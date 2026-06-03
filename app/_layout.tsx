@@ -1,8 +1,8 @@
-import { Stack, Tabs } from "expo-router";
+import { Tabs } from "expo-router";
 import "./global.css";
-// import { View, Text } from "react-native";
 import {Ionicons} from "@expo/vector-icons";
 import Header from "@/components/Header";
+
 export default function RootLayout() {
   // @ts-ignore
   return (
@@ -46,32 +46,32 @@ export default function RootLayout() {
               ),
             }}
         />
-
-        <Tabs.Screen
-            name="main/chatbot"
-            options={{
-              title: "Chatbot",
-              tabBarIcon: ({ color, focused }) => (
-                  <Ionicons
-                      name={focused ? "chatbubble" : "chatbubble-outline"}
-                      size={24}
-                      color={color}
-                  />
-              ),
-            }}
-        /> <Tabs.Screen
-          name="main/overviewhealth"
-          options={{
-            title: "Sức khoẻ",
-            tabBarIcon: ({ color, focused }) => (
-                <Ionicons
-                    name={focused ? "heart-circle" : "heart-circle-outline"}
-                    size={24}
-                    color={color}
-                />
-            ),
-          }}
-      />
+          <Tabs.Screen
+              name="main/chatbot"
+              options={{
+                  title: "Chatbot",
+                  tabBarIcon: ({ color, focused }) => (
+                      <Ionicons
+                          name={focused ? "chatbubble" : "chatbubble-outline"}
+                          size={24}
+                          color={color}
+                      />
+                  ),
+              }}
+          />
+          <Tabs.Screen
+              name="main/overviewhealth"
+              options={{
+                  title: "Sức khoẻ",
+                  tabBarIcon: ({ color, focused }) => (
+                      <Ionicons
+                          name={focused ? "heart-circle" : "heart-circle-outline"}
+                          size={24}
+                          color={color}
+                      />
+                  ),
+              }}
+          />
         <Tabs.Screen
             name="main/schedule"
             options={{
