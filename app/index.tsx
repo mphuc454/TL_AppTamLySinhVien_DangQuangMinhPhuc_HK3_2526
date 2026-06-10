@@ -1,15 +1,8 @@
 import { Ionicons } from "@expo/vector-icons";
-import { Animated, FlatList, Text, TouchableOpacity, View, Button } from "react-native";
+import { Animated, Button, Text, TouchableOpacity, View } from "react-native";
 import "./global.css";
 import ScrollView = Animated.ScrollView;
 
-const Data = [
-  { id: 1, name: "Vui vẻ", icon: "happy-outline", bg: "#EF5DA8" },
-  { id: 2, name: "Bình thản", icon: "moon-outline", bg: "#AEAFF7" },
-  { id: 3, name: "Hỗn loạn", icon: "sync-outline", bg: "#A0E3E2" },
-  { id: 4, name: "Giận dữ", icon: "thunderstorm-outline", bg: "#F09E54" },
-  { id: 5, name: "Buồn bã", icon: "sad-outline", bg: "#C3F2A6" },
-];
 const Data2 = [
   {id: 1, name: "Nhật ký", icon:"book", bg:"#F9EED8"},
   {id: 2, name: "Đặt lịch hẹn", icon:"calendar", bg:"#F9EED8"},
@@ -20,58 +13,69 @@ export default function Index() {
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: "#F5EDED" }}
+      contentContainerStyle={{ paddingBottom: 140 }}
       showsVerticalScrollIndicator={false}
     >
-      {/* Layout1: Lời chào mở đầu */}
       <View style={{ flex: 1, paddingHorizontal: 20, paddingTop: 20 }}>
+        {/* Layout1: Lời chào mở đầu */}
         <Text style={{ fontSize: 18, fontWeight: "bold" }}>
-          Chào bạn, User! Bạn cảm thấy thế nào !
+          Chào bạn, User! Chào ngày mới tràn đầy năng lượng nào!
         </Text>
-        {/* Layout2: Hỏi tâm trạng ntn */}
-        <Text
-          style={{
-            fontSize: 16,
-            fontWeight: "medium",
-            marginTop: 20,
-            color: "#371B34",
-          }}
-        >
-          Tâm trạng bạn hôm nay thấy thế nào ?
-        </Text>
-        <FlatList
-          data={Data}
-          horizontal
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => (
-            <TouchableOpacity style={{ alignItems: "center", marginRight: 25 }}>
-              <View
-                style={{
-                  width: 59.2,
-                  height: 62.06,
-                  backgroundColor: item.bg,
-                  borderRadius: 16,
-                  marginTop: 20,
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Ionicons name={item.icon as any} size={30} color="#FFFFFF" />
+        {/* Layout2: câu nói */}
+        <View style={{ marginTop: 30, backgroundColor: "#F4F4F4", borderRadius: 20, padding: 10, height: 100, flexDirection: "row", alignItems: "center" }}>
+          <View style={{ flex: 5, alignItems: "center" }}>
+            <Text style={{ fontSize: 14, fontWeight:"regular", color:"#707070", textAlign: "center" }}>
+              “It is better to conquer yourself than to win a thousand battles”
+            </Text>
+          </View>
+          <View style={{ flex: 1, alignItems: "center" }}>
+              <Ionicons name="chatbubble-ellipses-outline" size={35} color="#D9D8D8" />
+          </View>
+        </View>
+        {/* Layout3: Biểu đồ tổng quan */}
+          <View style={{ marginTop: 30, flexDirection: "row", gap: 9}}>
+          <View style={{flex: 1, padding: 15, backgroundColor:"#2D2121", borderRadius: 16}}>
+            <Text style={{ fontWeight:"bold", color:"#FBDFDF", fontSize: 14}}>
+              Streak ghi nhật ký
+            </Text>
+              <View style={{ alignItems:"center", gap: 10}}>
+                  <Text style={{ fontSize: 37, fontWeight: "bold", color: "#FFFFFF" }}>
+                    7
+                  </Text>
+                  <Text style={{ fontSize: 10, fontWeight: "semibold", color: "#FFFFFF" }}>
+                    Ngày liên tiếp
+                  </Text>
               </View>
-              <Text
-                style={{
-                  fontSize: 12,
-                  fontWeight: "medium",
-                  marginTop: 8,
-                  color: "#828282",
-                  textAlign: "center",
-                }}
-              >
-                {item.name}
-              </Text>
+  
+          </View>
+          <View style={{flex: 1, padding: 15, backgroundColor:"#2D2121", borderRadius: 16}}>
+            <Text style={{ fontWeight:"bold", color:"#FBDFDF", fontSize: 14}}>
+              Lịch hẹn sắp tới
+            </Text>
+            <View style={{ flexDirection: "row", alignItems:"center", gap: 10}}>
+                  <Text style={{ fontSize: 37, fontWeight: "bold", color: "#FFFFFF" }}>
+                    1
+                  </Text>
+                  <Text style={{ fontSize: 10, fontWeight: "semibold", color: "#FFFFFF" }}>
+                    14:00 · T4, 04/06
+                  </Text>
+              </View>
+            <TouchableOpacity style={{ 
+              borderWidth: 2, 
+              borderRadius: 16, 
+              paddingHorizontal: 16, 
+              alignItems:"center", 
+              backgroundColor:"#D9D9D9",
+              borderColor: "#D9D9D9",
+              marginTop: 8,
+              alignSelf: "center"}}> 
+              <Text style={{ fontSize: 10, fontWeight: "semibold", color: "#445AE6" }}>
+                Xem lịch
+                </Text>  
             </TouchableOpacity>
-          )}
-        ></FlatList>
-        {/* Layout3: Chatbot AI */}
+          </View>
+        </View>
+        {/* Layout5: Chatbot AI */}
         <View style={{ marginTop: 30, backgroundColor: "#604FD9", flexDirection: "row", alignItems: "center", borderRadius: 30, padding: 10, width: '100%' }}>
           {/* cột 1: icon */}
           <View style={{ flex: 1, alignItems: "center" }}>
@@ -91,39 +95,42 @@ export default function Index() {
             <Button title="Bắt đầu" onPress={() => console.log('Button with adjusted color pressed')}></Button>
           </View>
         </View>
-        {/* Layout4: Các dịch vụ */}
-        <FlatList data={Data2}
-                  numColumns={2}
-                  columnWrapperStyle={{justifyContent: "space-between", marginBottom: 20}}
-                  keyExtractor={(item) => item.id.toString()}
-                  renderItem={({item}) =>(
-                    <TouchableOpacity style={{ alignItems: "center", marginRight: 2}}>
-                      <View
-                        style={{
-                          width: 165.02,
-                          height: 62,
-                          backgroundColor: item.bg,
-                          borderRadius: 16,
-                          marginTop: 20,
-                          flexDirection:"row",
-                          alignItems: "center",
-                          paddingHorizontal: 10,
-                          borderWidth: 1, 
-                          borderColor: "#D8AD93"
-                        }}
-                      >
-                        <Ionicons name={item.icon as any} size={25} color="#D8AD93" />
-                        <Text
-                        style={{fontSize: 10, fontWeight: "bold", marginLeft: 10, color: "#573926", flex: 1}}
-                      >
-                        {item.name}
-                      </Text>
-                      </View>
-                    </TouchableOpacity>
-                  )}
-        >
-        </FlatList>
-        {/* Layout5: Các bài tập */}
+        {/* Layout6: Các dịch vụ */}
+        <View style={{ marginTop: 30, flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between" }}>
+          {Data2.map((item) => (
+            <TouchableOpacity
+              key={item.id}
+              style={{ width: "48%", alignItems: "center", marginBottom: 20 }}
+            >
+              <View
+                style={{
+                  width: "100%",
+                  height: 62,
+                  backgroundColor: item.bg,
+                  borderRadius: 16,
+                  flexDirection: "row",
+                  alignItems: "center",
+                  paddingHorizontal: 10,
+                  borderWidth: 1,
+                  borderColor: "#D8AD93",
+                }}
+              >
+                <Ionicons name={item.icon as any} size={25} color="#D8AD93" />
+                <Text
+                  style={{
+                    fontSize: 10,
+                    fontWeight: "bold",
+                    marginLeft: 10,
+                    color: "#573926",
+                    flex: 1,
+                  }}
+                >
+                  {item.name}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          ))}
+        </View>
       </View>
     </ScrollView>
   );
