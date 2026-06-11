@@ -4,9 +4,9 @@ import ScrollView = Animated.ScrollView;
 import { BarChart } from "react-native-gifted-charts";
 
 const Data2 = [
-  {id: 1, name: "Nhật ký", icon:"book", bg:"#F9EED8"},
+  {id: 1, name: "Xem bài viết", icon:"book", bg:"#F9EED8"},
   {id: 2, name: "Đặt lịch hẹn", icon:"calendar", bg:"#F9EED8"},
-  {id: 3, name: "Kiểm tra tâm trạng", icon:"heart", bg:"#F9EED8"},
+  {id: 3, name: "Xem bài tập", icon:"heart", bg:"#F9EED8"},
   {id: 4, name: "Bài khảo sát", icon:"checkbox", bg:"#F9EED8"}
 ]
 const legend = [
