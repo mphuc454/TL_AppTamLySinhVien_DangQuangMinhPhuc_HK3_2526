@@ -1,13 +1,29 @@
 import { Ionicons } from "@expo/vector-icons";
 import { Animated, Button, Text, TouchableOpacity, View } from "react-native";
-import "./global.css";
 import ScrollView = Animated.ScrollView;
+import { BarChart } from "react-native-gifted-charts";
 
 const Data2 = [
   {id: 1, name: "Nhật ký", icon:"book", bg:"#F9EED8"},
   {id: 2, name: "Đặt lịch hẹn", icon:"calendar", bg:"#F9EED8"},
   {id: 3, name: "Kiểm tra tâm trạng", icon:"heart", bg:"#F9EED8"},
   {id: 4, name: "Bài khảo sát", icon:"checkbox", bg:"#F9EED8"}
+]
+const legend = [
+  {label: "Tích cực", color: "#556817"},
+  {label: "Vui vẻ", color: "#22A3CA"},
+  {label: "Bình thường", color: "#A0E3E2"},
+  {label: "Lo âu", color: "#F36A0E"},
+  {label: "Giận dữ", color: "#BE0003"},
+]
+const Data3 = [
+  {value: 10, label: "T2", frontColor:"#556817", labelTextStyle: {color: "#FFFFFF"}},
+  {value: 20, label: "T3", frontColor:"#22A3CA", labelTextStyle: {color: "#FFFFFF"}},
+  {value: 40, label: "T4", frontColor:"#F36A0E", labelTextStyle: {color: "#FFFFFF"}},
+  {value: 50, label: "T5", frontColor:"#BE0003", labelTextStyle: {color: "#FFFFFF"}},
+  {value: 30, label: "T6", frontColor:"#A0E3E2", labelTextStyle: {color: "#FFFFFF"}},
+  {value: 30, label: "T7", frontColor:"#A0E3E2", labelTextStyle: {color: "#FFFFFF"}},
+  {value: 10, label: "CN", frontColor:"#556817", labelTextStyle: {color: "#FFFFFF"}},
 ]
 export default function Index() {
   return (
@@ -74,6 +90,43 @@ export default function Index() {
                 </Text>  
             </TouchableOpacity>
           </View>
+        </View>
+        {/* Layout4: Thống kê cảm xúc */}
+        <View style={{ marginTop:30, padding: 16, backgroundColor:"#2D2121", borderRadius: 16}}>
+              <Text style={{ fontSize: 16, fontWeight: "bold", color: "#FFF0F0" }}>
+                Biểu đồ cảm xúc
+              </Text>
+              <View style={{flexDirection: "row", flexWrap: "wrap", marginTop: 8, marginBottom: 12,}}>
+                {legend.map((item, index)=> (
+                  <View key={index} style={{
+                    flexDirection:"row",
+                    alignItems:"center",
+                    marginRight: 16,
+                    marginBottom: 8
+                  }}>
+                    <View style={{
+                      width: 12,
+                      height: 12,
+                      borderRadius: 6,
+                      backgroundColor: item.color,
+                      marginRight: 8,
+                    }}></View>
+                       <Text style={{ color: "#FFF0F0", fontSize: 14 }}>
+                            {item.label}
+                        </Text>
+                  </View>
+                ))}
+              </View>
+              <BarChart data={Data3} 
+              barWidth={25} 
+              spacing={20}
+              hideYAxisText
+              hideRules
+              yAxisThickness={0}
+              xAxisThickness={0}
+              noOfSections={4}
+              barMarginBottom={0}>
+              </BarChart>
         </View>
         {/* Layout5: Chatbot AI */}
         <View style={{ marginTop: 30, backgroundColor: "#604FD9", flexDirection: "row", alignItems: "center", borderRadius: 30, padding: 10, width: '100%' }}>

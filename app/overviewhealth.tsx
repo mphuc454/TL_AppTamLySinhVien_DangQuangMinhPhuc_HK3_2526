@@ -1,6 +1,5 @@
 import { ScrollView, Text, View, FlatList, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import './global.css';
 const Data = [
   { id: 1, name: "Vui vẻ", icon: "happy-outline", bg: "#EF5DA8" },
   { id: 2, name: "Bình thản", icon: "moon-outline", bg: "#AEAFF7" },
