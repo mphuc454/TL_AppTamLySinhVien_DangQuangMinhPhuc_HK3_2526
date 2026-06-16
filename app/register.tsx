@@ -3,7 +3,7 @@ import { router } from "expo-router";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-export default function Login() {
+export default function Register() {
   return (
     <SafeAreaView
       style={{
@@ -15,7 +15,7 @@ export default function Login() {
       <View
         style={{ flexDirection: "row", alignItems: "center", marginTop: 30 }}
       >
-        <TouchableOpacity onPress={() => router.push("/register")}>
+        <TouchableOpacity onPress={() => router.push("/(tabs)/index")}>
           <Ionicons name="arrow-back" size={25}></Ionicons>
         </TouchableOpacity>
         <Text
@@ -26,7 +26,7 @@ export default function Login() {
             fontWeight: "bold",
           }}
         >
-          Đăng nhập tài khoản
+          Tạo tài khoản mới
         </Text>
       </View>
       <View
