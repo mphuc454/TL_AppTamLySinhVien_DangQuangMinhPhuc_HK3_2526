@@ -22,24 +22,7 @@ export default function Header() {
       </TouchableOpacity>
 
       <TouchableOpacity style={{ position: "relative" }}>
-        <Ionicons name="notifications-outline" size={28} color="#5B4B6A" />
-        <View
-          style={{
-            position: "absolute",
-            top: -4,
-            right: -4,
-            width: 18,
-            height: 18,
-            borderRadius: 9,
-            backgroundColor: "#f97316",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Text style={{ color: "#fff", fontSize: 10, fontWeight: "bold" }}>
-            3
-          </Text>
-        </View>
+        <Ionicons name="settings" size={28} color="#5B4B6A" />
       </TouchableOpacity>
     </View>
   );

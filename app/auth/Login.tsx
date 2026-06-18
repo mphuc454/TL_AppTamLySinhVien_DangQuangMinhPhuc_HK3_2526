@@ -125,6 +125,7 @@ export default function Login() {
         }}
       >
         <TouchableOpacity
+          onPress={() => router.push("/profile")}
           style={{
             marginTop: 10,
             backgroundColor: "#6D00D9",

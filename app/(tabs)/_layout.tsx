@@ -1,6 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
-import Header from "../src/components/Header";
+import Header from "../../src/components/Header";
 
 export default function RootLayout() {
   // @ts-ignore
