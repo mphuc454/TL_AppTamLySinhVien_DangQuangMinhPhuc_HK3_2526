@@ -15,7 +15,7 @@ export default function Login() {
       <View
         style={{ flexDirection: "row", alignItems: "center", marginTop: 30 }}
       >
-        <TouchableOpacity onPress={() => router.push("/")}>
+        <TouchableOpacity onPress={() => router.push("/(tabs)/Index")}>
           <Ionicons name="arrow-back" size={25}></Ionicons>
         </TouchableOpacity>
         <Text
@@ -164,7 +164,7 @@ export default function Login() {
         }}
       >
         <TouchableOpacity
-          onPress={() => router.push("/auth/ProfileUser")}
+          onPress={() => router.push("/auth/Profile")}
           style={{
             marginTop: 10,
             backgroundColor: "#6D00D9",

@@ -15,7 +15,7 @@ export default function Register() {
       <View
         style={{ flexDirection: "row", alignItems: "center", marginTop: 30 }}
       >
-        <TouchableOpacity onPress={() => router.push("/")}>
+        <TouchableOpacity onPress={() => router.push("/(tabs)/Index")}>
           <Ionicons name="arrow-back" size={25}></Ionicons>
         </TouchableOpacity>
         <Text
