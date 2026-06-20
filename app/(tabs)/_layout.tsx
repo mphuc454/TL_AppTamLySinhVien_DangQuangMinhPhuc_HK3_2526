@@ -72,9 +72,9 @@ export default function RootLayout() {
         }}
       />
       <Tabs.Screen
-        name="Schedule"
+        name="Appointment"
         options={{
-          title: "Lịch khám",
+          title: "Đặt lịch",
           tabBarIcon: ({ color, focused }) => (
             <Ionicons
               name={focused ? "calendar" : "calendar-outline"}
