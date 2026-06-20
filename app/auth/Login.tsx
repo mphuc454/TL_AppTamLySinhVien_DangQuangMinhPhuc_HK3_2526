@@ -12,7 +12,7 @@ export default function Login() {
         paddingHorizontal: 20,
       }}
     >
-    <View
+      <View
         style={{ flexDirection: "row", alignItems: "center", marginTop: 30 }}
       >
         <TouchableOpacity onPress={() => router.push("/")}>
@@ -29,93 +29,132 @@ export default function Login() {
           Đăng nhập tài khoản
         </Text>
       </View>
-      <View 
-      style={{
+      <View
+        style={{
           marginTop: 30,
-        }}>
-          <Text 
-            style={{
+        }}
+      >
+        <Text
+          style={{
             fontSize: 12,
             color: "#888",
-            marginBottom: 6,}}>Email</Text>
-          <TextInput 
-            style={{backgroundColor: "#FFF",
+            marginBottom: 6,
+          }}
+        >
+          Email
+        </Text>
+        <TextInput
+          style={{
+            backgroundColor: "#FFF",
             borderWidth: 1,
             borderColor: "#E5E5E5",
             borderRadius: 10,
             height: 52,
-            paddingHorizontal: 12,}} placeholder="Nhập email"></TextInput>
+            paddingHorizontal: 12,
+          }}
+          placeholder="Nhập email"
+        ></TextInput>
       </View>
-        <View 
-            style={{
-            marginTop: 10,
-        }}>
-          <Text style={{
+      <View
+        style={{
+          marginTop: 10,
+        }}
+      >
+        <Text
+          style={{
             fontSize: 12,
             color: "#888",
-            marginBottom: 6,}}>Mật khẩu</Text>
-            <View style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  backgroundColor: "#FFF",
-                  borderWidth: 1,
-                  borderColor: "#E5E5E5",
-                  borderRadius: 10,
-                  height: 52,
-                  paddingHorizontal: 12,
-            }}>
-            <TextInput style={{ flex: 1}} placeholder="Nhập mật khẩu"></TextInput>
-            <TouchableOpacity>
-              <Feather name={"eye"} size={20}></Feather>
-            </TouchableOpacity>
-            </View>
-        </View>
-        <View 
+            marginBottom: 6,
+          }}
+        >
+          Mật khẩu
+        </Text>
+        <View
           style={{
             flexDirection: "row",
-            marginTop: 30,
             alignItems: "center",
-        }}> 
-
-        <View style={{ flex: 1, flexDirection: "row", alignItems: 'center'}}>
-          <View style={{
-          width: 16,
-          height: 16,
-          borderWidth: 1,
-          borderColor: "#999",
-          marginRight: 8,
-          }}></View>
-          <Text style={{  
-            fontSize: 12,
-            color: "#555",}}>Nhớ đăng nhập</Text>
-
+            backgroundColor: "#FFF",
+            borderWidth: 1,
+            borderColor: "#E5E5E5",
+            borderRadius: 10,
+            height: 52,
+            paddingHorizontal: 12,
+          }}
+        >
+          <TextInput
+            style={{ flex: 1 }}
+            placeholder="Nhập mật khẩu"
+          ></TextInput>
+          <TouchableOpacity>
+            <Feather name={"eye"} size={20}></Feather>
+          </TouchableOpacity>
         </View>
-            <View>
-              <TouchableOpacity>
-                <Text style={{
-                  fontSize: 12,
-                  color: "#4169E1",
-                }}>Quên mật khẩu</Text>
-              </TouchableOpacity>
-            </View>
       </View>
-      <View style={{
-        flexDirection: "row",
-        justifyContent: "center",
-        marginTop: 30,
-      }}>
-        <Text style={{
-           color: "#555",
-           fontSize: 13,
-        }}>
+      <View
+        style={{
+          flexDirection: "row",
+          marginTop: 30,
+          alignItems: "center",
+        }}
+      >
+        <View style={{ flex: 1, flexDirection: "row", alignItems: "center" }}>
+          <View
+            style={{
+              width: 16,
+              height: 16,
+              borderWidth: 1,
+              borderColor: "#999",
+              marginRight: 8,
+            }}
+          ></View>
+          <Text
+            style={{
+              fontSize: 12,
+              color: "#555",
+            }}
+          >
+            Nhớ đăng nhập
+          </Text>
+        </View>
+        <View>
+          <TouchableOpacity>
+            <Text
+              style={{
+                fontSize: 12,
+                color: "#4169E1",
+              }}
+            >
+              Quên mật khẩu
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "center",
+          marginTop: 30,
+        }}
+      >
+        <Text
+          style={{
+            color: "#555",
+            fontSize: 13,
+          }}
+        >
           Bạn chưa có tài khoản?
         </Text>
-        <TouchableOpacity onPress={() => router.push("/register")}>
-          <Text style={{
-            color: "#4169E1",
-            fontWeight: "bold",
-            fontSize: 13
-          }}> Đăng ký</Text>
+        <TouchableOpacity onPress={() => router.push("/auth/Register")}>
+          <Text
+            style={{
+              color: "#4169E1",
+              fontWeight: "bold",
+              fontSize: 13,
+            }}
+          >
+            {" "}
+            Đăng ký
+          </Text>
         </TouchableOpacity>
       </View>
       <View
@@ -125,7 +164,7 @@ export default function Login() {
         }}
       >
         <TouchableOpacity
-          onPress={() => router.push("/profile")}
+          onPress={() => router.push("/auth/ProfileUser")}
           style={{
             marginTop: 10,
             backgroundColor: "#6D00D9",
@@ -144,7 +183,7 @@ export default function Login() {
               fontWeight: "700",
             }}
           >
-           Đăng nhập
+            Đăng nhập
           </Text>
         </TouchableOpacity>
         <Text

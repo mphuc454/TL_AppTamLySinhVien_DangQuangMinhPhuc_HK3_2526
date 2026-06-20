@@ -33,7 +33,7 @@ export default function RootLayout() {
       }}
     >
       <Tabs.Screen
-        name="index"
+        name="Index"
         options={{
           title: "Trang chủ",
           tabBarIcon: ({ color, focused }) => (
@@ -46,7 +46,7 @@ export default function RootLayout() {
         }}
       />
       <Tabs.Screen
-        name="chatbot"
+        name="Chatbot"
         options={{
           title: "Chatbot",
           tabBarIcon: ({ color, focused }) => (
@@ -59,7 +59,7 @@ export default function RootLayout() {
         }}
       />
       <Tabs.Screen
-        name="overviewhealth"
+        name="HealthCare"
         options={{
           title: "Sức khoẻ",
           tabBarIcon: ({ color, focused }) => (
@@ -72,7 +72,7 @@ export default function RootLayout() {
         }}
       />
       <Tabs.Screen
-        name="schedule"
+        name="Schedule"
         options={{
           title: "Lịch khám",
           tabBarIcon: ({ color, focused }) => (
