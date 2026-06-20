@@ -22,7 +22,7 @@ export default function Header() {
       </TouchableOpacity>
 
       <TouchableOpacity
-        onPress={() => router.push("/auth/Settings")}
+        onPress={() => router.push("/auth/SettingsUser")}
         style={{ position: "relative" }}
       >
         <Ionicons name="settings" size={28} color="#5B4B6A" />

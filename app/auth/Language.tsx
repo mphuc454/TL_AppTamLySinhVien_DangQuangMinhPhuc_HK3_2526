@@ -20,7 +20,7 @@ export default function LanguagesSettings() {
       <View
         style={{ flexDirection: "row", alignItems: "center", marginTop: 30 }}
       >
-        <TouchableOpacity onPress={() => router.push("/auth/Settings")}>
+        <TouchableOpacity onPress={() => router.push("/auth/SettingsUser")}>
           <Ionicons name="arrow-back" size={25}></Ionicons>
         </TouchableOpacity>
         <Text
