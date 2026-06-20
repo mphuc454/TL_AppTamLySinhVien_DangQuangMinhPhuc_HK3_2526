@@ -64,7 +64,7 @@ export default function Index() {
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: "#F5EDED" }}
-      contentContainerStyle={{ paddingBottom: 140 }}
+      contentContainerStyle={{ paddingBottom: 240 }}
       showsVerticalScrollIndicator={false}
     >
       <View style={{ flex: 1, paddingHorizontal: 20, paddingTop: 20 }}>
@@ -332,6 +332,100 @@ export default function Index() {
               </View>
             </TouchableOpacity>
           ))}
+        </View>
+      </View>
+      <View style={{ marginTop: 30 }}>
+        <Text
+          style={{
+            fontSize: 18,
+            fontWeight: "700",
+            marginHorizontal: 20,
+            marginBottom: 10,
+          }}
+        >
+          Lịch hẹn sắp tới
+        </Text>
+
+        <View
+          style={{
+            backgroundColor: "#322223",
+            marginHorizontal: 20,
+            borderRadius: 20,
+            padding: 16,
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          {/* Thông tin bác sĩ */}
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              flex: 1,
+            }}
+          >
+            <View
+              style={{
+                width: 50,
+                height: 50,
+                borderRadius: 25,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Ionicons name="person" size={28} color="#FFF" />
+            </View>
+
+            <View style={{ marginLeft: 12 }}>
+              <Text
+                style={{
+                  color: "#FFF",
+                  fontSize: 16,
+                  fontWeight: "700",
+                }}
+              >
+                TS. Nguyễn Minh Anh
+              </Text>
+
+              <Text
+                style={{
+                  color: "#D9D9D9",
+                  fontSize: 13,
+                  marginTop: 4,
+                }}
+              >
+                Tâm lý học lâm sàng
+              </Text>
+            </View>
+          </View>
+
+          {/* Thời gian */}
+          <View
+            style={{
+              alignItems: "flex-end",
+            }}
+          >
+            <Text
+              style={{
+                color: "#FFF",
+                fontSize: 15,
+                fontWeight: "600",
+              }}
+            >
+              14:00
+            </Text>
+
+            <Text
+              style={{
+                color: "#D9D9D9",
+                fontSize: 13,
+                marginTop: 4,
+              }}
+            >
+              04/06/2026
+            </Text>
+          </View>
         </View>
       </View>
     </ScrollView>
