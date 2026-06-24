@@ -84,6 +84,19 @@ export default function RootLayout() {
           ),
         }}
       />
+        <Tabs.Screen
+        name="Article"
+        options={{
+          title: "Bài viết",
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons
+              name={focused ? "newspaper" : "newspaper-outline"}
+              size={24}
+              color={color}
+            />
+          ),
+        }}
+      />
     </Tabs>
   );
 }

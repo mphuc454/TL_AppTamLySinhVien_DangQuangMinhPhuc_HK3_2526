@@ -1,6 +1,6 @@
 import { FlatList, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
-import useHealthCareViewModel from "../viewmodels/HealthcareViewModel"
 import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
 const options = [
   { value: 0, label: "Không bao giờ" },
   { value: 1, label: "Một chút" },
@@ -15,11 +15,25 @@ const options = [
   { id: 2, name: "Bình thản", des: "Giảm lo âu - 3 phút" },
   { id: 3, name: "Hỗn loạn", des: "Tăng năng lượng- 15 phút" },
 ];
+export const moodData = [
+  { id: 1, name: "Tích cực", icon: "happy-outline", bg: "#EF5DA8" },
+  { id: 2, name: "Bình thản", icon: "moon-outline", bg: "#AEAFF7" },
+  { id: 3, name: "Lo âu", icon: "sync-outline", bg: "#A0E3E2" },
+  { id: 4, name: "Giận dữ", icon: "thunderstorm-outline", bg: "#F09E54" },
+  { id: 5, name: "Buồn bã", icon: "sad-outline", bg: "#C3F2A6" },
+];
+export const journalData = [
+  {
+    id: 1,
+    moodID: 1,
+    date: "Hôm nay. 8:30 AM",
+    content:
+      "Hôm nay mình cảm thấy rất vui vì đã hoàn thành được nhiều việc quan trọng",
+  },
+  { id: 2, moodID: 4, date: "Hôm qua. 8:25 PM", content: "Bực hết cả mình" },
+];
 export default function HealthcareView(){
-    
-    const{
-        moodData, journalData,
-    } = useHealthCareViewModel();
+  
     return(
           <ScrollView
       style={{ flex: 1, backgroundColor: "#F5EDED" }}
@@ -314,7 +328,7 @@ export default function HealthcareView(){
             <Text style={{ fontSize: 16, fontWeight: "bold" }}>
               Bài tập gợi ý cho bạn:
             </Text>
-            <TouchableOpacity>
+            <TouchableOpacity  onPress={() => router.push("/(tabs)/Article")}>
               <Text
                 style={{
                   fontSize: 11,
@@ -327,37 +341,75 @@ export default function HealthcareView(){
             </TouchableOpacity>
           </View>
           <FlatList
-            data={DataNews}
-            horizontal
-            keyExtractor={(item) => item.id.toString()}
-            renderItem={({ item }) => (
-              <TouchableOpacity
-                style={{
-                  alignItems: "center",
-                  flex: 1,
-                  backgroundColor: "#2D2121",
-                  marginLeft: 8,
-                  padding: 15,
-                  borderRadius: 16,
-                }}
-              >
-                <Text
-                  style={{ fontSize: 16, fontWeight: "bold", color: "#FFFFFF" }}
-                >
-                  {item.name}
-                </Text>
-                <Text
-                  style={{
-                    fontSize: 8,
-                    fontWeight: "regular",
-                    color: "#FFFFFF",
-                  }}
-                >
-                  {item.des}
-                </Text>
-              </TouchableOpacity>
-            )}
-          ></FlatList>
+  style={{ marginTop: 20 }}
+  data={DataNews}
+  horizontal
+  showsHorizontalScrollIndicator={false}
+  contentContainerStyle={{ paddingHorizontal: 20, gap: 12 }}
+  keyExtractor={(item) => item.id.toString()}
+  renderItem={({ item }) => (
+    <TouchableOpacity
+      style={{
+        width: 220,
+        backgroundColor: "#2D2121",
+        borderRadius: 18,
+        padding: 16,
+      }}
+    >
+      <View
+        style={{
+          backgroundColor: "#FBDFDF",
+          alignSelf: "flex-start",
+          paddingHorizontal: 8,
+          paddingVertical: 3,
+          borderRadius: 6,
+          marginBottom: 10,
+        }}
+      >
+        <Text style={{ fontSize: 9, fontWeight: "700", color: "#7a2e2e" }}>
+          BÀI VIẾT
+        </Text>
+      </View>
+
+      <Text
+        style={{
+          fontSize: 14,
+          fontWeight: "700",
+          color: "#FFFFFF",
+          lineHeight: 19,
+          marginBottom: 6,
+        }}
+        numberOfLines={2}
+      >
+        {item.name}
+      </Text>
+
+      <Text
+        style={{
+          fontSize: 11,
+          fontWeight: "400",
+          color: "#bfa9a9",
+          lineHeight: 15,
+        }}
+        numberOfLines={2}
+      >
+        {item.des}
+      </Text>
+
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          marginTop: 12,
+          gap: 4,
+        }}
+      >
+        <Ionicons name="time-outline" size={11} color="#8a7878" />
+        <Text style={{ fontSize: 10, color: "#8a7878" }}>5 phút đọc</Text>
+      </View>
+    </TouchableOpacity>
+  )}
+/>
         </View>
       </View>
     </ScrollView>
