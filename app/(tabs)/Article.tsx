@@ -1,5 +1,5 @@
 import ArticleView from "@/src/views/user/ArticleView";
-export default function Overviewhealth() {
+export default function Article() {
   return ( <ArticleView></ArticleView>
   );
 }
