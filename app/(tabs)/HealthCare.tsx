@@ -1,4 +1,4 @@
-import HealthcareView from "@/src/views/HealthcareView";
+import HealthcareView from "@/src/views/user/HealthcareView";
 export default function Overviewhealth() {
   return ( <HealthcareView></HealthcareView>
   );
