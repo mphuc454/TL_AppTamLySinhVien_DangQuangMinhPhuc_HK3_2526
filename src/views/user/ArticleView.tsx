@@ -1,11 +1,12 @@
 import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
 import { ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
 
 const ARTICLE = [
   {
     id: 1,
     title:"5 bước xây dựng thói quen tích cực mỗi ngày",
-    time:"7 phút",
+    time:"7 phút đọc",
     view: 1,
     specialty: "Cảm xúc",
   },
@@ -66,6 +67,7 @@ export default function ArticleView(){
       <View style={{ marginTop: 20 }}>
   {ARTICLE.map((arc) => (
     <TouchableOpacity
+    onPress={() => router.push('/details/DetailedArticle')}
       key={arc.id}
       style={{
         backgroundColor: "#FFF",
@@ -88,7 +90,6 @@ export default function ArticleView(){
         elevation: 4,
       }}
     >
-      {/* Thumbnail */}
       <View
         style={{
           width: 55,
@@ -98,7 +99,6 @@ export default function ArticleView(){
         }}
       />
 
-      {/* Content */}
       <View style={{ flex: 1 }}>
         <Text
           numberOfLines={2}
@@ -110,7 +110,6 @@ export default function ArticleView(){
           {arc.title}
         </Text>
 
-        {/* Time + View */}
         <View
           style={{
             flexDirection: "row",
@@ -150,7 +149,6 @@ export default function ArticleView(){
           </Text>
         </View>
 
-        {/* Category */}
         <View
           style={{
             alignSelf: "flex-start",
