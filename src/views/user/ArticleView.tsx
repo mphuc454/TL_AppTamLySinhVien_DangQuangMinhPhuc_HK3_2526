@@ -145,7 +145,7 @@ export default function ArticleView(){
               fontSize: 13,
             }}
           >
-            {arc.view}
+            {arc.view} lượt xem
           </Text>
         </View>
 

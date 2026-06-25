@@ -74,6 +74,94 @@ export default function DetailedArticleView(){
         ảnh hưởng nghiêm trọng đến khả năng tập trung và kết quả học tập.</Text>
         <Text style={{ fontSize: 20, fontWeight: "bold", marginTop: 40, marginHorizontal: 12, }} > 
             Bài viết khác </Text> 
+            <View style={{ marginTop: 20 }}>
+              {ARTICLE.map((arc) => (
+              <TouchableOpacity onPress={() => router.push('/details/DetailedArticle')} key={arc.id}
+              style={{
+        backgroundColor: "#FFF",
+        marginHorizontal: 20,
+        marginBottom: 15,
+        borderRadius: 20,
+        padding: 12,
+        borderWidth: 1,
+        borderColor: "#000",
+        flexDirection: "row",
+        alignItems: "center",
+
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 2,
+          height: 3,
+        },
+        shadowOpacity: 0.2,
+        shadowRadius: 4,
+        elevation: 4,
+      }}>
+        <View style={{
+          width: 55,
+          height: 55,
+          backgroundColor: "#E7A3A8",
+          marginRight: 10,
+        }}></View>
+        <View style={{ flex: 1 }}>
+          <Text
+          numberOfLines={2}
+          style={{
+            fontSize: 16,
+            fontWeight: "600",
+          }}
+        >
+          {arc.title}
+        </Text>
+        <View style={{
+            flexDirection: "row",
+            alignItems: "center",
+            marginTop: 6,
+          }}> 
+          <Ionicons name="time-outline"size={14} color="#555"/>
+          <Text style={{
+              marginLeft: 4,
+              color: "#555",
+              fontSize: 13,
+            }}>{arc.time}</Text>
+            <Ionicons
+            name="eye-outline"
+            size={14}
+            color="#555"
+            style={{ marginLeft: 15 }}
+          />
+          <Text
+            style={{
+              marginLeft: 4,
+              color: "#555",
+              fontSize: 13,
+            }}
+          >
+            {arc.view} lượt xem
+          </Text>
+          </View>
+          <View style={{
+            alignSelf: "flex-start",
+            backgroundColor: "#D9D9D9",
+            borderRadius: 20,
+            paddingHorizontal: 14,
+            paddingVertical: 4,
+            marginTop: 8,
+          }}>
+               <Text
+            style={{
+              fontSize: 12,
+              fontWeight: "500",
+            }}
+          >
+            {arc.specialty}
+          </Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+
+              ))}
+            </View>
       </ScrollView>
     );
 }
