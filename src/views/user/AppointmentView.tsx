@@ -1,4 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
 import {
   ScrollView,
   Text,
@@ -98,8 +99,8 @@ export default function AppointmentView() {
                 <Text style={{ fontSize: 16, fontWeight: "600" }}>
                   {doctor.name}
                 </Text>
-                <Text style={{ color: "#666", marginTop: 4 }}>
-                  4.9 • 8 năm KN
+                <Text style={{ fontWeight: "light", marginTop: 4 }}>
+                  8 năm Kinh Nghiệm
                 </Text>
               </View>
             </View>
@@ -122,6 +123,7 @@ export default function AppointmentView() {
                 <Text style={{ fontSize: 12 }}>{doctor.specialty}</Text>
               </View>
               <TouchableOpacity
+              onPress={() => router.push("/details/DetailedAppointment")}
                 style={{
                   backgroundColor: "#F3B8B8",
                   paddingHorizontal: 18,
