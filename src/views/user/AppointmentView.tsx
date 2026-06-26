@@ -34,12 +34,27 @@ const options = [
 export default function AppointmentView() {
   return (
     <ScrollView
-      style={{ flex: 1, backgroundColor: "#F5EDED" }}
+      style={{
+        flex: 1,
+        backgroundColor: "#F7F7F8",
+      }}
       contentContainerStyle={{ paddingBottom: 180 }}
     >
-      <View style={{ alignItems: "center", marginTop: 30 }}>
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          marginTop: 30,
+          marginLeft: 20,
+        }}
+      >
+        <TouchableOpacity onPress={() => router.push("/(tabs)/Index")}>
+          <Ionicons name="arrow-back" size={25}></Ionicons>
+        </TouchableOpacity>
         <Text
           style={{
+            flex: 1,
+            textAlign: "center",
             fontSize: 20,
             fontWeight: "bold",
           }}
@@ -123,7 +138,7 @@ export default function AppointmentView() {
                 <Text style={{ fontSize: 12 }}>{doctor.specialty}</Text>
               </View>
               <TouchableOpacity
-              onPress={() => router.push("/details/DetailedAppointment")}
+                onPress={() => router.push("/(no tabs)/DetailedAppointment")}
                 style={{
                   backgroundColor: "#F3B8B8",
                   paddingHorizontal: 18,

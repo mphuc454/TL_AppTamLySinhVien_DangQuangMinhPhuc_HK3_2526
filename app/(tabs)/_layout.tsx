@@ -84,7 +84,7 @@ export default function RootLayout() {
           ),
         }}
       />
-        <Tabs.Screen
+      <Tabs.Screen
         name="Article"
         options={{
           title: "Bài viết",

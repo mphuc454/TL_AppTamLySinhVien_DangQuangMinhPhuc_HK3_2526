@@ -3,12 +3,6 @@ import { Animated, Button, Text, TouchableOpacity, View } from "react-native";
 import { BarChart } from "react-native-gifted-charts";
 import ScrollView = Animated.ScrollView;
 
-const Data2 = [
-  { id: 1, name: "Xem bài viết", icon: "book", bg: "#F9EED8" },
-  { id: 2, name: "Đặt lịch hẹn", icon: "calendar", bg: "#F9EED8" },
-  { id: 3, name: "Xem bài tập", icon: "heart", bg: "#F9EED8" },
-  { id: 4, name: "Bài khảo sát", icon: "checkbox", bg: "#F9EED8" },
-];
 const legend = [
   { label: "Tích cực", color: "#556817" },
   { label: "Buồn bã", color: "#22A3CA" },
@@ -64,7 +58,7 @@ export default function IndexView() {
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: "#F5EDED" }}
-      contentContainerStyle={{ paddingBottom: 240 }}
+      contentContainerStyle={{ paddingBottom: 180 }}
       showsVerticalScrollIndicator={false}
     >
       <View style={{ flex: 1, paddingHorizontal: 20, paddingTop: 20 }}>
@@ -290,49 +284,6 @@ export default function IndexView() {
             ></Button>
           </View>
         </View>
-        {/* Layout6: Các dịch vụ */}
-        <View
-          style={{
-            marginTop: 30,
-            flexDirection: "row",
-            flexWrap: "wrap",
-            justifyContent: "space-between",
-          }}
-        >
-          {Data2.map((item) => (
-            <TouchableOpacity
-              key={item.id}
-              style={{ width: "48%", alignItems: "center", marginBottom: 20 }}
-            >
-              <View
-                style={{
-                  width: "100%",
-                  height: 62,
-                  backgroundColor: item.bg,
-                  borderRadius: 16,
-                  flexDirection: "row",
-                  alignItems: "center",
-                  paddingHorizontal: 10,
-                  borderWidth: 1,
-                  borderColor: "#D8AD93",
-                }}
-              >
-                <Ionicons name={item.icon as any} size={25} color="#D8AD93" />
-                <Text
-                  style={{
-                    fontSize: 10,
-                    fontWeight: "bold",
-                    marginLeft: 10,
-                    color: "#573926",
-                    flex: 1,
-                  }}
-                >
-                  {item.name}
-                </Text>
-              </View>
-            </TouchableOpacity>
-          ))}
-        </View>
       </View>
       <View style={{ marginTop: 30 }}>
         <Text
@@ -343,9 +294,8 @@ export default function IndexView() {
             marginBottom: 10,
           }}
         >
-          Lịch hẹn sắp tới
+          Lịch hẹn sắp tới:
         </Text>
-
         <View
           style={{
             backgroundColor: "#322223",
