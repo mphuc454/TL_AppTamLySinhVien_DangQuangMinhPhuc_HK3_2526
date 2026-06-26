@@ -1,12 +1,20 @@
-import { FlatList, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
+import {
+  FlatList,
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 const options = [
   { value: 0, label: "Không bao giờ" },
   { value: 1, label: "Một chút" },
   { value: 2, label: "Thỉnh thoảng" },
-  { value: 3, label: "Thường xuyên" },]
-  const DataNews = [
+  { value: 3, label: "Thường xuyên" },
+];
+const DataNews = [
   {
     id: 1,
     name: "Thiền định",
@@ -32,10 +40,9 @@ export const journalData = [
   },
   { id: 2, moodID: 4, date: "Hôm qua. 8:25 PM", content: "Bực hết cả mình" },
 ];
-export default function HealthcareView(){
-  
-    return(
-          <ScrollView
+export default function HealthcareView() {
+  return (
+    <ScrollView
       style={{ flex: 1, backgroundColor: "#F5EDED" }}
       contentContainerStyle={{ paddingBottom: 180 }}
     >
@@ -328,7 +335,9 @@ export default function HealthcareView(){
             <Text style={{ fontSize: 16, fontWeight: "bold" }}>
               Bài tập gợi ý cho bạn:
             </Text>
-            <TouchableOpacity  onPress={() => router.push("/(tabs)/Article")}>
+            <TouchableOpacity
+              onPress={() => router.push("/(no tabs)/Exercises")}
+            >
               <Text
                 style={{
                   fontSize: 11,
@@ -341,75 +350,79 @@ export default function HealthcareView(){
             </TouchableOpacity>
           </View>
           <FlatList
-  style={{ marginTop: 20 }}
-  data={DataNews}
-  horizontal
-  showsHorizontalScrollIndicator={false}
-  contentContainerStyle={{ paddingHorizontal: 20, gap: 12 }}
-  keyExtractor={(item) => item.id.toString()}
-  renderItem={({ item }) => (
-    <TouchableOpacity
-      style={{
-        width: 220,
-        backgroundColor: "#2D2121",
-        borderRadius: 18,
-        padding: 16,
-      }}
-    >
-      <View
-        style={{
-          backgroundColor: "#FBDFDF",
-          alignSelf: "flex-start",
-          paddingHorizontal: 8,
-          paddingVertical: 3,
-          borderRadius: 6,
-          marginBottom: 10,
-        }}
-      >
-        <Text style={{ fontSize: 9, fontWeight: "700", color: "#7a2e2e" }}>
-          BÀI VIẾT
-        </Text>
-      </View>
+            style={{ marginTop: 20 }}
+            data={DataNews}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{ paddingHorizontal: 20, gap: 12 }}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => (
+              <TouchableOpacity
+                style={{
+                  width: 220,
+                  backgroundColor: "#2D2121",
+                  borderRadius: 18,
+                  padding: 16,
+                }}
+              >
+                <View
+                  style={{
+                    backgroundColor: "#FBDFDF",
+                    alignSelf: "flex-start",
+                    paddingHorizontal: 8,
+                    paddingVertical: 3,
+                    borderRadius: 6,
+                    marginBottom: 10,
+                  }}
+                >
+                  <Text
+                    style={{ fontSize: 9, fontWeight: "700", color: "#7a2e2e" }}
+                  >
+                    BÀI VIẾT
+                  </Text>
+                </View>
 
-      <Text
-        style={{
-          fontSize: 14,
-          fontWeight: "700",
-          color: "#FFFFFF",
-          lineHeight: 19,
-          marginBottom: 6,
-        }}
-        numberOfLines={2}
-      >
-        {item.name}
-      </Text>
+                <Text
+                  style={{
+                    fontSize: 14,
+                    fontWeight: "700",
+                    color: "#FFFFFF",
+                    lineHeight: 19,
+                    marginBottom: 6,
+                  }}
+                  numberOfLines={2}
+                >
+                  {item.name}
+                </Text>
 
-      <Text
-        style={{
-          fontSize: 11,
-          fontWeight: "400",
-          color: "#bfa9a9",
-          lineHeight: 15,
-        }}
-        numberOfLines={2}
-      >
-        {item.des}
-      </Text>
+                <Text
+                  style={{
+                    fontSize: 11,
+                    fontWeight: "400",
+                    color: "#bfa9a9",
+                    lineHeight: 15,
+                  }}
+                  numberOfLines={2}
+                >
+                  {item.des}
+                </Text>
 
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          marginTop: 12,
-          gap: 4,
-        }}
-      >
-        <Ionicons name="time-outline" size={11} color="#8a7878" />
-        <Text style={{ fontSize: 10, color: "#8a7878" }}>5 phút đọc</Text>
-      </View>
-    </TouchableOpacity>
-  )}
-/>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    marginTop: 12,
+                    gap: 4,
+                  }}
+                >
+                  <Ionicons name="time-outline" size={11} color="#8a7878" />
+                  <Text style={{ fontSize: 10, color: "#8a7878" }}>
+                    5 phút đọc
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            )}
+          />
         </View>
       </View>
     </ScrollView>
