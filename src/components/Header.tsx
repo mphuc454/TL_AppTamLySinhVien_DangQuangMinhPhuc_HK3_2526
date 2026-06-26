@@ -1,5 +1,4 @@
 import { Ionicons } from "@expo/vector-icons";
-import { Image } from "expo-image";
 import { router } from "expo-router";
 import { TouchableOpacity, View } from "react-native";
 
@@ -15,10 +14,7 @@ export default function Header() {
       }}
     >
       <TouchableOpacity onPress={() => router.push("/auth/Login")}>
-        <Image
-          source={{ uri: "https://reactnative.dev/img/tiny_logo.png" }}
-          style={{ width: 48, height: 48, borderRadius: 24 }}
-        />
+        <Ionicons name="person" size={28}></Ionicons>
       </TouchableOpacity>
 
       <TouchableOpacity
