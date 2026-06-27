@@ -1,29 +1,11 @@
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
-const dates = [
-  { day: "CN" },
-  { day: "T2" },
-  { day: "T3" },
-  { day: "T4" },
-  { day: "T5" },
-  { day: "T6" },
-  { day: "T7" },
-];
+import { useState } from "react";
+import { ScrollView, Switch, Text, TouchableOpacity, View } from "react-native";
 
-const times = [
-  "8:00",
-  "09:00",
-  "10:00",
-  "11:00",
-  "12:00",
-  "14:30",
-  "15:30",
-  "16:30",
-  "17:30",
-  "18:30",
-];
 export default function DetailAppointmentView() {
+  const [saveEmergency, setSaveEmergency] = useState(true);
+
   return (
     <ScrollView
       style={{
@@ -71,38 +53,27 @@ export default function DetailAppointmentView() {
       >
         Tâm lý học sàng
       </Text>
+
       <View
         style={{
-          alignSelf: "center",
-          marginTop: 20,
+          marginTop: 30,
           backgroundColor: "#fff",
-          borderRadius: 20,
-          elevation: 2,
-          shadowColor: "#000",
-          shadowOpacity: 0.08,
-          shadowRadius: 5,
-          paddingVertical: 10,
-          paddingHorizontal: 20,
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
         }}
       >
-        <View style={{ alignItems: "center" }}>
-          <Text style={{ fontSize: 30, fontWeight: "semibold" }}>8</Text>
-          <Text
-            style={{ fontSize: 10, fontWeight: "light", textAlign: "center" }}
-          >
-            Năm KN
-          </Text>
+        <View style={{ alignItems: "center", paddingHorizontal: 28 }}>
+          <Text style={{ fontSize: 36, fontWeight: "bold" }}>8</Text>
+          <Text style={{ fontSize: 18, fontWeight: "semibold" }}>Năm KN</Text>
         </View>
-      </View>
-      <View style={{ marginTop: 30 }}>
         <TouchableOpacity
           style={{
-            height: 50,
-            marginHorizontal: 70,
-            borderRadius: 28,
-            backgroundColor: "#E6E6E6",
-            justifyContent: "center",
-            alignItems: "center",
+            backgroundColor: "#D8D8D8",
+            borderRadius: 30,
+            paddingHorizontal: 28,
+            paddingVertical: 12,
+            marginRight: 12,
           }}
         >
           <Text style={{ color: "#445AE6", fontWeight: "700", fontSize: 15 }}>
@@ -148,92 +119,66 @@ export default function DetailAppointmentView() {
         </View>
       </View>
       <View style={{ marginTop: 30 }}>
-        <Text>Chọn ngày</Text>
-        <ScrollView
-          style={{ marginTop: 10 }}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{
-            paddingHorizontal: 12,
-            gap: 10,
-          }}
-        >
-          {dates.map((item, index) => (
-            <TouchableOpacity
-              key={index}
-              style={{
-                width: 65,
-                height: 82,
-                borderRadius: 16,
-                backgroundColor: "#fff",
-                alignItems: "center",
-                justifyContent: "center",
-                borderWidth: 1,
-                borderColor: "#eee",
-              }}
-            >
-              <Text
-                style={{
-                  color: "#999",
-                  fontWeight: "600",
-                }}
-              >
-                {item.day}
-              </Text>
-            </TouchableOpacity>
-          ))}
-        </ScrollView>
-      </View>
-      <View style={{ marginTop: 30 }}>
-        <Text>Chọn thời gian</Text>
-        <View
+        <Text style={{ fontSize: 15 }}>Liên hệ khẩn cấp</Text>
+        <TouchableOpacity
           style={{
+            marginTop: 10,
+            backgroundColor: "#D8D8D8",
+            borderRadius: 18,
+            padding: 18,
             flexDirection: "row",
-            flexWrap: "wrap",
-            marginHorizontal: 12,
+            alignItems: "center",
           }}
         >
-          {times.map((time) => {
-            const disabled = time === "10:00" || time === "18:00";
-
-            return (
-              <TouchableOpacity
-                key={time}
-                disabled={disabled}
-                style={{
-                  width: "22%",
-                  height: 46,
-                  margin: "1.5%",
-                  borderRadius: 12,
-                  backgroundColor: "#fff",
-                  borderWidth: 1,
-                  borderColor: "#eee",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Text style={{ fontWeight: "600", color: "#666" }}>{time}</Text>
-              </TouchableOpacity>
-            );
-          })}
-        </View>
-        <View style={{ marginTop: 30 }}>
-          <TouchableOpacity
+          <View
             style={{
-              height: 55,
-              marginHorizontal: 70,
-              marginTop: 35,
-              borderRadius: 28,
-              backgroundColor: "#E6E6E6",
+              width: 60,
+              height: 60,
+              borderRadius: 16,
+              backgroundColor: "#C73636",
               justifyContent: "center",
               alignItems: "center",
             }}
           >
-            <Text style={{ color: "#445AE6", fontWeight: "700", fontSize: 16 }}>
-              Đặt lịch hẹn
+            <Ionicons name="call" size={30}></Ionicons>
+          </View>
+          <View style={{ marginLeft: 15 }}>
+            <Text style={{ fontWeight: "bold", fontSize: 18 }}>
+              Số điện thoại liên hệ
             </Text>
-          </TouchableOpacity>
+            <Text style={{ marginTop: 5, fontSize: 12, color: "#333" }}>
+              0901234567
+            </Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+      <View
+        style={{
+          marginTop: 30,
+          backgroundColor: "#D8D8D8",
+          borderRadius: 18,
+          padding: 18,
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <View>
+          <Text style={{ fontWeight: "bold", fontSize: 15 }}>
+            Lưu số điện thoại
+          </Text>
+          <Text style={{ fontWeight: "light" }}>
+            Lưu vào danh sách cuộc gọi khẩn cấp
+          </Text>
         </View>
+        <Switch
+          value={saveEmergency}
+          onValueChange={setSaveEmergency}
+          trackColor={{
+            false: "#d0b5b5",
+            true: "#5B63FF",
+          }}
+        ></Switch>
       </View>
     </ScrollView>
   );

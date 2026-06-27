@@ -74,10 +74,10 @@ export default function RootLayout() {
       <Tabs.Screen
         name="Appointment"
         options={{
-          title: "Đặt lịch",
+          title: "Bác sĩ",
           tabBarIcon: ({ color, focused }) => (
             <Ionicons
-              name={focused ? "calendar" : "calendar-outline"}
+              name={focused ? "medkit" : "medkit-outline"}
               size={24}
               color={color}
             />
