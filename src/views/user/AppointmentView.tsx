@@ -59,7 +59,7 @@ export default function AppointmentView() {
             fontWeight: "bold",
           }}
         >
-          Đặt lịch tư vấn bác sĩ
+          Xem danh sách bác sĩ
         </Text>
       </View>
       <TextInput
@@ -146,7 +146,7 @@ export default function AppointmentView() {
                   borderRadius: 20,
                 }}
               >
-                <Text style={{ fontWeight: "semibold" }}>Đặt lịch</Text>
+                <Text style={{ fontWeight: "semibold" }}>Xem</Text>
               </TouchableOpacity>
             </View>
           </View>
