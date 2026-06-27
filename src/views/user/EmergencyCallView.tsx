@@ -30,8 +30,69 @@ export default function EmergencyCallView() {
         </Text>
       </View>
       <View style={{ marginTop: 30 }}>
-        <Text>ĐƯỜNG DÂY NÓNG QUỐC GIA</Text>
-        <TouchableOpacity></TouchableOpacity>
+        <Text>ĐƯỜNG DÂY NÓNG QUỐC GIA:</Text>
+        <TouchableOpacity
+          style={{
+            marginTop: 10,
+            backgroundColor: "#C0392B",
+            borderRadius: 22,
+            padding: 12,
+            flexDirection: "row",
+            alignItems: "center",
+          }}
+        >
+          <View style={{ flex: 1 }}>
+            <Text style={{ color: "#fff", fontWeight: "semibold" }}>
+              Tổng đài tư vấn tâm lý 1800-1567
+            </Text>
+            <Text style={{ marginTop: 10 }}>Miễn phí · Hoạt động 24/7</Text>
+          </View>
+          <View style={{ width: 70, alignItems: "center" }}>
+            <Ionicons name="call" size={30}></Ionicons>
+          </View>
+        </TouchableOpacity>
+      </View>
+      <View style={{ marginTop: 30 }}>
+        <Text>DANH SÁCH CUỘC GỌI ĐƯỢC LƯU: </Text>
+        <TouchableOpacity
+          style={{
+            marginTop: 10,
+            backgroundColor: "#D9D9D9",
+            borderRadius: 22,
+            padding: 12,
+            flexDirection: "row",
+            alignItems: "center",
+          }}
+        >
+          <View
+            style={{
+              width: 78,
+              height: 78,
+              borderRadius: 39,
+              backgroundColor: "#7E79F6",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Text style={{ fontSize: 20, color: "#fff" }}>1</Text>
+          </View>
+          <View style={{ flex: 1, marginLeft: 16, alignItems: "center" }}>
+            <Text style={{ fontSize: 14 }}>TS. NGUYỄN MINH ANH</Text>
+            <Text style={{ fontWeight: "light" }}>Tâm lý học sàng</Text>
+            <Text>SĐT: 0901234567</Text>
+            <View
+              style={{
+                marginTop: 12,
+                backgroundColor: "#C8B5F8",
+                borderRadius: 20,
+                paddingHorizontal: 28,
+                paddingVertical: 3,
+              }}
+            >
+              <Text>Đã lưu</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );
