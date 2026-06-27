@@ -1,11 +1,11 @@
-import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import {
-    ScrollView,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
 const DATA = [
   {
@@ -15,7 +15,6 @@ const DATA = [
     icon: "meditation",
     color: "#EEF2FF",
     tag: "Vui vẻ",
-    tagColor: "#D9F5E8",
     iconColor: "#F59E0B",
   },
   {
@@ -25,7 +24,6 @@ const DATA = [
     icon: "lungs",
     color: "#FFF3D8",
     tag: "Lo âu",
-    tagColor: "#FFE8A3",
     iconColor: "#3B82F6",
   },
   {
@@ -35,7 +33,6 @@ const DATA = [
     icon: "book",
     color: "#FFE7EC",
     tag: "Mọi trạng thái",
-    tagColor: "#DCE7FF",
     iconColor: "#6B46C1",
   },
   {
@@ -45,7 +42,6 @@ const DATA = [
     icon: "walk",
     color: "#E8FFF7",
     tag: "Buồn",
-    tagColor: "#FFE0E6",
     iconColor: "#F59E0B",
   },
 ];
@@ -109,44 +105,42 @@ export default function ExercisesView() {
         >
           {DATA.map((item) => (
             <TouchableOpacity
+              onPress={() => router.push("/(no tabs)/DetailedExercises")}
               key={item.id}
               style={{
                 width: "48%",
-                backgroundColor: "#fff",
-                borderRadius: 20,
-                padding: 15,
-                marginBottom: 18,
+                backgroundColor: "#2D2121",
+                borderRadius: 18,
+                padding: 16,
+                marginBottom: 16,
               }}
             >
               <View
                 style={{
-                  width: 60,
-                  height: 60,
-                  borderRadius: 18,
-                  backgroundColor: item.color,
-                  justifyContent: "center",
-                  alignItems: "center",
+                  backgroundColor: "#FBDFDF",
+                  alignSelf: "flex-start",
+                  paddingHorizontal: 8,
+                  paddingVertical: 3,
+                  borderRadius: 6,
+                  marginBottom: 10,
                 }}
               >
-                <MaterialCommunityIcons
-                  name={item.icon as any}
-                  size={32}
-                  color={item.iconColor}
-                />
+                <Text
+                  style={{ fontSize: 9, fontWeight: "700", color: "#7a2e2e" }}
+                >
+                  {item.tag}
+                </Text>
               </View>
-
-              {/* Tiêu đề */}
               <Text
                 style={{
-                  marginTop: 15,
-                  fontSize: 18,
+                  fontSize: 20,
                   fontWeight: "700",
+                  color: "#FFFFFF",
+                  marginBottom: 6,
                 }}
               >
                 {item.title}
               </Text>
-
-              {/* Thời gian */}
               <View
                 style={{
                   flexDirection: "row",
@@ -157,8 +151,9 @@ export default function ExercisesView() {
                 <Ionicons name="time-outline" size={14} color="#888" />
                 <Text
                   style={{
+                    fontWeight: "light",
                     marginLeft: 4,
-                    color: "#888",
+                    color: "#FAF3F3",
                   }}
                 >
                   {item.time}
@@ -170,21 +165,11 @@ export default function ExercisesView() {
                 style={{
                   alignSelf: "flex-start",
                   marginTop: 12,
-                  backgroundColor: item.tagColor,
                   paddingHorizontal: 10,
                   paddingVertical: 5,
                   borderRadius: 8,
                 }}
-              >
-                <Text
-                  style={{
-                    fontSize: 12,
-                    fontWeight: "600",
-                  }}
-                >
-                  {item.tag}
-                </Text>
-              </View>
+              ></View>
             </TouchableOpacity>
           ))}
         </View>
