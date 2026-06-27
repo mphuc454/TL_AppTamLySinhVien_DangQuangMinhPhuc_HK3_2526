@@ -378,7 +378,7 @@ export default function HealthcareView() {
                   <Text
                     style={{ fontSize: 9, fontWeight: "700", color: "#7a2e2e" }}
                   >
-                    BÀI VIẾT
+                    BÀI TẬP
                   </Text>
                 </View>
 
