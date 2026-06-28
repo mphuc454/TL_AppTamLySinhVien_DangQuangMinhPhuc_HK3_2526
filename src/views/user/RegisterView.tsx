@@ -1,9 +1,31 @@
+import { useRegisterViewModel } from "@/src/viewmodels/AuthViewModels";
 import { Feather, Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React from "react";
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 export default function RegisterView() {
+  // const [username, setUsername] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [phone, setPhone] = useState("");
+  // const [password, setPassword] = useState("");
+  // const [confirmPassword, setConfirmPassword] = useState("");
+  const {
+    username,
+    setUsername,
+    email,
+    setEmail,
+    phone,
+    setPhone,
+    password,
+    setPassword,
+    confirmPassword,
+    setConfirmPassword,
+    loading,
+    errorMessage,
+    handleRegister,
+    handleOAuth,
+  } = useRegisterViewModel();
   return (
     <SafeAreaView
       style={{
@@ -41,6 +63,8 @@ export default function RegisterView() {
         }}
       >
         <TextInput
+          value={username}
+          onChangeText={setUsername}
           style={{ flex: 1 }}
           placeholder="Nhập tên của bạn"
         ></TextInput>
@@ -57,6 +81,8 @@ export default function RegisterView() {
         }}
       >
         <TextInput
+          value={email}
+          onChangeText={setEmail}
           style={{ flex: 1 }}
           placeholder="Nhập email của bạn"
         ></TextInput>
@@ -73,6 +99,8 @@ export default function RegisterView() {
         }}
       >
         <TextInput
+          value={phone}
+          onChangeText={setPhone}
           style={{ flex: 1 }}
           placeholder="Nhập số điện thoại của bạn"
         ></TextInput>
@@ -91,6 +119,8 @@ export default function RegisterView() {
         }}
       >
         <TextInput
+          value={password}
+          onChangeText={setPassword}
           style={{ flex: 1 }}
           placeholder="Nhập mật khẩu của bạn"
         ></TextInput>
@@ -107,6 +137,8 @@ export default function RegisterView() {
           Xác nhận mật khẩu
         </Text>
         <TextInput
+          value={confirmPassword}
+          onChangeText={setConfirmPassword}
           style={{
             backgroundColor: "#FFF",
             borderWidth: 1,
@@ -117,7 +149,11 @@ export default function RegisterView() {
           }}
         ></TextInput>
       </View>
+      {errorMessage ? (
+        <Text style={{ color: "red" }}>{errorMessage}</Text>
+      ) : null}
       <TouchableOpacity
+        onPress={handleRegister}
         style={{
           marginTop: 15,
           backgroundColor: "#6D00D9",
@@ -136,7 +172,7 @@ export default function RegisterView() {
             fontWeight: "700",
           }}
         >
-          Đăng nhập
+          Đăng ký
         </Text>
       </TouchableOpacity>
       <Text
