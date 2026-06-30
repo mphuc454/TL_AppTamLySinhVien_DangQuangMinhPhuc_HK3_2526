@@ -117,7 +117,7 @@ export default function LoginView() {
           </Text>
         </View>
         <View>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => router.push("/(no tabs)/otp")}>
             <Text
               style={{
                 fontSize: 12,
