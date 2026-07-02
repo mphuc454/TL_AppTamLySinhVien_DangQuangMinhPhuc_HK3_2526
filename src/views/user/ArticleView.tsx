@@ -1,5 +1,7 @@
 import { Article } from "@/src/models/Article";
+import { CategoryArticle } from "@/src/models/CategoryArticle";
 import { ArticleViewModel } from "@/src/viewmodels/ArticleViewModel";
+import { CategoryArticlesViewModel } from "@/src/viewmodels/CategoryArticleViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
@@ -11,25 +13,33 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-const options = [
-  { id: 0, label: "Cảm xúc" },
-  { id: 1, label: "Sức khoẻ học đường" },
-  { id: 2, label: "Kỹ năng sống" },
-  { id: 3, label: "Giấc ngủ" },
-];
+
 const viewModel = new ArticleViewModel();
+const categoryViewModel = new CategoryArticlesViewModel();
 
 export default function ArticleView() {
   const [articles, setArticles] = useState<Article[]>([]);
+  const [categoryArticles, setCategoryArticles] = useState<CategoryArticle[]>(
+    [],
+  );
 
   useEffect(() => {
     loadArticles();
+    loadCategoryArticles();
   }, []);
 
   const loadArticles = async () => {
     try {
       const data = await viewModel.loadArticles();
       setArticles(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const loadCategoryArticles = async () => {
+    try {
+      const data = await categoryViewModel.loadCategoryArticles();
+      setCategoryArticles(data);
     } catch (error) {
       console.log(error);
     }
@@ -83,7 +93,7 @@ export default function ArticleView() {
         showsHorizontalScrollIndicator={false}
         style={{ marginTop: 15, paddingHorizontal: 20 }}
       >
-        {options.map((item) => (
+        {categoryArticles.map((item) => (
           <TouchableOpacity
             key={item.id}
             style={{
@@ -94,7 +104,7 @@ export default function ArticleView() {
               marginRight: 10,
             }}
           >
-            <Text>{item.label}</Text>
+            <Text>{item.name}</Text>
           </TouchableOpacity>
         ))}
       </ScrollView>
@@ -180,7 +190,7 @@ export default function ArticleView() {
                     fontWeight: "500",
                   }}
                 >
-                  {article.category}
+                  {article.category_articles?.name}
                 </Text>
               </View>
             </View>
