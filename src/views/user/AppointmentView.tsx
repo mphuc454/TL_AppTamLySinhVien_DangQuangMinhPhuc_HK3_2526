@@ -13,16 +13,6 @@ const DOCTORS = [
     name: "TS. Nguyễn Minh Anh",
     specialty: "Tâm lý lâm sàng",
   },
-  {
-    id: 2,
-    name: "TS. Nguyễn Minh Anh",
-    specialty: "Tư vấn học đường",
-  },
-  {
-    id: 3,
-    name: "TS. Nguyễn Minh Anh",
-    specialty: "Trị liệu cảm xúc",
-  },
 ];
 const options = [
   { id: 0, label: "Tất cả" },
