@@ -1,29 +1,40 @@
+import { Article } from "@/src/models/Article";
+import { ArticleViewModel } from "@/src/viewmodels/ArticleViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
+import { useEffect, useState } from "react";
 import {
+  Image,
   ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
-
-const ARTICLE = [
-  {
-    id: 1,
-    title: "5 bước xây dựng thói quen tích cực mỗi ngày",
-    time: "7 phút đọc",
-    view: 1,
-    specialty: "Cảm xúc",
-  },
-];
 const options = [
   { id: 0, label: "Cảm xúc" },
   { id: 1, label: "Sức khoẻ học đường" },
   { id: 2, label: "Kỹ năng sống" },
   { id: 3, label: "Giấc ngủ" },
 ];
+const viewModel = new ArticleViewModel();
+
 export default function ArticleView() {
+  const [articles, setArticles] = useState<Article[]>([]);
+
+  useEffect(() => {
+    loadArticles();
+  }, []);
+
+  const loadArticles = async () => {
+    try {
+      const data = await viewModel.loadArticles();
+      setArticles(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: "#F5EDED" }}
@@ -38,8 +49,9 @@ export default function ArticleView() {
         }}
       >
         <TouchableOpacity onPress={() => router.push("/(tabs)/Index")}>
-          <Ionicons name="arrow-back" size={25}></Ionicons>
+          <Ionicons name="arrow-back" size={25} />
         </TouchableOpacity>
+
         <Text
           style={{
             flex: 1,
@@ -51,6 +63,7 @@ export default function ArticleView() {
           Bài viết
         </Text>
       </View>
+
       <TextInput
         placeholder="Tìm kiếm bài viết..."
         style={{
@@ -63,7 +76,8 @@ export default function ArticleView() {
           paddingHorizontal: 15,
           backgroundColor: "#fff",
         }}
-      ></TextInput>
+      />
+
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -84,11 +98,11 @@ export default function ArticleView() {
           </TouchableOpacity>
         ))}
       </ScrollView>
+
       <View style={{ marginTop: 20 }}>
-        {ARTICLE.map((arc) => (
+        {articles.map((article) => (
           <TouchableOpacity
-            onPress={() => router.push("/(no tabs)/DetailedArticle")}
-            key={arc.id}
+            key={article.id}
             style={{
               backgroundColor: "#FFF",
               marginHorizontal: 20,
@@ -99,7 +113,6 @@ export default function ArticleView() {
               borderColor: "#000",
               flexDirection: "row",
               alignItems: "center",
-
               shadowColor: "#000",
               shadowOffset: {
                 width: 2,
@@ -110,11 +123,12 @@ export default function ArticleView() {
               elevation: 4,
             }}
           >
-            <View
+            <Image
+              source={{ uri: article.thumbnail }}
               style={{
                 width: 55,
                 height: 55,
-                backgroundColor: "#E7A3A8",
+                borderRadius: 8,
                 marginRight: 10,
               }}
             />
@@ -127,7 +141,7 @@ export default function ArticleView() {
                   fontWeight: "600",
                 }}
               >
-                {arc.title}
+                {article.title}
               </Text>
 
               <View
@@ -138,22 +152,7 @@ export default function ArticleView() {
                 }}
               >
                 <Ionicons name="time-outline" size={14} color="#555" />
-                <Text
-                  style={{
-                    marginLeft: 4,
-                    color: "#555",
-                    fontSize: 13,
-                  }}
-                >
-                  {arc.time}
-                </Text>
 
-                <Ionicons
-                  name="eye-outline"
-                  size={14}
-                  color="#555"
-                  style={{ marginLeft: 15 }}
-                />
                 <Text
                   style={{
                     marginLeft: 4,
@@ -161,7 +160,7 @@ export default function ArticleView() {
                     fontSize: 13,
                   }}
                 >
-                  {arc.view} lượt xem
+                  {article.time_to_read} phút đọc
                 </Text>
               </View>
 
@@ -181,7 +180,7 @@ export default function ArticleView() {
                     fontWeight: "500",
                   }}
                 >
-                  {arc.specialty}
+                  {article.category}
                 </Text>
               </View>
             </View>

@@ -3,7 +3,7 @@ import { createClient, processLock } from "@supabase/supabase-js";
 import { AppState, Platform } from "react-native";
 import "react-native-url-polyfill/auto";
 
-const supabaseUrl = "https://rmzjhiftwntkrcygnrww.supabase.co/rest/v1/";
+const supabaseUrl = "https://rmzjhiftwntkrcygnrww.supabase.co";
 const supabasePublishableKey = "sb_publishable_HY5725H8bsYpZfREHPMqxg_tf0QLK1r";
 
 export const supabase = createClient(supabaseUrl, supabasePublishableKey, {
