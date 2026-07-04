@@ -284,7 +284,21 @@ export default function IndexView() {
             ></Button>
           </View>
         </View>
+           <View style={{ marginTop: 30 }}>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+                    Bài khảo sát bạn đã làm:
+                  </Text>
+                </View>
+              </View>
       </View>
+    
     </ScrollView>
   );
 }
