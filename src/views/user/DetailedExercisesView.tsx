@@ -1,5 +1,6 @@
+import { useExercisesDetailViewModel } from "@/src/viewmodels/ExercisesViewModel";
 import { Ionicons } from "@expo/vector-icons";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import {
   FlatList,
   ScrollView,
@@ -7,33 +8,10 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-const STEPS = [
-  {
-    id: "1",
-    title: "Hít vào bằng mũi",
-    description: "Ngồi thẳng lưng, hít vào chậm và sâu qua mũi, đếm đến 4",
-    duration: "4 giây",
-  },
-  {
-    id: "2",
-    title: "Giữ hơi thở",
-    description: "Nhẹ nhàng giữ hơi thở trong lồng ngực, không gắng sức",
-    duration: "7 giây",
-  },
-  {
-    id: "3",
-    title: "Thở ra bằng miệng",
-    description: 'Thở ra chậm và đều qua miệng, tạo âm thanh "whoosh" nhẹ',
-    duration: "8 giây",
-  },
-  {
-    id: "4",
-    title: "Lặp lại",
-    description: "Thực hiện lại chu trình trên 4 lần liên tiếp",
-    duration: "5 giây",
-  },
-];
+
 export default function DetailedExercisesView() {
+  const {id} = useLocalSearchParams();
+  const {ex} = useExercisesDetailViewModel(Number(id));
   return (
     <ScrollView
       style={{
@@ -86,7 +64,7 @@ export default function DetailedExercisesView() {
           marginHorizontal: 12,
         }}
       >
-        Bài tập thở 4-7-8
+        {ex?.title}
       </Text>
       <View
         style={{
@@ -97,16 +75,16 @@ export default function DetailedExercisesView() {
         }}
       >
         <Text>Số vòng: </Text>
-        <Text style={{ color: "#555" }}>4</Text>
+        <Text style={{ color: "#555" }}>{ex?.number_of_rounds}</Text>
         <Text style={{ marginLeft: 5, fontWeight: "light" }}>lượt</Text>
         <Ionicons
           name="time-outline"
           size={15}
           style={{ marginLeft: 15 }}
         ></Ionicons>
-        <Text style={{ marginLeft: 4, color: "#555" }}>5 phút</Text>
+        <Text style={{ marginLeft: 4, color: "#555" }}>{ex?.duration_minutes} phút</Text>
         <Text style={{ marginLeft: 20 }}>Mức độ: </Text>
-        <Text style={{ marginLeft: 3, color: "#555" }}>Dễ</Text>
+        <Text style={{ marginLeft: 3, color: "#555" }}>{ex?.difficulty}</Text>
       </View>
       <Text
         style={{
@@ -119,8 +97,7 @@ export default function DetailedExercisesView() {
           fontWeight: "semibold",
         }}
       >
-        Kỹ thuật thở giúp kích hoạt hệ thần kinh đối giao cảm, làm dịu cơ thể và
-        giảm cảm giác lo âu nhanh chóng, chỉ trong vài phút.
+       {ex?.description}
       </Text>
       <Text
         style={{
@@ -133,8 +110,8 @@ export default function DetailedExercisesView() {
       </Text>
       <FlatList
         style={{ marginTop: 20 }}
-        data={STEPS}
-        keyExtractor={(item) => item.id}
+        data={ex?.exercises_steps ?? []}
+        keyExtractor={(item) => item.id.toString()}
         scrollEnabled={false}
         showsVerticalScrollIndicator={false}
         renderItem={({ item }) => (
@@ -169,10 +146,10 @@ export default function DetailedExercisesView() {
                   fontWeight: "bold",
                 }}
               >
-                {item.title}
+                {item.title_step}
               </Text>
               <Text style={{ fontSize: 15, color: "#888", lineHeight: 22 }}>
-                {item.description}
+                {item.des_step}
               </Text>
               <View
                 style={{
@@ -193,7 +170,7 @@ export default function DetailedExercisesView() {
                     fontSize: 13,
                   }}
                 >
-                  {item.duration}
+                  {item.time_step} giây
                 </Text>
               </View>
             </View>

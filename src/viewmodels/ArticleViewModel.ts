@@ -20,5 +20,5 @@ export function useArticleViewModel() {
           loadArticles();
       }, []);
 
-      return {articles, loading, loadArticles};
+      return {articles, loading};
 }

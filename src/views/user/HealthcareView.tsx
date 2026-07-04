@@ -1,3 +1,4 @@
+import { useExercisesViewModel } from "@/src/viewmodels/ExercisesViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import {
@@ -13,15 +14,6 @@ const options = [
   { value: 1, label: "Một chút" },
   { value: 2, label: "Thỉnh thoảng" },
   { value: 3, label: "Thường xuyên" },
-];
-const DataNews = [
-  {
-    id: 1,
-    name: "Thiền định",
-    des: "Thư giãn tâm trí - 5 phút",
-  },
-  { id: 2, name: "Bình thản", des: "Giảm lo âu - 3 phút" },
-  { id: 3, name: "Hỗn loạn", des: "Tăng năng lượng- 15 phút" },
 ];
 export const moodData = [
   { id: 1, name: "Tích cực", icon: "happy-outline", bg: "#EF5DA8" },
@@ -41,6 +33,7 @@ export const journalData = [
   { id: 2, moodID: 4, date: "Hôm qua. 8:25 PM", content: "Bực hết cả mình" },
 ];
 export default function HealthcareView() {
+  const {ex} = useExercisesViewModel();
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: "#F5EDED" }}
@@ -351,7 +344,7 @@ export default function HealthcareView() {
           </View>
           <FlatList
             style={{ marginTop: 20 }}
-            data={DataNews}
+            data={ex}
             horizontal
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={{ paddingHorizontal: 20, gap: 12 }}
@@ -364,6 +357,14 @@ export default function HealthcareView() {
                   borderRadius: 18,
                   padding: 16,
                 }}
+                onPress={() =>
+              router.push({
+                pathname: "/(no tabs)/DetailedExercises",
+                params: {
+                  id: item.id,
+                },
+              })
+            }
               >
                 <View
                   style={{
@@ -392,7 +393,7 @@ export default function HealthcareView() {
                   }}
                   numberOfLines={2}
                 >
-                  {item.name}
+                  {item.title}
                 </Text>
 
                 <Text
@@ -404,7 +405,7 @@ export default function HealthcareView() {
                   }}
                   numberOfLines={2}
                 >
-                  {item.des}
+                  {item.description}
                 </Text>
 
                 <View
@@ -417,7 +418,7 @@ export default function HealthcareView() {
                 >
                   <Ionicons name="time-outline" size={11} color="#8a7878" />
                   <Text style={{ fontSize: 10, color: "#8a7878" }}>
-                    5 phút đọc
+                    {item.duration_minutes} phút đọc
                   </Text>
                 </View>
               </TouchableOpacity>

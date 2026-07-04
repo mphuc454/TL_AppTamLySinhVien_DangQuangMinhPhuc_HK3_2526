@@ -1,4 +1,5 @@
 import { CategoryExercise } from "./CategoryExercise";
+import { ExerciseStep } from "./ExerciseStep";
 
 export interface Exercise {
     id: number;
@@ -10,4 +11,5 @@ export interface Exercise {
     video_url: string;
     image_url: string;
     category: CategoryExercise;
+    exercises_steps: ExerciseStep[];
 }

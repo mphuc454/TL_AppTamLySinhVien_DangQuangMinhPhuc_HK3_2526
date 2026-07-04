@@ -70,7 +70,14 @@ const {ex} = useExercisesViewModel();
         >
           {ex.map((item) => (
             <TouchableOpacity
-              onPress={() => router.push("/(no tabs)/DetailedExercises")}
+              onPress={() =>
+              router.push({
+                pathname: "/(no tabs)/DetailedExercises",
+                params: {
+                  id: item.id,
+                },
+              })
+            }
               key={item.id}
               style={{
                 width: "48%",
