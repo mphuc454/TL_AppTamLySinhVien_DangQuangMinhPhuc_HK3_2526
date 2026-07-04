@@ -1,8 +1,11 @@
 import { Ionicons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
 import Header from "../../src/components/Header";
+import { useContext } from "react";
+import { ThemeContext } from "../../src/views/theme/ThemeContext";
 
 export default function RootLayout() {
+  const { colors } = useContext(ThemeContext);
   // @ts-ignore
   return (
     <Tabs
@@ -10,16 +13,17 @@ export default function RootLayout() {
         headerShown: true,
         header: () => <Header />,
         tabBarActiveTintColor: "#d97706",
-        tabBarInactiveTintColor: "#000000",
-
+        tabBarInactiveTintColor: colors.textSecondary,
         tabBarStyle: {
           height: 80,
           borderRadius: 30,
           marginHorizontal: 10,
           marginBottom: 10,
           position: "absolute",
-          backgroundColor: "#F5EDED",
+          backgroundColor: colors.cardBackground,
           borderTopWidth: 0,
+          borderColor: colors.borderColor,
+          borderWidth: 1,
           bottom: 70,
           paddingTop: 5,
           paddingBottom: 8,
@@ -40,7 +44,7 @@ export default function RootLayout() {
             <Ionicons
               name={focused ? "home" : "home-outline"}
               size={24}
-              color={color}
+              color={colors.text}
             />
           ),
         }}
@@ -53,7 +57,7 @@ export default function RootLayout() {
             <Ionicons
               name={focused ? "chatbubble" : "chatbubble-outline"}
               size={24}
-              color={color}
+              color={colors.text}
             />
           ),
         }}
@@ -66,7 +70,7 @@ export default function RootLayout() {
             <Ionicons
               name={focused ? "heart-circle" : "heart-circle-outline"}
               size={24}
-              color={color}
+              color={colors.text}
             />
           ),
         }}
@@ -79,7 +83,7 @@ export default function RootLayout() {
             <Ionicons
               name={focused ? "medkit" : "medkit-outline"}
               size={24}
-              color={color}
+              color={colors.text}
             />
           ),
         }}
@@ -92,7 +96,7 @@ export default function RootLayout() {
             <Ionicons
               name={focused ? "newspaper" : "newspaper-outline"}
               size={24}
-              color={color}
+              color={colors.text}
             />
           ),
         }}

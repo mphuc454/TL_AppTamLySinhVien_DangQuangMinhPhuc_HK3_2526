@@ -1,10 +1,7 @@
-import { Article } from "@/src/models/Article";
-import { CategoryArticle } from "@/src/models/CategoryArticle";
-import { ArticleViewModel } from "@/src/viewmodels/ArticleViewModel";
-import { CategoryArticlesViewModel } from "@/src/viewmodels/CategoryArticleViewModel";
+import { useArticleViewModel } from "@/src/viewmodels/ArticleViewModel";
+import { useCategoryArticlesViewModel } from "@/src/viewmodels/CategoryArticleViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
-import { useEffect, useState } from "react";
 import {
   Image,
   ScrollView,
@@ -13,38 +10,9 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-
-const viewModel = new ArticleViewModel();
-const categoryViewModel = new CategoryArticlesViewModel();
-
 export default function ArticleView() {
-  const [articles, setArticles] = useState<Article[]>([]);
-  const [categoryArticles, setCategoryArticles] = useState<CategoryArticle[]>(
-    [],
-  );
-
-  useEffect(() => {
-    loadArticles();
-    loadCategoryArticles();
-  }, []);
-
-  const loadArticles = async () => {
-    try {
-      const data = await viewModel.loadArticles();
-      setArticles(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const loadCategoryArticles = async () => {
-    try {
-      const data = await categoryViewModel.loadCategoryArticles();
-      setCategoryArticles(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
+  const {articles} = useArticleViewModel();
+  const{categoryArticles} = useCategoryArticlesViewModel();
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: "#F5EDED" }}

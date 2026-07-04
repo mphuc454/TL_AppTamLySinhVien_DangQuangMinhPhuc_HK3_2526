@@ -1,3 +1,4 @@
+import { useCategoryExercisesViewModel } from "@/src/viewmodels/CategoryExercisesViewModel";
 import { useExercisesViewModel } from "@/src/viewmodels/ExercisesViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
@@ -11,6 +12,7 @@ import {
 
 export default function ExercisesView() {
 const {ex} = useExercisesViewModel();
+const {categoryArticles} = useCategoryExercisesViewModel();
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: "#F5EDED" }}
@@ -51,8 +53,28 @@ const {ex} = useExercisesViewModel();
           backgroundColor: "#fff",
         }}
       ></TextInput>
-      <View style={{ marginTop: 20, marginHorizontal: 20 }}>
-        <Text
+       <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        style={{ marginTop: 15, paddingHorizontal: 20 }}
+      >
+        {categoryArticles.map((item) => (
+          <TouchableOpacity
+            key={item.id}
+            style={{
+              backgroundColor: "#D9D9D9",
+              paddingHorizontal: 12,
+              paddingVertical: 8,
+              borderRadius: 16,
+              marginRight: 10,
+            }}
+          >
+            <Text>{item.name}</Text>
+          </TouchableOpacity>
+        ))}
+      </ScrollView>
+      <View style={{ marginTop: 30, marginHorizontal: 20 }}>
+          <Text
           style={{
             fontWeight: "bold",
             fontSize: 16,
@@ -70,7 +92,14 @@ const {ex} = useExercisesViewModel();
         >
           {ex.map((item) => (
             <TouchableOpacity
-              onPress={() => router.push("/(no tabs)/DetailedExercises")}
+              onPress={() =>
+              router.push({
+                pathname: "/(no tabs)/DetailedExercises",
+                params: {
+                  id: item.id,
+                },
+              })
+            }
               key={item.id}
               style={{
                 width: "48%",
