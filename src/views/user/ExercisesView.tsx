@@ -1,3 +1,4 @@
+import { useExercisesViewModel } from "@/src/viewmodels/ExercisesViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import {
@@ -7,45 +8,9 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-const DATA = [
-  {
-    id: "1",
-    title: "Thiền định buổi sáng",
-    time: "5 phút",
-    icon: "meditation",
-    color: "#EEF2FF",
-    tag: "Vui vẻ",
-    iconColor: "#F59E0B",
-  },
-  {
-    id: "2",
-    title: "Thở 4-7-8",
-    time: "3 phút",
-    icon: "lungs",
-    color: "#FFF3D8",
-    tag: "Lo âu",
-    iconColor: "#3B82F6",
-  },
-  {
-    id: "3",
-    title: "Viết cảm xúc",
-    time: "10 phút",
-    icon: "book",
-    color: "#FFE7EC",
-    tag: "Mọi trạng thái",
-    iconColor: "#6B46C1",
-  },
-  {
-    id: "4",
-    title: "Đi bộ chánh niệm",
-    time: "15 phút",
-    icon: "walk",
-    color: "#E8FFF7",
-    tag: "Buồn",
-    iconColor: "#F59E0B",
-  },
-];
+
 export default function ExercisesView() {
+const {ex} = useExercisesViewModel();
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: "#F5EDED" }}
@@ -103,7 +68,7 @@ export default function ExercisesView() {
             justifyContent: "space-between",
           }}
         >
-          {DATA.map((item) => (
+          {ex.map((item) => (
             <TouchableOpacity
               onPress={() => router.push("/(no tabs)/DetailedExercises")}
               key={item.id}
@@ -128,7 +93,7 @@ export default function ExercisesView() {
                 <Text
                   style={{ fontSize: 9, fontWeight: "700", color: "#7a2e2e" }}
                 >
-                  {item.tag}
+                  {item.category.name}
                 </Text>
               </View>
               <Text
@@ -156,11 +121,10 @@ export default function ExercisesView() {
                     color: "#FAF3F3",
                   }}
                 >
-                  {item.time}
+                  {item.duration_minutes} phút
                 </Text>
               </View>
 
-              {/* Tag */}
               <View
                 style={{
                   alignSelf: "flex-start",
@@ -169,7 +133,13 @@ export default function ExercisesView() {
                   paddingVertical: 5,
                   borderRadius: 8,
                 }}
-              ></View>
+              >
+                <Text
+                  style={{ fontSize: 12, fontWeight: "700", color: "#FFFFFF" }}
+                >
+                  {item.image_url}
+                </Text>
+              </View>
             </TouchableOpacity>
           ))}
         </View>
