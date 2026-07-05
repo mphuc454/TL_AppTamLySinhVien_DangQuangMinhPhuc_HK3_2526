@@ -10,6 +10,5 @@ export interface Article {
   created_at: string;
   updated_at: string;
   time_to_read: number;
-  id_category_articles: number;
-  category_articles: CategoryArticle;
+  id_category_articles: CategoryArticle;
 }

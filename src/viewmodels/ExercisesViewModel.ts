@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getAllExercises, getExercisesbyID } from "../repository/ExerciseRepository";
 import { Exercise } from "../models/Exercises";
 
+// lấy danh sách bài tập
 export function useExercisesViewModel(){
    const [ex, setEx] = useState<Exercise[]>([]);
    const [loading, setLoading] = useState(false);
@@ -23,6 +24,8 @@ export function useExercisesViewModel(){
 
     return {ex, loading};
   };
+ 
+  // lấy chi tiết bài tập
 export function useExercisesDetailViewModel(id: number){
        const [ex, setEx] = useState<Exercise | null>(null);
        const [loading, setLoading] = useState(false);
