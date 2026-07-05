@@ -1,16 +1,14 @@
+import { useArticleDetailViewModel, useArticleViewModel } from "@/src/viewmodels/ArticleViewModel";
 import { Ionicons } from "@expo/vector-icons";
-import { router } from "expo-router";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
-const ARTICLE = [
-  {
-    id: 1,
-    title: "5 bước xây dựng thói quen tích cực mỗi ngày",
-    time: "7 phút đọc",
-    view: 1,
-    specialty: "Cảm xúc",
-  },
-];
+import { router, useLocalSearchParams } from "expo-router";
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+
 export default function DetailedArticleView() {
+  const {id} = useLocalSearchParams();
+  const {arc} = useArticleDetailViewModel(Number(id));
+  const {articles} = useArticleViewModel();
+  const otherArticles = articles.filter((articles) => articles.id !== Number(id)).slice(0,2)
+  
   return (
     <ScrollView
       style={{
@@ -52,7 +50,7 @@ export default function DetailedArticleView() {
             fontWeight: "semibold",
           }}
         >
-          Cảm xúc
+          {arc?.id_category_articles.name}
         </Text>
       </View>
       <Text
@@ -64,26 +62,34 @@ export default function DetailedArticleView() {
           marginHorizontal: 12,
         }}
       >
-        5 bước xây dựng thói quen tích cực mỗi ngày
+        {arc?.title}
       </Text>
       <View
         style={{
-          flexDirection: "row",
-          alignItems: "center",
-          marginTop: 12,
-          marginHorizontal: 12,
-        }}
-      >
-        <Text style={{ fontWeight: "light" }}>10/06/2026</Text>
-        <Ionicons
-          name="time-outline"
-          size={15}
-          style={{ marginLeft: 15 }}
-        ></Ionicons>
-        <Text style={{ marginLeft: 4, color: "#555" }}>5 phút</Text>
-        <Ionicons name="eye" size={15} style={{ marginLeft: 15 }}></Ionicons>
-        <Text style={{ marginLeft: 4, color: "#555" }}>1</Text>
-      </View>
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        marginHorizontal: 12,
+  }}
+>
+  <View style={{ flexDirection: "row", alignItems: "center", flex: 1 }}>
+    <Text>{arc?.created_at ? new Date(arc.created_at).toLocaleDateString("vi-VN"): ""}</Text>
+    <Text style={{ marginLeft: 15, fontWeight: "light",}}>Tác giả: </Text>
+    <Text
+      numberOfLines={1}
+      style={{ marginLeft: 1, fontWeight: "bold", flex: 1 }}
+    >
+      {arc?.name_author}
+    </Text>
+  </View>
+
+  <View style={{ flexDirection: "row", alignItems: "center" }}>
+    <Ionicons name="time-outline" size={15} />
+    <Text style={{ marginLeft: 4 }}>
+      {arc?.time_to_read} phút
+    </Text>
+  </View>
+</View>
       <Text
         style={{
           marginTop: 25,
@@ -95,10 +101,7 @@ export default function DetailedArticleView() {
           fontWeight: "semibold",
         }}
       >
-        Lo âu trước kỳ thi là cảm giác rất phổ biến với học sinh, sinh viên. Đó
-        là phản ứng tự nhiên của cơ thể khi đối mặt với áp lực, nhưng nếu không
-        kiểm soát tốt, nó có thể ảnh hưởng nghiêm trọng đến khả năng tập trung
-        và kết quả học tập.
+        {arc?.content}
       </Text>
       <Text
         style={{
@@ -108,107 +111,103 @@ export default function DetailedArticleView() {
           marginHorizontal: 12,
         }}
       >
-        Bài viết khác{" "}
+        Bài viết khác: 
       </Text>
       <View style={{ marginTop: 20 }}>
-        {ARTICLE.map((arc) => (
-          <TouchableOpacity
-            onPress={() => router.push("/details/DetailedArticle")}
-            key={arc.id}
-            style={{
-              backgroundColor: "#FFF",
-              marginHorizontal: 20,
-              marginBottom: 15,
-              borderRadius: 20,
-              padding: 12,
-              borderWidth: 1,
-              borderColor: "#000",
-              flexDirection: "row",
-              alignItems: "center",
-
-              shadowColor: "#000",
-              shadowOffset: {
-                width: 2,
-                height: 3,
-              },
-              shadowOpacity: 0.2,
-              shadowRadius: 4,
-              elevation: 4,
-            }}
-          >
-            <View
-              style={{
-                width: 55,
-                height: 55,
-                backgroundColor: "#E7A3A8",
-                marginRight: 10,
-              }}
-            ></View>
-            <View style={{ flex: 1 }}>
-              <Text
-                numberOfLines={2}
-                style={{
-                  fontSize: 16,
-                  fontWeight: "600",
-                }}
-              >
-                {arc.title}
-              </Text>
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  marginTop: 6,
-                }}
-              >
-                <Ionicons name="time-outline" size={14} color="#555" />
-                <Text
-                  style={{
-                    marginLeft: 4,
-                    color: "#555",
-                    fontSize: 13,
-                  }}
-                >
-                  {arc.time}
-                </Text>
-                <Ionicons
-                  name="eye-outline"
-                  size={14}
-                  color="#555"
-                  style={{ marginLeft: 15 }}
-                />
-                <Text
-                  style={{
-                    marginLeft: 4,
-                    color: "#555",
-                    fontSize: 13,
-                  }}
-                >
-                  {arc.view} lượt xem
-                </Text>
-              </View>
-              <View
-                style={{
-                  alignSelf: "flex-start",
-                  backgroundColor: "#D9D9D9",
-                  borderRadius: 20,
-                  paddingHorizontal: 14,
-                  paddingVertical: 4,
-                  marginTop: 8,
-                }}
-              >
-                <Text
-                  style={{
-                    fontSize: 12,
-                    fontWeight: "500",
-                  }}
-                >
-                  {arc.specialty}
-                </Text>
-              </View>
-            </View>
-          </TouchableOpacity>
-        ))}
+        {otherArticles.map((article) => (
+                 <TouchableOpacity
+                   onPress={() =>
+                     router.push({
+                       pathname: "/(no tabs)/DetailedArticle",
+                       params: {
+                         id: article.id,
+                       },
+                     })
+                   }
+                   key={article.id}
+                   style={{
+                     backgroundColor: "#FFF",
+                     marginHorizontal: 20,
+                     marginBottom: 15,
+                     borderRadius: 20,
+                     padding: 12,
+                     borderWidth: 1,
+                     borderColor: "#000",
+                     flexDirection: "row",
+                     alignItems: "center",
+                     shadowColor: "#000",
+                     shadowOffset: {
+                       width: 2,
+                       height: 3,
+                     },
+                     shadowOpacity: 0.2,
+                     shadowRadius: 4,
+                     elevation: 4,
+                   }}
+                 >
+                   <Image
+                     source={{ uri: article.thumbnail }}
+                     style={{
+                       width: 55,
+                       height: 55,
+                       borderRadius: 8,
+                       marginRight: 10,
+                     }}
+                   />
+       
+                   <View style={{ flex: 1 }}>
+                     <Text
+                       numberOfLines={2}
+                       style={{
+                         fontSize: 16,
+                         fontWeight: "600",
+                       }}
+                     >
+                       {article.title}
+                     </Text>
+       
+                     <View
+                       style={{
+                         flexDirection: "row",
+                         alignItems: "center",
+                         marginTop: 6,
+                       }}
+                     >
+                       <Ionicons name="time-outline" size={14} color="#555" />
+       
+                       <Text
+                         style={{
+                           marginLeft: 4,
+                           color: "#555",
+                           fontSize: 13,
+                         }}
+                       >
+                         {article.time_to_read} phút đọc
+                       </Text>
+                     </View>
+       
+                     <View
+                       style={{
+                         alignSelf: "flex-start",
+                         backgroundColor: "#D9D9D9",
+                         borderRadius: 20,
+                         paddingHorizontal: 14,
+                         paddingVertical: 4,
+                         marginTop: 8,
+                       }}
+                     >
+                       <Text
+                         style={{
+                           fontSize: 12,
+                           fontWeight: "500",
+                         }}
+                       >
+                         {article.id_category_articles.name}
+                       </Text>
+                     </View>
+                   </View>
+                 </TouchableOpacity>
+               ))}
       </View>
     </ScrollView>
   );

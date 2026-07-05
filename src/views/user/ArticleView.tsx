@@ -80,6 +80,14 @@ export default function ArticleView() {
       <View style={{ marginTop: 20 }}>
         {articles.map((article) => (
           <TouchableOpacity
+            onPress={() =>
+              router.push({
+                pathname: "/(no tabs)/DetailedArticle",
+                params: {
+                  id: article.id,
+                },
+              })
+            }
             key={article.id}
             style={{
               backgroundColor: "#FFF",
@@ -158,7 +166,7 @@ export default function ArticleView() {
                     fontWeight: "500",
                   }}
                 >
-                  {article.category_articles?.name}
+                  {article.id_category_articles.name}
                 </Text>
               </View>
             </View>

@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { Article } from "../models/Article";
-import { getArticles } from "../repository/ArticleRepository";
+import { getArticleByID, getArticles } from "../repository/ArticleRepository";
 
+// lấy danh sách bài viết
 export function useArticleViewModel() {
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState(false);
@@ -22,3 +23,26 @@ export function useArticleViewModel() {
 
       return {articles, loading};
 }
+  // lấy chi tiết bài viết
+  export function useArticleDetailViewModel(id: number){
+    const [arc, setArc] = useState<Article | null>(null);
+    const [loading, setLoading] = useState(false);
+
+     useEffect(() => {
+            const loadExercisesDetail = async () => {
+                try {
+                setLoading(true);
+                const data = await getArticleByID(id);
+                setArc(data);
+                } catch (error) {
+                console.log(error);
+                } finally {
+                setLoading(false);
+                }
+            };
+    
+            loadExercisesDetail();
+            }, [id]);
+
+            return {arc, loading};
+  }
