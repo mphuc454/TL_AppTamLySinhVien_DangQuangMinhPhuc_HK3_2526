@@ -60,7 +60,7 @@ export default function AppointmentView() {
         showsHorizontalScrollIndicator={false}
         style={{ marginTop: 15, paddingHorizontal: 20 }}
       >
-        {/* {options.map((item) => (
+        {doc.map((item) => (
           <TouchableOpacity
             key={item.id}
             style={{
@@ -71,9 +71,9 @@ export default function AppointmentView() {
               marginRight: 10,
             }}
           >
-            <Text>{item.label}</Text>
+            <Text>{item.specialization}</Text>
           </TouchableOpacity>
-        ))} */}
+        ))}
       </ScrollView>
       <View style={{ marginTop: 20 }}>
         {doc.map((d) => (
@@ -118,7 +118,14 @@ export default function AppointmentView() {
                 <Text style={{ fontSize: 12 }}>{d.specialization}</Text>
               </View>
               <TouchableOpacity
-                onPress={() => router.push("/(no tabs)/DetailedAppointment")}
+                 onPress={() =>
+                     router.push({
+                       pathname: "/(no tabs)/DetailedAppointment",
+                       params: {
+                         id:d.id,
+                       },
+                     })
+                   }
                 style={{
                   backgroundColor: "#F3B8B8",
                   paddingHorizontal: 18,
