@@ -1,23 +1,11 @@
 export interface User {
-  id: string;
-  username: string;
+  id: number;
+  full_name: string;
   email: string;
   phone: string;
-  password: string;
-  role: "user" | "doctor" | "admin";
+  address: string;
   avatar_url: string;
-  created_at: string;
-  updated_at: string;
+  birth_date: number;
+  gender: number;
 }
-export interface RegisterModel {
-  username: string;
-  email: string;
-  phone: string;
-  password: string;
-  confirmPassword: string;
-}
-export interface AuthResult {
-  success: boolean;
-  message?: string;
-  userId?: string;
-}
+

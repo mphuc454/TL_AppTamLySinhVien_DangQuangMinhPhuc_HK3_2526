@@ -54,33 +54,58 @@ export default function DetailAppointmentView() {
         Tâm lý học sàng
       </Text>
 
-      <View
-        style={{
-          marginTop: 30,
-          backgroundColor: "#fff",
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        <View style={{ alignItems: "center", paddingHorizontal: 28 }}>
-          <Text style={{ fontSize: 36, fontWeight: "bold" }}>8</Text>
-          <Text style={{ fontSize: 18, fontWeight: "semibold" }}>Năm KN</Text>
-        </View>
-        <TouchableOpacity
-          style={{
-            backgroundColor: "#D8D8D8",
-            borderRadius: 30,
-            paddingHorizontal: 28,
-            paddingVertical: 12,
-            marginRight: 12,
-          }}
-        >
-          <Text style={{ color: "#445AE6", fontWeight: "700", fontSize: 15 }}>
-            Nhắn tin
-          </Text>
-        </TouchableOpacity>
-      </View>
+    <View
+  style={{
+    marginTop: 24,
+    backgroundColor: "#fff",
+    borderRadius: 16,
+    padding: 20,
+    marginHorizontal: 16,
+    shadowColor: "#000",
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
+    elevation: 3,
+  }}
+>
+  <Text style={{ fontSize: 25, textAlign:"center"}}>Thông tin cơ bản: </Text>
+  <View style={{ marginTop: 18, gap: 12 }}>
+     <Text style={{ fontSize: 15, color: "#374151" }}>
+      Họ tên:  Nguyen Minh Anh
+    </Text>
+    <Text style={{ fontSize: 15, color: "#374151" }}>
+      Email:  nguyenvana@gmail.com
+    </Text>
+    <Text style={{ fontSize: 15, color: "#374151" }}>
+      Chức vụ:  Chuyên viên
+    </Text>
+    <Text style={{ fontSize: 15, color: "#374151" }}>
+       Nơi ở:  TP. Hồ Chí Minh
+    </Text>
+    <Text style={{ fontSize: 15, color: "#374151" }}>
+      Kinh nghiệm: 8 năm
+    </Text>
+  </View>
+
+  <TouchableOpacity
+    style={{
+      marginTop: 24,
+      backgroundColor: "#445AE6",
+      borderRadius: 12,
+      paddingVertical: 14,
+      alignItems: "center",
+    }}
+  >
+    <Text
+      style={{
+        color: "#fff",
+        fontSize: 16,
+        fontWeight: "700",
+      }}
+    >
+      Nhắn tin
+    </Text>
+  </TouchableOpacity>
+</View>
       <View style={{ marginTop: 30 }}>
         <Text style={{ fontSize: 15 }}>Giới thiệu</Text>
         <Text style={{ fontWeight: "normal", marginTop: 5, lineHeight: 30 }}>
