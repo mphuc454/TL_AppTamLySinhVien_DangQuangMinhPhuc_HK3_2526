@@ -1,3 +1,4 @@
+import { useDoctorViewModel } from "@/src/viewmodels/DoctorViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import {
@@ -7,21 +8,10 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-const DOCTORS = [
-  {
-    id: 1,
-    name: "TS. Nguyễn Minh Anh",
-    specialty: "Tâm lý lâm sàng",
-  },
-];
-const options = [
-  { id: 0, label: "Tất cả" },
-  { id: 1, label: "Tâm lý lâm sàng" },
-  { id: 2, label: "Tư vấn học đường" },
-  { id: 3, label: "Trị liệu cảm xúc" },
-];
+
 
 export default function AppointmentView() {
+  const {doc} = useDoctorViewModel();
   return (
     <ScrollView
       style={{
@@ -70,7 +60,7 @@ export default function AppointmentView() {
         showsHorizontalScrollIndicator={false}
         style={{ marginTop: 15, paddingHorizontal: 20 }}
       >
-        {options.map((item) => (
+        {/* {options.map((item) => (
           <TouchableOpacity
             key={item.id}
             style={{
@@ -83,12 +73,12 @@ export default function AppointmentView() {
           >
             <Text>{item.label}</Text>
           </TouchableOpacity>
-        ))}
+        ))} */}
       </ScrollView>
       <View style={{ marginTop: 20 }}>
-        {DOCTORS.map((doctor) => (
+        {doc.map((d) => (
           <View
-            key={doctor.id}
+            key={d.id}
             style={{
               backgroundColor: "#fff",
               marginHorizontal: 20,
@@ -102,10 +92,10 @@ export default function AppointmentView() {
               <Ionicons name="person" size={40} />
               <View style={{ flex: 1, marginLeft: 10 }}>
                 <Text style={{ fontSize: 16, fontWeight: "600" }}>
-                  {doctor.name}
+                  BS: {d.account_id.username}
                 </Text>
                 <Text style={{ fontWeight: "light", marginTop: 4 }}>
-                  8 năm Kinh Nghiệm
+                  {d.experience_years} năm kinh nghiệm
                 </Text>
               </View>
             </View>
@@ -125,7 +115,7 @@ export default function AppointmentView() {
                   borderRadius: 10,
                 }}
               >
-                <Text style={{ fontSize: 12 }}>{doctor.specialty}</Text>
+                <Text style={{ fontSize: 12 }}>{d.specialization}</Text>
               </View>
               <TouchableOpacity
                 onPress={() => router.push("/(no tabs)/DetailedAppointment")}
