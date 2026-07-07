@@ -1,6 +1,7 @@
 import { useDoctorViewModel } from "@/src/viewmodels/DoctorViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
+import { useState } from "react";
 import {
   ScrollView,
   Text,
@@ -12,6 +13,9 @@ import {
 
 export default function AppointmentView() {
   const {doc} = useDoctorViewModel();
+  const [selectedCategory, setSelectedCategory] = useState<number | null>(null)
+  const filterDocs = setSelectedCategory == null ? doc : doc.filter((item) => item.id === selectedCategory)
+
   return (
     <ScrollView
       style={{
@@ -63,6 +67,7 @@ export default function AppointmentView() {
         {doc.map((item) => (
           <TouchableOpacity
             key={item.id}
+            onPress={() => setSelectedCategory(item.id)}
             style={{
               backgroundColor: "#D9D9D9",
               paddingHorizontal: 12,
@@ -71,12 +76,12 @@ export default function AppointmentView() {
               marginRight: 10,
             }}
           >
-            <Text>{item.specialization}</Text>
+            <Text style={{color: selectedCategory === item.id ? "#fff" : "#000",}}>{item.specialization}</Text>
           </TouchableOpacity>
         ))}
       </ScrollView>
       <View style={{ marginTop: 20 }}>
-        {doc.map((d) => (
+        {filterDocs.length > 0 ? (doc.map((d) => (
           <View
             key={d.id}
             style={{
@@ -137,7 +142,17 @@ export default function AppointmentView() {
               </TouchableOpacity>
             </View>
           </View>
-        ))}
+        ))) : (<Text
+              style={{
+              width: "100%",
+              textAlign: "center",
+              marginTop: 20,
+              fontSize: 16,
+              color: "#666",
+            }}
+  >
+    Hiện chưa có bác sĩ nào.
+  </Text>)}
       </View>
     </ScrollView>
   );
