@@ -6,4 +6,5 @@ export interface Doctor {
   experience_years: number;
   specialization: string;
   bio: string;
+  role_doctor: string;
 }

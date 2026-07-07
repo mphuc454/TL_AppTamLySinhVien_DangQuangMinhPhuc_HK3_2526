@@ -2,6 +2,7 @@ import { useArticleViewModel } from "@/src/viewmodels/ArticleViewModel";
 import { useCategoryArticlesViewModel } from "@/src/viewmodels/CategoryArticleViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
+import { useState } from "react";
 import {
   Image,
   ScrollView,
@@ -15,6 +16,10 @@ import {
 export default function ArticleView() {
   const {articles} = useArticleViewModel();
   const{categoryArticles} = useCategoryArticlesViewModel();
+  const [selectedCategory, setSelectedCategory] = useState<number | null>(null)
+  const filterArticles = setSelectedCategory == null ? articles : articles.filter((item) => item.id === selectedCategory)
+
+  
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: "#F5EDED" }}
@@ -66,6 +71,7 @@ export default function ArticleView() {
         {categoryArticles.map((item) => (
           <TouchableOpacity
             key={item.id}
+            onPress={() => setSelectedCategory(item.id)}
             style={{
               backgroundColor: "#D9D9D9",
               paddingHorizontal: 12,
@@ -74,13 +80,13 @@ export default function ArticleView() {
               marginRight: 10,
             }}
           >
-            <Text>{item.name}</Text>
+            <Text style={{color: selectedCategory === item.id ? "#fff" : "#000",}}>{item.name}</Text>
           </TouchableOpacity>
         ))}
       </ScrollView>
 
       <View style={{ marginTop: 20 }}>
-        {articles.map((article) => (
+        {filterArticles.length > 0 ? (filterArticles.map((article) => (
           <TouchableOpacity
             onPress={() =>
               router.push({
@@ -173,7 +179,19 @@ export default function ArticleView() {
               </View>
             </View>
           </TouchableOpacity>
-        ))}
+        ))) : (
+          <Text
+              style={{
+              width: "100%",
+              textAlign: "center",
+              marginTop: 20,
+              fontSize: 16,
+              color: "#666",
+            }}
+  >
+          Hiện chưa có bài viết nào.
+          </Text>
+        )}
       </View>
     </ScrollView>
   );

@@ -1,11 +1,14 @@
+import { useDoctorDetailViewModel, useSkillDetailViewModel} from "@/src/viewmodels/DoctorViewModel";
 import { Ionicons } from "@expo/vector-icons";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { useState } from "react";
 import { ScrollView, Switch, Text, TouchableOpacity, View } from "react-native";
 
 export default function DetailAppointmentView() {
+  const {id} = useLocalSearchParams();
   const [saveEmergency, setSaveEmergency] = useState(true);
-
+  const {doc_id} = useDoctorDetailViewModel(Number(id));
+  const {skill_id} = useSkillDetailViewModel(Number(id));
   return (
     <ScrollView
       style={{
@@ -41,7 +44,7 @@ export default function DetailAppointmentView() {
           marginTop: 15,
         }}
       >
-        TS. NGUYỄN MINH ANH
+        BS: {doc_id?.account_id.username}
       </Text>
       <Text
         style={{
@@ -51,7 +54,7 @@ export default function DetailAppointmentView() {
           fontSize: 18,
         }}
       >
-        Tâm lý học sàng
+        {doc_id?.specialization}
       </Text>
 
     <View
@@ -70,19 +73,19 @@ export default function DetailAppointmentView() {
   <Text style={{ fontSize: 25, textAlign:"center"}}>Thông tin cơ bản: </Text>
   <View style={{ marginTop: 18, gap: 12 }}>
      <Text style={{ fontSize: 15, color: "#374151" }}>
-      Họ tên:  Nguyen Minh Anh
+      Họ tên:  {doc_id?.account_id.user_id.full_name}
     </Text>
     <Text style={{ fontSize: 15, color: "#374151" }}>
-      Email:  nguyenvana@gmail.com
+      Email:  {doc_id?.account_id.user_id.email}
     </Text>
     <Text style={{ fontSize: 15, color: "#374151" }}>
-      Chức vụ:  Chuyên viên
+      Chức vụ:  {doc_id?.role_doctor}
     </Text>
     <Text style={{ fontSize: 15, color: "#374151" }}>
-       Nơi ở:  TP. Hồ Chí Minh
+       Nơi ở:  {doc_id?.account_id.user_id.address}
     </Text>
     <Text style={{ fontSize: 15, color: "#374151" }}>
-      Kinh nghiệm: 8 năm
+      Kinh nghiệm: {doc_id?.experience_years} năm
     </Text>
   </View>
 
@@ -107,11 +110,9 @@ export default function DetailAppointmentView() {
   </TouchableOpacity>
 </View>
       <View style={{ marginTop: 30 }}>
-        <Text style={{ fontSize: 15 }}>Giới thiệu</Text>
+        <Text style={{ fontSize: 20, fontWeight:"bold" }}>Giới thiệu: </Text>
         <Text style={{ fontWeight: "normal", marginTop: 5, lineHeight: 30 }}>
-          Tiến sĩ Tâm lý học, chuyên sâu về trị liệu lo âu và trầm cảm ở học
-          sinh, sinh viên. Có 8 năm kinh nghiệm tư vấn tâm lý lâm sàng tại các
-          bệnh viện và trung tâm tâm lý uy tín...
+         {doc_id?.bio}
         </Text>
       </View>
       <View style={{ marginTop: 30 }}>
@@ -123,9 +124,9 @@ export default function DetailAppointmentView() {
             marginHorizontal: 14,
           }}
         >
-          {["Lo âu", "Trầm cảm", "Stress", "Rối loạn giấc ngủ"].map((item) => (
+          {skill_id.map((item) => (
             <View
-              key={item}
+              key={item.skill_id.id}
               style={{
                 backgroundColor: "#F5F6FF",
                 borderColor: "#CED5FF",
@@ -137,7 +138,7 @@ export default function DetailAppointmentView() {
               }}
             >
               <Text style={{ color: "#27139B", fontWeight: "600" }}>
-                {item}
+                {item.skill_id.name}
               </Text>
             </View>
           ))}
