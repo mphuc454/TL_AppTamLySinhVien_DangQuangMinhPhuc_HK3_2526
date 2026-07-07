@@ -1,7 +1,7 @@
+import { FilterDoc } from "@/src/filter/FilterView";
 import { useDoctorViewModel } from "@/src/viewmodels/DoctorViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
-import { useState } from "react";
 import {
   ScrollView,
   Text,
@@ -10,12 +10,9 @@ import {
   View,
 } from "react-native";
 
-
 export default function AppointmentView() {
-  const {doc} = useDoctorViewModel();
-  const [selectedCategory, setSelectedCategory] = useState<number | null>(null)
-  const filterDocs = setSelectedCategory == null ? doc : doc.filter((item) => item.id === selectedCategory)
-
+  const { selectedCategory, setSelectedCategory, filterDocs } = FilterDoc();
+  const { doc } = useDoctorViewModel();
   return (
     <ScrollView
       style={{
@@ -76,83 +73,91 @@ export default function AppointmentView() {
               marginRight: 10,
             }}
           >
-            <Text style={{color: selectedCategory === item.id ? "#fff" : "#000",}}>{item.specialization}</Text>
+            <Text
+              style={{ color: selectedCategory === item.id ? "#fff" : "#000" }}
+            >
+              {item.specialization}
+            </Text>
           </TouchableOpacity>
         ))}
       </ScrollView>
       <View style={{ marginTop: 20 }}>
-        {filterDocs.length > 0 ? (doc.map((d) => (
-          <View
-            key={d.id}
-            style={{
-              backgroundColor: "#fff",
-              marginHorizontal: 20,
-              marginTop: 15,
-              borderRadius: 20,
-              padding: 15,
-              elevation: 4,
-            }}
-          >
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <Ionicons name="person" size={40} />
-              <View style={{ flex: 1, marginLeft: 10 }}>
-                <Text style={{ fontSize: 16, fontWeight: "600" }}>
-                  BS: {d.account_id.username}
-                </Text>
-                <Text style={{ fontWeight: "light", marginTop: 4 }}>
-                  {d.experience_years} năm kinh nghiệm
-                </Text>
-              </View>
-            </View>
+        {filterDocs.length > 0 ? (
+          doc.map((d) => (
             <View
+              key={d.id}
               style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-                marginTop: 12,
+                backgroundColor: "#fff",
+                marginHorizontal: 20,
+                marginTop: 15,
+                borderRadius: 20,
+                padding: 15,
+                elevation: 4,
               }}
             >
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <Ionicons name="person" size={40} />
+                <View style={{ flex: 1, marginLeft: 10 }}>
+                  <Text style={{ fontSize: 16, fontWeight: "600" }}>
+                    BS: {d.account_id.username}
+                  </Text>
+                  <Text style={{ fontWeight: "light", marginTop: 4 }}>
+                    {d.experience_years} năm kinh nghiệm
+                  </Text>
+                </View>
+              </View>
               <View
                 style={{
-                  backgroundColor: "#EFEFEF",
-                  paddingHorizontal: 10,
-                  paddingVertical: 6,
-                  borderRadius: 10,
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  marginTop: 12,
                 }}
               >
-                <Text style={{ fontSize: 12 }}>{d.specialization}</Text>
+                <View
+                  style={{
+                    backgroundColor: "#EFEFEF",
+                    paddingHorizontal: 10,
+                    paddingVertical: 6,
+                    borderRadius: 10,
+                  }}
+                >
+                  <Text style={{ fontSize: 12 }}>{d.specialization}</Text>
+                </View>
+                <TouchableOpacity
+                  onPress={() =>
+                    router.push({
+                      pathname: "/(no tabs)/DetailedAppointment",
+                      params: {
+                        id: d.id,
+                      },
+                    })
+                  }
+                  style={{
+                    backgroundColor: "#F3B8B8",
+                    paddingHorizontal: 18,
+                    paddingVertical: 10,
+                    borderRadius: 20,
+                  }}
+                >
+                  <Text style={{ fontWeight: "semibold" }}>Xem</Text>
+                </TouchableOpacity>
               </View>
-              <TouchableOpacity
-                 onPress={() =>
-                     router.push({
-                       pathname: "/(no tabs)/DetailedAppointment",
-                       params: {
-                         id:d.id,
-                       },
-                     })
-                   }
-                style={{
-                  backgroundColor: "#F3B8B8",
-                  paddingHorizontal: 18,
-                  paddingVertical: 10,
-                  borderRadius: 20,
-                }}
-              >
-                <Text style={{ fontWeight: "semibold" }}>Xem</Text>
-              </TouchableOpacity>
             </View>
-          </View>
-        ))) : (<Text
-              style={{
+          ))
+        ) : (
+          <Text
+            style={{
               width: "100%",
               textAlign: "center",
               marginTop: 20,
               fontSize: 16,
               color: "#666",
             }}
-  >
-    Hiện chưa có bác sĩ nào.
-  </Text>)}
+          >
+            Hiện chưa có bác sĩ nào.
+          </Text>
+        )}
       </View>
     </ScrollView>
   );

@@ -1,8 +1,7 @@
-import { useArticleViewModel } from "@/src/viewmodels/ArticleViewModel";
+import { FilterArticle } from "@/src/filter/FilterView";
 import { useCategoryArticlesViewModel } from "@/src/viewmodels/CategoryArticleViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
-import { useState } from "react";
 import {
   Image,
   ScrollView,
@@ -12,14 +11,10 @@ import {
   View,
 } from "react-native";
 
-
 export default function ArticleView() {
-  const {articles} = useArticleViewModel();
-  const{categoryArticles} = useCategoryArticlesViewModel();
-  const [selectedCategory, setSelectedCategory] = useState<number | null>(null)
-  const filterArticles = setSelectedCategory == null ? articles : articles.filter((item) => item.id === selectedCategory)
-
-  
+  const { selectedCategory, setSelectedCategory, filterArticles } =
+    FilterArticle();
+  const { categoryArticles } = useCategoryArticlesViewModel();
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: "#F5EDED" }}
@@ -80,116 +75,122 @@ export default function ArticleView() {
               marginRight: 10,
             }}
           >
-            <Text style={{color: selectedCategory === item.id ? "#fff" : "#000",}}>{item.name}</Text>
+            <Text
+              style={{ color: selectedCategory === item.id ? "#fff" : "#000" }}
+            >
+              {item.name}
+            </Text>
           </TouchableOpacity>
         ))}
       </ScrollView>
 
       <View style={{ marginTop: 20 }}>
-        {filterArticles.length > 0 ? (filterArticles.map((article) => (
-          <TouchableOpacity
-            onPress={() =>
-              router.push({
-                pathname: "/(no tabs)/DetailedArticle",
-                params: {
-                  id: article.id,
+        {filterArticles.length > 0 ? (
+          filterArticles.map((article) => (
+            <TouchableOpacity
+              onPress={() =>
+                router.push({
+                  pathname: "/(no tabs)/DetailedArticle",
+                  params: {
+                    id: article.id,
+                  },
+                })
+              }
+              key={article.id}
+              style={{
+                backgroundColor: "#FFF",
+                marginHorizontal: 20,
+                marginBottom: 15,
+                borderRadius: 20,
+                padding: 12,
+                borderWidth: 1,
+                borderColor: "#000",
+                flexDirection: "row",
+                alignItems: "center",
+                shadowColor: "#000",
+                shadowOffset: {
+                  width: 2,
+                  height: 3,
                 },
-              })
-            }
-            key={article.id}
-            style={{
-              backgroundColor: "#FFF",
-              marginHorizontal: 20,
-              marginBottom: 15,
-              borderRadius: 20,
-              padding: 12,
-              borderWidth: 1,
-              borderColor: "#000",
-              flexDirection: "row",
-              alignItems: "center",
-              shadowColor: "#000",
-              shadowOffset: {
-                width: 2,
-                height: 3,
-              },
-              shadowOpacity: 0.2,
-              shadowRadius: 4,
-              elevation: 4,
-            }}
-          >
-            <Image
-              source={{ uri: article.thumbnail }}
-              style={{
-                width: 55,
-                height: 55,
-                borderRadius: 8,
-                marginRight: 10,
+                shadowOpacity: 0.2,
+                shadowRadius: 4,
+                elevation: 4,
               }}
-            />
-
-            <View style={{ flex: 1 }}>
-              <Text
-                numberOfLines={2}
+            >
+              <Image
+                source={{ uri: article.thumbnail }}
                 style={{
-                  fontSize: 16,
-                  fontWeight: "600",
+                  width: 55,
+                  height: 55,
+                  borderRadius: 8,
+                  marginRight: 10,
                 }}
-              >
-                {article.title}
-              </Text>
+              />
 
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  marginTop: 6,
-                }}
-              >
-                <Ionicons name="time-outline" size={14} color="#555" />
-
+              <View style={{ flex: 1 }}>
                 <Text
+                  numberOfLines={2}
                   style={{
-                    marginLeft: 4,
-                    color: "#555",
-                    fontSize: 13,
+                    fontSize: 16,
+                    fontWeight: "600",
                   }}
                 >
-                  {article.time_to_read} phút đọc
+                  {article.title}
                 </Text>
-              </View>
 
-              <View
-                style={{
-                  alignSelf: "flex-start",
-                  backgroundColor: "#D9D9D9",
-                  borderRadius: 20,
-                  paddingHorizontal: 14,
-                  paddingVertical: 4,
-                  marginTop: 8,
-                }}
-              >
-                <Text
+                <View
                   style={{
-                    fontSize: 12,
-                    fontWeight: "500",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    marginTop: 6,
                   }}
                 >
-                  {article.id_category_articles.name}
-                </Text>
+                  <Ionicons name="time-outline" size={14} color="#555" />
+
+                  <Text
+                    style={{
+                      marginLeft: 4,
+                      color: "#555",
+                      fontSize: 13,
+                    }}
+                  >
+                    {article.time_to_read} phút đọc
+                  </Text>
+                </View>
+
+                <View
+                  style={{
+                    alignSelf: "flex-start",
+                    backgroundColor: "#D9D9D9",
+                    borderRadius: 20,
+                    paddingHorizontal: 14,
+                    paddingVertical: 4,
+                    marginTop: 8,
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontSize: 12,
+                      fontWeight: "500",
+                    }}
+                  >
+                    {article.id_category_articles.name}
+                  </Text>
+                </View>
               </View>
-            </View>
-          </TouchableOpacity>
-        ))) : (
+            </TouchableOpacity>
+          ))
+        ) : (
           <Text
-              style={{
+            style={{
               width: "100%",
               textAlign: "center",
               marginTop: 20,
               fontSize: 16,
               color: "#666",
             }}
-  >
-          Hiện chưa có bài viết nào.
+          >
+            Hiện chưa có bài viết nào.
           </Text>
         )}
       </View>
