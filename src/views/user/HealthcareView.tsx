@@ -145,62 +145,37 @@ export default function HealthcareView() {
             </TouchableOpacity>
           </View>
           <View>
-            {/* {journalData.map((item) => {
-              const mood = moodData.find((m) => m.id === item.moodID);
-              return (
-                <TouchableOpacity
-                  key={item.id}
-                  style={{
-                    backgroundColor: "#2D2121",
-                    borderRadius: 16,
-                    padding: 16,
-                    flexDirection: "row",
-                    alignItems: "center",
-                    marginTop: 16,
-                  }}
-                >
-                  <View
-                    style={{
-                      width: 70,
-                      height: 70,
-                      borderRadius: 35,
-                      backgroundColor: mood?.bg,
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Ionicons name={mood?.icon as any} size={36} />
-                  </View>
-                  <View style={{ flex: 1, marginLeft: 10 }}>
-                    <Text
-                      style={{
-                        fontSize: 8,
-                        color: "#d9cfcf",
-                        fontWeight: "light",
-                      }}
-                    >
-                      {item.date}
-                    </Text>
-                    <Text
-                      style={{
-                        fontSize: 12,
-                        color: "#FFFF",
-                        fontWeight: "regular",
-                      }}
-                    >
-                      {item.content}
-                    </Text>
-                  </View>
-                </TouchableOpacity>
-              );
-            })} */}
+ 
           </View>
         </View>
         {/* Layout3: Âm nhạc thư giãn */}
       <View style={{marginTop: 30}}>
-        
+           <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+              Nghe nhạc thư giãn:
+            </Text>
+            <TouchableOpacity
+            onPress={() => router.push("/(no tabs)/Music")}
+            >
+              <Text
+                style={{
+                  fontSize: 11,
+                  color: "#3514C6",
+                  fontWeight: "regular",
+                }}
+              >
+                Xem tất cả
+              </Text>
+            </TouchableOpacity>
+          </View>
       </View>
-        {/* Layout4: Gợi ý bài viết */}
+        {/* Layout4: Gợi ý bài tập */}
         <View style={{ marginTop: 30 }}>
           <View
             style={{
