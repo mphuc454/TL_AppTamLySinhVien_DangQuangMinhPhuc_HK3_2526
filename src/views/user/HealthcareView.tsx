@@ -6,6 +6,7 @@ import { useExercisesViewModel } from "@/src/viewmodels/ExercisesViewModel";
 import { useMusicViewModel } from "@/src/viewmodels/MusicViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
+import { useContext } from "react";
 import {
   FlatList,
   ImageBackground,
@@ -15,7 +16,9 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { ThemeContext } from "../theme/ThemeContext";
 export default function HealthcareView() {
+  const { colors } = useContext(ThemeContext);
   const { ex } = useExercisesViewModel();
   const { em } = useEmotionViewModel();
   const { mus } = useMusicViewModel();
@@ -23,7 +26,7 @@ export default function HealthcareView() {
     useAddEmotionLog();
   return (
     <ScrollView
-      style={{ flex: 1, backgroundColor: "#F5EDED" }}
+      style={{ flex: 1, backgroundColor: colors.background }}
       contentContainerStyle={{ paddingBottom: 180 }}
     >
       <View style={{ paddingHorizontal: 20, paddingTop: 20 }}>
@@ -33,7 +36,7 @@ export default function HealthcareView() {
             marginTop: 30,
             paddingHorizontal: 20,
             paddingTop: 20,
-            backgroundColor: "#2D2121",
+            backgroundColor: colors.background,
             borderRadius: 16,
           }}
         >
@@ -41,7 +44,7 @@ export default function HealthcareView() {
             style={{
               fontSize: 16,
               fontWeight: "bold",
-              color: "#FBDFDF",
+              color: colors.text,
             }}
           >
             Ghi nhật ký tâm trạng hôm nay
@@ -80,7 +83,7 @@ export default function HealthcareView() {
                   style={{
                     fontSize: 9,
                     marginTop: 8,
-                    color: "#828282",
+                    color: colors.text,
                     textAlign: "center",
                   }}
                 >
@@ -94,14 +97,14 @@ export default function HealthcareView() {
             onChangeText={setContent}
             style={{
               height: 40,
-              borderColor: "#a02b2b",
+              borderColor: colors.borderColor,
               marginBottom: 25,
               marginTop: 15,
               borderWidth: 0.5,
               padding: 10,
             }}
             placeholder="Ghi nhật kí tại đây..."
-            placeholderTextColor="rgba(255, 255, 255, 0.5)"
+            placeholderTextColor="rgba(139, 123, 123, 0.5)"
           ></TextInput>
           <TouchableOpacity
             // onPress={() => handleSave(accountId)}
@@ -135,7 +138,9 @@ export default function HealthcareView() {
               alignItems: "center",
             }}
           >
-            <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+            <Text
+              style={{ fontSize: 16, fontWeight: "bold", color: colors.text }}
+            >
               Nhật ký gần đây:
             </Text>
             <TouchableOpacity>
@@ -161,7 +166,9 @@ export default function HealthcareView() {
               alignItems: "center",
             }}
           >
-            <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+            <Text
+              style={{ fontSize: 16, fontWeight: "bold", color: colors.text }}
+            >
               Nghe nhạc thư giãn:
             </Text>
             <TouchableOpacity onPress={() => router.push("/(no tabs)/Music")}>
@@ -254,7 +261,9 @@ export default function HealthcareView() {
               alignItems: "center",
             }}
           >
-            <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+            <Text
+              style={{ fontSize: 16, fontWeight: "bold", color: colors.text }}
+            >
               Bài tập gợi ý cho bạn:
             </Text>
             <TouchableOpacity

@@ -1,6 +1,7 @@
 import { useMusicViewModel } from "@/src/viewmodels/MusicViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
+import { useContext } from "react";
 import {
   ImageBackground,
   ScrollView,
@@ -9,12 +10,15 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { ThemeContext } from "../theme/ThemeContext";
 
 export default function MusicView() {
-    const{mus} = useMusicViewModel()
+  const { mus } = useMusicViewModel();
+  const { colors } = useContext(ThemeContext);
+
   return (
     <ScrollView
-      style={{ flex: 1, backgroundColor: "#F5EDED" }}
+      style={{ flex: 1, backgroundColor: colors.background }}
       contentContainerStyle={{ paddingBottom: 180 }}
     >
       <View
@@ -26,7 +30,11 @@ export default function MusicView() {
         }}
       >
         <TouchableOpacity onPress={() => router.push("/(tabs)/Index")}>
-          <Ionicons name="arrow-back" size={25}></Ionicons>
+          <Ionicons
+            style={{ color: colors.text }}
+            name="arrow-back"
+            size={25}
+          ></Ionicons>
         </TouchableOpacity>
         <Text
           style={{
@@ -34,6 +42,7 @@ export default function MusicView() {
             textAlign: "center",
             fontSize: 20,
             fontWeight: "bold",
+            color: colors.text,
           }}
         >
           Nghe nhạc thư giãn
@@ -56,14 +65,14 @@ export default function MusicView() {
         horizontal
         showsHorizontalScrollIndicator={false}
         style={{ marginTop: 15, paddingHorizontal: 20 }}
-      >
-      </ScrollView>
+      ></ScrollView>
       <View style={{ marginTop: 30, marginHorizontal: 20 }}>
         <Text
           style={{
             fontWeight: "bold",
             fontSize: 16,
             marginBottom: 15,
+            color: colors.text,
           }}
         >
           DANH SÁCH NHẠC
@@ -78,66 +87,66 @@ export default function MusicView() {
           {mus.length > 0 ? (
             mus.map((item) => (
               <TouchableOpacity
-  key={item.id}
-  onPress={() =>
-    router.push({
-      pathname: "/(no tabs)/DetailedMusic",
-      params: {
-        id: item.id,
-      },
-    })
-  }
-  style={{
-    width: "48%",
-    borderRadius: 18,
-    overflow: "hidden",
-    marginBottom: 16,
-  }}
->
-  <ImageBackground
-    source={{ uri: item.image_url }}
-    resizeMode="cover"
-    style={{
-      height: 180,
-      justifyContent: "flex-end",
-    }}
-  >
-    <View
-      style={{
-        backgroundColor: "rgba(0,0,0,0.45)",
-        padding: 16,
-      }}
-    >
-      <Text
-        style={{
-          fontSize: 20,
-          fontWeight: "700",
-          color: "#FFFFFF",
-          marginBottom: 6,
-        }}
-      >
-        {item.title}
-      </Text>
+                key={item.id}
+                onPress={() =>
+                  router.push({
+                    pathname: "/(no tabs)/DetailedMusic",
+                    params: {
+                      id: item.id,
+                    },
+                  })
+                }
+                style={{
+                  width: "48%",
+                  borderRadius: 18,
+                  overflow: "hidden",
+                  marginBottom: 16,
+                }}
+              >
+                <ImageBackground
+                  source={{ uri: item.image_url }}
+                  resizeMode="cover"
+                  style={{
+                    height: 180,
+                    justifyContent: "flex-end",
+                  }}
+                >
+                  <View
+                    style={{
+                      backgroundColor: "rgba(0,0,0,0.45)",
+                      padding: 16,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontSize: 20,
+                        fontWeight: "700",
+                        color: "#FFFFFF",
+                        marginBottom: 6,
+                      }}
+                    >
+                      {item.title}
+                    </Text>
 
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-        }}
-      >
-        <Ionicons name="time-outline" size={14} color="#FFF" />
-        <Text
-          style={{
-            marginLeft: 4,
-            color: "#FFF",
-          }}
-        >
-          {item.duration} phút
-        </Text>
-      </View>
-    </View>
-  </ImageBackground>
-</TouchableOpacity>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Ionicons name="time-outline" size={14} color="#FFF" />
+                      <Text
+                        style={{
+                          marginLeft: 4,
+                          color: "#FFF",
+                        }}
+                      >
+                        {item.duration} phút
+                      </Text>
+                    </View>
+                  </View>
+                </ImageBackground>
+              </TouchableOpacity>
             ))
           ) : (
             <Text
