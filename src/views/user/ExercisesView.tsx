@@ -2,6 +2,7 @@ import { FilterExercises } from "@/src/filter/FilterView";
 import { useCategoryExercisesViewModel } from "@/src/viewmodels/CategoryExercisesViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
+import { useContext } from "react";
 import {
   ScrollView,
   Text,
@@ -9,14 +10,17 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { ThemeContext } from "../theme/ThemeContext";
 
 export default function ExercisesView() {
   const { selectedCategory, setSelectedCategory, filterExercises } =
     FilterExercises();
   const { categoryArticles } = useCategoryExercisesViewModel();
+  const { colors } = useContext(ThemeContext);
+
   return (
     <ScrollView
-      style={{ flex: 1, backgroundColor: "#F5EDED" }}
+      style={{ flex: 1, backgroundColor: colors.background }}
       contentContainerStyle={{ paddingBottom: 180 }}
     >
       <View
@@ -28,7 +32,11 @@ export default function ExercisesView() {
         }}
       >
         <TouchableOpacity onPress={() => router.push("/(tabs)/Index")}>
-          <Ionicons name="arrow-back" size={25}></Ionicons>
+          <Ionicons
+            style={{ color: colors.text }}
+            name="arrow-back"
+            size={25}
+          ></Ionicons>
         </TouchableOpacity>
         <Text
           style={{
@@ -36,6 +44,7 @@ export default function ExercisesView() {
             textAlign: "center",
             fontSize: 20,
             fontWeight: "bold",
+            color: colors.text,
           }}
         >
           Bài tập cải thiện
@@ -85,6 +94,7 @@ export default function ExercisesView() {
             fontWeight: "bold",
             fontSize: 16,
             marginBottom: 15,
+            color: colors.text,
           }}
         >
           DANH SÁCH BÀI TẬP

@@ -3,7 +3,7 @@ import { router } from "expo-router";
 import React, { useContext } from "react";
 import { StyleSheet, Switch, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Theme, ThemeContext } from "../theme/ThemeContext";
+import { ThemeContext } from "../theme/ThemeContext";
 
 export default function ThemeSettingsView() {
   const { currentTheme, toggleTheme, colors } = useContext(ThemeContext);
@@ -42,7 +42,10 @@ export default function ThemeSettingsView() {
         <TouchableOpacity
           style={[
             styles.button,
-            { backgroundColor: colors.cardBackground, borderColor: colors.borderColor },
+            {
+              backgroundColor: colors.cardBackground,
+              borderColor: colors.borderColor,
+            },
           ]}
           activeOpacity={0.8}
           onPress={() => {}}
@@ -54,7 +57,7 @@ export default function ThemeSettingsView() {
           <Switch
             value={currentTheme === "dark"}
             onValueChange={() =>
-              toggleTheme(currentTheme === "light" ? "dark" : "light" as Theme)
+              toggleTheme(currentTheme === "light" ? "dark" : "light")
             }
           />
         </TouchableOpacity>

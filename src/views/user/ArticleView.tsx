@@ -2,6 +2,7 @@ import { FilterArticle } from "@/src/filter/FilterView";
 import { useCategoryArticlesViewModel } from "@/src/viewmodels/CategoryArticleViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
+import { useContext } from "react";
 import {
   Image,
   ScrollView,
@@ -10,14 +11,16 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { ThemeContext } from "../theme/ThemeContext";
 
 export default function ArticleView() {
+  const { colors } = useContext(ThemeContext);
   const { selectedCategory, setSelectedCategory, filterArticles } =
     FilterArticle();
   const { categoryArticles } = useCategoryArticlesViewModel();
   return (
     <ScrollView
-      style={{ flex: 1, backgroundColor: "#F5EDED" }}
+      style={{ flex: 1, backgroundColor: colors.background }}
       contentContainerStyle={{ paddingBottom: 180 }}
     >
       <View
@@ -29,7 +32,11 @@ export default function ArticleView() {
         }}
       >
         <TouchableOpacity onPress={() => router.push("/(tabs)/Index")}>
-          <Ionicons name="arrow-back" size={25} />
+          <Ionicons
+            style={{ color: colors.text }}
+            name="arrow-back"
+            size={25}
+          />
         </TouchableOpacity>
 
         <Text
@@ -38,6 +45,7 @@ export default function ArticleView() {
             textAlign: "center",
             fontSize: 20,
             fontWeight: "bold",
+            color: colors.text,
           }}
         >
           Bài viết

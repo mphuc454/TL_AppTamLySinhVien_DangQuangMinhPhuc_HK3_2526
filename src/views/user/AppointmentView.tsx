@@ -2,6 +2,7 @@ import { FilterDoc } from "@/src/filter/FilterView";
 import { useDoctorViewModel } from "@/src/viewmodels/DoctorViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
+import { useContext } from "react";
 import {
   ScrollView,
   Text,
@@ -9,15 +10,17 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { ThemeContext } from "../theme/ThemeContext";
 
 export default function AppointmentView() {
+  const { colors } = useContext(ThemeContext);
   const { selectedCategory, setSelectedCategory, filterDocs } = FilterDoc();
   const { doc } = useDoctorViewModel();
   return (
     <ScrollView
       style={{
         flex: 1,
-        backgroundColor: "#F7F7F8",
+        backgroundColor: colors.background,
       }}
       contentContainerStyle={{ paddingBottom: 180 }}
     >
@@ -30,7 +33,11 @@ export default function AppointmentView() {
         }}
       >
         <TouchableOpacity onPress={() => router.push("/(tabs)/Index")}>
-          <Ionicons name="arrow-back" size={25}></Ionicons>
+          <Ionicons
+            style={{ color: colors.text }}
+            name="arrow-back"
+            size={25}
+          ></Ionicons>
         </TouchableOpacity>
         <Text
           style={{
@@ -38,6 +45,7 @@ export default function AppointmentView() {
             textAlign: "center",
             fontSize: 20,
             fontWeight: "bold",
+            color: colors.text,
           }}
         >
           Xem danh sách bác sĩ
