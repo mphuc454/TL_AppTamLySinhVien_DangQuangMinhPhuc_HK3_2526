@@ -1,4 +1,7 @@
-import { useAddEmotionLog, useEmotionViewModel } from "@/src/viewmodels/EmotionViewModel";
+import {
+  useAddEmotionLog,
+  useEmotionViewModel,
+} from "@/src/viewmodels/EmotionViewModel";
 import { useExercisesViewModel } from "@/src/viewmodels/ExercisesViewModel";
 import { useMusicViewModel } from "@/src/viewmodels/MusicViewModel";
 import { Ionicons } from "@expo/vector-icons";
@@ -13,10 +16,11 @@ import {
   View,
 } from "react-native";
 export default function HealthcareView() {
-  const{ex} = useExercisesViewModel();
-  const{em} = useEmotionViewModel();
-  const{mus} = useMusicViewModel()
-  const{content,setContent,selectedEmotionId, setSelectedEmotionId} = useAddEmotionLog()
+  const { ex } = useExercisesViewModel();
+  const { em } = useEmotionViewModel();
+  const { mus } = useMusicViewModel();
+  const { content, setContent, selectedEmotionId, setSelectedEmotionId } =
+    useAddEmotionLog();
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: "#F5EDED" }}
@@ -67,7 +71,7 @@ export default function HealthcareView() {
                     marginTop: 10,
                     justifyContent: "center",
                     alignItems: "center",
-                    borderWidth: selectedEmotionId === opt.id ? 3 : 0
+                    borderWidth: selectedEmotionId === opt.id ? 3 : 0,
                   }}
                 >
                   <Ionicons name={opt.icon as any} size={30} color="#FFFFFF" />
@@ -86,8 +90,8 @@ export default function HealthcareView() {
             ))}
           </View>
           <TextInput
-          value={content}
-          onChangeText={setContent}
+            value={content}
+            onChangeText={setContent}
             style={{
               height: 40,
               borderColor: "#a02b2b",
@@ -146,13 +150,11 @@ export default function HealthcareView() {
               </Text>
             </TouchableOpacity>
           </View>
-          <View>
- 
-          </View>
+          <View></View>
         </View>
         {/* Layout3: Âm nhạc thư giãn */}
-      <View style={{marginTop: 30}}>
-           <View
+        <View style={{ marginTop: 30 }}>
+          <View
             style={{
               flexDirection: "row",
               justifyContent: "space-between",
@@ -162,9 +164,7 @@ export default function HealthcareView() {
             <Text style={{ fontSize: 16, fontWeight: "bold" }}>
               Nghe nhạc thư giãn:
             </Text>
-            <TouchableOpacity
-            onPress={() => router.push("/(no tabs)/Music")}
-            >
+            <TouchableOpacity onPress={() => router.push("/(no tabs)/Music")}>
               <Text
                 style={{
                   fontSize: 11,
@@ -176,71 +176,75 @@ export default function HealthcareView() {
               </Text>
             </TouchableOpacity>
           </View>
-             <FlatList
+          <FlatList
             style={{ marginTop: 20 }}
-            data={mus.slice(0,3)}
+            data={mus.slice(0, 3)}
             horizontal
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={{ paddingHorizontal: 20, gap: 12 }}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
-        <ImageBackground source={{ uri: item.image_url }} resizeMode="cover"
-                  style={{
-                    height: 180,
-                    justifyContent: "flex-end",
-    }}>
               <TouchableOpacity
                 style={{
                   width: 220,
                   borderRadius: 18,
                 }}
                 onPress={() =>
-              router.push({
-                pathname: "/(no tabs)/DetailedMusic",
-                params: {
-                  id: item.id,
-                },
-              })
-            }
+                  router.push({
+                    pathname: "/(no tabs)/DetailedMusic",
+                    params: {
+                      id: item.id,
+                    },
+                  })
+                }
               >
-        <View style={{
-        backgroundColor: "rgba(0,0,0,0.45)",
-        padding: 16,
-      }}>
-                   <Text
-        style={{
-          fontSize: 20,
-          fontWeight: "700",
-          color: "#FFFFFF",
-          marginBottom: 6,
-        }}
-      >
-        {item.title}
-      </Text>
+                <ImageBackground
+                  source={{ uri: item.image_url }}
+                  resizeMode="cover"
+                  style={{
+                    height: 180,
+                    justifyContent: "flex-end",
+                  }}
+                >
+                  <View
+                    style={{
+                      backgroundColor: "rgba(0,0,0,0.45)",
+                      padding: 16,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontSize: 20,
+                        fontWeight: "700",
+                        color: "#FFFFFF",
+                        marginBottom: 6,
+                      }}
+                    >
+                      {item.title}
+                    </Text>
 
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-        }}
-      >
-        <Ionicons name="time-outline" size={14} color="#FFF" />
-        <Text
-          style={{
-            marginLeft: 4,
-            color: "#FFF",
-          }}
-        >
-          {item.duration} phút
-        </Text>
-      </View>
-        </View>
- 
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Ionicons name="time-outline" size={14} color="#FFF" />
+                      <Text
+                        style={{
+                          marginLeft: 4,
+                          color: "#FFF",
+                        }}
+                      >
+                        {item.duration} phút
+                      </Text>
+                    </View>
+                  </View>
+                </ImageBackground>
               </TouchableOpacity>
-              </ImageBackground>
             )}
           />
-      </View>
+        </View>
         {/* Layout4: Gợi ý bài tập */}
         <View style={{ marginTop: 30 }}>
           <View
@@ -283,13 +287,13 @@ export default function HealthcareView() {
                   padding: 16,
                 }}
                 onPress={() =>
-              router.push({
-                pathname: "/(no tabs)/DetailedExercises",
-                params: {
-                  id: item.id,
-                },
-              })
-            }
+                  router.push({
+                    pathname: "/(no tabs)/DetailedExercises",
+                    params: {
+                      id: item.id,
+                    },
+                  })
+                }
               >
                 <View
                   style={{
