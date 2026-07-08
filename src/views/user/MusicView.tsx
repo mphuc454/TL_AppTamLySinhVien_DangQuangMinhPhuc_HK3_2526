@@ -90,7 +90,7 @@ export default function MusicView() {
   style={{
     width: "48%",
     borderRadius: 18,
-    overflow: "hidden", // cần để bo góc ảnh
+    overflow: "hidden",
     marginBottom: 16,
   }}
 >
@@ -102,7 +102,6 @@ export default function MusicView() {
       justifyContent: "flex-end",
     }}
   >
-    {/* Lớp phủ tối để chữ dễ đọc */}
     <View
       style={{
         backgroundColor: "rgba(0,0,0,0.45)",

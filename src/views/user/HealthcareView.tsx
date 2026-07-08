@@ -1,10 +1,11 @@
 import { useAddEmotionLog, useEmotionViewModel } from "@/src/viewmodels/EmotionViewModel";
 import { useExercisesViewModel } from "@/src/viewmodels/ExercisesViewModel";
+import { useMusicViewModel } from "@/src/viewmodels/MusicViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
-// import { useState } from "react";
 import {
   FlatList,
+  ImageBackground,
   ScrollView,
   Text,
   TextInput,
@@ -12,8 +13,9 @@ import {
   View,
 } from "react-native";
 export default function HealthcareView() {
-  const {ex} = useExercisesViewModel();
+  const{ex} = useExercisesViewModel();
   const{em} = useEmotionViewModel();
+  const{mus} = useMusicViewModel()
   const{content,setContent,selectedEmotionId, setSelectedEmotionId} = useAddEmotionLog()
   return (
     <ScrollView
@@ -174,6 +176,70 @@ export default function HealthcareView() {
               </Text>
             </TouchableOpacity>
           </View>
+             <FlatList
+            style={{ marginTop: 20 }}
+            data={mus.slice(0,3)}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{ paddingHorizontal: 20, gap: 12 }}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => (
+        <ImageBackground source={{ uri: item.image_url }} resizeMode="cover"
+                  style={{
+                    height: 180,
+                    justifyContent: "flex-end",
+    }}>
+              <TouchableOpacity
+                style={{
+                  width: 220,
+                  borderRadius: 18,
+                }}
+                onPress={() =>
+              router.push({
+                pathname: "/(no tabs)/DetailedMusic",
+                params: {
+                  id: item.id,
+                },
+              })
+            }
+              >
+        <View style={{
+        backgroundColor: "rgba(0,0,0,0.45)",
+        padding: 16,
+      }}>
+                   <Text
+        style={{
+          fontSize: 20,
+          fontWeight: "700",
+          color: "#FFFFFF",
+          marginBottom: 6,
+        }}
+      >
+        {item.title}
+      </Text>
+
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+        }}
+      >
+        <Ionicons name="time-outline" size={14} color="#FFF" />
+        <Text
+          style={{
+            marginLeft: 4,
+            color: "#FFF",
+          }}
+        >
+          {item.duration} phút
+        </Text>
+      </View>
+        </View>
+ 
+              </TouchableOpacity>
+              </ImageBackground>
+            )}
+          />
       </View>
         {/* Layout4: Gợi ý bài tập */}
         <View style={{ marginTop: 30 }}>
