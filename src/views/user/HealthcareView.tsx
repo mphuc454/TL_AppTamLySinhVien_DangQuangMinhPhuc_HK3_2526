@@ -1,6 +1,8 @@
+import { useAddEmotionLog, useEmotionViewModel } from "@/src/viewmodels/EmotionViewModel";
 import { useExercisesViewModel } from "@/src/viewmodels/ExercisesViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
+// import { useState } from "react";
 import {
   FlatList,
   ScrollView,
@@ -9,31 +11,10 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-const options = [
-  { value: 0, label: "Không bao giờ" },
-  { value: 1, label: "Một chút" },
-  { value: 2, label: "Thỉnh thoảng" },
-  { value: 3, label: "Thường xuyên" },
-];
-export const moodData = [
-  { id: 1, name: "Tích cực", icon: "happy-outline", bg: "#EF5DA8" },
-  { id: 2, name: "Bình thản", icon: "moon-outline", bg: "#AEAFF7" },
-  { id: 3, name: "Lo âu", icon: "sync-outline", bg: "#A0E3E2" },
-  { id: 4, name: "Giận dữ", icon: "thunderstorm-outline", bg: "#F09E54" },
-  { id: 5, name: "Buồn bã", icon: "sad-outline", bg: "#C3F2A6" },
-];
-export const journalData = [
-  {
-    id: 1,
-    moodID: 1,
-    date: "Hôm nay. 8:30 AM",
-    content:
-      "Hôm nay mình cảm thấy rất vui vì đã hoàn thành được nhiều việc quan trọng",
-  },
-  { id: 2, moodID: 4, date: "Hôm qua. 8:25 PM", content: "Bực hết cả mình" },
-];
 export default function HealthcareView() {
   const {ex} = useExercisesViewModel();
+  const{em} = useEmotionViewModel();
+  const{content,setContent,selectedEmotionId, setSelectedEmotionId} = useAddEmotionLog()
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: "#F5EDED" }}
@@ -66,9 +47,10 @@ export default function HealthcareView() {
               marginTop: 20,
             }}
           >
-            {moodData.map((opt) => (
+            {em.map((opt) => (
               <TouchableOpacity
                 key={opt.id}
+                onPress={() => setSelectedEmotionId(opt.id)}
                 style={{
                   alignItems: "center",
                   flex: 1,
@@ -78,11 +60,12 @@ export default function HealthcareView() {
                   style={{
                     width: 59.2,
                     height: 62.06,
-                    backgroundColor: opt.bg,
+                    backgroundColor: opt.color,
                     borderRadius: 16,
                     marginTop: 10,
                     justifyContent: "center",
                     alignItems: "center",
+                    borderWidth: selectedEmotionId === opt.id ? 3 : 0
                   }}
                 >
                   <Ionicons name={opt.icon as any} size={30} color="#FFFFFF" />
@@ -101,6 +84,8 @@ export default function HealthcareView() {
             ))}
           </View>
           <TextInput
+          value={content}
+          onChangeText={setContent}
             style={{
               height: 40,
               borderColor: "#a02b2b",
@@ -113,6 +98,7 @@ export default function HealthcareView() {
             placeholderTextColor="rgba(255, 255, 255, 0.5)"
           ></TextInput>
           <TouchableOpacity
+            // onPress={() => handleSave(accountId)}
             style={{
               borderWidth: 1,
               height: 38,
@@ -159,7 +145,7 @@ export default function HealthcareView() {
             </TouchableOpacity>
           </View>
           <View>
-            {journalData.map((item) => {
+            {/* {journalData.map((item) => {
               const mood = moodData.find((m) => m.id === item.moodID);
               return (
                 <TouchableOpacity
@@ -207,115 +193,13 @@ export default function HealthcareView() {
                   </View>
                 </TouchableOpacity>
               );
-            })}
+            })} */}
           </View>
         </View>
-        {/* Layout3: Khảo sát câu hỏi */}
-        <View
-          style={{
-            backgroundColor: "#CCB0EB",
-            borderRadius: 16,
-            padding: 20,
-            marginTop: 30,
-          }}
-        >
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "flex-start",
-            }}
-          >
-            <View>
-              <Text
-                style={{
-                  fontSize: 16,
-                  fontWeight: "bold",
-                  color: "#27139B",
-                }}
-              >
-                Khảo sát hôm nay
-              </Text>
-              <Text
-                style={{
-                  fontSize: 10,
-                  fontWeight: "normal",
-                  color: "#27139B",
-                }}
-              >
-                Đánh giá trạng thái tinh thần - 2 phút
-              </Text>
-            </View>
-            <TouchableOpacity
-              style={{
-                backgroundColor: "#D9D9D9",
-                borderRadius: 16,
-                paddingHorizontal: 12,
-                paddingVertical: 5,
-              }}
-            >
-              <Text
-                style={{
-                  fontSize: 10,
-                  color: "#445AE6",
-                  fontWeight: "semibold",
-                }}
-              >
-                Tiếp tục khảo sát
-              </Text>
-            </TouchableOpacity>
-          </View>
-          <Text
-            style={{
-              fontSize: 16,
-              fontWeight: "medium",
-              color: "#1a1a2e",
-              marginTop: 16,
-            }}
-          >
-            Câu 1. Trong 2 tuần qua, bạn cảm thấy chán nản hoặc tuyệt vọng ở mức
-            độ nào?
-          </Text>
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              marginTop: 20,
-            }}
-          >
-            {options.map((opt) => (
-              <TouchableOpacity
-                key={opt.value}
-                style={{
-                  alignItems: "center",
-                  flex: 1,
-                }}
-              >
-                <View
-                  style={{
-                    width: 52,
-                    height: 52,
-                    borderRadius: 26,
-                    backgroundColor: "#e8d8f8",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    marginBottom: 6,
-                  }}
-                ></View>
-                <Text
-                  style={{
-                    fontSize: 9,
-                    fontWeight: "semibold",
-                    color: "#000000",
-                    textAlign: "center",
-                  }}
-                >
-                  {opt.label}
-                </Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-        </View>
+        {/* Layout3: Âm nhạc thư giãn */}
+      <View style={{marginTop: 30}}>
+        
+      </View>
         {/* Layout4: Gợi ý bài viết */}
         <View style={{ marginTop: 30 }}>
           <View
