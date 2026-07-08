@@ -83,7 +83,7 @@ export default function AppointmentView() {
       </ScrollView>
       <View style={{ marginTop: 20 }}>
         {filterDocs.length > 0 ? (
-          doc.map((d) => (
+          filterDocs.map((d) => (
             <View
               key={d.id}
               style={{

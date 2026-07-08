@@ -7,7 +7,7 @@ export function FilterDoc() {
   const { doc } = useDoctorViewModel();
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
   const filterDocs =
-    setSelectedCategory == null
+    selectedCategory === null
       ? doc
       : doc.filter((item) => item.id === selectedCategory);
   return { selectedCategory, setSelectedCategory, filterDocs };
@@ -17,16 +17,19 @@ export function FilterArticle() {
   const { articles } = useArticleViewModel();
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
   const filterArticles =
-    setSelectedCategory == null
+    selectedCategory === null
       ? articles
-      : articles.filter((item) => item.id === selectedCategory);
+      : articles.filter(
+          (item) => item.id_category_articles.id === selectedCategory
+        );
   return { selectedCategory, setSelectedCategory, filterArticles };
 }
+
 export function FilterExercises() {
   const { ex } = useExercisesViewModel();
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
   const filterExercises =
-    setSelectedCategory == null
+    selectedCategory === null
       ? ex
       : ex.filter((item) => item.category.id === selectedCategory);
   return { selectedCategory, setSelectedCategory, filterExercises };
