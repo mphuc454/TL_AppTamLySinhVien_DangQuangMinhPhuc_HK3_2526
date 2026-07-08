@@ -53,7 +53,7 @@ export function useDoctorDetailViewModel(id: number){
     const [loading, setLoading] = useState(false);
 
      useEffect(() => {
-            const loadExercisesDetail = async () => {
+            const loadDoctorDetail = async () => {
                 try {
                 setLoading(true);
                 const data = await getDoctorByID(id);
@@ -65,7 +65,7 @@ export function useDoctorDetailViewModel(id: number){
                 }
             };
     
-            loadExercisesDetail();
+            loadDoctorDetail();
             }, [id]);
 
             return {doc_id, loading};
