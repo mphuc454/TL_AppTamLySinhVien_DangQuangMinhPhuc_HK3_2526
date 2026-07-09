@@ -1,6 +1,7 @@
 import { useExercisesDetailViewModel } from "@/src/viewmodels/ExercisesViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
+import { useContext } from "react";
 import {
   FlatList,
   ScrollView,
@@ -8,15 +9,18 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { ThemeContext } from "../theme/ThemeContext";
 
 export default function DetailedExercisesView() {
+    const { colors } = useContext(ThemeContext);
+  
   const {id} = useLocalSearchParams();
   const {ex} = useExercisesDetailViewModel(Number(id));
   return (
     <ScrollView
       style={{
         flex: 1,
-        backgroundColor: "#F7F7F8",
+        backgroundColor: colors.background,
         marginTop: 30,
         paddingHorizontal: 20,
       }}
@@ -26,7 +30,7 @@ export default function DetailedExercisesView() {
         style={{ flexDirection: "row", alignItems: "center", marginTop: 30 }}
       >
         <TouchableOpacity onPress={() => router.push("/(tabs)/Index")}>
-          <Ionicons name="arrow-back" size={25}></Ionicons>
+          <Ionicons style={{ color: colors.text }} name="arrow-back" size={25}></Ionicons>
         </TouchableOpacity>
       </View>
       <View
@@ -50,6 +54,7 @@ export default function DetailedExercisesView() {
         <Text
           style={{
             fontWeight: "semibold",
+            color: colors.text,
           }}
         >
           BÀI TẬP
@@ -62,6 +67,7 @@ export default function DetailedExercisesView() {
           lineHeight: 28,
           marginTop: 15,
           marginHorizontal: 12,
+          color: colors.text,
         }}
       >
         {ex?.title}
@@ -74,17 +80,17 @@ export default function DetailedExercisesView() {
           marginHorizontal: 12,
         }}
       >
-        <Text>Số vòng: </Text>
-        <Text style={{ color: "#555" }}>{ex?.number_of_rounds}</Text>
-        <Text style={{ marginLeft: 5, fontWeight: "light" }}>lượt</Text>
+        <Text style={{color: colors.text}}>Số vòng: </Text>
+        <Text style={{ color: colors.text }}>{ex?.number_of_rounds}</Text>
+        <Text style={{ marginLeft: 5, fontWeight: "light", color: colors.text }}>lượt</Text>
         <Ionicons
           name="time-outline"
           size={15}
-          style={{ marginLeft: 15 }}
+          style={{ marginLeft: 15, color: colors.text }}
         ></Ionicons>
-        <Text style={{ marginLeft: 4, color: "#555" }}>{ex?.duration_minutes} phút</Text>
-        <Text style={{ marginLeft: 20 }}>Mức độ: </Text>
-        <Text style={{ marginLeft: 3, color: "#555" }}>{ex?.difficulty}</Text>
+        <Text style={{ marginLeft: 4, color: colors.text }}>{ex?.duration_minutes} phút</Text>
+        <Text style={{ marginLeft: 20, color: colors.text }}>Mức độ: </Text>
+        <Text style={{ marginLeft: 3, color: colors.text }}>{ex?.difficulty}</Text>
       </View>
       <Text
         style={{
@@ -92,7 +98,7 @@ export default function DetailedExercisesView() {
           marginHorizontal: 12,
           fontSize: 16,
           lineHeight: 30,
-          color: "#333",
+          color: colors.text,
           textAlign: "justify",
           fontWeight: "semibold",
         }}
@@ -104,6 +110,7 @@ export default function DetailedExercisesView() {
           fontSize: 16,
           fontWeight: "bold",
           marginTop: 30,
+          color: colors.text
         }}
       >
         Các bước thực hiện:
@@ -144,6 +151,7 @@ export default function DetailedExercisesView() {
                 style={{
                   fontSize: 18,
                   fontWeight: "bold",
+                  color: colors.text
                 }}
               >
                 {item.title_step}

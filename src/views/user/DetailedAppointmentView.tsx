@@ -1,10 +1,12 @@
 import { useDoctorDetailViewModel, useSkillDetailViewModel} from "@/src/viewmodels/DoctorViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { ScrollView, Switch, Text, TouchableOpacity, View } from "react-native";
+import { ThemeContext } from "../theme/ThemeContext";
 
 export default function DetailAppointmentView() {
+  const { colors } = useContext(ThemeContext);
   const {id} = useLocalSearchParams();
   const [saveEmergency, setSaveEmergency] = useState(true);
   const {doc_id} = useDoctorDetailViewModel(Number(id));
@@ -13,7 +15,7 @@ export default function DetailAppointmentView() {
     <ScrollView
       style={{
         flex: 1,
-        backgroundColor: "#F7F7F8",
+        backgroundColor: colors.background,
         marginTop: 30,
         paddingHorizontal: 20,
       }}
@@ -23,7 +25,7 @@ export default function DetailAppointmentView() {
         style={{ flexDirection: "row", alignItems: "center", marginTop: 30 }}
       >
         <TouchableOpacity onPress={() => router.push("/(tabs)/Index")}>
-          <Ionicons name="arrow-back" size={25}></Ionicons>
+          <Ionicons style={{ color: colors.text }} name="arrow-back" size={25}></Ionicons>
         </TouchableOpacity>
       </View>
       <View
@@ -42,6 +44,7 @@ export default function DetailAppointmentView() {
           fontSize: 20,
           fontWeight: "800",
           marginTop: 15,
+          color: colors.text
         }}
       >
         BS: {doc_id?.account_id.username}
@@ -49,7 +52,7 @@ export default function DetailAppointmentView() {
       <Text
         style={{
           textAlign: "center",
-          color: "#777",
+          color: colors.text,
           marginTop: 5,
           fontSize: 18,
         }}
@@ -60,31 +63,31 @@ export default function DetailAppointmentView() {
     <View
   style={{
     marginTop: 24,
-    backgroundColor: "#fff",
+    backgroundColor: colors.background,
     borderRadius: 16,
     padding: 20,
     marginHorizontal: 16,
-    shadowColor: "#000",
+    shadowColor: "#e42222",
     shadowOpacity: 0.08,
     shadowRadius: 8,
     elevation: 3,
   }}
 >
-  <Text style={{ fontSize: 25, textAlign:"center"}}>Thông tin cơ bản: </Text>
+  <Text style={{ fontSize: 25, textAlign:"center", color: colors.text}}>Thông tin cơ bản: </Text>
   <View style={{ marginTop: 18, gap: 12 }}>
-     <Text style={{ fontSize: 15, color: "#374151" }}>
+     <Text style={{ fontSize: 15, color: colors.text }}>
       Họ tên:  {doc_id?.account_id.user_id.full_name}
     </Text>
-    <Text style={{ fontSize: 15, color: "#374151" }}>
+    <Text style={{ fontSize: 15, color: colors.text }}>
       Email:  {doc_id?.account_id.user_id.email}
     </Text>
-    <Text style={{ fontSize: 15, color: "#374151" }}>
+    <Text style={{ fontSize: 15, color: colors.text }}>
       Chức vụ:  {doc_id?.role_doctor}
     </Text>
-    <Text style={{ fontSize: 15, color: "#374151" }}>
+    <Text style={{ fontSize: 15, color: colors.text}}>
        Nơi ở:  {doc_id?.account_id.user_id.address}
     </Text>
-    <Text style={{ fontSize: 15, color: "#374151" }}>
+    <Text style={{ fontSize: 15, color: colors.text }}>
       Kinh nghiệm: {doc_id?.experience_years} năm
     </Text>
   </View>
@@ -100,7 +103,7 @@ export default function DetailAppointmentView() {
   >
     <Text
       style={{
-        color: "#fff",
+        color: colors.text,
         fontSize: 16,
         fontWeight: "700",
       }}
@@ -110,13 +113,13 @@ export default function DetailAppointmentView() {
   </TouchableOpacity>
 </View>
       <View style={{ marginTop: 30 }}>
-        <Text style={{ fontSize: 20, fontWeight:"bold" }}>Giới thiệu: </Text>
-        <Text style={{ fontWeight: "normal", marginTop: 5, lineHeight: 30 }}>
+        <Text style={{ fontSize: 20, fontWeight:"bold", color: colors.text }}>Giới thiệu: </Text>
+        <Text style={{ fontWeight: "normal", marginTop: 5, lineHeight: 30, color: colors.text }}>
          {doc_id?.bio}
         </Text>
       </View>
       <View style={{ marginTop: 30 }}>
-        <Text style={{ fontSize: 15 }}>Chuyên môn</Text>
+        <Text style={{ fontSize: 15, color: colors.text }}>Chuyên môn</Text>
         <View
           style={{
             flexDirection: "row",
@@ -145,7 +148,7 @@ export default function DetailAppointmentView() {
         </View>
       </View>
       <View style={{ marginTop: 30 }}>
-        <Text style={{ fontSize: 15 }}>Liên hệ khẩn cấp</Text>
+        <Text style={{ fontSize: 15, color: colors.text, marginBottom: 20 }}>Liên hệ khẩn cấp</Text>
         <TouchableOpacity
           style={{
             marginTop: 10,
