@@ -10,10 +10,11 @@ import {
 } from "react-native";
 import { ThemeContext } from "../theme/ThemeContext";
 import { useContext } from "react";
+import { useProfileViewModel } from "@/src/viewmodels/ProfileViewModel";
 
 export default function ProfileView() {
     const { colors } = useContext(ThemeContext);
-  
+    const { handleLogout } = useProfileViewModel();
   return (
     <ScrollView
       style={{
@@ -294,6 +295,7 @@ export default function ProfileView() {
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
+      onPress={handleLogout}
         style={{
           backgroundColor: "#C0392B",
           borderRadius: 25,

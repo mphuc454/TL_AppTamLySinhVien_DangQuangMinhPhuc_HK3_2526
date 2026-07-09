@@ -1,5 +1,6 @@
 import { supabase } from "../lib/supabase";
 
+// 1. Xử lý đăng ký
 export const register = async (
   username: string,
   email: string,
@@ -27,22 +28,14 @@ export const register = async (
       phone,
     });
     if (userError) throw userError;
-    const { error: accountError } = await supabase.from("accounts").insert({
-      id: user.id,
-      username,
-      role: 1,
-      created_at: new Date().toISOString(),
-    });
-console.log(accountError);
-
-    if (accountError) throw accountError;
-
     return true;
   } catch (error) {
     console.log(error);
     return false;
   }
 };
+
+// 2. Xử lý đăng nhập
 export const login = async (
   email: string,
   password: string
@@ -60,4 +53,77 @@ export const login = async (
     console.log(error);
     return false;
   }
+};
+
+//3. Đăng xuất
+export const logout = async (): Promise<boolean> => {
+  const { error } = await supabase.auth.signOut();
+
+  if (error) {
+    console.log(error);
+    return false;
+  }
+
+  return true;
+};
+
+// 4. Xử lý account
+export const createAccount = async (username: string, role: number): Promise<boolean> => {
+  try {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (!user) throw new Error("Chưa đăng nhập");
+    const { error } = await supabase.from("accounts").insert({
+      id: user.id,
+      username,
+      role,
+      created_at: new Date().toISOString(),
+    });
+
+    if (error) throw error;
+
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+}; 
+
+export const hasAccount = async (): Promise<boolean> => {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) return false;
+
+  const { data, error } = await supabase
+    .from("accounts")
+    .select("id")
+    .eq("id", user.id)
+    .maybeSingle();
+
+  if (error) {
+    console.log(error);
+    return false;
+  }
+
+  return !!data;
+};
+
+export const getAccount = async () => {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) return null;
+
+  const { data, error } = await supabase
+    .from("accounts")
+    .select("*")
+    .eq("id", user.id)
+    .single();
+
+  if (error) throw error;
+  return data;
 };

@@ -107,25 +107,7 @@ export default function LoginView() {
         }}
       >
         <View style={{ flex: 1, flexDirection: "row", alignItems: "center" }}>
-          {/* <View
-            style={{
-              width: 16,
-              height: 16,
-              borderWidth: 1,
-              borderColor: "#999",
-              marginRight: 8,
-            }}
-          ></View> */}
-          {/* <Text
-            style={{
-              fontSize: 12,
-              color: "#555",
-            }}
-          >
-            Nhớ đăng nhập
-          </Text> */}
-        </View>
-        <View>
+           <View>
           <TouchableOpacity onPress={() => router.push("/(no tabs)/otp")}>
             <Text
               style={{
@@ -136,6 +118,7 @@ export default function LoginView() {
               Quên mật khẩu
             </Text>
           </TouchableOpacity>
+        </View>
         </View>
       </View>
       <View
@@ -173,7 +156,6 @@ export default function LoginView() {
         }}
       >
         <TouchableOpacity
-          // onPress={() => router.push("/auth/Profile")}
           onPress={handleLogin}
           disabled={loading}
           style={{

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { router } from "expo-router";
-import { login } from "../services/AuthService";
+import { hasAccount, login } from "../services/AuthService";
 
 export function useLoginViewModel() {
   const [email, setEmail] = useState("");
@@ -21,21 +21,27 @@ export function useLoginViewModel() {
     return true;
   };
 
-  const handleLogin = async () => {
-    if (!validate()) return;
-
-    try {
-      setLoading(true);
-
-      await login(email, password);
-
-      router.replace("/auth/Profile"); // hoặc trang Home của bạn
-    } catch (error: any) {
-      alert(error.message);
-    } finally {
-      setLoading(false);
+const handleLogin = async () => {
+  if (!validate()) return;
+  try {
+    setLoading(true);
+    const success = await login(email, password);
+    if (!success) {
+      alert("Email hoặc mật khẩu không đúng.");
+      return;
     }
-  };
+    const hasAcc = await hasAccount();
+    if (hasAcc) {
+      router.replace("/(tabs)/Index"); // hoặc /auth/Profile
+    } else {
+      router.replace("/(no tabs)/InputUsr");
+    }
+  } catch (error: any) {
+    alert(error.message);
+  } finally {
+    setLoading(false);
+  }
+};
 
   return {
     email,
