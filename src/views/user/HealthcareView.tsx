@@ -22,7 +22,7 @@ export default function HealthcareView() {
   const { ex } = useExercisesViewModel();
   const { em } = useEmotionViewModel();
   const { mus } = useMusicViewModel();
-  const { content, setContent, selectedEmotionId, setSelectedEmotionId } =
+  const { content, setContent, selectedEmotionId, setSelectedEmotionId} =
     useAddEmotionLog();
   return (
     <ScrollView

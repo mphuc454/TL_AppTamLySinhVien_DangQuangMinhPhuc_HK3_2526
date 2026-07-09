@@ -1,34 +1,63 @@
-// import { supabase } from "../lib/supabase";
-// import { AuthResult, RegisterModel } from "../models/User";
+import { supabase } from "../lib/supabase";
 
-// export class AuthService {
-//   register = async (data: RegisterModel): Promise<AuthResult> => {
-//     const { email, password, username, phone } = data;
-//     const { data: signUpData, error } = await supabase.auth.signUp({
-//       email,
-//       password,
-//     });
-//     if (error) return { success: false, message: error.message };
-//     if (!signUpData.user)
-//       return { success: false, message: "lỗi không thể tạo người dùng được" };
-//     const { error: insertError } = await supabase.from("users").insert({
-//       id: signUpData.user.id,
-//       username,
-//       email,
-//       phone,
-//       role: "user",
-//     });
-//     if (insertError) return { success: false, message: insertError.message };
-//     return {
-//       success: true,
-//       userId: signUpData.user.id,
-//       message: "Đăng ký thành công, vui lòng xác nhận email",
-//     };
-//   };
-//   loginWithOAuth = async (provider: "google" | "facebook") => {
-//     const { data, error } = await supabase.auth.signInWithOAuth({ provider });
-//     if (error) throw error;
-//     return data;
-//   };
-// }
-// export const authService = new AuthService();
+export const register = async (
+  username: string,
+  email: string,
+  phone: string,
+  password: string
+): Promise<boolean> => {
+  try {
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+    });
+
+    if (error) throw error;
+
+    const user = data.user;
+
+    if (!user) {
+      throw new Error("Không tạo được tài khoản.");
+    }
+
+    const { error: userError } = await supabase.from("user").insert({
+      id: user.id,
+      full_name: username,
+      email,
+      phone,
+    });
+    if (userError) throw userError;
+    const { error: accountError } = await supabase.from("accounts").insert({
+      id: user.id,
+      username,
+      role: 1,
+      created_at: new Date().toISOString(),
+    });
+console.log(accountError);
+
+    if (accountError) throw accountError;
+
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+export const login = async (
+  email: string,
+  password: string
+): Promise<boolean> => {
+  try {
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (error) throw error;
+
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};

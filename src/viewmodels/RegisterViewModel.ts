@@ -1,0 +1,77 @@
+import { useState } from "react";
+import { register } from "../services/AuthService";
+import { router } from "expo-router";
+
+export function useRegisterViewModel(){
+    //   const [loading, setLoading] = useState(false);
+        const [username, setUsername] = useState("");
+        const [email, setEmail] = useState("");
+        const [phone, setPhone] = useState("");
+        const [password, setPassword] = useState("");
+        const [confirmPassword, setConfirmPassword] = useState("");
+        const validate = () =>{
+            if(!username.trim()){
+                alert('Vui lòng nhập tên')
+                return false
+            }
+                if (!email.trim()) {
+                    alert("Vui lòng nhập email.");
+                    return false;
+            }
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+             if (!emailRegex.test(email)) {
+                    alert("Email không hợp lệ.");
+                    return false;
+            }
+    if (!phone.trim()) {
+      alert("Vui lòng nhập số điện thoại.");
+      return false;
+    }
+    const phoneRegex = /^[0-9]{10}$/;
+    if (!phoneRegex.test(phone)) {
+      alert("Số điện thoại không hợp lệ.");
+      return false;
+    }
+
+    if (!password) {
+      alert("Vui lòng nhập mật khẩu.");
+      return false;
+    }
+
+    if (password.length < 6) {
+      alert("Mật khẩu phải có ít nhất 6 ký tự.");
+      return false;
+    }
+
+    if (password !== confirmPassword) {
+      alert("Mật khẩu xác nhận không khớp.");
+      return false;
+    }
+    return true;
+    }
+   const handleRegister = async () => {
+  if (!validate()) return;
+  try {
+    const success = await register(username, email, phone, password);
+    if (success) {
+      alert("Đăng ký thành công");
+      router.replace("/auth/Login");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+    return {
+    username,
+    setUsername,
+    email,
+    setEmail,
+    phone,
+    setPhone,
+    password,
+    setPassword,
+    confirmPassword,
+    setConfirmPassword,
+    handleRegister,
+  };
+}
