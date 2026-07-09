@@ -93,6 +93,14 @@ export default function DetailAppointmentView() {
   </View>
 
   <TouchableOpacity
+  onPress={() =>
+    router.push({
+      pathname: "/(no tabs)/MessageUser",
+      params: {
+        id: doc_id?.id,
+      },
+    })
+  }
     style={{
       marginTop: 24,
       backgroundColor: "#445AE6",
@@ -100,10 +108,11 @@ export default function DetailAppointmentView() {
       paddingVertical: 14,
       alignItems: "center",
     }}
+    
   >
     <Text
       style={{
-        color: colors.text,
+        color: "#fff",
         fontSize: 16,
         fontWeight: "700",
       }}
