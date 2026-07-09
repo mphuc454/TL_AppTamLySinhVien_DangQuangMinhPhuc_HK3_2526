@@ -4,8 +4,10 @@ import React, { useContext } from "react";
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ThemeContext } from "../theme/ThemeContext";
+import { useLoginViewModel } from "@/src/viewmodels/LoginViewModel";
 export default function LoginView() {
   const { colors } = useContext(ThemeContext);
+  const {email,setEmail,password,setPassword,loading,handleLogin} = useLoginViewModel();
   return (
     <SafeAreaView
       style={{
@@ -47,6 +49,8 @@ export default function LoginView() {
           Email
         </Text>
         <TextInput
+         value={email}
+  onChangeText={setEmail}
           style={{
             backgroundColor: "#FFF",
             borderWidth: 1,
@@ -85,6 +89,8 @@ export default function LoginView() {
           }}
         >
           <TextInput
+           value={password}
+  onChangeText={setPassword}
             style={{ flex: 1 }}
             placeholder="Nhập mật khẩu"
           ></TextInput>
@@ -101,7 +107,7 @@ export default function LoginView() {
         }}
       >
         <View style={{ flex: 1, flexDirection: "row", alignItems: "center" }}>
-          <View
+          {/* <View
             style={{
               width: 16,
               height: 16,
@@ -109,15 +115,15 @@ export default function LoginView() {
               borderColor: "#999",
               marginRight: 8,
             }}
-          ></View>
-          <Text
+          ></View> */}
+          {/* <Text
             style={{
               fontSize: 12,
               color: "#555",
             }}
           >
             Nhớ đăng nhập
-          </Text>
+          </Text> */}
         </View>
         <View>
           <TouchableOpacity onPress={() => router.push("/(no tabs)/otp")}>
@@ -167,7 +173,9 @@ export default function LoginView() {
         }}
       >
         <TouchableOpacity
-          onPress={() => router.push("/auth/Profile")}
+          // onPress={() => router.push("/auth/Profile")}
+          onPress={handleLogin}
+          disabled={loading}
           style={{
             marginTop: 10,
             backgroundColor: "#6D00D9",
@@ -186,7 +194,7 @@ export default function LoginView() {
               fontWeight: "700",
             }}
           >
-            Đăng nhập
+            {loading ? "Đang đăng nhập..." : "Đăng nhập"}
           </Text>
         </TouchableOpacity>
         <Text
@@ -199,22 +207,6 @@ export default function LoginView() {
         >
           or
         </Text>
-        <TouchableOpacity
-          style={{
-            marginTop: 30,
-            height: 60,
-            width: "100%",
-            borderRadius: 16,
-            justifyContent: "center",
-            alignItems: "center",
-            borderWidth: 1,
-            flexDirection: "row",
-            gap: 10,
-          }}
-        >
-          <Ionicons name="logo-facebook" size={24} color="#1877F2" />
-          <Text style={{color: colors.text}}>Tiếp tục với Facebook</Text>
-        </TouchableOpacity>
         <TouchableOpacity
           style={{
             marginTop: 30,
