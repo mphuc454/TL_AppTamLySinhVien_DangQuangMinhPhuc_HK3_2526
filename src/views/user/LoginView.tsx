@@ -1,14 +1,16 @@
 import { Feather, Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
-import React from "react";
+import React, { useContext } from "react";
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { ThemeContext } from "../theme/ThemeContext";
 export default function LoginView() {
+  const { colors } = useContext(ThemeContext);
   return (
     <SafeAreaView
       style={{
         flex: 1,
-        backgroundColor: "#F7F7F8",
+        backgroundColor: colors.background,
         paddingHorizontal: 20,
       }}
     >
@@ -16,7 +18,7 @@ export default function LoginView() {
         style={{ flexDirection: "row", alignItems: "center", marginTop: 30 }}
       >
         <TouchableOpacity onPress={() => router.push("/(tabs)/Index")}>
-          <Ionicons name="arrow-back" size={25}></Ionicons>
+          <Ionicons style={{ color: colors.text }}  name="arrow-back" size={25}></Ionicons>
         </TouchableOpacity>
         <Text
           style={{
@@ -24,6 +26,7 @@ export default function LoginView() {
             textAlign: "center",
             fontSize: 20,
             fontWeight: "bold",
+            color: colors.text
           }}
         >
           Đăng nhập tài khoản
@@ -190,7 +193,7 @@ export default function LoginView() {
           style={{
             textAlign: "center",
             marginTop: 30,
-            color: "#777",
+            color: colors.text,
             fontSize: 18,
           }}
         >
@@ -210,7 +213,7 @@ export default function LoginView() {
           }}
         >
           <Ionicons name="logo-facebook" size={24} color="#1877F2" />
-          <Text>Tiếp tục với Facebook</Text>
+          <Text style={{color: colors.text}}>Tiếp tục với Facebook</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={{
@@ -226,7 +229,7 @@ export default function LoginView() {
           }}
         >
           <Ionicons name="logo-google" size={24} color="#EA4335" />
-          <Text>Tiếp tục với Google</Text>
+          <Text style={{color: colors.text}}>Tiếp tục với Google</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>

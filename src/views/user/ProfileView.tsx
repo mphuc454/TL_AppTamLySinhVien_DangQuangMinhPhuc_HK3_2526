@@ -8,13 +8,17 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { ThemeContext } from "../theme/ThemeContext";
+import { useContext } from "react";
 
 export default function ProfileView() {
+    const { colors } = useContext(ThemeContext);
+  
   return (
     <ScrollView
       style={{
         flex: 1,
-        backgroundColor: "#F7F7F8",
+        backgroundColor: colors.background,
         paddingHorizontal: 20,
       }}
       contentContainerStyle={{ paddingBottom: 100 }}
@@ -23,7 +27,7 @@ export default function ProfileView() {
         style={{ flexDirection: "row", alignItems: "center", marginTop: 30 }}
       >
         <TouchableOpacity onPress={() => router.push("/(tabs)/Index")}>
-          <Ionicons name="arrow-back" size={25}></Ionicons>
+          <Ionicons style={{ color: colors.text }} name="arrow-back" size={25}></Ionicons>
         </TouchableOpacity>
         <Text
           style={{
@@ -31,6 +35,7 @@ export default function ProfileView() {
             textAlign: "center",
             fontSize: 20,
             fontWeight: "bold",
+            color: colors.text
           }}
         >
           Chỉnh sửa thông tin
