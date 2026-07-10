@@ -1,7 +1,7 @@
 import {
   useAccountDetailViewModel,
   useProfileViewModel,
-} from "@/src/viewmodels/ProfileViewModel";
+} from "@/src/viewmodels/auth/ProfileViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useContext } from "react";
@@ -13,12 +13,23 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { ThemeContext } from "../theme/ThemeContext";
+import { ThemeContext } from "../../theme/ThemeContext";
 
 export default function ProfileView() {
   const { colors } = useContext(ThemeContext);
   const { handleLogout } = useProfileViewModel();
-  const { acc } = useAccountDetailViewModel();
+  const {
+    usrname,
+    setUsername,
+    addr,
+    setAddr,
+    email,
+    setEmail,
+    phone,
+    setPhone,
+    handleAccount,
+  } = useAccountDetailViewModel();
+
   return (
     <ScrollView
       style={{
@@ -105,7 +116,8 @@ export default function ProfileView() {
             height: 52,
             paddingHorizontal: 12,
           }}
-          value={acc?.username ?? "Không có thông tin"}
+          value={usrname}
+          onChangeText={setUsername}
         ></TextInput>
       </View>
       <View
@@ -131,7 +143,8 @@ export default function ProfileView() {
             height: 52,
             paddingHorizontal: 12,
           }}
-          value={acc?.user_id.email ?? "Không có thông tin"}
+          value={email}
+          onChangeText={setEmail}
         ></TextInput>
       </View>
       <View
@@ -157,7 +170,8 @@ export default function ProfileView() {
             height: 52,
             paddingHorizontal: 12,
           }}
-          value={acc?.user_id.phone ?? "Không có thông tin"}
+          value={phone}
+          onChangeText={setPhone}
         ></TextInput>
       </View>
 
@@ -184,7 +198,8 @@ export default function ProfileView() {
             height: 52,
             paddingHorizontal: 12,
           }}
-          value={acc?.address ?? "Không có thông tin"}
+          value={addr}
+          onChangeText={setAddr}
         ></TextInput>
       </View>
       <View
@@ -196,6 +211,7 @@ export default function ProfileView() {
       >
         <View style={{ flex: 1 }}>
           <TouchableOpacity
+            onPress={handleAccount}
             style={{
               backgroundColor: "#29296d",
               height: 55,
@@ -209,26 +225,7 @@ export default function ProfileView() {
             <Text
               style={{ color: "#fff", fontSize: 12, fontWeight: "semibold" }}
             >
-              Cập nhật thông tin
-            </Text>
-          </TouchableOpacity>
-        </View>
-        <View style={{ flex: 1 }}>
-          <TouchableOpacity
-            style={{
-              backgroundColor: "#29296d",
-              height: 55,
-              borderRadius: 8,
-              justifyContent: "center",
-              alignItems: "center",
-              width: "80%",
-              alignSelf: "center",
-            }}
-          >
-            <Text
-              style={{ color: "#fff", fontSize: 12, fontWeight: "semibold" }}
-            >
-              Lưu thay đổi
+              Cập nhật thay đổi
             </Text>
           </TouchableOpacity>
         </View>

@@ -1,10 +1,10 @@
-import { useLoginViewModel } from "@/src/viewmodels/LoginViewModel";
+import { useLoginViewModel } from "@/src/viewmodels/auth/LoginViewModel";
 import { Feather, Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useContext } from "react";
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { ThemeContext } from "../theme/ThemeContext";
+import { ThemeContext } from "../../theme/ThemeContext";
 export default function LoginView() {
   const { colors } = useContext(ThemeContext);
   const { email, setEmail, password, setPassword, loading, handleLogin } =

@@ -1,11 +1,11 @@
 // import { useRegisterViewModel } from "@/src/viewmodels/AuthViewModels";
-import { useRegisterViewModel } from "@/src/viewmodels/RegisterViewModel";
+import { useRegisterViewModel } from "@/src/viewmodels/auth/RegisterViewModel";
 import { Feather, Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useContext } from "react";
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { ThemeContext } from "../theme/ThemeContext";
+import { ThemeContext } from "../../theme/ThemeContext";
 export default function RegisterView() {
   const { colors } = useContext(ThemeContext);
   const {
