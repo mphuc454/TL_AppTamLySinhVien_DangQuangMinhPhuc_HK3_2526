@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { Music } from "../models/Music";
 import {
-    geDetailedMusicsbyID,
-    getAllMusics,
+  geDetailedMusicsbyID,
+  getAllMusics,
 } from "../repository/MusicRepository";
 
-// lấy danh sách bài tập
+//1. lấy danh sách bài nhạc
 export function useMusicViewModel() {
   const [mus, setMus] = useState<Music[]>([]);
   const [loading, setLoading] = useState(false);
@@ -26,7 +26,8 @@ export function useMusicViewModel() {
 
   return { mus, loading };
 }
-// lấy chi tiết âm nhạc by id
+
+//2. lấy chi tiết âm nhạc by id
 export function useMusicsDetailViewModel(id: number) {
   const [mus_id, setMus_id] = useState<Music | null>(null);
   const [loading, setLoading] = useState(false);

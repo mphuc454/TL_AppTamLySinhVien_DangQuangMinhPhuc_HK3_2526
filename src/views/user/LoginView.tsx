@@ -1,13 +1,14 @@
+import { useLoginViewModel } from "@/src/viewmodels/LoginViewModel";
 import { Feather, Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useContext } from "react";
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ThemeContext } from "../theme/ThemeContext";
-import { useLoginViewModel } from "@/src/viewmodels/LoginViewModel";
 export default function LoginView() {
   const { colors } = useContext(ThemeContext);
-  const {email,setEmail,password,setPassword,loading,handleLogin} = useLoginViewModel();
+  const { email, setEmail, password, setPassword, loading, handleLogin } =
+    useLoginViewModel();
   return (
     <SafeAreaView
       style={{
@@ -20,7 +21,11 @@ export default function LoginView() {
         style={{ flexDirection: "row", alignItems: "center", marginTop: 30 }}
       >
         <TouchableOpacity onPress={() => router.push("/(tabs)/Index")}>
-          <Ionicons style={{ color: colors.text }}  name="arrow-back" size={25}></Ionicons>
+          <Ionicons
+            style={{ color: colors.text }}
+            name="arrow-back"
+            size={25}
+          ></Ionicons>
         </TouchableOpacity>
         <Text
           style={{
@@ -28,7 +33,7 @@ export default function LoginView() {
             textAlign: "center",
             fontSize: 20,
             fontWeight: "bold",
-            color: colors.text
+            color: colors.text,
           }}
         >
           Đăng nhập tài khoản
@@ -49,8 +54,10 @@ export default function LoginView() {
           Email
         </Text>
         <TextInput
-         value={email}
-  onChangeText={setEmail}
+          value={email}
+          onChangeText={setEmail}
+          autoCapitalize="none"
+          keyboardType="email-address"
           style={{
             backgroundColor: "#FFF",
             borderWidth: 1,
@@ -89,8 +96,10 @@ export default function LoginView() {
           }}
         >
           <TextInput
-           value={password}
-  onChangeText={setPassword}
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry
+            autoCapitalize="none"
             style={{ flex: 1 }}
             placeholder="Nhập mật khẩu"
           ></TextInput>
@@ -107,35 +116,20 @@ export default function LoginView() {
         }}
       >
         <View style={{ flex: 1, flexDirection: "row", alignItems: "center" }}>
-          {/* <View
-            style={{
-              width: 16,
-              height: 16,
-              borderWidth: 1,
-              borderColor: "#999",
-              marginRight: 8,
-            }}
-          ></View> */}
-          {/* <Text
-            style={{
-              fontSize: 12,
-              color: "#555",
-            }}
-          >
-            Nhớ đăng nhập
-          </Text> */}
-        </View>
-        <View>
-          <TouchableOpacity onPress={() => router.push("/(no tabs)/otp")}>
-            <Text
-              style={{
-                fontSize: 12,
-                color: "#4169E1",
-              }}
+          <View>
+            <TouchableOpacity
+              onPress={() => router.push("/(no tabs)/InputUsr")}
             >
-              Quên mật khẩu
-            </Text>
-          </TouchableOpacity>
+              <Text
+                style={{
+                  fontSize: 12,
+                  color: "#4169E1",
+                }}
+              >
+                Quên mật khẩu
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
       <View
@@ -173,7 +167,6 @@ export default function LoginView() {
         }}
       >
         <TouchableOpacity
-          // onPress={() => router.push("/auth/Profile")}
           onPress={handleLogin}
           disabled={loading}
           style={{
@@ -221,7 +214,7 @@ export default function LoginView() {
           }}
         >
           <Ionicons name="logo-google" size={24} color="#EA4335" />
-          <Text style={{color: colors.text}}>Tiếp tục với Google</Text>
+          <Text style={{ color: colors.text }}>Tiếp tục với Google</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>

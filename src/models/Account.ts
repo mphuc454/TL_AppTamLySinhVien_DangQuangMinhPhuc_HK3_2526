@@ -1,14 +1,12 @@
-import { User } from "./User";
- enum Role {
-  User = 1,
-  Admin = 2,
-  Doctor = 3,
-}
+import { User } from "@supabase/supabase-js";
+
 export interface Account {
-  id: number;
   user_id: User;
   username: string;
-  password: string;
-  role: Role;
+  address: string;
+  avatar_url: string;
+  birth_date: number;
+  gender: number;
+  role: number;
   created_at: string;
 }
