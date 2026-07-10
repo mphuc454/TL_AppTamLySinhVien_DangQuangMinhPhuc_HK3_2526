@@ -32,9 +32,9 @@ export function useLoginViewModel() {
       }
       const hasAcc = await hasAccount();
       if (hasAcc) {
-        router.replace("/(tabs)/Index"); // hoặc /auth/Profile
+        router.replace("/(tabs)/Index");
       } else {
-        router.replace("/(no tabs)/InputUsr");
+        router.replace("/auth/InputUsr");
       }
     } catch {
       alert("Đăng nhập thất bại.");
