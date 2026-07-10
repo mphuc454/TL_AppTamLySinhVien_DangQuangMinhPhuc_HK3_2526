@@ -73,7 +73,7 @@ export default function SettingView() {
           Thay đổi màu nền
         </Text>
       </TouchableOpacity>
-       <TouchableOpacity
+      <TouchableOpacity
         onPress={() => router.push("/(no tabs)/InputUsr")}
         style={{
           backgroundColor: "#FCDDDD",

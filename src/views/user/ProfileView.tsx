@@ -1,5 +1,10 @@
+import {
+  useAccountDetailViewModel,
+  useProfileViewModel,
+} from "@/src/viewmodels/ProfileViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
+import { useContext } from "react";
 import {
   Image,
   ScrollView,
@@ -9,12 +14,11 @@ import {
   View,
 } from "react-native";
 import { ThemeContext } from "../theme/ThemeContext";
-import { useContext } from "react";
-import { useProfileViewModel } from "@/src/viewmodels/ProfileViewModel";
 
 export default function ProfileView() {
-    const { colors } = useContext(ThemeContext);
-    const { handleLogout } = useProfileViewModel();
+  const { colors } = useContext(ThemeContext);
+  const { handleLogout } = useProfileViewModel();
+  const { acc } = useAccountDetailViewModel();
   return (
     <ScrollView
       style={{
@@ -28,7 +32,11 @@ export default function ProfileView() {
         style={{ flexDirection: "row", alignItems: "center", marginTop: 30 }}
       >
         <TouchableOpacity onPress={() => router.push("/(tabs)/Index")}>
-          <Ionicons style={{ color: colors.text }} name="arrow-back" size={25}></Ionicons>
+          <Ionicons
+            style={{ color: colors.text }}
+            name="arrow-back"
+            size={25}
+          ></Ionicons>
         </TouchableOpacity>
         <Text
           style={{
@@ -36,7 +44,7 @@ export default function ProfileView() {
             textAlign: "center",
             fontSize: 20,
             fontWeight: "bold",
-            color: colors.text
+            color: colors.text,
           }}
         >
           Chỉnh sửa thông tin
@@ -97,9 +105,8 @@ export default function ProfileView() {
             height: 52,
             paddingHorizontal: 12,
           }}
-        >
-          Alex
-        </TextInput>
+          value={acc?.username ?? "Không có thông tin"}
+        ></TextInput>
       </View>
       <View
         style={{
@@ -124,7 +131,7 @@ export default function ProfileView() {
             height: 52,
             paddingHorizontal: 12,
           }}
-          value="22130215@st.hcmuaf.edu.vn"
+          value={acc?.user_id.email ?? "Không có thông tin"}
         ></TextInput>
       </View>
       <View
@@ -150,9 +157,10 @@ export default function ProfileView() {
             height: 52,
             paddingHorizontal: 12,
           }}
-          value="099888"
+          value={acc?.user_id.phone ?? "Không có thông tin"}
         ></TextInput>
       </View>
+
       <View
         style={{
           marginTop: 10,
@@ -165,7 +173,7 @@ export default function ProfileView() {
             marginBottom: 6,
           }}
         >
-          Ngày sinh
+          Nơi sống
         </Text>
         <TextInput
           style={{
@@ -176,7 +184,7 @@ export default function ProfileView() {
             height: 52,
             paddingHorizontal: 12,
           }}
-          value="14/09/2004"
+          value={acc?.address ?? "Không có thông tin"}
         ></TextInput>
       </View>
       <View
@@ -295,7 +303,7 @@ export default function ProfileView() {
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
-      onPress={handleLogout}
+        onPress={handleLogout}
         style={{
           backgroundColor: "#C0392B",
           borderRadius: 25,

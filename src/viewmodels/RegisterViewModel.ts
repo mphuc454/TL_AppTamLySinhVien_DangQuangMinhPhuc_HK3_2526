@@ -1,28 +1,28 @@
-import { useState } from "react";
-import { register } from "../services/AuthService";
 import { router } from "expo-router";
+import { useState } from "react";
+import { register } from "../repository/AuthRepository";
 
-export function useRegisterViewModel(){
-    //   const [loading, setLoading] = useState(false);
-        const [username, setUsername] = useState("");
-        const [email, setEmail] = useState("");
-        const [phone, setPhone] = useState("");
-        const [password, setPassword] = useState("");
-        const [confirmPassword, setConfirmPassword] = useState("");
-        const validate = () =>{
-            if(!username.trim()){
-                alert('Vui lòng nhập tên')
-                return false
-            }
-                if (!email.trim()) {
-                    alert("Vui lòng nhập email.");
-                    return false;
-            }
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-             if (!emailRegex.test(email)) {
-                    alert("Email không hợp lệ.");
-                    return false;
-            }
+//1. xử lý dữ liệu đăng ký tài khoản
+export function useRegisterViewModel() {
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const validate = () => {
+    if (!username.trim()) {
+      alert("Vui lòng nhập tên");
+      return false;
+    }
+    if (!email.trim()) {
+      alert("Vui lòng nhập email.");
+      return false;
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      alert("Email không hợp lệ.");
+      return false;
+    }
     if (!phone.trim()) {
       alert("Vui lòng nhập số điện thoại.");
       return false;
@@ -48,20 +48,23 @@ export function useRegisterViewModel(){
       return false;
     }
     return true;
+  };
+  const handleRegister = async () => {
+    if (!validate()) return;
+    try {
+      const result = await register(username, email, phone, password);
+      if (result.success) {
+        alert("Đăng ký thành công");
+        router.replace("/auth/Login");
+      } else {
+        alert(result.error || "Đăng ký thất bại.");
+      }
+    } catch (error) {
+      console.log(error);
+      alert("Đăng ký thất bại.");
     }
-   const handleRegister = async () => {
-  if (!validate()) return;
-  try {
-    const success = await register(username, email, phone, password);
-    if (success) {
-      alert("Đăng ký thành công");
-      router.replace("/auth/Login");
-    }
-  } catch (error) {
-    console.log(error);
-  }
-};
-    return {
+  };
+  return {
     username,
     setUsername,
     email,

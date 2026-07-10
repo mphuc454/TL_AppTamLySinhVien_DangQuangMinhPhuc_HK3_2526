@@ -1,12 +1,12 @@
 import { useInputUsrViewModel } from "@/src/viewmodels/InputUsrViewModel";
 import {
-  View,
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
-  StyleSheet,
-  KeyboardAvoidingView,
-  Platform,
+  View,
 } from "react-native";
 
 const ROLES = [
@@ -16,7 +16,7 @@ const ROLES = [
 ];
 
 export default function InputUsrView() {
-  const {name, setName, role, setRole, handleSubmit} = useInputUsrViewModel();
+  const { name, setName, role, setRole, handleSubmit } = useInputUsrViewModel();
 
   return (
     <KeyboardAvoidingView
@@ -63,17 +63,16 @@ export default function InputUsrView() {
             </Text>
           ))}
         </View>
-      <TouchableOpacity
+        <TouchableOpacity
           style={[
-          styles.submitButton,
-          (!name || !role) && styles.submitButtonDisabled,]}
+            styles.submitButton,
+            (!name || !role) && styles.submitButtonDisabled,
+          ]}
           disabled={!name || !role}
           onPress={handleSubmit}
->
-  <Text style={styles.submitButtonText}>
-    Xác nhận
-  </Text>
-</TouchableOpacity>
+        >
+          <Text style={styles.submitButtonText}>Xác nhận</Text>
+        </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
   );

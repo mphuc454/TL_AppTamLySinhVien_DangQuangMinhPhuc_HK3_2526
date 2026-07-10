@@ -7,42 +7,42 @@ export function useArticleViewModel() {
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState(false);
   const loadArticles = async () => {
-    try{
-      setLoading(true)
+    try {
+      setLoading(true);
       const data = await getArticles();
       setArticles(data);
-    }catch(error){
-      console.log(error)
+    } catch (error) {
+      console.log(error);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
-    useEffect(() => {
-          loadArticles();
-      }, []);
+  };
+  useEffect(() => {
+    loadArticles();
+  }, []);
 
-      return {articles, loading};
+  return { articles, loading };
 }
-  // lấy chi tiết bài viết
-  export function useArticleDetailViewModel(id: number){
-    const [arc, setArc] = useState<Article | null>(null);
-    const [loading, setLoading] = useState(false);
+// lấy chi tiết bài viết
+export function useArticleDetailViewModel(id: number) {
+  const [arc, setArc] = useState<Article | null>(null);
+  const [loading, setLoading] = useState(false);
 
-     useEffect(() => {
-            const loadExercisesDetail = async () => {
-                try {
-                setLoading(true);
-                const data = await getArticleByID(id);
-                setArc(data);
-                } catch (error) {
-                console.log(error);
-                } finally {
-                setLoading(false);
-                }
-            };
-    
-            loadExercisesDetail();
-            }, [id]);
+  useEffect(() => {
+    const loadExercisesDetail = async () => {
+      try {
+        setLoading(true);
+        const data = await getArticleByID(id);
+        setArc(data);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-            return {arc, loading};
-  }
+    loadExercisesDetail();
+  }, [id]);
+
+  return { arc, loading };
+}

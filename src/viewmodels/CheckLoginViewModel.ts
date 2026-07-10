@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../lib/supabase";
 
-
-
 export function useCheckLogin() {
   const [isLogin, setIsLogin] = useState(false);
 

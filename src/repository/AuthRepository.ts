@@ -1,24 +1,29 @@
 import { supabase } from "../lib/supabase";
 
+type AuthResult = {
+  success: boolean;
+  error?: string;
+};
+
 // 1. Xử lý đăng ký
 export const register = async (
   username: string,
   email: string,
   phone: string,
-  password: string
-): Promise<boolean> => {
+  password: string,
+): Promise<AuthResult> => {
   try {
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
     });
-
-    if (error) throw error;
+    if (error) {
+      return { success: false, error: error.message };
+    }
 
     const user = data.user;
-
     if (!user) {
-      throw new Error("Không tạo được tài khoản.");
+      return { success: false, error: "Không tạo được tài khoản." };
     }
 
     const { error: userError } = await supabase.from("user").insert({
@@ -27,31 +32,37 @@ export const register = async (
       email,
       phone,
     });
-    if (userError) throw userError;
-    return true;
-  } catch (error) {
+
+    if (userError) {
+      return { success: false, error: userError.message };
+    }
+
+    return { success: true };
+  } catch (error: any) {
     console.log(error);
-    return false;
+    return { success: false, error: error?.message || "Đăng ký thất bại." };
   }
 };
 
 // 2. Xử lý đăng nhập
 export const login = async (
   email: string,
-  password: string
-): Promise<boolean> => {
+  password: string,
+): Promise<AuthResult> => {
   try {
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
 
-    if (error) throw error;
+    if (error) {
+      return { success: false, error: error.message };
+    }
 
-    return true;
-  } catch (error) {
+    return { success: true };
+  } catch (error: any) {
     console.log(error);
-    return false;
+    return { success: false, error: error?.message || "Đăng nhập thất bại." };
   }
 };
 
@@ -68,14 +79,17 @@ export const logout = async (): Promise<boolean> => {
 };
 
 // 4. Xử lý account
-export const createAccount = async (username: string, role: number): Promise<boolean> => {
+export const createAccount = async (
+  username: string,
+  role: number,
+): Promise<boolean> => {
   try {
     const {
       data: { user },
     } = await supabase.auth.getUser();
     if (!user) throw new Error("Chưa đăng nhập");
     const { error } = await supabase.from("accounts").insert({
-      id: user.id,
+      user_id: user.id,
       username,
       role,
       created_at: new Date().toISOString(),
@@ -88,8 +102,9 @@ export const createAccount = async (username: string, role: number): Promise<boo
     console.log(error);
     return false;
   }
-}; 
+};
 
+// 5. Kiểm tra account
 export const hasAccount = async (): Promise<boolean> => {
   const {
     data: { user },
@@ -99,18 +114,18 @@ export const hasAccount = async (): Promise<boolean> => {
 
   const { data, error } = await supabase
     .from("accounts")
-    .select("id")
-    .eq("id", user.id)
+    .select("user_id")
+    .eq("user_id", user.id)
     .maybeSingle();
 
   if (error) {
     console.log(error);
     return false;
   }
-
   return !!data;
 };
 
+// 6. Lấy account
 export const getAccount = async () => {
   const {
     data: { user },
@@ -121,7 +136,7 @@ export const getAccount = async () => {
   const { data, error } = await supabase
     .from("accounts")
     .select("*")
-    .eq("id", user.id)
+    .eq("user_id", user.id)
     .single();
 
   if (error) throw error;

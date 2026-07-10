@@ -1,12 +1,12 @@
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
+import { useContext } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { ThemeContext } from "../theme/ThemeContext";
-import { useContext } from "react";
 
 export default function EmergencyCallView() {
-      const { colors } = useContext(ThemeContext);
-  
+  const { colors } = useContext(ThemeContext);
+
   return (
     <ScrollView
       style={{
@@ -20,7 +20,11 @@ export default function EmergencyCallView() {
         style={{ flexDirection: "row", alignItems: "center", marginTop: 80 }}
       >
         <TouchableOpacity onPress={() => router.push("/(tabs)/Index")}>
-          <Ionicons style={{ color: colors.text }} name="arrow-back" size={25}></Ionicons>
+          <Ionicons
+            style={{ color: colors.text }}
+            name="arrow-back"
+            size={25}
+          ></Ionicons>
         </TouchableOpacity>
         <Text
           style={{
@@ -28,7 +32,7 @@ export default function EmergencyCallView() {
             textAlign: "center",
             fontSize: 20,
             fontWeight: "bold",
-            color: colors.text
+            color: colors.text,
           }}
         >
           Các cuộc gọi khẩn cấp
@@ -58,7 +62,9 @@ export default function EmergencyCallView() {
         </TouchableOpacity>
       </View>
       <View style={{ marginTop: 30 }}>
-        <Text style={{ color: colors.text }}>DANH SÁCH CUỘC GỌI ĐƯỢC LƯU: </Text>
+        <Text style={{ color: colors.text }}>
+          DANH SÁCH CUỘC GỌI ĐƯỢC LƯU:{" "}
+        </Text>
         <TouchableOpacity
           style={{
             marginTop: 10,
