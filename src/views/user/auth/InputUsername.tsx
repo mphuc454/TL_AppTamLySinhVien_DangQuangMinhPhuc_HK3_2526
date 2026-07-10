@@ -1,4 +1,4 @@
-import { useInputUsrViewModel } from "@/src/viewmodels/InputUsrViewModel";
+import { useInputUsrViewModel } from "@/src/viewmodels/auth/InputUsrViewModel";
 import {
   KeyboardAvoidingView,
   Platform,

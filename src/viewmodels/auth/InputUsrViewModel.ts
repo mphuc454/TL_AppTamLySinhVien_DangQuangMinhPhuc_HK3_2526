@@ -1,6 +1,6 @@
+import { createAccount } from "@/src/repository/auth/AuthRepository";
 import { router } from "expo-router";
 import { useState } from "react";
-import { createAccount } from "../repository/AuthRepository";
 
 //1. Xử lý dữ liệu nhập input
 export function useInputUsrViewModel() {

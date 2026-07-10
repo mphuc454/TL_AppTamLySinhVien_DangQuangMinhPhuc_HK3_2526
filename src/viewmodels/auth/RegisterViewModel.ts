@@ -1,6 +1,6 @@
+import { register } from "@/src/repository/auth/AuthRepository";
 import { router } from "expo-router";
 import { useState } from "react";
-import { register } from "../repository/AuthRepository";
 
 //1. xử lý dữ liệu đăng ký tài khoản
 export function useRegisterViewModel() {

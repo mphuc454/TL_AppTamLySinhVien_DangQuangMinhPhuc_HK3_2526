@@ -1,6 +1,6 @@
+import { hasAccount, login } from "@/src/repository/auth/AuthRepository";
 import { router } from "expo-router";
 import { useState } from "react";
-import { hasAccount, login } from "../repository/AuthRepository";
 
 export function useLoginViewModel() {
   const [email, setEmail] = useState("");
