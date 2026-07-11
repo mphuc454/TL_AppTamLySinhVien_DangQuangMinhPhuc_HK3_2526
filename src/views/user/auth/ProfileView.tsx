@@ -266,6 +266,7 @@ export default function ProfileView() {
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
+        onPress={() => router.push("/auth/ChangePass")}
         style={{
           backgroundColor: "#FBDFDF",
           borderRadius: 25,
