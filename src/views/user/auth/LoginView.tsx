@@ -114,24 +114,7 @@ export default function LoginView() {
           marginTop: 30,
           alignItems: "center",
         }}
-      >
-        <View style={{ flex: 1, flexDirection: "row", alignItems: "center" }}>
-          <View>
-            <TouchableOpacity
-              onPress={() => router.push("/(no tabs)/InputUsr")}
-            >
-              <Text
-                style={{
-                  fontSize: 12,
-                  color: "#4169E1",
-                }}
-              >
-                Quên mật khẩu
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </View>
+      ></View>
       <View
         style={{
           flexDirection: "row",

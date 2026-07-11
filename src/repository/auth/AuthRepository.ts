@@ -142,3 +142,14 @@ export const getAccount = async () => {
   if (error) throw error;
   return data;
 };
+
+// 7. Thay đổi password
+export const changePassword = async (newPass: string) => {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user || !user.email) return null;
+  const { error } = await supabase.auth.updateUser({ password: newPass });
+  if (error) throw error;
+  return true;
+};

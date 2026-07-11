@@ -1,4 +1,4 @@
-import { logout } from "@/src/repository/auth/AuthRepository";
+import { changePassword, logout } from "@/src/repository/auth/AuthRepository";
 import {
   getAccountById,
   modifyAccountbyID,
@@ -75,4 +75,33 @@ export function useAccountDetailViewModel() {
     handleAccount,
     loading,
   };
+}
+
+//3. thay đổi mật khẩu tài khoản
+export function useChangePassword() {
+  const [newPa, setNewPa] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleChangePass = async () => {
+    if (!newPa) {
+      alert("Vui lòng nhập đầy đủ mật khẩu.");
+      return;
+    }
+    if (newPa.length < 6) {
+      alert("Mật khẩu phải có ít nhất 6 ký tự");
+      return;
+    }
+    try {
+      setLoading(true);
+      await changePassword(newPa);
+      alert("Đã thay đổi mật khẩu thành công");
+      router.replace("/(tabs)/Index");
+      setNewPa("");
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  return { newPa, setNewPa, handleChangePass, loading };
 }
