@@ -38,6 +38,7 @@ export const modifyAccountbyID = async (
   phone: string,
   address: string,
   email: string,
+  gender: string,
 ) => {
   const {
     data: { user },
@@ -47,7 +48,7 @@ export const modifyAccountbyID = async (
   }
   const { data: account, error: accountError } = await supabase
     .from("accounts")
-    .update({ username, address })
+    .update({ username, address, gender })
     .eq("user_id", user.id)
     .select()
     .single();

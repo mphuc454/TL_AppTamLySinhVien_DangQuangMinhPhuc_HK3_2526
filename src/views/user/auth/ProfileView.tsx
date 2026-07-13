@@ -6,7 +6,6 @@ import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useContext } from "react";
 import {
-  Image,
   ScrollView,
   Text,
   TextInput,
@@ -28,6 +27,8 @@ export default function ProfileView() {
     phone,
     setPhone,
     handleAccount,
+    gender,
+    setGender,
   } = useAccountDetailViewModel();
 
   return (
@@ -44,13 +45,14 @@ export default function ProfileView() {
       >
         <TouchableOpacity onPress={() => router.push("/(tabs)/Index")}>
           <Ionicons
-            style={{ color: colors.text }}
+            style={{ color: colors.text, marginTop: 30 }}
             name="arrow-back"
             size={25}
           ></Ionicons>
         </TouchableOpacity>
         <Text
           style={{
+            marginTop: 30,
             flex: 1,
             textAlign: "center",
             fontSize: 20,
@@ -66,33 +68,7 @@ export default function ProfileView() {
           alignSelf: "center",
           marginVertical: 20,
         }}
-      >
-        <Image
-          source={{ uri: "https://i.pravatar.cc/150?img=5" }}
-          style={{
-            width: 110,
-            height: 110,
-            borderRadius: 55,
-            borderWidth: 2,
-            borderColor: "#5b5bb5",
-          }}
-        ></Image>
-        <TouchableOpacity
-          style={{
-            position: "absolute",
-            bottom: 5,
-            right: 0,
-            width: 24,
-            height: 24,
-            borderRadius: 12,
-            backgroundColor: "#5b5bb5",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Ionicons name="camera" size={20} color="#fff" />
-        </TouchableOpacity>
-      </View>
+      ></View>
       <View
         style={{
           marginTop: 10,
@@ -105,7 +81,7 @@ export default function ProfileView() {
             marginBottom: 6,
           }}
         >
-          Tên
+          Tên người dùng
         </Text>
         <TextInput
           style={{
@@ -132,7 +108,7 @@ export default function ProfileView() {
             marginBottom: 6,
           }}
         >
-          Email
+          Email người dùng
         </Text>
         <TextInput
           style={{
@@ -159,7 +135,7 @@ export default function ProfileView() {
             marginBottom: 6,
           }}
         >
-          SĐT
+          SĐT người dùng
         </Text>
         <TextInput
           style={{
@@ -200,6 +176,33 @@ export default function ProfileView() {
           }}
           value={addr}
           onChangeText={setAddr}
+        ></TextInput>
+      </View>
+      <View
+        style={{
+          marginTop: 10,
+        }}
+      >
+        <Text
+          style={{
+            fontSize: 12,
+            color: "#888",
+            marginBottom: 6,
+          }}
+        >
+          Giới tính người dùng
+        </Text>
+        <TextInput
+          style={{
+            backgroundColor: "#FFF",
+            borderWidth: 1,
+            borderColor: "#E5E5E5",
+            borderRadius: 10,
+            height: 52,
+            paddingHorizontal: 12,
+          }}
+          value={gender}
+          onChangeText={setGender}
         ></TextInput>
       </View>
       <View

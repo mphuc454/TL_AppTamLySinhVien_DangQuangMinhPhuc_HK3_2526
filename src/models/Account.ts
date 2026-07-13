@@ -1,4 +1,4 @@
-import { User } from "@supabase/supabase-js";
+import { User } from "./User";
 
 export interface Account {
   user_id: User;
@@ -6,7 +6,7 @@ export interface Account {
   address: string;
   avatar_url: string;
   birth_date: number;
-  gender: number;
+  gender: string;
   role: number;
   created_at: string;
 }
