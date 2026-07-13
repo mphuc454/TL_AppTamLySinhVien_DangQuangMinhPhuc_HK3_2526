@@ -7,6 +7,7 @@ export interface Article {
   content: string;
   name_author: string;
   published: boolean;
+  views: number;
   created_at: string;
   updated_at: string;
   time_to_read: number;
