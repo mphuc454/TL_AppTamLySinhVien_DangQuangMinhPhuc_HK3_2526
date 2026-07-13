@@ -9,18 +9,37 @@ export default function HeaderAdmin() {
     <View
       style={{
         flexDirection: "row",
-        justifyContent: "space-between",
         alignItems: "center",
-        paddingHorizontal: 20,
-        paddingTop: 60,
+        backgroundColor: "#2563EB",
+        paddingHorizontal: 16,
+        paddingVertical: 30,
+        borderBottomLeftRadius: 20,
+        borderBottomRightRadius: 20,
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 4,
       }}
     >
       <TouchableOpacity
+        style={{
+          padding: 6,
+        }}
         onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
       >
         <Ionicons name="menu" size={28} />
       </TouchableOpacity>
-      <Text style={{ fontSize: 18, fontWeight: "bold" }}>GIAO DIỆN ADMIN</Text>
+      <Text
+        style={{
+          flex: 1,
+          textAlign: "center",
+          color: "#fff",
+          fontSize: 22,
+          fontWeight: "bold",
+        }}
+      >
+        GIAO DIỆN ADMIN
+      </Text>
     </View>
   );
 }

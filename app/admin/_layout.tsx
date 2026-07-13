@@ -32,6 +32,12 @@ export default function AdminLayout() {
           title: "Quản Lý Bài Viết",
         }}
       />
+      <Drawer.Screen
+        name="ChatbotManagement"
+        options={{
+          title: "Quản Lý Chatbot",
+        }}
+      />
     </Drawer>
   );
 }

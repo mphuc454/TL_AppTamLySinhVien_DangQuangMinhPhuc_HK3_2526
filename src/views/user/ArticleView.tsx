@@ -154,7 +154,6 @@ export default function ArticleView() {
                   }}
                 >
                   <Ionicons name="time-outline" size={14} color="#555" />
-
                   <Text
                     style={{
                       marginLeft: 4,
@@ -163,6 +162,22 @@ export default function ArticleView() {
                     }}
                   >
                     {article.time_to_read} phút đọc
+                  </Text>
+
+                  <Ionicons
+                    name="eye-outline"
+                    size={14}
+                    color="#555"
+                    style={{ marginLeft: 15 }}
+                  />
+                  <Text
+                    style={{
+                      marginLeft: 4,
+                      color: "#555",
+                      fontSize: 13,
+                    }}
+                  >
+                    {article.views ?? 0} lượt xem
                   </Text>
                 </View>
 
