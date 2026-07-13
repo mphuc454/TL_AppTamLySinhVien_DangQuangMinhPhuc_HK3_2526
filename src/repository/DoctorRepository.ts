@@ -21,15 +21,29 @@ export const getSkillDoctor = async (): Promise<DoctorSkill[]> => {
 
 //3. lấy chi tiết 1 bài viết từ cơ sở dữ liệu
 export const getDoctorByID = async (id: number) => {
-  const { data, error } = await supabase
+  const { data: doctor, error } = await supabase
     .from("doctors")
-    .select(`*, account_id(*, user_id (*))`)
+    .select(`*, account_id(*)`)
     .eq("id", id)
     .single();
-  if (error) {
-    throw new Error(error.message);
-  }
-  return data ?? [];
+
+  if (error) throw error;
+
+  const { data: profile, error: profileError } = await supabase
+    .from("user")
+    .select("*")
+    .eq("id", doctor.account_id.user_id)
+    .single();
+
+  if (profileError) throw profileError;
+
+  return {
+    ...doctor,
+    account_id: {
+      ...doctor.account_id,
+      user_id: profile,
+    },
+  };
 };
 
 //4. Lấy chi tiết kỹ năng của bác sĩ từ DB:

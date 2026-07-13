@@ -1,4 +1,7 @@
-import { useDoctorDetailViewModel, useSkillDetailViewModel} from "@/src/viewmodels/DoctorViewModel";
+import {
+  useDoctorDetailViewModel,
+  useSkillDetailViewModel,
+} from "@/src/viewmodels/DoctorViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import { useContext, useState } from "react";
@@ -7,10 +10,10 @@ import { ThemeContext } from "../theme/ThemeContext";
 
 export default function DetailAppointmentView() {
   const { colors } = useContext(ThemeContext);
-  const {id} = useLocalSearchParams();
+  const { id } = useLocalSearchParams();
   const [saveEmergency, setSaveEmergency] = useState(true);
-  const {doc_id} = useDoctorDetailViewModel(Number(id));
-  const {skill_id} = useSkillDetailViewModel(Number(id));
+  const { doc_id } = useDoctorDetailViewModel(Number(id));
+  const { skill_id } = useSkillDetailViewModel(Number(id));
   return (
     <ScrollView
       style={{
@@ -25,7 +28,11 @@ export default function DetailAppointmentView() {
         style={{ flexDirection: "row", alignItems: "center", marginTop: 30 }}
       >
         <TouchableOpacity onPress={() => router.push("/(tabs)/Index")}>
-          <Ionicons style={{ color: colors.text }} name="arrow-back" size={25}></Ionicons>
+          <Ionicons
+            style={{ color: colors.text }}
+            name="arrow-back"
+            size={25}
+          ></Ionicons>
         </TouchableOpacity>
       </View>
       <View
@@ -44,7 +51,7 @@ export default function DetailAppointmentView() {
           fontSize: 20,
           fontWeight: "800",
           marginTop: 15,
-          color: colors.text
+          color: colors.text,
         }}
       >
         BS: {doc_id?.account_id.username}
@@ -60,71 +67,81 @@ export default function DetailAppointmentView() {
         {doc_id?.specialization}
       </Text>
 
-    <View
-  style={{
-    marginTop: 24,
-    backgroundColor: colors.background,
-    borderRadius: 16,
-    padding: 20,
-    marginHorizontal: 16,
-    shadowColor: "#e42222",
-    shadowOpacity: 0.08,
-    shadowRadius: 8,
-    elevation: 3,
-  }}
->
-  <Text style={{ fontSize: 25, textAlign:"center", color: colors.text}}>Thông tin cơ bản: </Text>
-  <View style={{ marginTop: 18, gap: 12 }}>
-     <Text style={{ fontSize: 15, color: colors.text }}>
-      Họ tên:  {doc_id?.account_id.user_id.full_name}
-    </Text>
-    <Text style={{ fontSize: 15, color: colors.text }}>
-      Email:  {doc_id?.account_id.user_id.email}
-    </Text>
-    <Text style={{ fontSize: 15, color: colors.text }}>
-      Chức vụ:  {doc_id?.role_doctor}
-    </Text>
-    <Text style={{ fontSize: 15, color: colors.text}}>
-       Nơi ở:  {doc_id?.account_id.user_id.address}
-    </Text>
-    <Text style={{ fontSize: 15, color: colors.text }}>
-      Kinh nghiệm: {doc_id?.experience_years} năm
-    </Text>
-  </View>
+      <View
+        style={{
+          marginTop: 24,
+          backgroundColor: colors.background,
+          borderRadius: 16,
+          padding: 20,
+          marginHorizontal: 16,
+          shadowColor: "#e42222",
+          shadowOpacity: 0.08,
+          shadowRadius: 8,
+          elevation: 3,
+        }}
+      >
+        <Text style={{ fontSize: 25, textAlign: "center", color: colors.text }}>
+          Thông tin cơ bản:{" "}
+        </Text>
+        <View style={{ marginTop: 18, gap: 12 }}>
+          <Text style={{ fontSize: 15, color: colors.text }}>
+            Họ tên: {doc_id?.account_id.user_id.full_name}
+          </Text>
+          <Text style={{ fontSize: 15, color: colors.text }}>
+            Email: {doc_id?.account_id.user_id.email}
+          </Text>
+          <Text style={{ fontSize: 15, color: colors.text }}>
+            Chức vụ: {doc_id?.role_doctor}
+          </Text>
+          <Text style={{ fontSize: 15, color: colors.text }}>
+            Nơi ở: {doc_id?.account_id.address}
+          </Text>
+          <Text style={{ fontSize: 15, color: colors.text }}>
+            Kinh nghiệm: {doc_id?.experience_years} năm
+          </Text>
+        </View>
 
-  <TouchableOpacity
-  onPress={() =>
-    router.push({
-      pathname: "/(no tabs)/MessageUser",
-      params: {
-        id: doc_id?.id,
-      },
-    })
-  }
-    style={{
-      marginTop: 24,
-      backgroundColor: "#445AE6",
-      borderRadius: 12,
-      paddingVertical: 14,
-      alignItems: "center",
-    }}
-    
-  >
-    <Text
-      style={{
-        color: "#fff",
-        fontSize: 16,
-        fontWeight: "700",
-      }}
-    >
-      Nhắn tin
-    </Text>
-  </TouchableOpacity>
-</View>
+        <TouchableOpacity
+          onPress={() =>
+            router.push({
+              pathname: "/(no tabs)/MessageUser",
+              params: {
+                id: doc_id?.id,
+              },
+            })
+          }
+          style={{
+            marginTop: 24,
+            backgroundColor: "#445AE6",
+            borderRadius: 12,
+            paddingVertical: 14,
+            alignItems: "center",
+          }}
+        >
+          <Text
+            style={{
+              color: "#fff",
+              fontSize: 16,
+              fontWeight: "700",
+            }}
+          >
+            Nhắn tin
+          </Text>
+        </TouchableOpacity>
+      </View>
       <View style={{ marginTop: 30 }}>
-        <Text style={{ fontSize: 20, fontWeight:"bold", color: colors.text }}>Giới thiệu: </Text>
-        <Text style={{ fontWeight: "normal", marginTop: 5, lineHeight: 30, color: colors.text }}>
-         {doc_id?.bio}
+        <Text style={{ fontSize: 20, fontWeight: "bold", color: colors.text }}>
+          Giới thiệu:{" "}
+        </Text>
+        <Text
+          style={{
+            fontWeight: "normal",
+            marginTop: 5,
+            lineHeight: 30,
+            color: colors.text,
+          }}
+        >
+          {doc_id?.bio}
         </Text>
       </View>
       <View style={{ marginTop: 30 }}>
@@ -157,7 +174,9 @@ export default function DetailAppointmentView() {
         </View>
       </View>
       <View style={{ marginTop: 30 }}>
-        <Text style={{ fontSize: 15, color: colors.text, marginBottom: 20 }}>Liên hệ khẩn cấp</Text>
+        <Text style={{ fontSize: 15, color: colors.text, marginBottom: 20 }}>
+          Liên hệ khẩn cấp
+        </Text>
         <TouchableOpacity
           style={{
             marginTop: 10,

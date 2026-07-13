@@ -1,8 +1,20 @@
-import { ScrollView, Text, View } from "react-native";
-import { BarChart } from "react-native-gifted-charts";
+import { Ionicons } from "@expo/vector-icons";
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { BarChart, PieChart } from "react-native-gifted-charts";
 
 const legend = [{ label: "Lượng người dùng", color: "#22C55E" }];
-
+const pieData = [
+  {
+    value: 120,
+    color: "#4F46E5",
+    text: "Nam",
+  },
+  {
+    value: 80,
+    color: "#EC4899",
+    text: "Nữ",
+  },
+];
 const Data3 = [
   { value: 120, label: "2022", frontColor: "#22C55E" },
   { value: 185, label: "2023", frontColor: "#22C55E" },
@@ -146,14 +158,14 @@ export default function AdminDashboardView() {
                 textAlign: "center",
               }}
             >
-              Tổng số cuộc trò chuyện với chatbot
+              Tổng số bài tập
             </Text>
           </View>
           <View style={{ alignItems: "center", gap: 10 }}>
             <Text style={{ fontSize: 37, fontWeight: "bold", color: "#fff" }}>
               1
             </Text>
-            <Text style={{ fontSize: 15, color: "#fff" }}>trò chuyện</Text>
+            <Text style={{ fontSize: 15, color: "#fff" }}>bài tập</Text>
           </View>
         </View>
         <View
@@ -187,6 +199,41 @@ export default function AdminDashboardView() {
       </View>
 
       {/* Thống kê phần 3 */}
+      <View
+        style={{
+          marginTop: 30,
+          marginHorizontal: 15,
+        }}
+      >
+        <Text
+          style={{
+            fontSize: 18,
+            fontWeight: "bold",
+            marginBottom: 15,
+          }}
+        >
+          Thống kê giới tính
+        </Text>
+
+        <View
+          style={{
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <PieChart
+            data={pieData}
+            donut
+            radius={90}
+            innerRadius={55}
+            showText
+            textColor="white"
+            textSize={14}
+          />
+        </View>
+      </View>
+
+      {/* Thống kê phần 4 */}
 
       <View
         style={{
@@ -348,7 +395,7 @@ export default function AdminDashboardView() {
         </View>
       </View>
 
-      {/* Thống kê phần 4 */}
+      {/* Thống kê phần 5 */}
 
       <View style={{ marginTop: 30, marginHorizontal: 15 }}>
         <Text
@@ -449,12 +496,12 @@ export default function AdminDashboardView() {
         </View>
       </View>
 
-      {/* Thống kê phần 5 */}
+      {/* Thống kê phần 6 */}
 
       <View
         style={{
           marginTop: 30,
-          marginHorizontal: 15,
+          marginHorizontal: 8,
         }}
       >
         <Text
@@ -466,6 +513,106 @@ export default function AdminDashboardView() {
         >
           Thống kê 3 bài viết nhiều lượt xem nhất
         </Text>
+        <View style={{ marginTop: 10 }}>
+          <TouchableOpacity
+            style={{
+              backgroundColor: "#FFF",
+              marginHorizontal: 8,
+              marginBottom: 15,
+              borderRadius: 20,
+              padding: 12,
+              borderWidth: 1,
+              borderColor: "#000",
+              flexDirection: "row",
+              alignItems: "center",
+              shadowColor: "#000",
+              shadowOffset: {
+                width: 2,
+                height: 3,
+              },
+              shadowOpacity: 0.2,
+              shadowRadius: 4,
+              elevation: 4,
+            }}
+          >
+            <Image
+              source={{}}
+              style={{
+                width: 55,
+                height: 55,
+                borderRadius: 8,
+                marginRight: 10,
+              }}
+            />
+
+            <View style={{ flex: 1 }}>
+              <Text
+                numberOfLines={2}
+                style={{
+                  fontSize: 16,
+                  fontWeight: "600",
+                }}
+              >
+                No name
+              </Text>
+
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  marginTop: 6,
+                }}
+              >
+                <Ionicons name="time-outline" size={14} color="#555" />
+                <Text
+                  style={{
+                    marginLeft: 4,
+                    color: "#555",
+                    fontSize: 13,
+                  }}
+                >
+                  No name phút đọc
+                </Text>
+
+                <Ionicons
+                  name="eye-outline"
+                  size={14}
+                  color="#555"
+                  style={{ marginLeft: 15 }}
+                />
+                <Text
+                  style={{
+                    marginLeft: 4,
+                    color: "#555",
+                    fontSize: 13,
+                  }}
+                >
+                  0 lượt xem
+                </Text>
+              </View>
+
+              <View
+                style={{
+                  alignSelf: "flex-start",
+                  backgroundColor: "#D9D9D9",
+                  borderRadius: 20,
+                  paddingHorizontal: 14,
+                  paddingVertical: 4,
+                  marginTop: 8,
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: 12,
+                    fontWeight: "500",
+                  }}
+                >
+                  No name
+                </Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+        </View>
       </View>
     </ScrollView>
   );
