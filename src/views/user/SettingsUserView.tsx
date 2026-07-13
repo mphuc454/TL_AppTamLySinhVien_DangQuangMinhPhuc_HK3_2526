@@ -74,7 +74,7 @@ export default function SettingView() {
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={() => router.push("/auth/ChangePass")}
+        onPress={() => router.push("/admin/Dashboard")}
         style={{
           backgroundColor: "#FCDDDD",
           borderRadius: 25,
