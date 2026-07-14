@@ -3,6 +3,7 @@ import {
   totalAccount,
   totalAdmin,
   totalDoctor,
+  totalGender,
 } from "@/src/repository/auth/ProfileRepository";
 import { totalExercise } from "@/src/repository/ExerciseRepository";
 import { totalMusic } from "@/src/repository/MusicRepository";
@@ -132,4 +133,35 @@ export function useDashboardAdminViewModel() {
   }, []);
 
   return { adTotal, loadingAd };
+}
+
+export function useGenderAdminViewModel() {
+  const [genTotal, setGenTotal] = useState({ male: 0, female: 0 });
+  const loadTotal = async () => {
+    try {
+      const total = await totalGender();
+      setGenTotal(total);
+    } catch (error) {
+      console.log(error);
+    } finally {
+    }
+  };
+  useEffect(() => {
+    loadTotal();
+  }, []);
+
+  const pieData = [
+    {
+      value: genTotal.male,
+      color: "#4F46E5",
+      text: "Nam",
+    },
+    {
+      value: genTotal.female,
+      color: "#EC4899",
+      text: "Nữ",
+    },
+  ];
+
+  return { pieData };
 }

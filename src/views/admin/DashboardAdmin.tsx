@@ -5,24 +5,14 @@ import {
   useDashboardExerciseViewModel,
   useDashboardMusicViewModel,
   useDashboardUserViewModel,
+  useGenderAdminViewModel,
 } from "@/src/viewmodels/admin/DashboardViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { BarChart, PieChart } from "react-native-gifted-charts";
 
 const legend = [{ label: "Lượng người dùng", color: "#22C55E" }];
-const pieData = [
-  {
-    value: 120,
-    color: "#4F46E5",
-    text: "Nam",
-  },
-  {
-    value: 80,
-    color: "#EC4899",
-    text: "Nữ",
-  },
-];
+
 const Data3 = [{ value: 420, label: "2026", frontColor: "#22C55E" }];
 export default function AdminDashboardView() {
   const { usrTotal, loading } = useDashboardUserViewModel();
@@ -31,6 +21,7 @@ export default function AdminDashboardView() {
   const { arcTotal, loadingArc } = useDashboardArticleViewModel();
   const { adTotal, loadingAd } = useDashboardAdminViewModel();
   const { loadingMus, musTotal } = useDashboardMusicViewModel();
+  const { pieData } = useGenderAdminViewModel();
 
   const chartData = Data3.map((item) => ({
     ...item,
@@ -307,6 +298,50 @@ export default function AdminDashboardView() {
             textColor="white"
             textSize={14}
           />
+          <View
+            style={{
+              marginTop: 20,
+              flexDirection: "row",
+              justifyContent: "center",
+              gap: 30,
+            }}
+          >
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
+              <View
+                style={{
+                  width: 12,
+                  height: 12,
+                  borderRadius: 6,
+                  backgroundColor: "#4A90E2",
+                  marginRight: 8,
+                }}
+              />
+              <Text>Nam: {pieData[0].value} người</Text>
+            </View>
+
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
+              <View
+                style={{
+                  width: 12,
+                  height: 12,
+                  borderRadius: 6,
+                  backgroundColor: "#FF69B4",
+                  marginRight: 8,
+                }}
+              />
+              <Text>Nữ: {pieData[1].value} người</Text>
+            </View>
+          </View>
         </View>
       </View>
 
