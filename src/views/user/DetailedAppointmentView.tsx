@@ -128,6 +128,25 @@ export default function DetailAppointmentView() {
             Nhắn tin
           </Text>
         </TouchableOpacity>
+        <TouchableOpacity
+          style={{
+            marginTop: 24,
+            backgroundColor: "#ef1e1e",
+            borderRadius: 12,
+            paddingVertical: 14,
+            alignItems: "center",
+          }}
+        >
+          <Text
+            style={{
+              color: "#fff",
+              fontSize: 16,
+              fontWeight: "700",
+            }}
+          >
+            Yêu cầu theo dõi sức khoẻ
+          </Text>
+        </TouchableOpacity>
       </View>
       <View style={{ marginTop: 30 }}>
         <Text style={{ fontSize: 20, fontWeight: "bold", color: colors.text }}>
