@@ -1,4 +1,5 @@
 import {
+  useCategoryArticleAdminViewModel,
   useDashboardAdminViewModel,
   useDashboardArticleViewModel,
   useDashboardDoctorViewModel,
@@ -9,11 +10,9 @@ import {
 } from "@/src/viewmodels/admin/DashboardViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
-import { BarChart, PieChart } from "react-native-gifted-charts";
+import { PieChart } from "react-native-gifted-charts";
 
-const legend = [{ label: "Lượng người dùng", color: "#22C55E" }];
-
-const Data3 = [{ value: 420, label: "2026", frontColor: "#22C55E" }];
+// const Data3 = [{ value: 420, label: "Cảm xúc", frontColor: "#22C55E" }];
 export default function AdminDashboardView() {
   const { usrTotal, loading } = useDashboardUserViewModel();
   const { docTotal, loadingDoc } = useDashboardDoctorViewModel();
@@ -22,10 +21,8 @@ export default function AdminDashboardView() {
   const { adTotal, loadingAd } = useDashboardAdminViewModel();
   const { loadingMus, musTotal } = useDashboardMusicViewModel();
   const { pieData } = useGenderAdminViewModel();
-
-  const chartData = Data3.map((item) => ({
-    ...item,
-  }));
+  const { chartData } = useCategoryArticleAdminViewModel();
+  // const chartData = Data3.map((item) => ({ ...item }));
   return (
     <ScrollView contentContainerStyle={{ paddingBottom: 180 }}>
       <View
@@ -355,95 +352,69 @@ export default function AdminDashboardView() {
             marginBottom: 15,
           }}
         >
-          Thống kê biểu đồ người dùng mới
+          Thống kê bài viết theo danh mục
         </Text>
-
-        {/* Legend */}
         <View
           style={{
-            flexDirection: "row",
             alignItems: "center",
-            marginBottom: 15,
+            justifyContent: "center",
           }}
         >
-          {legend.map((item, index) => (
+          <PieChart
+            data={chartData}
+            radius={95}
+            innerRadius={60}
+            showText
+            textSize={14}
+            textColor="#fff"
+            strokeWidth={3}
+            focusOnPress
+          />
+        </View>
+        {chartData.map((item, index) => (
+          <View
+            key={index}
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
             <View
-              key={index}
               style={{
                 flexDirection: "row",
                 alignItems: "center",
-                marginRight: 20,
               }}
             >
               <View
                 style={{
                   width: 14,
                   height: 14,
-                  borderRadius: 4,
+                  borderRadius: 7,
                   backgroundColor: item.color,
-                  marginRight: 8,
+                  marginRight: 10,
                 }}
               />
+
               <Text
                 style={{
-                  fontSize: 14,
-                  color: "#444",
-                  fontWeight: "500",
+                  fontSize: 15,
                 }}
               >
                 {item.label}
               </Text>
             </View>
-          ))}
-        </View>
 
-        <View style={{ flexDirection: "row" }}>
-          {/* Trục Y */}
-          <View
-            style={{
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
             <Text
               style={{
-                transform: [{ rotate: "-90deg" }],
-                fontSize: 14,
-                fontWeight: "600",
-                color: "#555",
-                textAlign: "center",
+                fontWeight: "bold",
+                fontSize: 15,
               }}
             >
-              Số lượng
+              {item.value} bài
             </Text>
           </View>
-
-          <View style={{ flex: 1 }}>
-            <BarChart
-              data={chartData}
-              barWidth={25}
-              spacing={20}
-              roundedTop
-              noOfSections={5}
-              maxValue={40}
-              yAxisThickness={1}
-              xAxisThickness={1}
-            />
-
-            {/* Trục X */}
-            <Text
-              style={{
-                textAlign: "center",
-                marginTop: 12,
-                fontSize: 14,
-                fontWeight: "600",
-                color: "#555",
-              }}
-            >
-              Năm
-            </Text>
-          </View>
-        </View>
+        ))}
       </View>
 
       {/* Thống kê phần 6 */}

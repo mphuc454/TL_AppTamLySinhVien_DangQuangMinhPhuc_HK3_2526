@@ -1,4 +1,7 @@
-import { totalArticle } from "@/src/repository/ArticleRepository";
+import {
+  totalArticle,
+  totalArticleByCategory,
+} from "@/src/repository/ArticleRepository";
 import {
   totalAccount,
   totalAdmin,
@@ -143,7 +146,6 @@ export function useGenderAdminViewModel() {
       setGenTotal(total);
     } catch (error) {
       console.log(error);
-    } finally {
     }
   };
   useEffect(() => {
@@ -164,4 +166,20 @@ export function useGenderAdminViewModel() {
   ];
 
   return { pieData };
+}
+
+export function useCategoryArticleAdminViewModel() {
+  const [chartData, setPieData] = useState<any[]>([]);
+  const loadTotal = async () => {
+    try {
+      const total = await totalArticleByCategory();
+      setPieData(total);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    loadTotal();
+  }, []);
+  return { chartData };
 }
