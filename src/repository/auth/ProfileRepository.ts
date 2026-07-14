@@ -46,9 +46,10 @@ export const modifyAccountbyID = async (
   if (!user) {
     throw new Error("Chưa đăng nhập");
   }
+  const formatGender = gender.trim().toUpperCase();
   const { data: account, error: accountError } = await supabase
     .from("accounts")
-    .update({ username, address, gender })
+    .update({ username, address, gender: formatGender })
     .eq("user_id", user.id)
     .select()
     .single();
@@ -96,4 +97,14 @@ export const totalAdmin = async () => {
     .eq("role", 2);
   if (error) throw error;
   return count ?? 0;
+};
+
+//6.Thống kê tổng số giới tính
+export const totalGender = async () => {
+  const { data, error } = await supabase.from("accounts").select("gender");
+  if (error) throw error;
+  const male = data.filter((i) => i.gender === "NAM").length;
+  const female = data.filter((i) => i.gender === "NỮ").length;
+
+  return { male, female };
 };
