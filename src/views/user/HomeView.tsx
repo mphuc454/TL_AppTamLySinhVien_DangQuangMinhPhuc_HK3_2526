@@ -122,7 +122,12 @@ export default function IndexView() {
             }}
           >
             <Text
-              style={{ fontWeight: "bold", color: colors.text, fontSize: 14 }}
+              style={{
+                fontWeight: "bold",
+                color: colors.text,
+                fontSize: 14,
+                textAlign: "center",
+              }}
             >
               Số lần ghi nhật ký
             </Text>

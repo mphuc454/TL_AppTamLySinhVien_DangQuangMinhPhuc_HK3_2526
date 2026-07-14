@@ -13,13 +13,21 @@ export const getArticles = async (): Promise<Article[]> => {
 //2. lấy chi tiết 1 bài viết từ cơ sở dữ liệu
 export const getArticleByID = async (id: number) => {
   const { data, error } = await supabase
-  .from("articles")
-  .select (`*,id_category_articles(id, name) `)
-  .eq("id", id)
-  .single();
-    if (error) {
-      throw new Error(error.message);
-    }
-    return data ?? [];
-}
+    .from("articles")
+    .select(`*,id_category_articles(id, name) `)
+    .eq("id", id)
+    .single();
+  if (error) {
+    throw new Error(error.message);
+  }
+  return data ?? [];
+};
 
+//3.Thống kê tổng số bài viết
+export const totalArticle = async () => {
+  const { count, error } = await supabase
+    .from("articles")
+    .select("*", { count: "exact", head: true });
+  if (error) throw error;
+  return count ?? 0;
+};
