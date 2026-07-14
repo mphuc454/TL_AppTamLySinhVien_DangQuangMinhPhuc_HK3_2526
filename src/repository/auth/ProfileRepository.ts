@@ -67,3 +67,33 @@ export const modifyAccountbyID = async (
     user_id: profile,
   };
 };
+
+//3.Thống kê tổng số người dùng
+export const totalAccount = async () => {
+  const { count, error } = await supabase
+    .from("accounts")
+    .select("*", { count: "exact", head: true })
+    .eq("role", 1);
+  if (error) throw error;
+  return count ?? 0;
+};
+
+//4.Thống kê tổng số bác sĩ
+export const totalDoctor = async () => {
+  const { count, error } = await supabase
+    .from("accounts")
+    .select("*", { count: "exact", head: true })
+    .eq("role", 3);
+  if (error) throw error;
+  return count ?? 0;
+};
+
+//5.Thống kê tổng số admin
+export const totalAdmin = async () => {
+  const { count, error } = await supabase
+    .from("accounts")
+    .select("*", { count: "exact", head: true })
+    .eq("role", 2);
+  if (error) throw error;
+  return count ?? 0;
+};

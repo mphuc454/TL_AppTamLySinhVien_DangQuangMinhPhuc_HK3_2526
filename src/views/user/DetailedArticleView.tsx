@@ -4,9 +4,12 @@ import {
 } from "@/src/viewmodels/ArticleViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
+import { useContext } from "react";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { ThemeContext } from "../theme/ThemeContext";
 
 export default function DetailedArticleView() {
+  const { colors } = useContext(ThemeContext);
   const { id } = useLocalSearchParams();
   const { arc } = useArticleDetailViewModel(Number(id));
   const { articles } = useArticleViewModel();
@@ -18,7 +21,7 @@ export default function DetailedArticleView() {
     <ScrollView
       style={{
         flex: 1,
-        backgroundColor: "#F7F7F8",
+        backgroundColor: colors.background,
         marginTop: 30,
         paddingHorizontal: 20,
       }}
@@ -28,7 +31,11 @@ export default function DetailedArticleView() {
         style={{ flexDirection: "row", alignItems: "center", marginTop: 30 }}
       >
         <TouchableOpacity onPress={() => router.push("/(tabs)/Index")}>
-          <Ionicons name="arrow-back" size={25}></Ionicons>
+          <Ionicons
+            style={{ color: colors.text }}
+            name="arrow-back"
+            size={25}
+          ></Ionicons>
         </TouchableOpacity>
       </View>
       <View
@@ -65,6 +72,7 @@ export default function DetailedArticleView() {
           lineHeight: 28,
           marginTop: 15,
           marginHorizontal: 12,
+          color: colors.text,
         }}
       >
         {arc?.title}
@@ -78,25 +86,38 @@ export default function DetailedArticleView() {
         }}
       >
         <View style={{ flexDirection: "row", alignItems: "center", flex: 1 }}>
-          <Text>
+          <Text style={{ color: colors.text }}>
             {arc?.created_at
               ? new Date(arc.created_at).toLocaleDateString("vi-VN")
               : ""}
           </Text>
-          <Text style={{ marginLeft: 15, fontWeight: "light" }}>Tác giả: </Text>
+          <Text
+            style={{ marginLeft: 15, fontWeight: "light", color: colors.text }}
+          >
+            Tác giả:{" "}
+          </Text>
           <Text
             numberOfLines={1}
-            style={{ marginLeft: 1, fontWeight: "bold", flex: 1 }}
+            style={{
+              marginLeft: 1,
+              fontWeight: "bold",
+              flex: 1,
+              color: colors.text,
+            }}
           >
             {arc?.name_author}
           </Text>
         </View>
 
         <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <Ionicons name="time-outline" size={15} />
-          <Text style={{ marginLeft: 4 }}>{arc?.time_to_read} phút</Text>
-          <Ionicons style={{ marginLeft: 10 }} name="eye-outline" size={15} />
-          <Text style={{ marginLeft: 4 }}>{arc?.views ?? 0} lượt xem</Text>
+          <Ionicons
+            style={{ color: colors.text }}
+            name="time-outline"
+            size={15}
+          />
+          <Text style={{ marginLeft: 4, color: colors.text }}>
+            {arc?.time_to_read} phút
+          </Text>
         </View>
       </View>
       <Text
@@ -105,7 +126,7 @@ export default function DetailedArticleView() {
           marginHorizontal: 12,
           fontSize: 16,
           lineHeight: 30,
-          color: "#333",
+          color: colors.text,
           textAlign: "justify",
           fontWeight: "semibold",
         }}
@@ -118,6 +139,7 @@ export default function DetailedArticleView() {
           fontWeight: "bold",
           marginTop: 40,
           marginHorizontal: 12,
+          color: colors.text,
         }}
       >
         Bài viết khác:

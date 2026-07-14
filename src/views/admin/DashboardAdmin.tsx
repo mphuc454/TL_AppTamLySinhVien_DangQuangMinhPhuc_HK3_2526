@@ -1,3 +1,11 @@
+import {
+  useDashboardAdminViewModel,
+  useDashboardArticleViewModel,
+  useDashboardDoctorViewModel,
+  useDashboardExerciseViewModel,
+  useDashboardMusicViewModel,
+  useDashboardUserViewModel,
+} from "@/src/viewmodels/admin/DashboardViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { BarChart, PieChart } from "react-native-gifted-charts";
@@ -17,11 +25,18 @@ const pieData = [
 ];
 const Data3 = [{ value: 420, label: "2026", frontColor: "#22C55E" }];
 export default function AdminDashboardView() {
+  const { usrTotal, loading } = useDashboardUserViewModel();
+  const { docTotal, loadingDoc } = useDashboardDoctorViewModel();
+  const { exTotal, loadingEx } = useDashboardExerciseViewModel();
+  const { arcTotal, loadingArc } = useDashboardArticleViewModel();
+  const { adTotal, loadingAd } = useDashboardAdminViewModel();
+  const { loadingMus, musTotal } = useDashboardMusicViewModel();
+
   const chartData = Data3.map((item) => ({
     ...item,
   }));
   return (
-    <ScrollView contentContainerStyle={{ paddingBottom: 200 }}>
+    <ScrollView contentContainerStyle={{ paddingBottom: 180 }}>
       <View
         style={{
           paddingHorizontal: 20,
@@ -89,7 +104,7 @@ export default function AdminDashboardView() {
           </View>
           <View style={{ alignItems: "center", gap: 10 }}>
             <Text style={{ fontSize: 37, fontWeight: "bold", color: "#fff" }}>
-              7
+              {loading ? "..." : usrTotal}
             </Text>
             <Text style={{ fontSize: 15, color: "#fff" }}>Người dùng</Text>
           </View>
@@ -117,7 +132,7 @@ export default function AdminDashboardView() {
 
           <View style={{ alignItems: "center", gap: 10 }}>
             <Text style={{ fontSize: 37, fontWeight: "bold", color: "#fff" }}>
-              1
+              {loadingDoc ? "..." : docTotal}
             </Text>
             <Text style={{ fontSize: 15, color: "#fff" }}>Bác sĩ</Text>
           </View>
@@ -157,7 +172,7 @@ export default function AdminDashboardView() {
           </View>
           <View style={{ alignItems: "center", gap: 10 }}>
             <Text style={{ fontSize: 37, fontWeight: "bold", color: "#fff" }}>
-              1
+              {loadingEx ? "..." : exTotal}
             </Text>
             <Text style={{ fontSize: 15, color: "#fff" }}>Bài tập</Text>
           </View>
@@ -185,14 +200,82 @@ export default function AdminDashboardView() {
 
           <View style={{ alignItems: "center", gap: 10 }}>
             <Text style={{ fontSize: 37, fontWeight: "bold", color: "#fff" }}>
-              1
+              {loadingArc ? "..." : arcTotal}
             </Text>
             <Text style={{ fontSize: 15, color: "#fff" }}>Bài viết</Text>
           </View>
         </View>
       </View>
-
       {/* Thống kê phần 3 */}
+      <View
+        style={{
+          marginTop: 30,
+          flexDirection: "row",
+          gap: 9,
+          marginLeft: 15,
+          marginRight: 15,
+        }}
+      >
+        <View
+          style={{
+            flex: 1,
+            padding: 15,
+            backgroundColor: "#1f1616",
+            borderRadius: 16,
+          }}
+        >
+          <View style={{ alignItems: "center", gap: 10 }}>
+            <Text
+              style={{
+                fontWeight: "bold",
+                color: "#fff",
+                fontSize: 16,
+                textAlign: "center",
+              }}
+            >
+              Thống kê tổng số bài nhạc
+            </Text>
+          </View>
+          <View style={{ alignItems: "center", gap: 10 }}>
+            <Text style={{ fontSize: 37, fontWeight: "bold", color: "#fff" }}>
+              {loadingMus ? "..." : musTotal}
+            </Text>
+            <Text style={{ fontSize: 15, color: "#fff" }}>Bài nhạc</Text>
+          </View>
+        </View>
+        <View
+          style={{
+            flex: 1,
+            padding: 15,
+            backgroundColor: "#1f1616",
+            borderRadius: 16,
+          }}
+        >
+          <View style={{ alignItems: "center", gap: 10 }}>
+            <Text
+              style={{
+                fontWeight: "bold",
+                color: "#fff",
+                fontSize: 16,
+                textAlign: "center",
+              }}
+            >
+              Người dùng quản trị viên
+            </Text>
+          </View>
+
+          <View style={{ alignItems: "center", gap: 10 }}>
+            <Text style={{ fontSize: 37, fontWeight: "bold", color: "#fff" }}>
+              {loadingAd ? "..." : adTotal}
+            </Text>
+            <Text style={{ fontSize: 15, color: "#fff" }}>
+              Người quản trị viên
+            </Text>
+          </View>
+        </View>
+      </View>
+
+      {/* Thống kê phần 4 */}
       <View
         style={{
           marginTop: 30,
@@ -224,168 +307,6 @@ export default function AdminDashboardView() {
             textColor="white"
             textSize={14}
           />
-        </View>
-      </View>
-
-      {/* Thống kê phần 4 */}
-
-      <View
-        style={{
-          marginTop: 30,
-          marginHorizontal: 15,
-        }}
-      >
-        <Text
-          style={{
-            fontSize: 18,
-            fontWeight: "bold",
-            marginBottom: 15,
-          }}
-        >
-          Thống kê cảm xúc người dùng
-        </Text>
-
-        <View
-          style={{
-            flexDirection: "row",
-            flexWrap: "wrap",
-            justifyContent: "space-between",
-          }}
-        >
-          {/* Tích cực */}
-          <View
-            style={{
-              width: "48%",
-              backgroundColor: "#fff",
-              borderRadius: 15,
-              padding: 16,
-              marginBottom: 12,
-              borderLeftWidth: 6,
-              borderLeftColor: "#22C55E",
-              elevation: 3,
-            }}
-          >
-            <Text style={{ fontSize: 15, fontWeight: "600" }}>Tích cực</Text>
-            <Text
-              style={{
-                fontSize: 28,
-                fontWeight: "bold",
-                color: "#22C55E",
-                marginTop: 10,
-              }}
-            >
-              320
-            </Text>
-            <Text style={{ color: "#666", marginTop: 4 }}>lượt ghi nhận</Text>
-          </View>
-
-          {/* Bình thản */}
-          <View
-            style={{
-              width: "48%",
-              backgroundColor: "#fff",
-              borderRadius: 15,
-              padding: 16,
-              marginBottom: 12,
-              borderLeftWidth: 6,
-              borderLeftColor: "#3B82F6",
-              elevation: 3,
-            }}
-          >
-            <Text style={{ fontSize: 15, fontWeight: "600" }}>Bình thản</Text>
-            <Text
-              style={{
-                fontSize: 28,
-                fontWeight: "bold",
-                color: "#3B82F6",
-                marginTop: 10,
-              }}
-            >
-              210
-            </Text>
-            <Text style={{ color: "#666", marginTop: 4 }}>lượt ghi nhận</Text>
-          </View>
-
-          {/* Lo âu */}
-          <View
-            style={{
-              width: "48%",
-              backgroundColor: "#fff",
-              borderRadius: 15,
-              padding: 16,
-              marginBottom: 12,
-              borderLeftWidth: 6,
-              borderLeftColor: "#F59E0B",
-              elevation: 3,
-            }}
-          >
-            <Text style={{ fontSize: 15, fontWeight: "600" }}>Lo âu</Text>
-            <Text
-              style={{
-                fontSize: 28,
-                fontWeight: "bold",
-                color: "#F59E0B",
-                marginTop: 10,
-              }}
-            >
-              95
-            </Text>
-            <Text style={{ color: "#666", marginTop: 4 }}>lượt ghi nhận</Text>
-          </View>
-
-          {/* Buồn bã */}
-          <View
-            style={{
-              width: "48%",
-              backgroundColor: "#fff",
-              borderRadius: 15,
-              padding: 16,
-              marginBottom: 12,
-              borderLeftWidth: 6,
-              borderLeftColor: "#6366F1",
-              elevation: 3,
-            }}
-          >
-            <Text style={{ fontSize: 15, fontWeight: "600" }}>Buồn bã</Text>
-            <Text
-              style={{
-                fontSize: 28,
-                fontWeight: "bold",
-                color: "#6366F1",
-                marginTop: 10,
-              }}
-            >
-              68
-            </Text>
-            <Text style={{ color: "#666", marginTop: 4 }}>lượt ghi nhận</Text>
-          </View>
-
-          {/* Giận dữ */}
-          <View
-            style={{
-              width: "48%",
-              backgroundColor: "#fff",
-              borderRadius: 15,
-              padding: 16,
-              marginBottom: 12,
-              borderLeftWidth: 6,
-              borderLeftColor: "#EF4444",
-              elevation: 3,
-            }}
-          >
-            <Text style={{ fontSize: 15, fontWeight: "600" }}>Giận dữ</Text>
-            <Text
-              style={{
-                fontSize: 28,
-                fontWeight: "bold",
-                color: "#EF4444",
-                marginTop: 10,
-              }}
-            >
-              34
-            </Text>
-            <Text style={{ color: "#666", marginTop: 4 }}>lượt ghi nhận</Text>
-          </View>
         </View>
       </View>
 
