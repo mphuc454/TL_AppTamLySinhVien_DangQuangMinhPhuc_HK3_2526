@@ -9,13 +9,11 @@ export const getAccountById = async () => {
   if (!user) {
     throw new Error("Chưa đăng nhập");
   }
-
   const { data: account, error: accountError } = await supabase
     .from("accounts")
     .select(`*`)
     .eq("user_id", user.id)
     .single();
-
   if (accountError) {
     throw new Error(accountError.message);
   }
@@ -25,7 +23,6 @@ export const getAccountById = async () => {
     .eq("id", user.id)
     .single();
   if (profileError) throw profileError;
-
   return {
     ...account,
     user_id: profile,
@@ -53,9 +50,7 @@ export const modifyAccountbyID = async (
     .eq("user_id", user.id)
     .select()
     .single();
-
   if (accountError) throw accountError.message;
-
   const { data: profile, error: profileError } = await supabase
     .from("user")
     .update({ email, phone })
@@ -107,4 +102,19 @@ export const totalGender = async () => {
   const female = data.filter((i) => i.gender === "NỮ").length;
 
   return { male, female };
+};
+
+//7.Thống kê accounts trong năm
+export const totalUserByYear = async () => {
+  const { data, error } = await supabase.from("accounts").select("created_at");
+  if (error) throw error;
+  const statistical: Record<string, number> = {};
+  data.forEach((i: any) => {
+    const getYear = new Date(i.created_at).getFullYear().toString();
+    statistical[getYear] = (statistical[getYear] || 0) + 1;
+  });
+  return Object.entries(statistical).map(([getYear, total]) => ({
+    getYear,
+    total,
+  }));
 };

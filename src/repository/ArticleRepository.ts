@@ -59,3 +59,5 @@ export const totalArticleByCategory = async () => {
     color: colors[index % colors.length],
   }));
 };
+
+//6. Bài viết tăng lượt xem

@@ -7,6 +7,7 @@ import {
   totalAdmin,
   totalDoctor,
   totalGender,
+  totalUserByYear,
 } from "@/src/repository/auth/ProfileRepository";
 import { totalExercise } from "@/src/repository/ExerciseRepository";
 import { totalMusic } from "@/src/repository/MusicRepository";
@@ -182,4 +183,26 @@ export function useCategoryArticleAdminViewModel() {
     loadTotal();
   }, []);
   return { chartData };
+}
+
+export function useUserByYearAdminViewModel() {
+  const [dataUser, setChartData] = useState<any[]>([]);
+  const loadTotal = async () => {
+    try {
+      const total = await totalUserByYear();
+      setChartData(
+        total.map((i) => ({
+          value: i.total,
+          label: i.getYear,
+          frontColor: "#09f210",
+        })),
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    loadTotal();
+  }, []);
+  return { dataUser };
 }

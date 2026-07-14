@@ -7,10 +7,10 @@ import {
   useDashboardMusicViewModel,
   useDashboardUserViewModel,
   useGenderAdminViewModel,
+  useUserByYearAdminViewModel,
 } from "@/src/viewmodels/admin/DashboardViewModel";
-import { Ionicons } from "@expo/vector-icons";
-import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
-import { PieChart } from "react-native-gifted-charts";
+import { ScrollView, Text, View } from "react-native";
+import { BarChart, PieChart } from "react-native-gifted-charts";
 
 // const Data3 = [{ value: 420, label: "Cảm xúc", frontColor: "#22C55E" }];
 export default function AdminDashboardView() {
@@ -22,9 +22,9 @@ export default function AdminDashboardView() {
   const { loadingMus, musTotal } = useDashboardMusicViewModel();
   const { pieData } = useGenderAdminViewModel();
   const { chartData } = useCategoryArticleAdminViewModel();
-  // const chartData = Data3.map((item) => ({ ...item }));
+  const { dataUser } = useUserByYearAdminViewModel();
   return (
-    <ScrollView contentContainerStyle={{ paddingBottom: 180 }}>
+    <ScrollView contentContainerStyle={{ paddingBottom: 120 }}>
       <View
         style={{
           paddingHorizontal: 20,
@@ -423,6 +423,7 @@ export default function AdminDashboardView() {
         style={{
           marginTop: 30,
           marginHorizontal: 8,
+          paddingBottom: 20,
         }}
       >
         <Text
@@ -432,107 +433,75 @@ export default function AdminDashboardView() {
             marginBottom: 15,
           }}
         >
-          Thống kê 3 bài viết nhiều lượt xem nhất
+          Thống kê lượt người dùng đăng ký trong năm
         </Text>
-        <View style={{ marginTop: 10 }}>
-          <TouchableOpacity
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            marginBottom: 15,
+          }}
+        >
+          <View
             style={{
-              backgroundColor: "#FFF",
-              marginHorizontal: 8,
-              marginBottom: 15,
-              borderRadius: 20,
-              padding: 12,
-              borderWidth: 1,
-              borderColor: "#000",
-              flexDirection: "row",
-              alignItems: "center",
-              shadowColor: "#000",
-              shadowOffset: {
-                width: 2,
-                height: 3,
-              },
-              shadowOpacity: 0.2,
-              shadowRadius: 4,
-              elevation: 4,
+              width: 14,
+              height: 14,
+              borderRadius: 3,
+              backgroundColor: "#09f210",
+              marginRight: 8,
+            }}
+          />
+
+          <Text
+            style={{
+              fontSize: 14,
+              fontWeight: "500",
             }}
           >
-            <Image
-              source={{}}
+            Lượng người dùng
+          </Text>
+        </View>
+        <View style={{ flexDirection: "row", marginTop: 10 }}>
+          {/* Trục Y */}
+          <View style={{ justifyContent: "center", alignItems: "center" }}>
+            {" "}
+            <Text
               style={{
-                width: 55,
-                height: 55,
-                borderRadius: 8,
-                marginRight: 10,
+                transform: [{ rotate: "-90deg" }],
+                fontSize: 14,
+                fontWeight: "600",
+                color: "#555",
+                textAlign: "center",
               }}
+            >
+              Số lượng
+            </Text>
+          </View>
+          <View style={{ flex: 1 }}>
+            {" "}
+            <BarChart
+              data={dataUser}
+              barWidth={25}
+              spacing={20}
+              roundedTop
+              noOfSections={5}
+              maxValue={40}
+              yAxisThickness={1}
+              xAxisThickness={1}
             />
-
-            <View style={{ flex: 1 }}>
-              <Text
-                numberOfLines={2}
-                style={{
-                  fontSize: 16,
-                  fontWeight: "600",
-                }}
-              >
-                No name
-              </Text>
-
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  marginTop: 6,
-                }}
-              >
-                <Ionicons name="time-outline" size={14} color="#555" />
-                <Text
-                  style={{
-                    marginLeft: 4,
-                    color: "#555",
-                    fontSize: 13,
-                  }}
-                >
-                  No name phút đọc
-                </Text>
-
-                <Ionicons
-                  name="eye-outline"
-                  size={14}
-                  color="#555"
-                  style={{ marginLeft: 15 }}
-                />
-                <Text
-                  style={{
-                    marginLeft: 4,
-                    color: "#555",
-                    fontSize: 13,
-                  }}
-                >
-                  0 lượt xem
-                </Text>
-              </View>
-
-              <View
-                style={{
-                  alignSelf: "flex-start",
-                  backgroundColor: "#D9D9D9",
-                  borderRadius: 20,
-                  paddingHorizontal: 14,
-                  paddingVertical: 4,
-                  marginTop: 8,
-                }}
-              >
-                <Text
-                  style={{
-                    fontSize: 12,
-                    fontWeight: "500",
-                  }}
-                >
-                  No name
-                </Text>
-              </View>
-            </View>
-          </TouchableOpacity>
+            {/* Trục X */}
+            <Text
+              style={{
+                textAlign: "center",
+                marginTop: 12,
+                fontSize: 14,
+                fontWeight: "600",
+                color: "#555",
+              }}
+            >
+              Năm
+            </Text>
+          </View>
         </View>
       </View>
     </ScrollView>
