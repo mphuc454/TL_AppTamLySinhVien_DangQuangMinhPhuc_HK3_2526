@@ -1,11 +1,42 @@
+import { useCurentCalender } from "@/src/viewmodels/CurrentDate";
 import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
 import { useContext } from "react";
 import { Animated, Text, TouchableOpacity, View } from "react-native";
 import { BarChart } from "react-native-gifted-charts";
 import { ThemeContext } from "../theme/ThemeContext";
 
 const ScrollView = Animated.ScrollView;
-
+const Data2 = [
+  {
+    id: 1,
+    name: "Xem bài viết",
+    icon: "book",
+    bg: "#F9EED8",
+    route: "/(tabs)/Article",
+  },
+  {
+    id: 2,
+    name: "Xem bác sĩ",
+    icon: "calendar",
+    bg: "#F9EED8",
+    route: "/(tabs)/Appointment",
+  },
+  {
+    id: 3,
+    name: "Xem bài tập",
+    icon: "heart",
+    bg: "#F9EED8",
+    route: "/(no tabs)/Exercises",
+  },
+  {
+    id: 4,
+    name: "Nghe nhạc thư giãn",
+    icon: "musical-notes",
+    bg: "#F9EED8",
+    route: "/(no tabs)/Music",
+  },
+] as const;
 const legend = [
   { label: "Tích cực", color: "#556817" },
   { label: "Buồn bã", color: "#22A3CA" },
@@ -26,7 +57,7 @@ const Data3 = [
 
 export default function IndexView() {
   const { colors } = useContext(ThemeContext);
-
+  const { currentTime, currentDate } = useCurentCalender();
   const chartData = Data3.map((item) => ({
     ...item,
     labelTextStyle: { color: colors.text },
@@ -93,16 +124,16 @@ export default function IndexView() {
             <Text
               style={{ fontWeight: "bold", color: colors.text, fontSize: 14 }}
             >
-              Streak ghi nhật ký
+              Số lần ghi nhật ký
             </Text>
             <View style={{ alignItems: "center", gap: 10 }}>
               <Text
                 style={{ fontSize: 37, fontWeight: "bold", color: colors.text }}
               >
-                7
+                0
               </Text>
               <Text style={{ fontSize: 10, color: colors.textSecondary }}>
-                Ngày liên tiếp
+                Lượt ghi nhận
               </Text>
             </View>
           </View>
@@ -116,40 +147,25 @@ export default function IndexView() {
             }}
           >
             <Text
-              style={{ fontWeight: "bold", color: colors.text, fontSize: 14 }}
+              style={{
+                fontWeight: "bold",
+                color: colors.text,
+                fontSize: 14,
+                textAlign: "center",
+              }}
             >
-              Lịch hẹn sắp tới
+              Ngày hôm nay
             </Text>
-            <View
-              style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
-            >
+            <View style={{ alignItems: "center", gap: 10 }}>
               <Text
                 style={{ fontSize: 37, fontWeight: "bold", color: colors.text }}
               >
-                1
+                {currentTime}
               </Text>
               <Text style={{ fontSize: 10, color: colors.textSecondary }}>
-                14:00 · T4, 04/06
+                Ngày:{currentDate}
               </Text>
             </View>
-
-            <TouchableOpacity
-              style={{
-                borderWidth: 2,
-                borderRadius: 16,
-                paddingHorizontal: 16,
-                alignItems: "center",
-                backgroundColor: colors.background,
-                borderColor: colors.borderColor,
-                marginTop: 8,
-                alignSelf: "center",
-                paddingVertical: 6,
-              }}
-              activeOpacity={0.85}
-              onPress={() => {}}
-            >
-              <Text style={{ fontSize: 10, color: colors.text }}>Xem lịch</Text>
-            </TouchableOpacity>
           </View>
         </View>
 
@@ -268,16 +284,46 @@ export default function IndexView() {
         <View style={{ marginTop: 30 }}>
           <View
             style={{
+              marginTop: 30,
               flexDirection: "row",
+              flexWrap: "wrap",
               justifyContent: "space-between",
-              alignItems: "center",
             }}
           >
-            <Text
-              style={{ fontSize: 16, fontWeight: "bold", color: colors.text }}
-            >
-              Bài khảo sát bạn đã làm:
-            </Text>
+            {Data2.map((item) => (
+              <TouchableOpacity
+                onPress={() => router.push(item.route)}
+                key={item.id}
+                style={{ width: "48%", alignItems: "center", marginBottom: 20 }}
+              >
+                <View
+                  style={{
+                    width: "100%",
+                    height: 62,
+                    backgroundColor: item.bg,
+                    borderRadius: 16,
+                    flexDirection: "row",
+                    alignItems: "center",
+                    paddingHorizontal: 10,
+                    borderWidth: 1,
+                    borderColor: "#D8AD93",
+                  }}
+                >
+                  <Ionicons name={item.icon as any} size={25} color="#D8AD93" />
+                  <Text
+                    style={{
+                      fontSize: 10,
+                      fontWeight: "bold",
+                      marginLeft: 10,
+                      color: "#573926",
+                      flex: 1,
+                    }}
+                  >
+                    {item.name}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            ))}
           </View>
         </View>
       </View>
