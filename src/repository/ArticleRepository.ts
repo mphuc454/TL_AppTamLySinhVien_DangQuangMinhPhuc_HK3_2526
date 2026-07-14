@@ -31,3 +31,31 @@ export const totalArticle = async () => {
   if (error) throw error;
   return count ?? 0;
 };
+
+//4.Thống kê tổng số bài viết theo danh mục
+export const totalArticleByCategory = async () => {
+  const { data, error } = await supabase
+    .from("articles")
+    .select(`id, id_category_articles(name)`);
+  if (error) throw error;
+  const statistical: Record<string, number> = {};
+  data.forEach((item: any) => {
+    const category = item.id_category_articles.name;
+    statistical[category] = (statistical[category] || 0) + 1;
+  });
+  const total = Object.values(statistical).reduce((a, b) => a + b, 0);
+  const colors = [
+    "#002868",
+    "#22C55E",
+    "#F59E0B",
+    "#EF4444",
+    "#753df7",
+    "#d2dae6",
+  ];
+  return Object.entries(statistical).map(([category, count], index) => ({
+    value: count,
+    label: category,
+    text: `${Math.round((count / total) * 100)}%`,
+    color: colors[index % colors.length],
+  }));
+};
