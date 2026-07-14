@@ -15,13 +15,7 @@ const pieData = [
     text: "Nữ",
   },
 ];
-const Data3 = [
-  { value: 120, label: "2022", frontColor: "#22C55E" },
-  { value: 185, label: "2023", frontColor: "#22C55E" },
-  { value: 260, label: "2024", frontColor: "#22C55E" },
-  { value: 340, label: "2025", frontColor: "#22C55E" },
-  { value: 420, label: "2026", frontColor: "#22C55E" },
-];
+const Data3 = [{ value: 420, label: "2026", frontColor: "#22C55E" }];
 export default function AdminDashboardView() {
   const chartData = Data3.map((item) => ({
     ...item,
@@ -158,14 +152,14 @@ export default function AdminDashboardView() {
                 textAlign: "center",
               }}
             >
-              Tổng số bài tập
+              Thống kê tổng số bài tập
             </Text>
           </View>
           <View style={{ alignItems: "center", gap: 10 }}>
             <Text style={{ fontSize: 37, fontWeight: "bold", color: "#fff" }}>
               1
             </Text>
-            <Text style={{ fontSize: 15, color: "#fff" }}>bài tập</Text>
+            <Text style={{ fontSize: 15, color: "#fff" }}>Bài tập</Text>
           </View>
         </View>
         <View
@@ -185,7 +179,7 @@ export default function AdminDashboardView() {
                 textAlign: "center",
               }}
             >
-              Thống kê Tổng số bài viết
+              Thống kê tổng số bài viết
             </Text>
           </View>
 
