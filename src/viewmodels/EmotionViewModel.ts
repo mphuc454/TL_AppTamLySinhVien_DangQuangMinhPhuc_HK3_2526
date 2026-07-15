@@ -26,6 +26,8 @@ export function useEmotionViewModel() {
   }, []);
   return { em, loading };
 }
+
+//thêm emotion log
 export function useAddEmotionLog() {
   const [selectedEmotionId, setSelectedEmotionId] = useState<number | null>(
     null,

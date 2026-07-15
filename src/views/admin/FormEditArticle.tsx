@@ -1,33 +1,36 @@
-import { useAddArticle } from "@/src/viewmodels/admin/ArticleAdminViewModel";
+import { useEditArticle } from "@/src/viewmodels/admin/ArticleAdminViewModel";
 import { useCategoryArticlesViewModel } from "@/src/viewmodels/CategoryArticleViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { Picker } from "@react-native-picker/picker";
+import { useLocalSearchParams } from "expo-router";
 import {
-  Image,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
+    Image,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View,
 } from "react-native";
 
-export default function FormAddView() {
+export default function FormEditView() {
+  const { id } = useLocalSearchParams();
+
   const {
     title,
     setTitle,
     author,
     setAuthor,
-    time,
-    setTime,
-    category,
-    setCategory,
     content,
     setContent,
     thumbnail,
-    handleSave,
-    pickImage,
-  } = useAddArticle();
+    category,
+    setCategory,
+    time,
+    setTime,
+    handleUpdate,
+    pickImage, // thêm dòng này
+  } = useEditArticle(Number(id));
   const { categoryArticles } = useCategoryArticlesViewModel();
   const hasThumbnail = Boolean(thumbnail?.trim());
   const imageUri = hasThumbnail
@@ -46,7 +49,7 @@ export default function FormAddView() {
           marginBottom: 20,
         }}
       >
-        Nhập thêm bài viết
+        Chỉnh sửa bài viết
       </Text>
       <TouchableOpacity onPress={pickImage} style={styles.imagePicker}>
         <Image
@@ -123,8 +126,8 @@ export default function FormAddView() {
           style={styles.input}
         />
       </View>
-      <TouchableOpacity onPress={handleSave} style={styles.button}>
-        <Text style={styles.buttonText}>Thêm bài viết</Text>
+      <TouchableOpacity onPress={handleUpdate} style={styles.button}>
+        <Text style={styles.buttonText}>Cập nhật bài viết</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.button}>
         <Text style={styles.buttonText}>Huỷ</Text>

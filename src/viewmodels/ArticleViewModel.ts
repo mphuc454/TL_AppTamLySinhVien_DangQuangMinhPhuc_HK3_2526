@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useFocusEffect } from "expo-router";
+import { useCallback, useEffect, useState } from "react";
 import { Article } from "../models/Article";
 import {
   getArticleByID,
@@ -21,9 +22,11 @@ export function useArticleViewModel() {
       setLoading(false);
     }
   };
-  useEffect(() => {
-    loadArticles();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      loadArticles();
+    }, []),
+  );
 
   return { articles, loading };
 }
@@ -33,7 +36,7 @@ export function useArticleDetailViewModel(id: number) {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const loadExercisesDetail = async () => {
+    const loadDetail = async () => {
       try {
         setLoading(true);
         const data = await getArticleByID(id);
@@ -45,7 +48,7 @@ export function useArticleDetailViewModel(id: number) {
       }
     };
 
-    loadExercisesDetail();
+    loadDetail();
   }, [id]);
 
   return { arc, loading };

@@ -2,49 +2,48 @@ import { supabase } from "../lib/supabase";
 import { Emotion } from "../models/Emotion";
 import { EmotionLog } from "../models/EmotionLog";
 
-
 //1. lấy danh sách emotion từ cơ sở dữ liệu
-export const getAllEmotion = async() : Promise<Emotion[]> => {
-    const { data, error } = await supabase
+export const getAllEmotion = async (): Promise<Emotion[]> => {
+  const { data, error } = await supabase
     .from("emotions")
     .select("*")
-    .order("id")
-      if (error) {
+    .order("id");
+  if (error) {
     throw error;
   }
   return data as Emotion[];
-}
+};
 //2. Thêm vào nhật ký cảm xúc
-export const insertEmotionLog = async(
+export const insertEmotionLog = async (
   accountId: number,
   emotionId: number,
-  content: string) => {
-    const { error }  =  await supabase
-    .from('emotion_logs')
-    .insert({account_id: accountId, emotion_id: emotionId, content,})
-        if (error) {
+  content: string,
+) => {
+  const { error } = await supabase
+    .from("emotion_logs")
+    .insert({ account_id: accountId, emotion_id: emotionId, content });
+  if (error) {
     throw error;
   }
-  }
- //3. Lấy lịch sử nhật ký cảm xúc
-   export const getEmotionLog = async(accountId: number) : Promise<EmotionLog[]> => {
-     const { data, error } = await supabase
-     .from("emotion_logs")
+};
+//3. Lấy lịch sử nhật ký cảm xúc
+export const getEmotionLog = async (
+  accountId: number,
+): Promise<EmotionLog[]> => {
+  const { data, error } = await supabase
+    .from("emotion_logs")
     .select(`*, emotions (id, name, icon, color)`)
-    .eq('account_id', accountId )
+    .eq("account_id", accountId)
     .order("created_at", { ascending: false });
-      if (error) {
+  if (error) {
     throw error;
   }
-        return data as unknown as EmotionLog[];
- } 
- //4. Xoá lịch sử nhật ký cảm xúc theo id
-  export const deleteEmotionLog = async(id: number) : Promise<void> => {
-     const { error } = await supabase
-     .from("emotion_logs")
-     .delete()
-     .eq('id', id )
-      if (error) {
+  return data as unknown as EmotionLog[];
+};
+//4. Xoá lịch sử nhật ký cảm xúc theo id
+export const deleteEmotionLog = async (id: number): Promise<void> => {
+  const { error } = await supabase.from("emotion_logs").delete().eq("id", id);
+  if (error) {
     throw error;
   }
- } 
+};

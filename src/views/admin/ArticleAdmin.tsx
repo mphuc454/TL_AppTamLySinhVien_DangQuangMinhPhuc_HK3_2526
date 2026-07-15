@@ -1,3 +1,4 @@
+import { useDeleteArticle } from "@/src/viewmodels/admin/ArticleAdminViewModel";
 import { useArticleViewModel } from "@/src/viewmodels/ArticleViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
@@ -12,6 +13,7 @@ import {
 
 export default function AdminArticleView() {
   const { articles } = useArticleViewModel();
+  const handleRemove = useDeleteArticle();
   return (
     <ScrollView contentContainerStyle={{ paddingBottom: 120 }}>
       <View
@@ -61,6 +63,7 @@ export default function AdminArticleView() {
         />
       </View>
       <TouchableOpacity
+        onPress={() => router.push("/admin/CRUD/FormAddArticle")}
         style={{
           backgroundColor: "#2563eb",
           marginHorizontal: 15,
@@ -75,7 +78,7 @@ export default function AdminArticleView() {
             fontWeight: "bold",
           }}
         >
-          + Thêm bài viết
+          Thêm bài viết
         </Text>
       </TouchableOpacity>
       {articles.length > 0 ? (
@@ -100,7 +103,11 @@ export default function AdminArticleView() {
             }}
           >
             <Image
-              source={{ uri: item.thumbnail }}
+              source={{
+                uri: item.thumbnail?.trim()
+                  ? item.thumbnail
+                  : "https://placehold.co/600x350.png",
+              }}
               style={{
                 width: "100%",
                 height: 180,
@@ -144,14 +151,6 @@ export default function AdminArticleView() {
                 {item.views} lượt xem
               </Text>
 
-              <Text
-                style={{
-                  color: "green",
-                  marginTop: 5,
-                }}
-              >
-                {item.published === true ? "Đã xuất bản" : "Chưa xuất bản"}
-              </Text>
               <View
                 style={{
                   flexDirection: "row",
@@ -159,11 +158,21 @@ export default function AdminArticleView() {
                   marginTop: 15,
                 }}
               >
-                <TouchableOpacity style={{ marginRight: 20 }}>
+                <TouchableOpacity
+                  onPress={() =>
+                    router.push({
+                      pathname: "/admin/CRUD/FormEditArticle",
+                      params: {
+                        id: item.id,
+                      },
+                    })
+                  }
+                  style={{ marginRight: 20 }}
+                >
                   <Ionicons name="create-outline" size={24} color="#2563eb" />
                 </TouchableOpacity>
 
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => handleRemove(item.id)}>
                   <Ionicons name="trash-outline" size={24} color="red" />
                 </TouchableOpacity>
               </View>
