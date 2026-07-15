@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { Article } from "../models/Article";
-import { getArticleByID, getArticles } from "../repository/ArticleRepository";
+import {
+  getArticleByID,
+  getArticles,
+  inscreaseView,
+} from "../repository/ArticleRepository";
 
 // lấy danh sách bài viết
 export function useArticleViewModel() {
@@ -45,4 +49,20 @@ export function useArticleDetailViewModel(id: number) {
   }, [id]);
 
   return { arc, loading };
+}
+
+export function useViewsbyUserViewModel(id: number) {
+  useEffect(() => {
+    if (!id || Number.isNaN(id)) return;
+
+    const totalView = async () => {
+      try {
+        await inscreaseView(id);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    totalView();
+  }, [id]);
 }

@@ -11,8 +11,6 @@ import {
 } from "@/src/viewmodels/admin/DashboardViewModel";
 import { ScrollView, Text, View } from "react-native";
 import { BarChart, PieChart } from "react-native-gifted-charts";
-
-// const Data3 = [{ value: 420, label: "Cảm xúc", frontColor: "#22C55E" }];
 export default function AdminDashboardView() {
   const { usrTotal, loading } = useDashboardUserViewModel();
   const { docTotal, loadingDoc } = useDashboardDoctorViewModel();
@@ -464,7 +462,6 @@ export default function AdminDashboardView() {
         <View style={{ flexDirection: "row", marginTop: 10 }}>
           {/* Trục Y */}
           <View style={{ justifyContent: "center", alignItems: "center" }}>
-            {" "}
             <Text
               style={{
                 transform: [{ rotate: "-90deg" }],
@@ -478,7 +475,6 @@ export default function AdminDashboardView() {
             </Text>
           </View>
           <View style={{ flex: 1 }}>
-            {" "}
             <BarChart
               data={dataUser}
               barWidth={25}
@@ -502,6 +498,24 @@ export default function AdminDashboardView() {
               Năm
             </Text>
           </View>
+        </View>
+        {/* lấy thông tin chi tiết */}
+        <View
+          style={{
+            marginTop: 15,
+          }}
+        >
+          {dataUser.map((item, index) => (
+            <View
+              key={index}
+              style={{ flexDirection: "row", alignItems: "center" }}
+            >
+              <Text>Số lượng người đăng ký năm </Text>
+              <Text style={{ fontWeight: "bold" }}>{item.label}: </Text>
+              <Text style={{ fontWeight: "bold" }}>{item.value} </Text>
+              <Text>người</Text>
+            </View>
+          ))}
         </View>
       </View>
     </ScrollView>

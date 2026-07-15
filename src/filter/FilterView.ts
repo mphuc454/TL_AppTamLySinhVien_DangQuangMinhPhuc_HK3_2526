@@ -20,7 +20,7 @@ export function FilterArticle() {
     selectedCategory === null
       ? articles
       : articles.filter(
-          (item) => item.id_category_articles.id === selectedCategory
+          (item) => item.id_category_articles.id === selectedCategory,
         );
   return { selectedCategory, setSelectedCategory, filterArticles };
 }

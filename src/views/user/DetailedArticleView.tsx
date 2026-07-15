@@ -1,6 +1,7 @@
 import {
   useArticleDetailViewModel,
   useArticleViewModel,
+  useViewsbyUserViewModel,
 } from "@/src/viewmodels/ArticleViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
@@ -13,6 +14,9 @@ export default function DetailedArticleView() {
   const { id } = useLocalSearchParams();
   const { arc } = useArticleDetailViewModel(Number(id));
   const { articles } = useArticleViewModel();
+  // const { totalView } = useViewsbyUserViewModel();
+  useViewsbyUserViewModel(Number(id));
+
   const otherArticles = articles
     .filter((articles) => articles.id !== Number(id))
     .slice(0, 2);
@@ -30,7 +34,7 @@ export default function DetailedArticleView() {
       <View
         style={{ flexDirection: "row", alignItems: "center", marginTop: 30 }}
       >
-        <TouchableOpacity onPress={() => router.push("/(tabs)/Index")}>
+        <TouchableOpacity onPress={() => router.back()}>
           <Ionicons
             style={{ color: colors.text }}
             name="arrow-back"
@@ -38,14 +42,14 @@ export default function DetailedArticleView() {
           ></Ionicons>
         </TouchableOpacity>
       </View>
-      <View
+
+      <Image
+        source={{ uri: arc?.thumbnail }}
         style={{
-          height: 220,
-          backgroundColor: "#D88D8D",
-          marginTop: 20,
-          marginHorizontal: 8,
+          width: "100%",
+          height: 180,
         }}
-      ></View>
+      ></Image>
       <View
         style={{
           alignSelf: "flex-start",
