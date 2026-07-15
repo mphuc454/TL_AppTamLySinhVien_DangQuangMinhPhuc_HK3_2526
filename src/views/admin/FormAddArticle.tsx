@@ -1,4 +1,4 @@
-import { useAddArticle } from "@/src/viewmodels/admin/ArticleAdminViewModel";
+import { useAddArticle } from "@/src/viewmodels/ArticleViewModel";
 import { useCategoryArticlesViewModel } from "@/src/viewmodels/CategoryArticleViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { Picker } from "@react-native-picker/picker";

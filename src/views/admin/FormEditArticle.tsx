@@ -1,16 +1,16 @@
-import { useEditArticle } from "@/src/viewmodels/admin/ArticleAdminViewModel";
+import { useEditArticle } from "@/src/viewmodels/ArticleViewModel";
 import { useCategoryArticlesViewModel } from "@/src/viewmodels/CategoryArticleViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { Picker } from "@react-native-picker/picker";
 import { useLocalSearchParams } from "expo-router";
 import {
-    Image,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 export default function FormEditView() {
@@ -29,7 +29,7 @@ export default function FormEditView() {
     time,
     setTime,
     handleUpdate,
-    pickImage, // thêm dòng này
+    pickImage,
   } = useEditArticle(Number(id));
   const { categoryArticles } = useCategoryArticlesViewModel();
   const hasThumbnail = Boolean(thumbnail?.trim());

@@ -8,7 +8,7 @@ import {
   useDashboardUserViewModel,
   useGenderAdminViewModel,
   useUserByYearAdminViewModel,
-} from "@/src/viewmodels/admin/DashboardViewModel";
+} from "@/src/viewmodels/DashboardViewModel";
 import { ScrollView, Text, View } from "react-native";
 import { BarChart, PieChart } from "react-native-gifted-charts";
 export default function AdminDashboardView() {
