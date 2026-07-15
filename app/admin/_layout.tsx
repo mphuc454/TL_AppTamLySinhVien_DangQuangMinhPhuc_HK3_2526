@@ -38,6 +38,13 @@ export default function AdminLayout() {
           title: "Quản Lý Chatbot",
         }}
       />
+      <Drawer.Screen
+        name="CRUD/FormAddArticle"
+        options={{
+          drawerLabel: () => null,
+          drawerItemStyle: { display: "none" },
+        }}
+      />
     </Drawer>
   );
 }

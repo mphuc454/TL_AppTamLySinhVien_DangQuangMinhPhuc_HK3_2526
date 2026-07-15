@@ -61,6 +61,7 @@ export default function AdminArticleView() {
         />
       </View>
       <TouchableOpacity
+        onPress={() => router.push("/admin/CRUD/FormAddArticle")}
         style={{
           backgroundColor: "#2563eb",
           marginHorizontal: 15,
@@ -75,7 +76,7 @@ export default function AdminArticleView() {
             fontWeight: "bold",
           }}
         >
-          + Thêm bài viết
+          Thêm bài viết
         </Text>
       </TouchableOpacity>
       {articles.length > 0 ? (
@@ -144,14 +145,6 @@ export default function AdminArticleView() {
                 {item.views} lượt xem
               </Text>
 
-              <Text
-                style={{
-                  color: "green",
-                  marginTop: 5,
-                }}
-              >
-                {item.published === true ? "Đã xuất bản" : "Chưa xuất bản"}
-              </Text>
               <View
                 style={{
                   flexDirection: "row",
