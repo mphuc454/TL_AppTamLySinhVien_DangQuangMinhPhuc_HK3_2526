@@ -1,4 +1,7 @@
-import { insertArticle } from "@/src/repository/ArticleRepository";
+import {
+  deleteArticle,
+  insertArticle,
+} from "@/src/repository/ArticleRepository";
 import * as ImagePicker from "expo-image-picker";
 import { router } from "expo-router";
 import { useState } from "react";
@@ -22,7 +25,6 @@ export function useAddArticle() {
   ) => {
     try {
       setLoading(true);
-
       await insertArticle(
         id_category_articles,
         title,
@@ -80,7 +82,7 @@ export function useAddArticle() {
       setTime("");
       setCategory(null);
       setThumbnail("");
-      router.replace("/admin/ArticleManagement");
+      router.back();
     } else {
       Alert.alert("Thông báo", "Lỗi khi thêm vào");
     }
@@ -93,7 +95,8 @@ export function useAddArticle() {
       quality: 1,
     });
     if (!res.canceled) {
-      setThumbnail(res.assets[0].uri);
+      const uri = res.assets?.[0]?.uri?.trim();
+      setThumbnail(uri || "");
     }
   };
   return {
@@ -109,8 +112,31 @@ export function useAddArticle() {
     setContent,
     thumbnail,
     setThumbnail,
-    loading,
     handleSave,
     pickImage,
+    loading,
   };
+}
+
+export function useDeleteArticle() {
+  const handleRemove = (id: number) => {
+    Alert.alert("Xoá bài viết", "Bạn có muốn chắc xoá bài viết không ?", [
+      { text: "Huỷ", style: "cancel" },
+      {
+        text: "Xoá",
+        style: "destructive",
+        onPress: async () => {
+          try {
+            await deleteArticle(id);
+            Alert.alert("Thông báo", "Xóa thành công");
+            router.replace("/admin/ArticleManagement");
+          } catch (error) {
+            console.log(error);
+            Alert.alert("Thông báo", "Lỗi không thể xoá được");
+          }
+        },
+      },
+    ]);
+  };
+  return handleRemove;
 }

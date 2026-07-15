@@ -29,6 +29,10 @@ export default function FormAddView() {
     pickImage,
   } = useAddArticle();
   const { categoryArticles } = useCategoryArticlesViewModel();
+  const hasThumbnail = Boolean(thumbnail?.trim());
+  const imageUri = hasThumbnail
+    ? thumbnail
+    : "https://placehold.co/600x350.png";
 
   return (
     <ScrollView contentContainerStyle={{ paddingBottom: 120 }}>
@@ -47,11 +51,11 @@ export default function FormAddView() {
       <TouchableOpacity onPress={pickImage} style={styles.imagePicker}>
         <Image
           source={{
-            uri: thumbnail || "https://placehold.co/600x350.png",
+            uri: imageUri,
           }}
           style={styles.image}
         />
-        {!thumbnail && (
+        {!hasThumbnail && (
           <View style={styles.imageOverlay}>
             <Ionicons name="camera" size={32} color="#fff" />
             <Text style={styles.imageText}>Chọn ảnh bìa</Text>

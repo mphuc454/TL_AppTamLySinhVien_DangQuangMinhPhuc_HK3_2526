@@ -1,3 +1,4 @@
+import { useDeleteArticle } from "@/src/viewmodels/admin/ArticleAdminViewModel";
 import { useArticleViewModel } from "@/src/viewmodels/ArticleViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
@@ -12,6 +13,7 @@ import {
 
 export default function AdminArticleView() {
   const { articles } = useArticleViewModel();
+  const handleRemove = useDeleteArticle();
   return (
     <ScrollView contentContainerStyle={{ paddingBottom: 120 }}>
       <View
@@ -101,7 +103,11 @@ export default function AdminArticleView() {
             }}
           >
             <Image
-              source={{ uri: item.thumbnail }}
+              source={{
+                uri: item.thumbnail?.trim()
+                  ? item.thumbnail
+                  : "https://placehold.co/600x350.png",
+              }}
               style={{
                 width: "100%",
                 height: 180,
@@ -156,7 +162,7 @@ export default function AdminArticleView() {
                   <Ionicons name="create-outline" size={24} color="#2563eb" />
                 </TouchableOpacity>
 
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => handleRemove(item.id)}>
                   <Ionicons name="trash-outline" size={24} color="red" />
                 </TouchableOpacity>
               </View>

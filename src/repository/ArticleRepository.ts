@@ -106,3 +106,11 @@ export const insertArticle = async (
 
   return data;
 };
+
+//8. Xoá bài viết
+export const deleteArticle = async (id: number): Promise<void> => {
+  const { error } = await supabase.from("articles").delete().eq("id", id);
+  if (error) {
+    throw error;
+  }
+};
