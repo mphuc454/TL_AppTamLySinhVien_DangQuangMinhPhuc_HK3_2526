@@ -45,6 +45,13 @@ export default function AdminLayout() {
           drawerItemStyle: { display: "none" },
         }}
       />
+      <Drawer.Screen
+        name="CRUD/FormEditArticle"
+        options={{
+          drawerLabel: () => null,
+          drawerItemStyle: { display: "none" },
+        }}
+      />
     </Drawer>
   );
 }
