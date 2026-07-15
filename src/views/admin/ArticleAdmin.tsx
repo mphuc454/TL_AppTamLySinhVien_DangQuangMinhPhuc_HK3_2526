@@ -158,7 +158,17 @@ export default function AdminArticleView() {
                   marginTop: 15,
                 }}
               >
-                <TouchableOpacity style={{ marginRight: 20 }}>
+                <TouchableOpacity
+                  onPress={() =>
+                    router.push({
+                      pathname: "/admin/CRUD/FormEditArticle",
+                      params: {
+                        id: item.id,
+                      },
+                    })
+                  }
+                  style={{ marginRight: 20 }}
+                >
                   <Ionicons name="create-outline" size={24} color="#2563eb" />
                 </TouchableOpacity>
 

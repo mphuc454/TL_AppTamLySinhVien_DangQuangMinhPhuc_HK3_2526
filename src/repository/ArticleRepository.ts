@@ -114,3 +114,30 @@ export const deleteArticle = async (id: number): Promise<void> => {
     throw error;
   }
 };
+
+//9. cập nhật bài viết
+
+export async function updateArticle(
+  id: number,
+  id_category_articles: number,
+  title: string,
+  thumbnail: string,
+  content: string,
+  name_author: string,
+  time_to_read: number,
+) {
+  const { error } = await supabase
+    .from("articles")
+    .update({
+      id_category_articles,
+      title,
+      thumbnail,
+      content,
+      name_author,
+      time_to_read,
+      updated_at: new Date(),
+    })
+    .eq("id", id);
+
+  if (error) throw error;
+}
