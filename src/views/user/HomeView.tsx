@@ -1,4 +1,3 @@
-import { useCurentCalender } from "@/src/viewmodels/CurrentDate";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useContext } from "react";
@@ -57,7 +56,6 @@ const Data3 = [
 
 export default function IndexView() {
   const { colors } = useContext(ThemeContext);
-  const { currentTime, currentDate } = useCurentCalender();
   const chartData = Data3.map((item) => ({
     ...item,
     labelTextStyle: { color: colors.text },
@@ -139,36 +137,6 @@ export default function IndexView() {
               </Text>
               <Text style={{ fontSize: 10, color: colors.textSecondary }}>
                 Lượt ghi nhận
-              </Text>
-            </View>
-          </View>
-
-          <View
-            style={{
-              flex: 1,
-              padding: 15,
-              backgroundColor: colors.cardBackground,
-              borderRadius: 16,
-            }}
-          >
-            <Text
-              style={{
-                fontWeight: "bold",
-                color: colors.text,
-                fontSize: 14,
-                textAlign: "center",
-              }}
-            >
-              Ngày hôm nay
-            </Text>
-            <View style={{ alignItems: "center", gap: 10 }}>
-              <Text
-                style={{ fontSize: 37, fontWeight: "bold", color: colors.text }}
-              >
-                {currentTime}
-              </Text>
-              <Text style={{ fontSize: 10, color: colors.textSecondary }}>
-                Ngày:{currentDate}
               </Text>
             </View>
           </View>
