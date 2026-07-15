@@ -61,3 +61,20 @@ export const totalArticleByCategory = async () => {
 };
 
 //6. Bài viết tăng lượt xem
+export const inscreaseView = async (id: number) => {
+  const { data, error } = await supabase
+    .from("articles")
+    .select("views")
+    .eq("id", id)
+    .single();
+  if (error) {
+    throw new Error(error.message);
+  }
+  const { error: upadateError } = await supabase
+    .from("articles")
+    .update({ views: (data.views ?? 0) + 1 })
+    .eq("id", id);
+  if (upadateError) {
+    throw new Error(upadateError.message);
+  }
+};

@@ -1,4 +1,6 @@
+import { useArticleViewModel } from "@/src/viewmodels/ArticleViewModel";
 import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
 import {
   Image,
   ScrollView,
@@ -9,6 +11,7 @@ import {
 } from "react-native";
 
 export default function AdminArticleView() {
+  const { articles } = useArticleViewModel();
   return (
     <ScrollView contentContainerStyle={{ paddingBottom: 120 }}>
       <View
@@ -75,86 +78,111 @@ export default function AdminArticleView() {
           + Thêm bài viết
         </Text>
       </TouchableOpacity>
-      <View
-        style={{
-          backgroundColor: "#fff",
-          marginHorizontal: 15,
-          marginTop: 15,
-          borderRadius: 15,
-          overflow: "hidden",
-          elevation: 3,
-        }}
-      >
-        <Image
-          source={{ uri: "https://picsum.photos/600/300" }}
+      {articles.length > 0 ? (
+        articles.map((item) => (
+          <TouchableOpacity
+            onPress={() =>
+              router.push({
+                pathname: "/(no tabs)/DetailedArticle",
+                params: {
+                  id: item.id,
+                },
+              })
+            }
+            key={item.id}
+            style={{
+              backgroundColor: "#fff",
+              marginHorizontal: 15,
+              marginTop: 15,
+              borderRadius: 15,
+              overflow: "hidden",
+              elevation: 3,
+            }}
+          >
+            <Image
+              source={{ uri: item.thumbnail }}
+              style={{
+                width: "100%",
+                height: 180,
+              }}
+            />
+
+            <View style={{ padding: 15 }}>
+              <Text
+                style={{
+                  fontSize: 20,
+                  fontWeight: "bold",
+                }}
+              >
+                {item.title}
+              </Text>
+
+              <Text
+                style={{
+                  fontSize: 16,
+                  fontWeight: "600",
+                }}
+              >
+                {item.name_author}
+              </Text>
+
+              <Text
+                style={{
+                  fontSize: 12,
+                  fontWeight: "500",
+                }}
+              >
+                {item.id_category_articles.name}
+              </Text>
+
+              <Text
+                style={{
+                  color: "#555",
+                  fontSize: 13,
+                }}
+              >
+                {item.views} lượt xem
+              </Text>
+
+              <Text
+                style={{
+                  color: "green",
+                  marginTop: 5,
+                }}
+              >
+                {item.published === true ? "Đã xuất bản" : "Chưa xuất bản"}
+              </Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "flex-end",
+                  marginTop: 15,
+                }}
+              >
+                <TouchableOpacity style={{ marginRight: 20 }}>
+                  <Ionicons name="create-outline" size={24} color="#2563eb" />
+                </TouchableOpacity>
+
+                <TouchableOpacity>
+                  <Ionicons name="trash-outline" size={24} color="red" />
+                </TouchableOpacity>
+              </View>
+            </View>
+          </TouchableOpacity>
+        ))
+      ) : (
+        <Text
           style={{
             width: "100%",
-            height: 180,
+            textAlign: "center",
+            marginTop: 20,
+            fontSize: 16,
+            color: "#666",
           }}
-        />
-
-        <View style={{ padding: 15 }}>
-          <Text
-            style={{
-              fontSize: 20,
-              fontWeight: "bold",
-            }}
-          >
-            React Native Expo là gì?
-          </Text>
-
-          <Text
-            style={{
-              fontSize: 16,
-              fontWeight: "600",
-            }}
-          >
-            Admin
-          </Text>
-
-          <Text
-            style={{
-              fontSize: 12,
-              fontWeight: "500",
-            }}
-          >
-            Công nghệ
-          </Text>
-
-          <Text
-            style={{
-              color: "#555",
-              fontSize: 13,
-            }}
-          >
-            8 lượt xem
-          </Text>
-
-          <Text
-            style={{
-              color: "green",
-              marginTop: 5,
-            }}
-          >
-            Đã xuất bản
-          </Text>
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "flex-end",
-              marginTop: 15,
-            }}
-          >
-            <TouchableOpacity style={{ marginRight: 20 }}>
-              <Ionicons name="create-outline" size={24} color="#2563eb" />
-            </TouchableOpacity>
-
-            <TouchableOpacity>
-              <Ionicons name="trash-outline" size={24} color="red" />
-            </TouchableOpacity>
-          </View>
-        </View>
-      </View>
+        >
+          Hiện chưa có bài viết nào.
+        </Text>
+      )}
     </ScrollView>
   );
 }
