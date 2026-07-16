@@ -7,4 +7,6 @@ export interface Doctor {
   specialization: string;
   bio: string;
   role_doctor: string;
+  avatar_url: string;
+  verify: boolean;
 }

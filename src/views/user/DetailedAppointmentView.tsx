@@ -27,7 +27,7 @@ export default function DetailAppointmentView() {
       <View
         style={{ flexDirection: "row", alignItems: "center", marginTop: 30 }}
       >
-        <TouchableOpacity onPress={() => router.push("/(tabs)/Index")}>
+        <TouchableOpacity onPress={() => router.back()}>
           <Ionicons
             style={{ color: colors.text }}
             name="arrow-back"
