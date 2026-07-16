@@ -80,3 +80,11 @@ export const toggleVerify = async (id: number, verify: boolean) => {
   if (error) throw error;
   return data;
 };
+
+//6. Xoá bác sĩ
+export const deleteDoctor = async (id: number): Promise<void> => {
+  const { error } = await supabase.from("doctors").delete().eq("id", id);
+  if (error) {
+    throw error;
+  }
+};

@@ -5,7 +5,14 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import { useContext, useState } from "react";
-import { ScrollView, Switch, Text, TouchableOpacity, View } from "react-native";
+import {
+  Image,
+  ScrollView,
+  Switch,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { ThemeContext } from "../theme/ThemeContext";
 
 export default function DetailAppointmentView() {
@@ -35,16 +42,20 @@ export default function DetailAppointmentView() {
           ></Ionicons>
         </TouchableOpacity>
       </View>
-      <View
+      <Image
+        source={{
+          uri: doc_id?.avatar_url.trim()
+            ? doc_id?.avatar_url
+            : "https://placehold.co/600x350.png",
+        }}
         style={{
           width: 110,
           height: 110,
           borderRadius: 18,
-          backgroundColor: "#D98A8A",
           alignSelf: "center",
           marginTop: 15,
         }}
-      ></View>
+      ></Image>
       <Text
         style={{
           textAlign: "center",
