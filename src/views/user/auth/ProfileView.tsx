@@ -60,7 +60,7 @@ export default function ProfileView() {
             color: colors.text,
           }}
         >
-          Chỉnh sửa thông tin
+          Hồ sơ người dùng
         </Text>
       </View>
       <View

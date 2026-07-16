@@ -1,6 +1,8 @@
-import { useArticleViewModel, useDeleteArticle } from "@/src/viewmodels/ArticleViewModel";
+import { useSearchArticle } from "@/src/filter/FilterView";
+import { useDeleteArticle } from "@/src/viewmodels/ArticleViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
+import { useState } from "react";
 import {
   Image,
   ScrollView,
@@ -11,8 +13,9 @@ import {
 } from "react-native";
 
 export default function AdminArticleView() {
-  const { articles } = useArticleViewModel();
   const handleRemove = useDeleteArticle();
+  const [search, setSearch] = useState("");
+  const filterSearchArticle = useSearchArticle(search);
   return (
     <ScrollView contentContainerStyle={{ paddingBottom: 120 }}>
       <View
@@ -53,6 +56,8 @@ export default function AdminArticleView() {
         <Ionicons name="search" size={20} color="gray" />
 
         <TextInput
+          value={search}
+          onChangeText={setSearch}
           placeholder="Tìm bài viết..."
           style={{
             flex: 1,
@@ -80,8 +85,8 @@ export default function AdminArticleView() {
           Thêm bài viết
         </Text>
       </TouchableOpacity>
-      {articles.length > 0 ? (
-        articles.map((item) => (
+      {filterSearchArticle.length > 0 ? (
+        filterSearchArticle.map((item) => (
           <TouchableOpacity
             onPress={() =>
               router.push({

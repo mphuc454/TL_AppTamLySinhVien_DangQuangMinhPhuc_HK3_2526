@@ -1,6 +1,7 @@
 import { createAccount } from "@/src/repository/auth/AuthRepository";
 import { router } from "expo-router";
 import { useState } from "react";
+import { Alert } from "react-native";
 
 //1. Xử lý dữ liệu nhập input
 export function useInputUsrViewModel() {
@@ -18,8 +19,18 @@ export function useInputUsrViewModel() {
     }
     const success = await createAccount(name, Number(role));
     if (success) {
-      alert("Hoàn tất thông tin");
-      router.replace("/(tabs)/Index");
+      Alert.alert("Thông báo", "Hoàn tất thông tin");
+      switch (role) {
+        case "1":
+          router.replace("/(tabs)/Index");
+          break;
+        case "2":
+          router.replace("/admin/Dashboard");
+          break;
+        case "3":
+          router.replace("/doctor/MainDoctor");
+          break;
+      }
     }
   };
 
