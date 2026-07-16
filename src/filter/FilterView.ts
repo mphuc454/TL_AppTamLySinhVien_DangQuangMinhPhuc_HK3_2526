@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useArticleViewModel } from "../viewmodels/ArticleViewModel";
 import { useDoctorViewModel } from "../viewmodels/DoctorViewModel";
 import { useExercisesViewModel } from "../viewmodels/ExercisesViewModel";
@@ -33,4 +33,16 @@ export function FilterExercises() {
       ? ex
       : ex.filter((item) => item.category.id === selectedCategory);
   return { selectedCategory, setSelectedCategory, filterExercises };
+}
+
+// lọc tìm kiếm
+export function useSearchArticle(seacrhItems: string) {
+  const { articles } = useArticleViewModel();
+
+  const filterSearchArticle = useMemo(() => {
+    return articles.filter((i) =>
+      i.title.toUpperCase().includes(seacrhItems.toUpperCase()),
+    );
+  }, [articles, seacrhItems]);
+  return filterSearchArticle;
 }
