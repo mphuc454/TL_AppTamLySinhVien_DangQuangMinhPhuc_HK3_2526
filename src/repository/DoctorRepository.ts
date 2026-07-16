@@ -31,7 +31,7 @@ export const getSkillDoctor = async (): Promise<DoctorSkill[]> => {
   return data ?? [];
 };
 
-//3. lấy chi tiết 1 bài viết từ cơ sở dữ liệu
+//3. lấy chi tiết thông tin bác sĩ từ cơ sở dữ liệu
 export const getDoctorByID = async (id: number) => {
   const { data: doctor, error } = await supabase
     .from("doctors")
@@ -69,4 +69,14 @@ export const getSkillDetailDoctor = async (
 
   if (error) throw error;
   return data as unknown as DoctorSkill[];
+};
+
+//5. Vô hiệu hoá tài khoản:
+export const toggleVerify = async (id: number, verify: boolean) => {
+  const { data, error } = await supabase
+    .from("doctors")
+    .update({ verify })
+    .eq("id", id);
+  if (error) throw error;
+  return data;
 };

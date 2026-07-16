@@ -32,7 +32,7 @@ export default function AppointmentView() {
           marginLeft: 20,
         }}
       >
-        <TouchableOpacity onPress={() => router.push("/(tabs)/Index")}>
+        <TouchableOpacity onPress={() => router.back()}>
           <Ionicons
             style={{ color: colors.text }}
             name="arrow-back"
@@ -90,7 +90,7 @@ export default function AppointmentView() {
         ))}
       </ScrollView>
       <View style={{ marginTop: 20 }}>
-        {filterDocs.length > 0 ? (
+        {filterDocs.filter((d) => d.verify).length > 0 ? (
           filterDocs.map((d) => (
             <View
               key={d.id}

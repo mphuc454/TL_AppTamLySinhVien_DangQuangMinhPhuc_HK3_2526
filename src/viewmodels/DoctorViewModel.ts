@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useFocusEffect } from "expo-router";
+import { useCallback, useEffect, useState } from "react";
 import { Alert } from "react-native";
 import { Doctor } from "../models/Doctor";
 import { DoctorSkill } from "../models/DoctorSkill";
@@ -7,6 +8,7 @@ import {
   getDoctorByID,
   getSkillDetailDoctor,
   getSkillDoctor,
+  toggleVerify,
 } from "../repository/DoctorRepository";
 
 // lấy danh sách các bác sĩ
@@ -25,9 +27,11 @@ export function useDoctorViewModel() {
       setLoading(false);
     }
   };
-  useEffect(() => {
-    loadDoctors();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      loadDoctors();
+    }, []),
+  );
 
   return { doc, loading };
 }
@@ -101,11 +105,32 @@ export function useSkillDetailViewModel(doctorId: number) {
   return { skill_id, loading };
 }
 
+// Vô hiệu hoá  bác sĩ
+export function useDisableDoctor() {
+  const disable = async (id: number, verifyCurrent: boolean) => {
+    try {
+      await toggleVerify(id, !verifyCurrent);
+      Alert.alert(
+        "Thông báo",
+        verifyCurrent ? "Vô hiệu hoá thành công" : "Mở lại thành công",
+      );
+    } catch (error) {
+      Alert.alert("Thông báo", "Lỗi không thể xử lý được!");
+      console.log(error);
+    }
+  };
+  return disable;
+}
+
 // Hiện thị cài đặt quản lý bác sĩ
 export function useEditDoctor() {
-  const handleDoctor = async () => {
+  const disable = useDisableDoctor();
+  const handleDoctor = async (id: number, verify: boolean) => {
     Alert.alert("Thông báo", "Chọn thao tác thay đổi", [
-      { text: "Vô hiệu hoá tài khoản" },
+      {
+        text: verify ? "Vô hiệu hoá tài khoản" : "Mở tài khoản",
+        onPress: () => disable(id, verify),
+      },
       { text: "Xoá tài khoản" },
       { text: "Huỷ", style: "cancel" },
     ]);
