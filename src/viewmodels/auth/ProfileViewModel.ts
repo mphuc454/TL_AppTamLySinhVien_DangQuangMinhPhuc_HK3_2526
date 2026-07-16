@@ -1,20 +1,39 @@
-import { changePassword, logout } from "@/src/repository/auth/AuthRepository";
+import {
+  changePassword,
+  getAccount,
+  logout,
+} from "@/src/repository/auth/AuthRepository";
 import {
   getAccountById,
   modifyAccountbyID,
 } from "@/src/repository/auth/ProfileRepository";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
+import { Alert } from "react-native";
 import { Account } from "../../models/Account";
 
 //1. đăng xuất tài khoản
 export function useProfileViewModel() {
   const handleLogout = async () => {
-    const success = await logout();
-
-    if (success) {
-      router.replace("/auth/Login");
-    }
+    Alert.alert("Thông báo", "Bạn có muốn đăng xuất tài khoản không ?", [
+      { text: "Huỷ", style: "cancel" },
+      {
+        text: "Có",
+        style: "destructive",
+        onPress: async () => {
+          try {
+            const success = await logout();
+            if (success) {
+              router.replace("/auth/Login");
+              Alert.alert("Thông báo", "Đã đăng xuất thành công");
+            }
+          } catch (error) {
+            console.log(error);
+            Alert.alert("Thông báo", "Lỗi không thể đăng xuất");
+          }
+        },
+      },
+    ]);
   };
   return {
     handleLogout,
@@ -99,7 +118,18 @@ export function useChangePassword() {
       setLoading(true);
       await changePassword(newPa);
       alert("Đã thay đổi mật khẩu thành công");
-      router.replace("/(tabs)/Index");
+      const acc = await getAccount();
+      switch (acc.role) {
+        case 1:
+          router.replace("/(tabs)/Index");
+          break;
+        case 2:
+          router.replace("/admin/Dashboard");
+          break;
+        case 3:
+          router.replace("/doctor/MainDoctor");
+          break;
+      }
       setNewPa("");
     } catch (error) {
       console.log(error);

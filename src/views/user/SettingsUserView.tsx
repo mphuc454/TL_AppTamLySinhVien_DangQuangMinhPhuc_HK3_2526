@@ -74,7 +74,7 @@ export default function SettingView() {
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={() => router.push("/admin/Dashboard")}
+        onPress={() => router.push("/doctor/MainDoctor")}
         style={{
           backgroundColor: "#FCDDDD",
           borderRadius: 25,
