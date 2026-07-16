@@ -11,7 +11,8 @@ import {
 } from "@/src/repository/auth/ProfileRepository";
 import { totalExercise } from "@/src/repository/ExerciseRepository";
 import { totalMusic } from "@/src/repository/MusicRepository";
-import { useEffect, useState } from "react";
+import { useFocusEffect } from "expo-router";
+import { useCallback, useState } from "react";
 
 export function useDashboardUserViewModel() {
   const [usrTotal, setUsrTotal] = useState<number>(0);
@@ -27,9 +28,11 @@ export function useDashboardUserViewModel() {
       setLoading(false);
     }
   };
-  useEffect(() => {
-    loadTotal();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      loadTotal();
+    }, []),
+  );
 
   return { usrTotal, loading };
 }
@@ -48,9 +51,11 @@ export function useDashboardDoctorViewModel() {
       setLoading(false);
     }
   };
-  useEffect(() => {
-    loadTotal();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      loadTotal();
+    }, []),
+  );
 
   return { docTotal, loadingDoc };
 }
@@ -69,9 +74,11 @@ export function useDashboardArticleViewModel() {
       setLoading(false);
     }
   };
-  useEffect(() => {
-    loadTotal();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      loadTotal();
+    }, []),
+  );
 
   return { arcTotal, loadingArc };
 }
@@ -90,9 +97,11 @@ export function useDashboardExerciseViewModel() {
       setLoading(false);
     }
   };
-  useEffect(() => {
-    loadTotal();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      loadTotal();
+    }, []),
+  );
 
   return { exTotal, loadingEx };
 }
@@ -111,9 +120,11 @@ export function useDashboardMusicViewModel() {
       setLoading(false);
     }
   };
-  useEffect(() => {
-    loadTotal();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      loadTotal();
+    }, []),
+  );
 
   return { musTotal, loadingMus };
 }
@@ -132,9 +143,11 @@ export function useDashboardAdminViewModel() {
       setLoading(false);
     }
   };
-  useEffect(() => {
-    loadTotal();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      loadTotal();
+    }, []),
+  );
 
   return { adTotal, loadingAd };
 }
@@ -149,9 +162,11 @@ export function useGenderAdminViewModel() {
       console.log(error);
     }
   };
-  useEffect(() => {
-    loadTotal();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      loadTotal();
+    }, []),
+  );
 
   const pieData = [
     {
@@ -179,9 +194,11 @@ export function useCategoryArticleAdminViewModel() {
       console.log(error);
     }
   };
-  useEffect(() => {
-    loadTotal();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      loadTotal();
+    }, []),
+  );
   return { chartData };
 }
 
@@ -201,8 +218,10 @@ export function useUserByYearAdminViewModel() {
       console.log(error);
     }
   };
-  useEffect(() => {
-    loadTotal();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      loadTotal();
+    }, []),
+  );
   return { dataUser };
 }

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Alert } from "react-native";
 import { Doctor } from "../models/Doctor";
 import { DoctorSkill } from "../models/DoctorSkill";
 import {
@@ -75,6 +76,7 @@ export function useDoctorDetailViewModel(id: number) {
 
   return { doc_id, loading };
 }
+
 // lấy chi tiết kỹ năng bác sĩ theo id
 export function useSkillDetailViewModel(doctorId: number) {
   const [skill_id, setSkill] = useState<DoctorSkill[]>([]);
@@ -97,4 +99,16 @@ export function useSkillDetailViewModel(doctorId: number) {
   }, [doctorId]);
 
   return { skill_id, loading };
+}
+
+// Hiện thị cài đặt quản lý bác sĩ
+export function useEditDoctor() {
+  const handleDoctor = async () => {
+    Alert.alert("Thông báo", "Chọn thao tác thay đổi", [
+      { text: "Vô hiệu hoá tài khoản" },
+      { text: "Xoá tài khoản" },
+      { text: "Huỷ", style: "cancel" },
+    ]);
+  };
+  return handleDoctor;
 }

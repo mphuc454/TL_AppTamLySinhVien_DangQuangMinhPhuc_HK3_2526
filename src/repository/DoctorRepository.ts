@@ -1,15 +1,27 @@
 import { supabase } from "../lib/supabase";
-import { Doctor } from "../models/Doctor";
 import { DoctorSkill } from "../models/DoctorSkill";
 
 //1. lấy danh sách bác sĩ từ cơ sở dữ liệu
-export const getAllDoctor = async (): Promise<Doctor[]> => {
-  const { data, error } = await supabase
+export const getAllDoctor = async () => {
+  const { data: doctors, error } = await supabase
     .from("doctors")
-    .select(`*, account_id(*, user_id(*))`);
+    .select(`*, account_id(*)`);
   if (error) throw error;
-  return data ?? [];
+  const { data: profiles, error: profileError } = await supabase
+    .from("user")
+    .select("*");
+  if (profileError) throw profileError;
+  return doctors.map((doctor) => ({
+    ...doctor,
+    account_id: {
+      ...doctor.account_id,
+      user_id: profiles.find(
+        (profile) => profile.id === doctor.account_id.user_id,
+      ),
+    },
+  }));
 };
+
 //2. Lấy kỹ năng của bác sĩ từ DB:
 export const getSkillDoctor = async (): Promise<DoctorSkill[]> => {
   const { data, error } = await supabase
