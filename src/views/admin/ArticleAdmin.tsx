@@ -1,5 +1,4 @@
-import { useDeleteArticle } from "@/src/viewmodels/admin/ArticleAdminViewModel";
-import { useArticleViewModel } from "@/src/viewmodels/ArticleViewModel";
+import { useArticleViewModel, useDeleteArticle } from "@/src/viewmodels/ArticleViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import {
