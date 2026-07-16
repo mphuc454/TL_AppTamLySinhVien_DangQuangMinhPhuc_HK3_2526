@@ -5,6 +5,7 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import {
+  Image,
   ScrollView,
   Text,
   TextInput,
@@ -63,24 +64,7 @@ export default function AdminDoctorView() {
           }}
         />
       </View>
-      <TouchableOpacity
-        style={{
-          backgroundColor: "#2563eb",
-          marginHorizontal: 15,
-          borderRadius: 10,
-          padding: 14,
-          alignItems: "center",
-        }}
-      >
-        <Text
-          style={{
-            color: "#fff",
-            fontWeight: "bold",
-          }}
-        >
-          Lịch sử Chờ phê duyệt
-        </Text>
-      </TouchableOpacity>
+
       {doc.length >= 0 ? (
         doc.map((item) => (
           <TouchableOpacity
@@ -100,19 +84,20 @@ export default function AdminDoctorView() {
               borderRadius: 15,
               overflow: "hidden",
               elevation: 3,
+              opacity: item.verify ? 1 : 0.4,
             }}
           >
-            {/* <Image
-                      source={{
-                        uri: item.thumbnail?.trim()
-                          ? item.thumbnail
-                          : "https://placehold.co/600x350.png",
-                      }}
-                      style={{
-                        width: "100%",
-                        height: 180,
-                      }}
-                    /> */}
+            <Image
+              source={{
+                uri: item.avatar_url.trim()
+                  ? item.avatar_url
+                  : "https://placehold.co/600x350.png",
+              }}
+              style={{
+                width: "100%",
+                height: 180,
+              }}
+            />
 
             <View style={{ padding: 15 }}>
               <Text
@@ -139,25 +124,9 @@ export default function AdminDoctorView() {
                   fontWeight: "500",
                 }}
               >
-                {item.experience_years} năm KN
-              </Text>
-              <Text
-                style={{
-                  fontSize: 12,
-                  fontWeight: "500",
-                }}
-              >
                 SĐT: {item.account_id.user_id.phone}
               </Text>
 
-              <Text
-                style={{
-                  fontSize: 12,
-                  fontWeight: "light",
-                }}
-              >
-                {item.role_doctor}
-              </Text>
               <Text
                 style={{
                   marginTop: 15,
@@ -188,7 +157,24 @@ export default function AdminDoctorView() {
                 }}
               >
                 <TouchableOpacity
-                  onPress={() => handle()}
+                  style={{ marginRight: 20 }}
+                  onPress={() =>
+                    router.push({
+                      pathname: "/admin/CRUD/PermissionDoctor",
+                      params: {
+                        id: item.id,
+                      },
+                    })
+                  }
+                >
+                  <Ionicons
+                    name="shield-checkmark-outline"
+                    size={24}
+                    color="#2563eb"
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => handle(item.id, item.verify)}
                   style={{ marginRight: 20 }}
                 >
                   <Ionicons name="create-outline" size={24} color="#2563eb" />
