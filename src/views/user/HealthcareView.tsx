@@ -1,5 +1,6 @@
 import {
   useAddEmotionLog,
+  useDeleteEmotionLog,
   useEmotionLog,
   useEmotionViewModel,
 } from "@/src/viewmodels/EmotionViewModel";
@@ -31,6 +32,8 @@ export default function HealthcareView() {
     setSelectedEmotionId,
     handleSave,
   } = useAddEmotionLog();
+  const handleRM = useDeleteEmotionLog();
+  const filterEmotionLog = emLog.slice(0, 2);
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: colors.background }}
@@ -151,7 +154,9 @@ export default function HealthcareView() {
             >
               Nhật ký gần đây:
             </Text>
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => router.push("/(no tabs)/ListEmotion")}
+            >
               <Text
                 style={{
                   fontSize: 11,
@@ -164,7 +169,7 @@ export default function HealthcareView() {
             </TouchableOpacity>
           </View>
           <View>
-            {emLog.map((item) => {
+            {filterEmotionLog.map((item) => {
               return (
                 <TouchableOpacity
                   key={item.id}
@@ -189,26 +194,37 @@ export default function HealthcareView() {
                   >
                     <Ionicons name={item.emotions?.icon as any} size={36} />
                   </View>
-                  <View style={{ flex: 1, marginLeft: 10 }}>
+
+                  <View style={{ flex: 1, marginLeft: 12 }}>
                     <Text
                       style={{
                         fontSize: 12,
                         color: "#d9cfcf",
-                        fontWeight: "light",
+                        marginBottom: 4,
                       }}
                     >
                       {new Date(item.created_at).toLocaleDateString("vi-VN")}
                     </Text>
+
                     <Text
                       style={{
                         fontSize: 15,
-                        color: "#FFFF",
-                        fontWeight: "regular",
+                        color: "#FFF",
                       }}
                     >
                       {item.content}
                     </Text>
                   </View>
+
+                  <TouchableOpacity
+                    onPress={() => handleRM(item.id)}
+                    style={{
+                      marginLeft: 10,
+                      padding: 8,
+                    }}
+                  >
+                    <Ionicons name="trash-outline" size={24} color="#FF4D4F" />
+                  </TouchableOpacity>
                 </TouchableOpacity>
               );
             })}
