@@ -36,7 +36,7 @@ export default function AdminProfileView() {
       <View
         style={{ flexDirection: "row", alignItems: "center", marginTop: 30 }}
       >
-        <TouchableOpacity onPress={() => router.push("/(tabs)/Index")}>
+        <TouchableOpacity onPress={() => router.push("/admin/Dashboard")}>
           <Ionicons
             style={{ marginTop: 30 }}
             name="arrow-back"
@@ -50,7 +50,6 @@ export default function AdminProfileView() {
             textAlign: "center",
             fontSize: 20,
             fontWeight: "bold",
-            // color: colors.text,
           }}
         >
           Hồ sơ Admin
