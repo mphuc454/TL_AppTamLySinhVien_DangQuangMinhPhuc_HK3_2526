@@ -58,3 +58,46 @@ export const deleteEmotionLog = async (id: number): Promise<void> => {
     throw error;
   }
 };
+
+//5.Thống kê tổng số lượt ghi nhật ký
+export const totalEmotionLog = async () => {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) {
+    throw new Error("Chưa đăng nhập");
+  }
+  const { count, error } = await supabase
+    .from("emotion_logs")
+    .select("*", { count: "exact", head: true })
+    .eq("account_id", user.id);
+  if (error) {
+    throw error;
+  }
+  return count ?? 0;
+};
+//6.Thống kê cảm xúc ghi nhận nhiều nhất
+export const mostEmotion = async () => {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) {
+    throw new Error("Chưa đăng nhập");
+  }
+  const { data, error } = await supabase
+    .from("emotion_logs")
+    .select(
+      `*, emotions(
+        id,
+        name,
+        icon,
+        color
+      )
+    `,
+    )
+    .eq("account_id", user.id);
+  if (error) {
+    throw error;
+  }
+  return data;
+};

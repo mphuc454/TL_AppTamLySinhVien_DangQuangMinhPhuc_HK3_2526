@@ -1,8 +1,11 @@
+import {
+  useMostEmotionViewModel,
+  useTotalLogViewModel,
+} from "@/src/viewmodels/EmotionViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useContext } from "react";
 import { Animated, Text, TouchableOpacity, View } from "react-native";
-import { BarChart } from "react-native-gifted-charts";
 import { ThemeContext } from "../theme/ThemeContext";
 
 const ScrollView = Animated.ScrollView;
@@ -36,31 +39,11 @@ const Data2 = [
     route: "/(no tabs)/Music",
   },
 ] as const;
-const legend = [
-  { label: "Tích cực", color: "#556817" },
-  { label: "Buồn bã", color: "#22A3CA" },
-  { label: "Bình thản", color: "#A0E3E2" },
-  { label: "Lo âu", color: "#F36A0E" },
-  { label: "Giận dữ", color: "#BE0003" },
-];
-
-const Data3 = [
-  { value: 10, label: "T2", frontColor: "#556817" },
-  { value: 20, label: "T3", frontColor: "#22A3CA" },
-  { value: 40, label: "T4", frontColor: "#F36A0E" },
-  { value: 50, label: "T5", frontColor: "#BE0003" },
-  { value: 30, label: "T6", frontColor: "#A0E3E2" },
-  { value: 30, label: "T7", frontColor: "#A0E3E2" },
-  { value: 10, label: "CN", frontColor: "#556817" },
-];
 
 export default function IndexView() {
   const { colors } = useContext(ThemeContext);
-  const chartData = Data3.map((item) => ({
-    ...item,
-    labelTextStyle: { color: colors.text },
-  }));
-
+  const { logTotal } = useTotalLogViewModel();
+  const { emotion, count } = useMostEmotionViewModel();
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: colors.background }}
@@ -133,7 +116,7 @@ export default function IndexView() {
               <Text
                 style={{ fontSize: 37, fontWeight: "bold", color: colors.text }}
               >
-                0
+                {logTotal}
               </Text>
               <Text style={{ fontSize: 10, color: colors.textSecondary }}>
                 Lượt ghi nhận
@@ -142,65 +125,36 @@ export default function IndexView() {
           </View>
         </View>
 
-        <View
-          style={{
-            marginTop: 30,
-            padding: 16,
-            backgroundColor: colors.cardBackground,
-            borderRadius: 16,
-          }}
-        >
-          <Text
-            style={{ fontSize: 16, fontWeight: "bold", color: colors.text }}
-          >
-            Biểu đồ cảm xúc
-          </Text>
-
+        <View style={{ marginTop: 30, flexDirection: "row", gap: 9 }}>
           <View
             style={{
-              flexDirection: "row",
-              flexWrap: "wrap",
-              marginTop: 8,
-              marginBottom: 12,
+              flex: 1,
+              padding: 15,
+              backgroundColor: colors.cardBackground,
+              borderRadius: 16,
             }}
           >
-            {legend.map((item, index) => (
-              <View
-                key={index}
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  marginRight: 16,
-                  marginBottom: 8,
-                }}
+            <Text
+              style={{
+                fontWeight: "bold",
+                color: colors.text,
+                fontSize: 14,
+                textAlign: "center",
+              }}
+            >
+              Cảm xúc nhiều nhất
+            </Text>
+            <View style={{ alignItems: "center", gap: 10 }}>
+              <Text
+                style={{ fontSize: 37, fontWeight: "bold", color: colors.text }}
               >
-                <View
-                  style={{
-                    width: 12,
-                    height: 12,
-                    borderRadius: 6,
-                    backgroundColor: item.color,
-                    marginRight: 8,
-                  }}
-                />
-                <Text style={{ color: colors.textSecondary, fontSize: 14 }}>
-                  {item.label}
-                </Text>
-              </View>
-            ))}
+                {emotion?.name ?? "Không có"}
+              </Text>
+              <Text style={{ fontSize: 10, color: colors.textSecondary }}>
+                {count} lần
+              </Text>
+            </View>
           </View>
-
-          <BarChart
-            data={chartData}
-            barWidth={25}
-            spacing={20}
-            hideYAxisText
-            hideRules
-            yAxisThickness={0}
-            xAxisThickness={0}
-            noOfSections={4}
-            barMarginBottom={0}
-          />
         </View>
 
         <View
