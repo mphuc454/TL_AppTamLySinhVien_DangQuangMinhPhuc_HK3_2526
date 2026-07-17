@@ -8,6 +8,8 @@ import {
   getAllEmotion,
   getEmotionLog,
   insertEmotionLog,
+  mostEmotion,
+  totalEmotionLog,
 } from "../repository/EmotionRepository";
 
 // lấy danh sách các emotion
@@ -127,4 +129,69 @@ export function useDeleteEmotionLog() {
     ]);
   };
   return handleRemove;
+}
+
+export function useTotalLogViewModel() {
+  const [logTotal, setLogTotal] = useState<number>(0);
+  const [loading, setLoading] = useState(false);
+  const loadTotal = async () => {
+    try {
+      setLoading(true);
+      const total = await totalEmotionLog();
+      setLogTotal(total);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  useFocusEffect(
+    useCallback(() => {
+      loadTotal();
+    }, []),
+  );
+  return { logTotal, loading };
+}
+
+export function useMostEmotionViewModel() {
+  const [emotion, setEmotion] = useState<Emotion | null>(null);
+  const [count, setCount] = useState(0);
+
+  const loadTotal = async () => {
+    try {
+      const most = await mostEmotion();
+      const emotionMap = new Map<number, { emotion: Emotion; count: number }>();
+      most.forEach((item: any) => {
+        if (!item.emotions) return;
+        const exist = emotionMap.get(item.emotion_id);
+        if (exist) {
+          exist.count++;
+        } else {
+          emotionMap.set(item.emotion_id, {
+            emotion: item.emotions,
+            count: 1,
+          });
+        }
+      });
+      const result = [...emotionMap.values()].sort(
+        (a, b) => b.count - a.count,
+      )[0];
+      if (result) {
+        setEmotion(result.emotion);
+        setCount(result.count);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useFocusEffect(
+    useCallback(() => {
+      loadTotal();
+    }, []),
+  );
+
+  return {
+    emotion,
+    count,
+  };
 }
