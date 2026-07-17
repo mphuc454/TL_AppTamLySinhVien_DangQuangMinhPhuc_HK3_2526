@@ -1,9 +1,10 @@
-import { useFocusEffect } from "expo-router";
+import { router, useFocusEffect } from "expo-router";
 import { useCallback, useEffect, useState } from "react";
 import { Alert } from "react-native";
 import { Emotion } from "../models/Emotion";
 import { EmotionLog } from "../models/EmotionLog";
 import {
+  deleteEmotionLog,
   getAllEmotion,
   getEmotionLog,
   insertEmotionLog,
@@ -102,4 +103,28 @@ export function useEmotionLog() {
     loadEmotionLog();
   });
   return { emLog, loading };
+}
+
+// xoá nhật ký
+export function useDeleteEmotionLog() {
+  const handleRemove = async (id: number) => {
+    Alert.alert("Xoá", "Bạn có muốn chắc xoá nhật ký này không ?", [
+      { text: "Huỷ", style: "cancel" },
+      {
+        text: "Xoá",
+        style: "destructive",
+        onPress: async () => {
+          try {
+            await deleteEmotionLog(id);
+            Alert.alert("Thông báo", "Xóa thành công");
+            router.back();
+          } catch (error) {
+            console.log(error);
+            Alert.alert("Thông báo", "Lỗi không thể xoá được");
+          }
+        },
+      },
+    ]);
+  };
+  return handleRemove;
 }

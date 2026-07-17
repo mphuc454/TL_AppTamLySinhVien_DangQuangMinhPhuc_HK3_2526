@@ -14,7 +14,6 @@ export default function DetailedArticleView() {
   const { id } = useLocalSearchParams();
   const { arc } = useArticleDetailViewModel(Number(id));
   const { articles } = useArticleViewModel();
-  // const { totalView } = useViewsbyUserViewModel();
   useViewsbyUserViewModel(Number(id));
 
   const otherArticles = articles

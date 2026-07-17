@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useFocusEffect } from "expo-router";
+import { useCallback, useEffect, useState } from "react";
 import { Music } from "../models/Music";
 import {
   geDetailedMusicsbyID,
@@ -20,9 +21,11 @@ export function useMusicViewModel() {
       setLoading(false);
     }
   };
-  useEffect(() => {
-    loadMusics();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      loadMusics();
+    }, []),
+  );
 
   return { mus, loading };
 }
