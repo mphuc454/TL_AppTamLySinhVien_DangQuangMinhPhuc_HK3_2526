@@ -1,5 +1,6 @@
 import {
   useAddEmotionLog,
+  useEmotionLog,
   useEmotionViewModel,
 } from "@/src/viewmodels/EmotionViewModel";
 import { useExercisesViewModel } from "@/src/viewmodels/ExercisesViewModel";
@@ -21,9 +22,15 @@ export default function HealthcareView() {
   const { colors } = useContext(ThemeContext);
   const { ex } = useExercisesViewModel();
   const { em } = useEmotionViewModel();
+  const { emLog } = useEmotionLog();
   const { mus } = useMusicViewModel();
-  const { content, setContent, selectedEmotionId, setSelectedEmotionId } =
-    useAddEmotionLog();
+  const {
+    content,
+    setContent,
+    selectedEmotionId,
+    setSelectedEmotionId,
+    handleSave,
+  } = useAddEmotionLog();
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: colors.background }}
@@ -107,7 +114,7 @@ export default function HealthcareView() {
             placeholderTextColor="rgba(139, 123, 123, 0.5)"
           ></TextInput>
           <TouchableOpacity
-            // onPress={() => handleSave(accountId)}
+            onPress={() => handleSave()}
             style={{
               borderWidth: 1,
               height: 38,
@@ -129,6 +136,7 @@ export default function HealthcareView() {
             </Text>
           </TouchableOpacity>
         </View>
+
         {/* Layout2: Lịch sử ghi nhật ký */}
         <View style={{ marginTop: 30 }}>
           <View
@@ -155,7 +163,56 @@ export default function HealthcareView() {
               </Text>
             </TouchableOpacity>
           </View>
-          <View></View>
+          <View>
+            {emLog.map((item) => {
+              return (
+                <TouchableOpacity
+                  key={item.id}
+                  style={{
+                    backgroundColor: "#2D2121",
+                    borderRadius: 16,
+                    padding: 16,
+                    flexDirection: "row",
+                    alignItems: "center",
+                    marginTop: 16,
+                  }}
+                >
+                  <View
+                    style={{
+                      width: 70,
+                      height: 70,
+                      borderRadius: 35,
+                      backgroundColor: item.emotions?.color,
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Ionicons name={item.emotions?.icon as any} size={36} />
+                  </View>
+                  <View style={{ flex: 1, marginLeft: 10 }}>
+                    <Text
+                      style={{
+                        fontSize: 12,
+                        color: "#d9cfcf",
+                        fontWeight: "light",
+                      }}
+                    >
+                      {new Date(item.created_at).toLocaleDateString("vi-VN")}
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 15,
+                        color: "#FFFF",
+                        fontWeight: "regular",
+                      }}
+                    >
+                      {item.content}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              );
+            })}
+          </View>
         </View>
         {/* Layout3: Âm nhạc thư giãn */}
         <View style={{ marginTop: 30 }}>

@@ -1,7 +1,11 @@
-import { useEffect, useState } from "react";
+import { useFocusEffect } from "expo-router";
+import { useCallback, useEffect, useState } from "react";
+import { Alert } from "react-native";
 import { Emotion } from "../models/Emotion";
+import { EmotionLog } from "../models/EmotionLog";
 import {
   getAllEmotion,
+  getEmotionLog,
   insertEmotionLog,
 } from "../repository/EmotionRepository";
 
@@ -21,9 +25,12 @@ export function useEmotionViewModel() {
       setLoading(false);
     }
   };
-  useEffect(() => {
-    loadEmotion();
-  }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      loadEmotion();
+    }, []),
+  );
   return { em, loading };
 }
 
@@ -35,16 +42,10 @@ export function useAddEmotionLog() {
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const saveEmotionLog = async (
-    accountId: number,
-    emotionId: number,
-    content: string,
-  ) => {
+  const saveEmotionLog = async (emotionId: number, content: string) => {
     try {
       setLoading(true);
-
-      await insertEmotionLog(accountId, emotionId, content);
-
+      await insertEmotionLog(emotionId, content);
       return true;
     } catch (error) {
       console.log(error);
@@ -53,24 +54,22 @@ export function useAddEmotionLog() {
       setLoading(false);
     }
   };
-
-  const handleSave = async (accountId: number) => {
+  const handleSave = async () => {
     if (!selectedEmotionId) {
       alert("Vui lòng chọn biểu tượng cảm xúc");
       return;
     }
-
     if (!content.trim()) {
       alert("Vui lòng nhập nội dung");
       return;
     }
-
-    const success = await saveEmotionLog(accountId, selectedEmotionId, content);
-
+    const success = await saveEmotionLog(selectedEmotionId, content);
     if (success) {
-      alert("Lưu thành công");
+      Alert.alert("Thông báo", "Thêm nhật ký thành công");
       setContent("");
       setSelectedEmotionId(null);
+    } else {
+      Alert.alert("Thông báo", "Lỗi khi thêm vào");
     }
   };
   return {
@@ -81,4 +80,26 @@ export function useAddEmotionLog() {
     setSelectedEmotionId,
     handleSave,
   };
+}
+
+//lấy lịch sử nhật ký
+export function useEmotionLog() {
+  const [emLog, setEmLog] = useState<EmotionLog[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  const loadEmotionLog = async () => {
+    try {
+      setLoading(true);
+      const data = await getEmotionLog();
+      setEmLog(data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+    loadEmotionLog();
+  });
+  return { emLog, loading };
 }

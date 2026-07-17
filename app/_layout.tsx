@@ -24,7 +24,6 @@ export default function RootLayout() {
             segments[0] === "(tabs)" ||
             segments[0] === "(no tabs)" ||
             segments[0] === "auth";
-          console.log(inAdminGroup);
           if (account?.role === 2 && !inAdminGroup) {
             router.replace("/admin/Dashboard");
           } else if (account?.role === 3 && !inDoctorGroup) {

@@ -14,32 +14,43 @@ export const getAllEmotion = async (): Promise<Emotion[]> => {
   return data as Emotion[];
 };
 //2. Thêm vào nhật ký cảm xúc
-export const insertEmotionLog = async (
-  accountId: number,
-  emotionId: number,
-  content: string,
-) => {
-  const { error } = await supabase
+export const insertEmotionLog = async (emotionId: number, content: string) => {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) {
+    throw new Error("Chưa đăng nhập");
+  }
+  const { data, error } = await supabase
     .from("emotion_logs")
-    .insert({ account_id: accountId, emotion_id: emotionId, content });
+    .insert({ account_id: user.id, emotion_id: emotionId, content })
+    .select()
+    .single();
   if (error) {
     throw error;
   }
+  return data;
 };
+
 //3. Lấy lịch sử nhật ký cảm xúc
-export const getEmotionLog = async (
-  accountId: number,
-): Promise<EmotionLog[]> => {
+export const getEmotionLog = async (): Promise<EmotionLog[]> => {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) {
+    throw new Error("Chưa đăng nhập");
+  }
   const { data, error } = await supabase
     .from("emotion_logs")
     .select(`*, emotions (id, name, icon, color)`)
-    .eq("account_id", accountId)
+    .eq("account_id", user.id)
     .order("created_at", { ascending: false });
   if (error) {
     throw error;
   }
-  return data as unknown as EmotionLog[];
+  return data as EmotionLog[];
 };
+
 //4. Xoá lịch sử nhật ký cảm xúc theo id
 export const deleteEmotionLog = async (id: number): Promise<void> => {
   const { error } = await supabase.from("emotion_logs").delete().eq("id", id);
