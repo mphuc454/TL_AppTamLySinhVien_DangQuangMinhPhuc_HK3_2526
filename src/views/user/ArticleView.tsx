@@ -15,8 +15,13 @@ import { ThemeContext } from "../theme/ThemeContext";
 
 export default function ArticleView() {
   const { colors } = useContext(ThemeContext);
-  const { selectedCategory, setSelectedCategory, filterArticles } =
-    FilterArticle();
+  const {
+    filterArticles,
+    selectedCategory,
+    setSelectedCategory,
+    searchText,
+    setSearchText,
+  } = FilterArticle();
   const { categoryArticles } = useCategoryArticlesViewModel();
   return (
     <ScrollView
@@ -53,6 +58,8 @@ export default function ArticleView() {
       </View>
 
       <TextInput
+        value={searchText}
+        onChangeText={setSearchText}
         placeholder="Tìm kiếm bài viết..."
         style={{
           marginTop: 30,

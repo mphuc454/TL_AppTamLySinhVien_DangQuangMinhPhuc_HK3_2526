@@ -15,14 +15,31 @@ export function FilterDoc() {
 
 export function FilterArticle() {
   const { articles } = useArticleViewModel();
+
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
-  const filterArticles =
-    selectedCategory === null
-      ? articles
-      : articles.filter(
-          (item) => item.id_category_articles.id === selectedCategory,
-        );
-  return { selectedCategory, setSelectedCategory, filterArticles };
+  const [searchText, setSearchText] = useState("");
+
+  const filterArticles = useMemo(() => {
+    return articles.filter((item) => {
+      const matchCategory =
+        selectedCategory === null ||
+        item.id_category_articles.id === selectedCategory;
+
+      const filterSearchArticle = item.title
+        .toUpperCase()
+        .includes(searchText.toUpperCase().trim());
+
+      return matchCategory && filterSearchArticle;
+    });
+  }, [articles, selectedCategory, searchText]);
+
+  return {
+    selectedCategory,
+    setSelectedCategory,
+    searchText,
+    setSearchText,
+    filterArticles,
+  };
 }
 
 export function FilterExercises() {
