@@ -14,7 +14,13 @@ import { ThemeContext } from "../theme/ThemeContext";
 
 export default function AppointmentView() {
   const { colors } = useContext(ThemeContext);
-  const { selectedCategory, setSelectedCategory, filterDocs } = FilterDoc();
+  const {
+    selectedCategory,
+    setSelectedCategory,
+    searchText,
+    setSearchText,
+    filterDocs,
+  } = FilterDoc();
   const { doc } = useDoctorViewModel();
   return (
     <ScrollView
@@ -52,6 +58,8 @@ export default function AppointmentView() {
         </Text>
       </View>
       <TextInput
+        value={searchText}
+        onChangeText={setSearchText}
         placeholder="Tìm kiếm bác sĩ..."
         style={{
           marginTop: 30,

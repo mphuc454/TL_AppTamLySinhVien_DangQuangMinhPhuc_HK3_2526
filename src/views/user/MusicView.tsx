@@ -6,7 +6,6 @@ import {
   ImageBackground,
   ScrollView,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -48,19 +47,6 @@ export default function MusicView() {
           Nghe nhạc thư giãn
         </Text>
       </View>
-      <TextInput
-        placeholder="Tìm kiếm nhạc..."
-        style={{
-          marginTop: 30,
-          height: 50,
-          borderWidth: 1,
-          borderColor: "#ccc",
-          borderRadius: 15,
-          marginHorizontal: 20,
-          paddingHorizontal: 15,
-          backgroundColor: "#fff",
-        }}
-      ></TextInput>
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
