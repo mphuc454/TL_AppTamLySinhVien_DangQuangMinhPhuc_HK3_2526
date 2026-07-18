@@ -6,11 +6,26 @@ import { useExercisesViewModel } from "../viewmodels/ExercisesViewModel";
 export function FilterDoc() {
   const { doc } = useDoctorViewModel();
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
-  const filterDocs =
-    selectedCategory === null
-      ? doc
-      : doc.filter((item) => item.id === selectedCategory);
-  return { selectedCategory, setSelectedCategory, filterDocs };
+  const [searchText, setSearchText] = useState("");
+  const filterDocs = useMemo(() => {
+    return doc.filter((item) => {
+      const matchCategory =
+        selectedCategory === null || item.id === selectedCategory;
+
+      const filterSearchDoc = item.account_id.username
+        .toUpperCase()
+        .includes(searchText.trim().toUpperCase());
+
+      return matchCategory && filterSearchDoc;
+    });
+  }, [doc, selectedCategory, searchText]);
+  return {
+    selectedCategory,
+    setSelectedCategory,
+    searchText,
+    setSearchText,
+    filterDocs,
+  };
 }
 
 export function FilterArticle() {
@@ -45,11 +60,27 @@ export function FilterArticle() {
 export function FilterExercises() {
   const { ex } = useExercisesViewModel();
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
-  const filterExercises =
-    selectedCategory === null
-      ? ex
-      : ex.filter((item) => item.category.id === selectedCategory);
-  return { selectedCategory, setSelectedCategory, filterExercises };
+  const [searchText, setSearchText] = useState("");
+
+  const filterExercises = useMemo(() => {
+    return ex.filter((item) => {
+      const matchCategory =
+        selectedCategory === null || item.category.id === selectedCategory;
+
+      const filterSearchEx = item.title
+        .toUpperCase()
+        .includes(searchText.trim().toUpperCase());
+
+      return matchCategory && filterSearchEx;
+    });
+  }, [ex, selectedCategory, searchText]);
+  return {
+    selectedCategory,
+    setSelectedCategory,
+    searchText,
+    setSearchText,
+    filterExercises,
+  };
 }
 
 // lọc tìm kiếm

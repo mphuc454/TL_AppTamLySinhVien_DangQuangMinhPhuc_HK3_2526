@@ -13,8 +13,13 @@ import {
 import { ThemeContext } from "../theme/ThemeContext";
 
 export default function ExercisesView() {
-  const { selectedCategory, setSelectedCategory, filterExercises } =
-    FilterExercises();
+  const {
+    selectedCategory,
+    setSelectedCategory,
+    searchText,
+    setSearchText,
+    filterExercises,
+  } = FilterExercises();
   const { categoryArticles } = useCategoryExercisesViewModel();
   const { colors } = useContext(ThemeContext);
 
@@ -51,6 +56,8 @@ export default function ExercisesView() {
         </Text>
       </View>
       <TextInput
+        value={searchText}
+        onChangeText={setSearchText}
         placeholder="Tìm kiếm bài tập..."
         style={{
           marginTop: 30,
