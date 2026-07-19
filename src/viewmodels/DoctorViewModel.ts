@@ -126,14 +126,14 @@ export function useDisableDoctor() {
 // Hiện thị cài đặt quản lý bác sĩ
 export function useEditDoctor() {
   const disable = useDisableDoctor();
-  const del = useDeleteDoctor();
+  // const del = useDeleteDoctor();
   const handleDoctor = async (id: number, verify: boolean) => {
     Alert.alert("Thông báo", "Chọn thao tác thay đổi", [
       {
         text: verify ? "Vô hiệu hoá tài khoản" : "Mở tài khoản",
         onPress: () => disable(id, verify),
       },
-      { text: "Xoá tài khoản", onPress: () => del(id) },
+      // { text: "Xoá tài khoản", onPress: () => del(id) },
       { text: "Huỷ", style: "cancel" },
     ]);
   };

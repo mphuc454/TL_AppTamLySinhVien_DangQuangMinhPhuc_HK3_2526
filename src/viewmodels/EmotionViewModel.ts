@@ -1,5 +1,5 @@
 import { router, useFocusEffect } from "expo-router";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { Alert } from "react-native";
 import { Emotion } from "../models/Emotion";
 import { EmotionLog } from "../models/EmotionLog";
@@ -101,9 +101,13 @@ export function useEmotionLog() {
       setLoading(false);
     }
   };
-  useEffect(() => {
-    loadEmotionLog();
-  });
+
+  useFocusEffect(
+    useCallback(() => {
+      loadEmotionLog();
+    }, []),
+  );
+
   return { emLog, loading };
 }
 

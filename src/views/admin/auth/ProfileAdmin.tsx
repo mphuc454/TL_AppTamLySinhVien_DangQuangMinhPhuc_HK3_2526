@@ -203,41 +203,7 @@ export default function AdminProfileView() {
           </TouchableOpacity>
         </View>
       </View>
-      <TouchableOpacity
-        onPress={() => router.push("/(no tabs)/EmergencyCall")}
-        style={{
-          backgroundColor: "#F2F8BE",
-          borderRadius: 25,
-          flexDirection: "row",
-          alignItems: "center",
-          padding: 20,
-          marginTop: 30,
-        }}
-      >
-        <View
-          style={{
-            width: 45,
-            height: 45,
-            borderRadius: 10,
-            backgroundColor: "#D5D5D5",
-            justifyContent: "center",
-            alignItems: "center",
-            marginRight: 20,
-          }}
-        >
-          <Ionicons name="call" size={24}></Ionicons>
-        </View>
-        <Text
-          style={{
-            fontSize: 16,
-            fontWeight: "bold",
-            flex: 1,
-            textAlign: "center",
-          }}
-        >
-          Danh sách cuộc gọi khẩn cấp
-        </Text>
-      </TouchableOpacity>
+
       <TouchableOpacity
         onPress={() => router.push("/auth/ChangePass")}
         style={{

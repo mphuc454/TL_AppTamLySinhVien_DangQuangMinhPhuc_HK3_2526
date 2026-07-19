@@ -222,30 +222,44 @@ export function useEditArticle(id: number) {
   const [content, setContent] = useState("");
 
   const loadArticles = useCallback(async () => {
-    const article = await getArticleByID(id);
-    setTitle(article.title);
-    setAuthor(article.name_author);
-    setContent(article.content);
-    setThumbnail(article.thumbnail);
-    setCategory(article.id_category_articles.id);
-    setTime(String(article.time_to_read));
+    try {
+      const article = await getArticleByID(id);
+      setTitle(article.title);
+      setAuthor(article.name_author);
+      setContent(article.content);
+      setThumbnail(article.thumbnail);
+      setCategory(article.id_category_articles?.id ?? null);
+      setTime(String(article.time_to_read));
+    } catch (error) {
+      console.log(error);
+      Alert.alert("Lỗi", "Không thể tải bài viết");
+    }
   }, [id]);
   useEffect(() => {
     loadArticles();
   }, [loadArticles]);
 
   const handleUpdate = async () => {
-    await updateArticle(
-      id,
-      category!,
-      title,
-      thumbnail,
-      content,
-      author,
-      Number(time),
-    );
-    Alert.alert("Thông báo", "Cập nhật bài viết thành công");
-    router.back();
+    if (!category) {
+      Alert.alert("Thông báo", "Vui lòng chọn danh mục bài viết");
+      return;
+    }
+    try {
+      await updateArticle(
+        id,
+        category,
+        title,
+        thumbnail,
+        content,
+        author,
+        Number(time),
+      );
+      Alert.alert("Thông báo", "Cập nhật bài viết thành công");
+      router.back();
+    } catch (error) {
+      console.log(error);
+      Alert.alert("Lỗi", "Cập nhật bài viết thất bại");
+    }
   };
   const pickImage = async () => {
     const res = await ImagePicker.launchImageLibraryAsync({
