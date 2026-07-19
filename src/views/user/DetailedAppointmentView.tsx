@@ -44,8 +44,8 @@ export default function DetailAppointmentView() {
       </View>
       <Image
         source={{
-          uri: doc_id?.avatar_url.trim()
-            ? doc_id?.avatar_url
+          uri: doc_id?.avatar_url?.trim()
+            ? doc_id.avatar_url
             : "https://placehold.co/600x350.png",
         }}
         style={{
@@ -65,7 +65,7 @@ export default function DetailAppointmentView() {
           color: colors.text,
         }}
       >
-        BS: {doc_id?.account_id.username}
+        BS: {doc_id?.account_id?.username ?? "Chưa có tài khoản"}
       </Text>
       <Text
         style={{
@@ -96,16 +96,16 @@ export default function DetailAppointmentView() {
         </Text>
         <View style={{ marginTop: 18, gap: 12 }}>
           <Text style={{ fontSize: 15, color: colors.text }}>
-            Họ tên: {doc_id?.account_id.user_id.full_name}
+            Họ tên: {doc_id?.account_id?.user_id?.full_name ?? "Không có"}
           </Text>
           <Text style={{ fontSize: 15, color: colors.text }}>
-            Email: {doc_id?.account_id.user_id.email}
+            Email: {doc_id?.account_id?.user_id?.email ?? "Không có"}
           </Text>
           <Text style={{ fontSize: 15, color: colors.text }}>
             Chức vụ: {doc_id?.role_doctor}
           </Text>
           <Text style={{ fontSize: 15, color: colors.text }}>
-            Nơi ở: {doc_id?.account_id.address}
+            Nơi ở: {doc_id?.account_id?.address ?? "Không có"}
           </Text>
           <Text style={{ fontSize: 15, color: colors.text }}>
             Kinh nghiệm: {doc_id?.experience_years} năm
@@ -183,24 +183,26 @@ export default function DetailAppointmentView() {
             marginHorizontal: 14,
           }}
         >
-          {skill_id.map((item) => (
-            <View
-              key={item.skill_id.id}
-              style={{
-                backgroundColor: "#F5F6FF",
-                borderColor: "#CED5FF",
-                borderWidth: 1,
-                borderRadius: 20,
-                paddingHorizontal: 18,
-                paddingVertical: 10,
-                margin: 5,
-              }}
-            >
-              <Text style={{ color: "#27139B", fontWeight: "600" }}>
-                {item.skill_id.name}
-              </Text>
-            </View>
-          ))}
+          {skill_id
+            .filter((item) => item.skill_id)
+            .map((item) => (
+              <View
+                key={item.skill_id.id}
+                style={{
+                  backgroundColor: "#F5F6FF",
+                  borderColor: "#CED5FF",
+                  borderWidth: 1,
+                  borderRadius: 20,
+                  paddingHorizontal: 18,
+                  paddingVertical: 10,
+                  margin: 5,
+                }}
+              >
+                <Text style={{ color: "#27139B", fontWeight: "600" }}>
+                  {item.skill_id.name}
+                </Text>
+              </View>
+            ))}
         </View>
       </View>
       <View style={{ marginTop: 30 }}>

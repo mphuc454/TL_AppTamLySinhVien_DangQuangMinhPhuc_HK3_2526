@@ -12,7 +12,7 @@ export function FilterDoc() {
       const matchCategory =
         selectedCategory === null || item.id === selectedCategory;
 
-      const filterSearchDoc = item.account_id.username
+      const filterSearchDoc = (item.account_id?.username ?? "")
         .toUpperCase()
         .includes(searchText.trim().toUpperCase());
 
@@ -38,7 +38,7 @@ export function FilterArticle() {
     return articles.filter((item) => {
       const matchCategory =
         selectedCategory === null ||
-        item.id_category_articles.id === selectedCategory;
+        item.id_category_articles?.id === selectedCategory;
 
       const filterSearchArticle = item.title
         .toUpperCase()
@@ -65,7 +65,7 @@ export function FilterExercises() {
   const filterExercises = useMemo(() => {
     return ex.filter((item) => {
       const matchCategory =
-        selectedCategory === null || item.category.id === selectedCategory;
+        selectedCategory === null || item.category?.id === selectedCategory;
 
       const filterSearchEx = item.title
         .toUpperCase()

@@ -158,15 +158,23 @@ export function useAddArticle() {
     }
   };
   const pickImage = async () => {
-    const res = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ["images"],
-      allowsEditing: true,
-      aspect: [16, 9],
-      quality: 1,
-    });
-    if (!res.canceled) {
-      const uri = res.assets?.[0]?.uri?.trim();
-      setThumbnail(uri || "");
+    try {
+      const res = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ["images"],
+        allowsEditing: true,
+        aspect: [16, 9],
+        quality: 1,
+      });
+      if (!res.canceled) {
+        const uri = res.assets?.[0]?.uri?.trim();
+        setThumbnail(uri || "");
+      }
+    } catch (error) {
+      console.log(error);
+      Alert.alert(
+        "Lỗi",
+        "Không thể chọn ảnh. Vui lòng kiểm tra quyền truy cập thư viện ảnh.",
+      );
     }
   };
   return {
@@ -262,16 +270,24 @@ export function useEditArticle(id: number) {
     }
   };
   const pickImage = async () => {
-    const res = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ["images"],
-      allowsEditing: true,
-      aspect: [16, 9],
-      quality: 1,
-    });
+    try {
+      const res = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ["images"],
+        allowsEditing: true,
+        aspect: [16, 9],
+        quality: 1,
+      });
 
-    if (!res.canceled) {
-      const uri = res.assets?.[0]?.uri?.trim();
-      setThumbnail(uri || "");
+      if (!res.canceled) {
+        const uri = res.assets?.[0]?.uri?.trim();
+        setThumbnail(uri || "");
+      }
+    } catch (error) {
+      console.log(error);
+      Alert.alert(
+        "Lỗi",
+        "Không thể chọn ảnh. Vui lòng kiểm tra quyền truy cập thư viện ảnh.",
+      );
     }
   };
   return {

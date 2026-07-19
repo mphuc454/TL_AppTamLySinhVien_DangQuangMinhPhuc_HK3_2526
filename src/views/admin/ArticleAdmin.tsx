@@ -143,7 +143,7 @@ export default function AdminArticleView() {
                   fontWeight: "500",
                 }}
               >
-                {item.id_category_articles.name}
+                {item.id_category_articles?.name ?? "Chưa phân loại"}
               </Text>
 
               <Text

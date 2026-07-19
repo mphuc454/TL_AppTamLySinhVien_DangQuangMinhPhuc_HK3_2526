@@ -40,7 +40,7 @@ export const totalArticleByCategory = async () => {
   if (error) throw error;
   const statistical: Record<string, number> = {};
   data.forEach((item: any) => {
-    const category = item.id_category_articles.name;
+    const category = item.id_category_articles?.name ?? "Chưa phân loại";
     statistical[category] = (statistical[category] || 0) + 1;
   });
   const total = Object.values(statistical).reduce((a, b) => a + b, 0);

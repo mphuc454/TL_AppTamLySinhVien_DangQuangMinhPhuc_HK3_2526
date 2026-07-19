@@ -89,7 +89,7 @@ export default function AdminDoctorView() {
           >
             <Image
               source={{
-                uri: item.avatar_url.trim()
+                uri: item.avatar_url?.trim()
                   ? item.avatar_url
                   : "https://placehold.co/600x350.png",
               }}
@@ -106,7 +106,7 @@ export default function AdminDoctorView() {
                   fontWeight: "bold",
                 }}
               >
-                BS: {item.account_id.username}
+                BS: {item.account_id?.username ?? "Chưa có tài khoản"}
               </Text>
 
               <Text
@@ -124,7 +124,7 @@ export default function AdminDoctorView() {
                   fontWeight: "500",
                 }}
               >
-                SĐT: {item.account_id.user_id.phone}
+                SĐT: {item.account_id?.user_id?.phone ?? "Không có"}
               </Text>
 
               <Text
@@ -144,9 +144,11 @@ export default function AdminDoctorView() {
                 }}
               >
                 Ngày tạo:{" "}
-                {new Date(item.account_id.created_at).toLocaleDateString(
-                  "vi-VN",
-                )}
+                {item.account_id?.created_at
+                  ? new Date(item.account_id.created_at).toLocaleDateString(
+                      "vi-VN",
+                    )
+                  : "Không có"}
               </Text>
 
               <View

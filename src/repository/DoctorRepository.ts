@@ -13,12 +13,14 @@ export const getAllDoctor = async () => {
   if (profileError) throw profileError;
   return doctors.map((doctor) => ({
     ...doctor,
-    account_id: {
-      ...doctor.account_id,
-      user_id: profiles.find(
-        (profile) => profile.id === doctor.account_id.user_id,
-      ),
-    },
+    account_id: doctor.account_id
+      ? {
+          ...doctor.account_id,
+          user_id: profiles.find(
+            (profile) => profile.id === doctor.account_id?.user_id,
+          ),
+        }
+      : null,
   }));
 };
 
@@ -40,6 +42,10 @@ export const getDoctorByID = async (id: number) => {
     .single();
 
   if (error) throw error;
+
+  if (!doctor.account_id) {
+    return { ...doctor, account_id: null };
+  }
 
   const { data: profile, error: profileError } = await supabase
     .from("user")
