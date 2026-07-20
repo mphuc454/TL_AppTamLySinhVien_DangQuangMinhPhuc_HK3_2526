@@ -1,9 +1,8 @@
-import {
-  useDoctorViewModel,
-  useEditDoctor,
-} from "@/src/viewmodels/DoctorViewModel";
+import { useSearchDoc } from "@/src/filter/FilterView";
+import { useEditDoctor } from "@/src/viewmodels/DoctorViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
+import { useState } from "react";
 import {
   Image,
   ScrollView,
@@ -14,7 +13,8 @@ import {
 } from "react-native";
 
 export default function AdminDoctorView() {
-  const { doc } = useDoctorViewModel();
+  const [search, setSearch] = useState("");
+  const filterSearchDoc = useSearchDoc(search);
   const handle = useEditDoctor();
   return (
     <ScrollView contentContainerStyle={{ paddingBottom: 120 }}>
@@ -56,6 +56,8 @@ export default function AdminDoctorView() {
         <Ionicons name="search" size={20} color="gray" />
 
         <TextInput
+          value={search}
+          onChangeText={setSearch}
           placeholder="Tìm bài viết..."
           style={{
             flex: 1,
@@ -65,8 +67,8 @@ export default function AdminDoctorView() {
         />
       </View>
 
-      {doc.length >= 0 ? (
-        doc.map((item) => (
+      {filterSearchDoc.length >= 0 ? (
+        filterSearchDoc.map((item) => (
           <TouchableOpacity
             onPress={() =>
               router.push({

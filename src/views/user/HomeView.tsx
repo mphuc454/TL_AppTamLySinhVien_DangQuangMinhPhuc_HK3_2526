@@ -114,18 +114,27 @@ export default function IndexView() {
             </Text>
             <View style={{ alignItems: "center", gap: 10 }}>
               <Text
-                style={{ fontSize: 37, fontWeight: "bold", color: colors.text }}
+                style={{
+                  fontSize: 37,
+                  fontWeight: "bold",
+                  color: colors.text,
+                  textAlign: "center",
+                }}
               >
                 {logTotal}
               </Text>
-              <Text style={{ fontSize: 10, color: colors.textSecondary }}>
-                Lượt ghi nhận
+              <Text
+                style={{
+                  fontSize: 10,
+                  fontWeight: "semibold",
+                  color: colors.text,
+                  textAlign: "center",
+                }}
+              >
+                lượt ghi nhận
               </Text>
             </View>
           </View>
-        </View>
-
-        <View style={{ marginTop: 30, flexDirection: "row", gap: 9 }}>
           <View
             style={{
               flex: 1,
@@ -144,16 +153,30 @@ export default function IndexView() {
             >
               Cảm xúc nhiều nhất
             </Text>
-            <View style={{ alignItems: "center", gap: 10 }}>
+            <View
+              style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
+            >
               <Text
-                style={{ fontSize: 37, fontWeight: "bold", color: colors.text }}
+                style={{
+                  fontSize: 37,
+                  fontWeight: "bold",
+                  color: colors.text,
+                  textAlign: "center",
+                }}
               >
                 {emotion?.name ?? "Không có"}
               </Text>
-              <Text style={{ fontSize: 10, color: colors.textSecondary }}>
-                {count} lần
-              </Text>
             </View>
+            <Text
+              style={{
+                fontSize: 10,
+                fontWeight: "semibold",
+                color: colors.text,
+                textAlign: "center",
+              }}
+            >
+              {count} lần
+            </Text>
           </View>
         </View>
 
@@ -206,6 +229,208 @@ export default function IndexView() {
               </Text>
             </TouchableOpacity>
           </View>
+        </View>
+
+        <View
+          style={{
+            marginTop: 18,
+            backgroundColor: colors.cardBackground,
+            borderRadius: 24,
+            padding: 18,
+            borderWidth: 1,
+            borderColor: "#E9E4F6",
+            shadowColor: "#000",
+            shadowOpacity: 0.06,
+            shadowRadius: 10,
+            shadowOffset: { width: 0, height: 4 },
+            elevation: 3,
+          }}
+        >
+          {/* Header */}
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                flex: 1,
+              }}
+            >
+              <View
+                style={{
+                  width: 42,
+                  height: 42,
+                  borderRadius: 21,
+                  backgroundColor: "#EFEAFB",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginRight: 12,
+                }}
+              >
+                <Ionicons name="pulse-outline" size={22} color="#604FD9" />
+              </View>
+
+              <View style={{ flex: 1 }}>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    fontWeight: "700",
+                    color: colors.text,
+                  }}
+                >
+                  Phân tích tâm trạng
+                </Text>
+
+                <Text
+                  style={{
+                    fontSize: 12,
+                    color: colors.textSecondary,
+                    marginTop: 2,
+                  }}
+                >
+                  Dựa trên nhật ký cảm xúc của bạn
+                </Text>
+              </View>
+            </View>
+          </View>
+
+          {/* Nội dung */}
+          <Text
+            style={{
+              marginTop: 16,
+              fontSize: 13,
+              color: colors.textSecondary,
+              lineHeight: 21,
+            }}
+          >
+            AI nhận thấy tâm trạng của bạn đang khá ổn định trong tuần gần đây.
+            Hãy tiếp tục ghi nhật ký để theo dõi những thay đổi và nhận phân
+            tích chính xác hơn.
+          </Text>
+
+          {/* Thống kê */}
+          <View
+            style={{
+              marginTop: 18,
+              backgroundColor: "#F8F6FD",
+              borderRadius: 16,
+              padding: 14,
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          >
+            <View style={{ alignItems: "center", flex: 1 }}>
+              <Text
+                style={{
+                  fontSize: 22,
+                  fontWeight: "700",
+                  color: "#604FD9",
+                }}
+              >
+                7
+              </Text>
+              <Text
+                style={{
+                  fontSize: 11,
+                  color: colors.textSecondary,
+                  marginTop: 4,
+                }}
+              >
+                Nhật ký
+              </Text>
+            </View>
+
+            <View
+              style={{
+                width: 1,
+                backgroundColor: "#E5E5E5",
+              }}
+            />
+
+            <View style={{ alignItems: "center", flex: 1 }}>
+              <Text
+                style={{
+                  fontSize: 22,
+                  fontWeight: "700",
+                  color: "#4CAF50",
+                }}
+              >
+                82%
+              </Text>
+              <Text
+                style={{
+                  fontSize: 11,
+                  color: colors.textSecondary,
+                  marginTop: 4,
+                }}
+              >
+                Tích cực
+              </Text>
+            </View>
+
+            <View
+              style={{
+                width: 1,
+                backgroundColor: "#E5E5E5",
+              }}
+            />
+
+            <View style={{ alignItems: "center", flex: 1 }}>
+              <Text
+                style={{
+                  fontSize: 22,
+                  fontWeight: "700",
+                  color: "#FF9800",
+                }}
+              >
+                5
+              </Text>
+              <Text
+                style={{
+                  fontSize: 11,
+                  color: colors.textSecondary,
+                  marginTop: 4,
+                }}
+              >
+                Ngày
+              </Text>
+            </View>
+          </View>
+
+          {/* Button */}
+          <TouchableOpacity
+            style={{
+              marginTop: 18,
+              height: 48,
+              borderRadius: 14,
+              backgroundColor: "#604FD9",
+              justifyContent: "center",
+              alignItems: "center",
+              flexDirection: "row",
+            }}
+          >
+            <Ionicons
+              name="sparkles-outline"
+              size={18}
+              color="#FFF"
+              style={{ marginRight: 8 }}
+            />
+
+            <Text
+              style={{
+                color: "#FFF",
+                fontWeight: "700",
+                fontSize: 14,
+              }}
+            >
+              Xem phân tích chi tiết
+            </Text>
+          </TouchableOpacity>
         </View>
 
         <View style={{ marginTop: 30 }}>
