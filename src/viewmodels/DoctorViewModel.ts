@@ -178,16 +178,14 @@ export function useEditDoc(id: number) {
       Alert.alert("Thông báo", "Vui lòng nhập số năm kinh nghiệm");
       return;
     }
-    console.log("id =", id);
-    console.log("experience =", experience);
-    console.log("Number(experience) =", Number(experience));
     try {
       await updateDoctor(id, Number(experience), specialization, bio, role);
       Alert.alert("Thông báo", "Cập nhật thông tin thành công");
       router.back();
     } catch (error) {
-      console.log("Update Error:", error);
+      console.log(error);
       Alert.alert("Lỗi", "Cập nhật thông tin thất bại");
+      console.log("Update Error:", error);
     }
   };
   return {

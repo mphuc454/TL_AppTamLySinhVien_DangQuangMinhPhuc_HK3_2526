@@ -111,7 +111,7 @@ export async function updateDoctor(
       bio,
       role_doctor,
     })
-    .eq("id", id)
-    .select();
+    .eq("id", id);
+
   if (error) throw error;
 }

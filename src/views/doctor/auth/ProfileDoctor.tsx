@@ -238,14 +238,7 @@ export default function DoctorProfileView() {
         </View>
         <View style={{ flex: 1 }}>
           <TouchableOpacity
-            onPress={() =>
-              router.push({
-                pathname: "/doctor/FormEditDoctor",
-                params: {
-                  id: doc_id?.id,
-                },
-              })
-            }
+            onPress={() => router.push("/doctor/FormEditDoctor")}
             style={{
               backgroundColor: "#29296d",
               height: 55,
