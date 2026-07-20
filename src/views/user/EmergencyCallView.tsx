@@ -1,15 +1,14 @@
+// import { useEmergencyViewModel } from "@/src/viewmodels/EmergencyViewModel";
 import { useEmergencyViewModel } from "@/src/viewmodels/EmergencyViewModel";
 import { Ionicons } from "@expo/vector-icons";
-import { router, useLocalSearchParams } from "expo-router";
+import { router } from "expo-router";
 import { useContext } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { ThemeContext } from "../theme/ThemeContext";
 
 export default function EmergencyCallView() {
   const { colors } = useContext(ThemeContext);
-  const { id } = useLocalSearchParams();
-  const { emergencyList } = useEmergencyViewModel(Number(id));
-  console.log(emergencyList);
+  const { emergencyList } = useEmergencyViewModel();
   return (
     <ScrollView
       style={{
@@ -88,12 +87,16 @@ export default function EmergencyCallView() {
                 alignItems: "center",
               }}
             >
-              <Text style={{ fontSize: 20, color: "#fff" }}>1</Text>
+              <Text style={{ fontSize: 20, color: "#fff" }}>{i.id}</Text>
             </View>
             <View style={{ flex: 1, marginLeft: 16, alignItems: "center" }}>
-              <Text style={{ fontSize: 14 }}>{i.name}</Text>
-              <Text style={{ fontWeight: "light" }}>Tâm lý học sàng</Text>
-              <Text>SĐT: 0901234567</Text>
+              <Text style={{ fontSize: 14 }}>
+                BS: {i.doctor_id.account_id.username}
+              </Text>
+              <Text style={{ fontWeight: "light" }}>
+                {i.doctor_id.specialization}
+              </Text>
+              <Text>{i.doctor_id.account_id.user_id.phone}</Text>
               <View
                 style={{
                   marginTop: 12,
@@ -106,6 +109,23 @@ export default function EmergencyCallView() {
                 <Text>Đã lưu</Text>
               </View>
             </View>
+            <TouchableOpacity
+              style={{
+                position: "absolute",
+                top: 10,
+                right: 10,
+                width: 50,
+                height: 28,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Text
+                style={{ fontSize: 16, color: "#7E79F6", fontWeight: "bold" }}
+              >
+                Xoá
+              </Text>
+            </TouchableOpacity>
           </TouchableOpacity>
         ))}
       </View>

@@ -2,18 +2,10 @@ import {
   useDoctorDetailViewModel,
   useSkillDetailViewModel,
 } from "@/src/viewmodels/DoctorViewModel";
-import { useEmergencyViewModel } from "@/src/viewmodels/EmergencyViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import { useContext } from "react";
-import {
-  Image,
-  ScrollView,
-  Switch,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { ThemeContext } from "../theme/ThemeContext";
 
 export default function DetailAppointmentView() {
@@ -21,7 +13,7 @@ export default function DetailAppointmentView() {
   const { id } = useLocalSearchParams();
   const { doc_id } = useDoctorDetailViewModel(Number(id));
   const { skill_id } = useSkillDetailViewModel(Number(id));
-  const { saveEmergency, Toggle, loading } = useEmergencyViewModel(Number(id));
+  // const { saveEmergency, Toggle, loading } = useEmergencyViewModel(Number(id));
   return (
     <ScrollView
       style={{
@@ -229,28 +221,33 @@ export default function DetailAppointmentView() {
           backgroundColor: "#D8D8D8",
           borderRadius: 18,
           padding: 18,
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
+          flexDirection: "column",
+          alignItems: "stretch",
         }}
       >
-        <View>
+        <View style={{ marginBottom: 14 }}>
           <Text style={{ fontWeight: "bold", fontSize: 15 }}>
             Lưu số điện thoại
           </Text>
-          <Text style={{ fontWeight: "light" }}>
+          <Text style={{ fontWeight: "300", color: "#555" }}>
             Lưu vào danh sách cuộc gọi khẩn cấp
           </Text>
         </View>
-        <Switch
-          value={saveEmergency}
-          onValueChange={Toggle}
-          disabled={loading}
-          trackColor={{
-            false: "#d0b5b5",
-            true: "#5B63FF",
+
+        <TouchableOpacity
+          activeOpacity={0.7}
+          onPress={() => {}}
+          style={{
+            backgroundColor: "#000",
+            paddingVertical: 12,
+            borderRadius: 12,
+            alignItems: "center",
           }}
-        ></Switch>
+        >
+          <Text style={{ color: "#fff", fontWeight: "600", fontSize: 14 }}>
+            Lưu vào
+          </Text>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );
