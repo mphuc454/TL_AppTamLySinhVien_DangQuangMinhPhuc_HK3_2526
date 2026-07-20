@@ -14,6 +14,19 @@ export default function AdminLayout() {
           title: "Quản lý theo dõi sức khoẻ",
         }}
       />
+      <Drawer.Screen
+        name="Profile"
+        options={{
+          title: "Hồ sơ bác sĩ",
+        }}
+      />
+      <Drawer.Screen
+        name="FormEditDoctor"
+        options={{
+          drawerLabel: () => null,
+          drawerItemStyle: { display: "none" },
+        }}
+      />
     </Drawer>
   );
 }

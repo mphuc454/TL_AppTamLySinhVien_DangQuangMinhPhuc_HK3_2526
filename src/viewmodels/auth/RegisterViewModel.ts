@@ -54,14 +54,16 @@ export function useRegisterViewModel() {
     try {
       const result = await register(username, email, phone, password);
       if (result.success) {
-        alert("Đăng ký thành công");
+        alert(
+          "Đăng ký thành công, Vui lòng xác nhận đã gửi về email của bạn !",
+        );
         router.replace("/auth/Login");
       } else {
-        alert(result.error || "Đăng ký thất bại.");
+        alert("Đăng ký thất bại.");
       }
     } catch (error) {
       console.log(error);
-      alert("Đăng ký thất bại.");
+      alert("Đã có xảy ra lỗi vui lòng thử lại");
     }
   };
   return {

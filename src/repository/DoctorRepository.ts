@@ -94,3 +94,24 @@ export const deleteDoctor = async (id: number): Promise<void> => {
     throw error;
   }
 };
+
+//7. cập nhật bác sĩ
+export async function updateDoctor(
+  id: number,
+  experience_years: number,
+  specialization: string,
+  bio: string,
+  role_doctor: string,
+) {
+  const { error } = await supabase
+    .from("doctors")
+    .update({
+      experience_years,
+      specialization,
+      bio,
+      role_doctor,
+    })
+    .eq("id", id)
+    .select();
+  if (error) throw error;
+}
