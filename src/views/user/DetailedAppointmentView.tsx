@@ -2,9 +2,10 @@ import {
   useDoctorDetailViewModel,
   useSkillDetailViewModel,
 } from "@/src/viewmodels/DoctorViewModel";
+import { useEmergencyViewModel } from "@/src/viewmodels/EmergencyViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import {
   Image,
   ScrollView,
@@ -18,9 +19,9 @@ import { ThemeContext } from "../theme/ThemeContext";
 export default function DetailAppointmentView() {
   const { colors } = useContext(ThemeContext);
   const { id } = useLocalSearchParams();
-  const [saveEmergency, setSaveEmergency] = useState(true);
   const { doc_id } = useDoctorDetailViewModel(Number(id));
   const { skill_id } = useSkillDetailViewModel(Number(id));
+  const { saveEmergency, Toggle, loading } = useEmergencyViewModel(Number(id));
   return (
     <ScrollView
       style={{
@@ -92,7 +93,7 @@ export default function DetailAppointmentView() {
         }}
       >
         <Text style={{ fontSize: 25, textAlign: "center", color: colors.text }}>
-          Thông tin cơ bản:{" "}
+          Thông tin cơ bản:
         </Text>
         <View style={{ marginTop: 18, gap: 12 }}>
           <Text style={{ fontSize: 15, color: colors.text }}>
@@ -142,7 +143,7 @@ export default function DetailAppointmentView() {
       </View>
       <View style={{ marginTop: 30 }}>
         <Text style={{ fontSize: 20, fontWeight: "bold", color: colors.text }}>
-          Giới thiệu:{" "}
+          Giới thiệu:
         </Text>
         <Text
           style={{
@@ -243,7 +244,8 @@ export default function DetailAppointmentView() {
         </View>
         <Switch
           value={saveEmergency}
-          onValueChange={setSaveEmergency}
+          onValueChange={Toggle}
+          disabled={loading}
           trackColor={{
             false: "#d0b5b5",
             true: "#5B63FF",

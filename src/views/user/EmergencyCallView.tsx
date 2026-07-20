@@ -1,12 +1,15 @@
+import { useEmergencyViewModel } from "@/src/viewmodels/EmergencyViewModel";
 import { Ionicons } from "@expo/vector-icons";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { useContext } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { ThemeContext } from "../theme/ThemeContext";
 
 export default function EmergencyCallView() {
   const { colors } = useContext(ThemeContext);
-
+  const { id } = useLocalSearchParams();
+  const { emergencyList } = useEmergencyViewModel(Number(id));
+  console.log(emergencyList);
   return (
     <ScrollView
       style={{
@@ -62,48 +65,49 @@ export default function EmergencyCallView() {
         </TouchableOpacity>
       </View>
       <View style={{ marginTop: 30 }}>
-        <Text style={{ color: colors.text }}>
-          DANH SÁCH CUỘC GỌI ĐƯỢC LƯU:{" "}
-        </Text>
-        <TouchableOpacity
-          style={{
-            marginTop: 10,
-            backgroundColor: "#D9D9D9",
-            borderRadius: 22,
-            padding: 12,
-            flexDirection: "row",
-            alignItems: "center",
-          }}
-        >
-          <View
+        <Text style={{ color: colors.text }}>DANH SÁCH CUỘC GỌI ĐƯỢC LƯU:</Text>
+        {emergencyList.map((i) => (
+          <TouchableOpacity
+            key={i.id}
             style={{
-              width: 78,
-              height: 78,
-              borderRadius: 39,
-              backgroundColor: "#7E79F6",
-              justifyContent: "center",
+              marginTop: 10,
+              backgroundColor: "#D9D9D9",
+              borderRadius: 22,
+              padding: 12,
+              flexDirection: "row",
               alignItems: "center",
             }}
           >
-            <Text style={{ fontSize: 20, color: "#fff" }}>1</Text>
-          </View>
-          <View style={{ flex: 1, marginLeft: 16, alignItems: "center" }}>
-            <Text style={{ fontSize: 14 }}>TS. NGUYỄN MINH ANH</Text>
-            <Text style={{ fontWeight: "light" }}>Tâm lý học sàng</Text>
-            <Text>SĐT: 0901234567</Text>
             <View
               style={{
-                marginTop: 12,
-                backgroundColor: "#C8B5F8",
-                borderRadius: 20,
-                paddingHorizontal: 28,
-                paddingVertical: 3,
+                width: 78,
+                height: 78,
+                borderRadius: 39,
+                backgroundColor: "#7E79F6",
+                justifyContent: "center",
+                alignItems: "center",
               }}
             >
-              <Text>Đã lưu</Text>
+              <Text style={{ fontSize: 20, color: "#fff" }}>1</Text>
             </View>
-          </View>
-        </TouchableOpacity>
+            <View style={{ flex: 1, marginLeft: 16, alignItems: "center" }}>
+              <Text style={{ fontSize: 14 }}>{i.name}</Text>
+              <Text style={{ fontWeight: "light" }}>Tâm lý học sàng</Text>
+              <Text>SĐT: 0901234567</Text>
+              <View
+                style={{
+                  marginTop: 12,
+                  backgroundColor: "#C8B5F8",
+                  borderRadius: 20,
+                  paddingHorizontal: 28,
+                  paddingVertical: 3,
+                }}
+              >
+                <Text>Đã lưu</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+        ))}
       </View>
     </ScrollView>
   );
