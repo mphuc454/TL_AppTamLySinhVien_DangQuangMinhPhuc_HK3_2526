@@ -2,6 +2,7 @@ import {
   useDoctorDetailViewModel,
   useSkillDetailViewModel,
 } from "@/src/viewmodels/DoctorViewModel";
+import { useAddEmergencyViewModel } from "@/src/viewmodels/EmergencyViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import { useContext } from "react";
@@ -13,7 +14,7 @@ export default function DetailAppointmentView() {
   const { id } = useLocalSearchParams();
   const { doc_id } = useDoctorDetailViewModel(Number(id));
   const { skill_id } = useSkillDetailViewModel(Number(id));
-  // const { saveEmergency, Toggle, loading } = useEmergencyViewModel(Number(id));
+  const { loading, saveEmergency } = useAddEmergencyViewModel();
   return (
     <ScrollView
       style={{
@@ -235,8 +236,13 @@ export default function DetailAppointmentView() {
         </View>
 
         <TouchableOpacity
-          activeOpacity={0.7}
-          onPress={() => {}}
+          disabled={loading}
+          onPress={() => {
+            if (!doc_id?.id) {
+              return;
+            }
+            saveEmergency(doc_id.id);
+          }}
           style={{
             backgroundColor: "#000",
             paddingVertical: 12,
@@ -245,7 +251,7 @@ export default function DetailAppointmentView() {
           }}
         >
           <Text style={{ color: "#fff", fontWeight: "600", fontSize: 14 }}>
-            Lưu vào
+            {loading ? "Đang lưu..." : "Lưu vào"}
           </Text>
         </TouchableOpacity>
       </View>
