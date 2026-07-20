@@ -12,7 +12,7 @@ export function FilterDoc() {
       const matchCategory =
         selectedCategory === null || item.id === selectedCategory;
 
-      const filterSearchDoc = item.account_id.username
+      const filterSearchDoc = (item.account_id?.username ?? "")
         .toUpperCase()
         .includes(searchText.trim().toUpperCase());
 
@@ -38,7 +38,7 @@ export function FilterArticle() {
     return articles.filter((item) => {
       const matchCategory =
         selectedCategory === null ||
-        item.id_category_articles.id === selectedCategory;
+        item.id_category_articles?.id === selectedCategory;
 
       const filterSearchArticle = item.title
         .toUpperCase()
@@ -65,7 +65,7 @@ export function FilterExercises() {
   const filterExercises = useMemo(() => {
     return ex.filter((item) => {
       const matchCategory =
-        selectedCategory === null || item.category.id === selectedCategory;
+        selectedCategory === null || item.category?.id === selectedCategory;
 
       const filterSearchEx = item.title
         .toUpperCase()
@@ -83,7 +83,7 @@ export function FilterExercises() {
   };
 }
 
-// lọc tìm kiếm
+// lọc tìm kiếm bài viết
 export function useSearchArticle(seacrhItems: string) {
   const { articles } = useArticleViewModel();
 
@@ -93,4 +93,16 @@ export function useSearchArticle(seacrhItems: string) {
     );
   }, [articles, seacrhItems]);
   return filterSearchArticle;
+}
+
+// lọc tìm kiếm bác sĩ
+export function useSearchDoc(seacrhItems: string) {
+  const { doc } = useDoctorViewModel();
+
+  const filterSearchDoc = useMemo(() => {
+    return doc.filter((i) =>
+      i.account_id?.username.toUpperCase().includes(seacrhItems.toUpperCase()),
+    );
+  }, [doc, seacrhItems]);
+  return filterSearchDoc;
 }

@@ -3,4 +3,5 @@ export interface Emotion {
   name: string;
   icon: string;
   color: string;
+  sentiment: number;
 }

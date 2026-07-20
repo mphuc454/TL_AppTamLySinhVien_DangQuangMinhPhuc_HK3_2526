@@ -4,7 +4,6 @@ import { Alert } from "react-native";
 import { Doctor } from "../models/Doctor";
 import { DoctorSkill } from "../models/DoctorSkill";
 import {
-  deleteDoctor,
   getAllDoctor,
   getDoctorByID,
   getSkillDetailDoctor,
@@ -115,6 +114,7 @@ export function useDisableDoctor() {
         "Thông báo",
         verifyCurrent ? "Vô hiệu hoá thành công" : "Mở lại thành công",
       );
+      router.back();
     } catch (error) {
       Alert.alert("Thông báo", "Lỗi không thể xử lý được!");
       console.log(error);
@@ -126,40 +126,14 @@ export function useDisableDoctor() {
 // Hiện thị cài đặt quản lý bác sĩ
 export function useEditDoctor() {
   const disable = useDisableDoctor();
-  // const del = useDeleteDoctor();
   const handleDoctor = async (id: number, verify: boolean) => {
     Alert.alert("Thông báo", "Chọn thao tác thay đổi", [
       {
         text: verify ? "Vô hiệu hoá tài khoản" : "Mở tài khoản",
         onPress: () => disable(id, verify),
       },
-      // { text: "Xoá tài khoản", onPress: () => del(id) },
       { text: "Huỷ", style: "cancel" },
     ]);
   };
   return handleDoctor;
-}
-
-// xoá bác sĩ
-export function useDeleteDoctor() {
-  const handleDeleteDoc = (id: number) => {
-    Alert.alert("Thông báo", "Bạn có muốn chắc xoá không ?", [
-      { text: "Huỷ", style: "cancel" },
-      {
-        text: "Xoá bác sĩ",
-        style: "destructive",
-        onPress: async () => {
-          try {
-            await deleteDoctor(id);
-            Alert.alert("Thông báo", "Xóa thành công");
-            router.back();
-          } catch (error) {
-            console.log(error);
-            Alert.alert("Thông báo", "Lỗi không thể xoá được");
-          }
-        },
-      },
-    ]);
-  };
-  return handleDeleteDoc;
 }

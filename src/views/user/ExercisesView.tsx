@@ -146,7 +146,7 @@ export default function ExercisesView() {
                   <Text
                     style={{ fontSize: 9, fontWeight: "700", color: "#7a2e2e" }}
                   >
-                    {item.category.name}
+                    {item.category?.name ?? "Chưa phân loại"}
                   </Text>
                 </View>
 

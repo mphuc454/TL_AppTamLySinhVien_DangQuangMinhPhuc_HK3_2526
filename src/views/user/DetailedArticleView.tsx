@@ -65,7 +65,7 @@ export default function DetailedArticleView() {
             fontWeight: "semibold",
           }}
         >
-          {arc?.id_category_articles.name}
+          {arc?.id_category_articles?.name ?? "Chưa phân loại"}
         </Text>
       </View>
       <Text
@@ -251,7 +251,7 @@ export default function DetailedArticleView() {
                     fontWeight: "500",
                   }}
                 >
-                  {article.id_category_articles.name}
+                  {article.id_category_articles?.name ?? "Chưa phân loại"}
                 </Text>
               </View>
             </View>

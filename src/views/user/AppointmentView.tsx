@@ -115,7 +115,7 @@ export default function AppointmentView() {
                 <Ionicons name="person" size={40} />
                 <View style={{ flex: 1, marginLeft: 10 }}>
                   <Text style={{ fontSize: 16, fontWeight: "600" }}>
-                    BS: {d.account_id.username}
+                    BS: {d.account_id?.username ?? "Chưa có tài khoản"}
                   </Text>
                   <Text style={{ fontWeight: "light", marginTop: 4 }}>
                     {d.experience_years} năm kinh nghiệm

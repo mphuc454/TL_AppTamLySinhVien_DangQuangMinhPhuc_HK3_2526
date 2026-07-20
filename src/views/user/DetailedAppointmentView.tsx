@@ -2,25 +2,19 @@ import {
   useDoctorDetailViewModel,
   useSkillDetailViewModel,
 } from "@/src/viewmodels/DoctorViewModel";
+import { useAddEmergencyViewModel } from "@/src/viewmodels/EmergencyViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
-import { useContext, useState } from "react";
-import {
-  Image,
-  ScrollView,
-  Switch,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { useContext } from "react";
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { ThemeContext } from "../theme/ThemeContext";
 
 export default function DetailAppointmentView() {
   const { colors } = useContext(ThemeContext);
   const { id } = useLocalSearchParams();
-  const [saveEmergency, setSaveEmergency] = useState(true);
   const { doc_id } = useDoctorDetailViewModel(Number(id));
   const { skill_id } = useSkillDetailViewModel(Number(id));
+  const { loading, saveEmergency } = useAddEmergencyViewModel();
   return (
     <ScrollView
       style={{
@@ -44,8 +38,8 @@ export default function DetailAppointmentView() {
       </View>
       <Image
         source={{
-          uri: doc_id?.avatar_url.trim()
-            ? doc_id?.avatar_url
+          uri: doc_id?.avatar_url?.trim()
+            ? doc_id.avatar_url
             : "https://placehold.co/600x350.png",
         }}
         style={{
@@ -65,7 +59,7 @@ export default function DetailAppointmentView() {
           color: colors.text,
         }}
       >
-        BS: {doc_id?.account_id.username}
+        BS: {doc_id?.account_id?.username ?? "Chưa có tài khoản"}
       </Text>
       <Text
         style={{
@@ -92,20 +86,20 @@ export default function DetailAppointmentView() {
         }}
       >
         <Text style={{ fontSize: 25, textAlign: "center", color: colors.text }}>
-          Thông tin cơ bản:{" "}
+          Thông tin cơ bản:
         </Text>
         <View style={{ marginTop: 18, gap: 12 }}>
           <Text style={{ fontSize: 15, color: colors.text }}>
-            Họ tên: {doc_id?.account_id.user_id.full_name}
+            Họ tên: {doc_id?.account_id?.user_id?.full_name ?? "Không có"}
           </Text>
           <Text style={{ fontSize: 15, color: colors.text }}>
-            Email: {doc_id?.account_id.user_id.email}
+            Email: {doc_id?.account_id?.user_id?.email ?? "Không có"}
           </Text>
           <Text style={{ fontSize: 15, color: colors.text }}>
             Chức vụ: {doc_id?.role_doctor}
           </Text>
           <Text style={{ fontSize: 15, color: colors.text }}>
-            Nơi ở: {doc_id?.account_id.address}
+            Nơi ở: {doc_id?.account_id?.address ?? "Không có"}
           </Text>
           <Text style={{ fontSize: 15, color: colors.text }}>
             Kinh nghiệm: {doc_id?.experience_years} năm
@@ -139,29 +133,10 @@ export default function DetailAppointmentView() {
             Nhắn tin
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={{
-            marginTop: 24,
-            backgroundColor: "#ef1e1e",
-            borderRadius: 12,
-            paddingVertical: 14,
-            alignItems: "center",
-          }}
-        >
-          <Text
-            style={{
-              color: "#fff",
-              fontSize: 16,
-              fontWeight: "700",
-            }}
-          >
-            Yêu cầu theo dõi sức khoẻ
-          </Text>
-        </TouchableOpacity>
       </View>
       <View style={{ marginTop: 30 }}>
         <Text style={{ fontSize: 20, fontWeight: "bold", color: colors.text }}>
-          Giới thiệu:{" "}
+          Giới thiệu:
         </Text>
         <Text
           style={{
@@ -183,24 +158,26 @@ export default function DetailAppointmentView() {
             marginHorizontal: 14,
           }}
         >
-          {skill_id.map((item) => (
-            <View
-              key={item.skill_id.id}
-              style={{
-                backgroundColor: "#F5F6FF",
-                borderColor: "#CED5FF",
-                borderWidth: 1,
-                borderRadius: 20,
-                paddingHorizontal: 18,
-                paddingVertical: 10,
-                margin: 5,
-              }}
-            >
-              <Text style={{ color: "#27139B", fontWeight: "600" }}>
-                {item.skill_id.name}
-              </Text>
-            </View>
-          ))}
+          {skill_id
+            .filter((item) => item.skill_id)
+            .map((item) => (
+              <View
+                key={item.skill_id.id}
+                style={{
+                  backgroundColor: "#F5F6FF",
+                  borderColor: "#CED5FF",
+                  borderWidth: 1,
+                  borderRadius: 20,
+                  paddingHorizontal: 18,
+                  paddingVertical: 10,
+                  margin: 5,
+                }}
+              >
+                <Text style={{ color: "#27139B", fontWeight: "600" }}>
+                  {item.skill_id.name}
+                </Text>
+              </View>
+            ))}
         </View>
       </View>
       <View style={{ marginTop: 30 }}>
@@ -245,27 +222,38 @@ export default function DetailAppointmentView() {
           backgroundColor: "#D8D8D8",
           borderRadius: 18,
           padding: 18,
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
+          flexDirection: "column",
+          alignItems: "stretch",
         }}
       >
-        <View>
+        <View style={{ marginBottom: 14 }}>
           <Text style={{ fontWeight: "bold", fontSize: 15 }}>
             Lưu số điện thoại
           </Text>
-          <Text style={{ fontWeight: "light" }}>
+          <Text style={{ fontWeight: "300", color: "#555" }}>
             Lưu vào danh sách cuộc gọi khẩn cấp
           </Text>
         </View>
-        <Switch
-          value={saveEmergency}
-          onValueChange={setSaveEmergency}
-          trackColor={{
-            false: "#d0b5b5",
-            true: "#5B63FF",
+
+        <TouchableOpacity
+          disabled={loading}
+          onPress={() => {
+            if (!doc_id?.id) {
+              return;
+            }
+            saveEmergency(doc_id.id);
           }}
-        ></Switch>
+          style={{
+            backgroundColor: "#000",
+            paddingVertical: 12,
+            borderRadius: 12,
+            alignItems: "center",
+          }}
+        >
+          <Text style={{ color: "#fff", fontWeight: "600", fontSize: 14 }}>
+            {loading ? "Đang lưu..." : "Lưu vào"}
+          </Text>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );

@@ -204,7 +204,7 @@ export default function ArticleView() {
                       fontWeight: "500",
                     }}
                   >
-                    {article.id_category_articles.name}
+                    {article.id_category_articles?.name ?? "Chưa phân loại"}
                   </Text>
                 </View>
               </View>
