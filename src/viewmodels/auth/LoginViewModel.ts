@@ -38,7 +38,7 @@ export function useLoginViewModel() {
       const hasAcc = await hasAccount();
       if (!hasAcc) {
         router.replace("/auth/InputUsr");
-        Alert.alert("Thông báo", "Tài khoản chưa tồn tại");
+        Alert.alert("Thông báo", "Vui lòng nhập tên tài khoản và chọn vai trò");
         return;
       }
       const acc = await getAccount();

@@ -9,6 +9,7 @@ import {
   getSkillDetailDoctor,
   getSkillDoctor,
   toggleVerify,
+  updateDoctor,
 } from "../repository/DoctorRepository";
 
 // lấy danh sách các bác sĩ
@@ -136,4 +137,66 @@ export function useEditDoctor() {
     ]);
   };
   return handleDoctor;
+}
+
+// sửa thông tin bác sĩ
+export function useEditDoc(id: number) {
+  const [specialization, setSpecialization] = useState("");
+  const [role, setRole] = useState("");
+  const [bio, setBio] = useState("");
+  const [experience, setExperience] = useState("");
+
+  const loadDocs = useCallback(async () => {
+    try {
+      const data = await getDoctorByID(id);
+      setSpecialization(data.specialization);
+      setRole(data.role_doctor);
+      setBio(data.bio);
+      setExperience(String(data.experience_years));
+    } catch (error) {
+      console.log(error);
+      Alert.alert("Lỗi", "Không thể tải được thông tin");
+    }
+  }, [id]);
+  useEffect(() => {
+    loadDocs();
+  }, [loadDocs]);
+  const handleUpdate = async () => {
+    if (!specialization) {
+      Alert.alert("Thông báo", "Vui lòng nhập chuyên ngành");
+      return;
+    }
+    if (!role) {
+      Alert.alert("Thông báo", "Vui lòng nhập vai trò");
+      return;
+    }
+    if (!bio) {
+      Alert.alert("Thông báo", "Vui lòng nhập thông tin giới thiệu");
+      return;
+    }
+    if (!experience) {
+      Alert.alert("Thông báo", "Vui lòng nhập số năm kinh nghiệm");
+      return;
+    }
+    try {
+      await updateDoctor(id, Number(experience), specialization, bio, role);
+      Alert.alert("Thông báo", "Cập nhật thông tin thành công");
+      router.back();
+    } catch (error) {
+      console.log(error);
+      Alert.alert("Lỗi", "Cập nhật thông tin thất bại");
+      console.log("Update Error:", error);
+    }
+  };
+  return {
+    specialization,
+    setSpecialization,
+    role,
+    setRole,
+    bio,
+    setBio,
+    experience,
+    setExperience,
+    handleUpdate,
+  };
 }
