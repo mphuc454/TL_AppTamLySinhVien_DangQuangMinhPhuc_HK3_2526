@@ -28,14 +28,6 @@ export default function HealthManagementView() {
         <Text style={{ fontSize: 18, fontWeight: "bold" }}>Nguyễn Văn A</Text>
 
         <Text style={{ marginTop: 8 }}>Email: nguyenvana@gmail.com</Text>
-
-        <Text style={{ marginTop: 5 }}>
-          Trạng thái:
-          <Text style={{ color: "green", fontWeight: "bold" }}>
-            {" "}
-            Đang theo dõi
-          </Text>
-        </Text>
       </View>
 
       <Text

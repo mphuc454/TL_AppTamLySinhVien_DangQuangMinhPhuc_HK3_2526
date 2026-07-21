@@ -160,23 +160,6 @@ export default function AdminDoctorView() {
                   marginTop: 15,
                 }}
               >
-                {/* <TouchableOpacity
-                  style={{ marginRight: 20 }}
-                  onPress={() =>
-                    router.push({
-                      pathname: "/admin/CRUD/PermissionDoctor",
-                      params: {
-                        id: item.id,
-                      },
-                    })
-                  }
-                >
-                  <Ionicons
-                    name="shield-checkmark-outline"
-                    size={24}
-                    color="#2563eb"
-                  />
-                </TouchableOpacity> */}
                 <TouchableOpacity
                   onPress={() => handle(item.id, item.verify)}
                   style={{ marginRight: 20 }}
