@@ -1,4 +1,7 @@
 import { useEditDoc } from "@/src/viewmodels/DoctorViewModel";
+import { Ionicons } from "@expo/vector-icons";
+import { Picker } from "@react-native-picker/picker";
+import { router } from "expo-router";
 import {
   ScrollView,
   StyleSheet,
@@ -22,18 +25,28 @@ export default function FormEditView() {
   } = useEditDoc();
   return (
     <ScrollView contentContainerStyle={{ paddingBottom: 120 }}>
-      <Text
-        style={{
-          marginTop: 30,
-          flex: 1,
-          textAlign: "center",
-          fontSize: 20,
-          fontWeight: "bold",
-          marginBottom: 20,
-        }}
+      <View
+        style={{ flexDirection: "row", alignItems: "center", marginTop: 30 }}
       >
-        Bổ sung thông tin bác sĩ
-      </Text>
+        <TouchableOpacity onPress={() => router.back()}>
+          <Ionicons
+            style={{ marginTop: 30 }}
+            name="arrow-back"
+            size={25}
+          ></Ionicons>
+        </TouchableOpacity>
+        <Text
+          style={{
+            marginTop: 30,
+            flex: 1,
+            textAlign: "center",
+            fontSize: 20,
+            fontWeight: "bold",
+          }}
+        >
+          Bổ sung thông tin bác sĩ
+        </Text>
+      </View>
 
       <View style={styles.group}>
         <Text style={styles.label}>Nhập chuyên ngành</Text>
@@ -46,13 +59,16 @@ export default function FormEditView() {
       </View>
 
       <View style={styles.group}>
-        <Text style={styles.label}>Nhập vai trò</Text>
-        <TextInput
-          placeholder="Nhập vai trò bác sĩ"
-          value={role}
-          onChangeText={setRole}
-          style={styles.input}
-        />
+        <Text style={styles.label}>Chọn vai trò</Text>
+        <Picker
+          style={styles.dropdown}
+          selectedValue={role}
+          onValueChange={(value) => setRole(value)}
+        >
+          <Picker.Item label="Chọn vai trò" value="" />
+          <Picker.Item label="Bác sĩ" value="Bác sĩ" />
+          <Picker.Item label="Chuyên viên" value="Chuyên viên" />
+        </Picker>
       </View>
 
       <View style={styles.group}>
@@ -133,6 +149,7 @@ const styles = StyleSheet.create({
 
   group: {
     marginBottom: 18,
+    marginTop: 30,
   },
 
   label: {

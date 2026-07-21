@@ -2,7 +2,7 @@ import { useEditArticle } from "@/src/viewmodels/ArticleViewModel";
 import { useCategoryArticlesViewModel } from "@/src/viewmodels/CategoryArticleViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { Picker } from "@react-native-picker/picker";
-import { useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import {
   Image,
   ScrollView,
@@ -38,19 +38,37 @@ export default function FormEditView() {
     : "https://placehold.co/600x350.png";
 
   return (
-    <ScrollView contentContainerStyle={{ paddingBottom: 120 }}>
-      <Text
-        style={{
-          marginTop: 30,
-          flex: 1,
-          textAlign: "center",
-          fontSize: 20,
-          fontWeight: "bold",
-          marginBottom: 20,
-        }}
+    <ScrollView
+      style={{
+        flex: 1,
+        paddingHorizontal: 20,
+      }}
+      contentContainerStyle={{ paddingBottom: 120 }}
+    >
+      <View
+        style={{ flexDirection: "row", alignItems: "center", marginTop: 30 }}
       >
-        Chỉnh sửa bài viết
-      </Text>
+        <TouchableOpacity onPress={() => router.back()}>
+          <Ionicons
+            style={{ marginTop: 30 }}
+            name="arrow-back"
+            size={25}
+          ></Ionicons>
+        </TouchableOpacity>
+        <Text
+          style={{
+            marginTop: 30,
+            flex: 1,
+            textAlign: "center",
+            fontSize: 20,
+            fontWeight: "bold",
+            marginBottom: 20,
+          }}
+        >
+          Chỉnh sửa bài viết
+        </Text>
+      </View>
+
       <TouchableOpacity onPress={pickImage} style={styles.imagePicker}>
         <Image
           source={{
