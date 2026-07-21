@@ -79,3 +79,40 @@ export const checkHealthManagement = async (doctorId: number) => {
   console.log("existed:", existed);
   return existed;
 };
+
+//4. chấp nhận yêu cầu:
+export const toggleStatus = async (id: number, status: boolean) => {
+  const { data, error } = await supabase
+    .from("health_managements")
+    .update({ status })
+    .eq("id", id);
+  if (error) throw error;
+  return data;
+};
+
+// 5. xem chi tiết quản lý sức khoẻ
+export const getDetailHealthManagement = async (id: number) => {
+  const { data: detailedhealth, error } = await supabase
+    .from("health_managements")
+    .select(`*, account_id(*)`)
+    .eq("id", id)
+    .single();
+
+  if (error) throw error;
+
+  const { data: profiles, error: profileError } = await supabase
+    .from("user")
+    .select("*")
+    .eq("id", detailedhealth.account_id.user_id)
+    .single();
+
+  if (profileError) throw profileError;
+
+  return {
+    ...detailedhealth,
+    account_id: {
+      ...detailedhealth.account_id,
+      profiles,
+    },
+  };
+};

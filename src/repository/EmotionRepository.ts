@@ -101,3 +101,25 @@ export const mostEmotion = async () => {
   }
   return data;
 };
+
+//7.Thống kê toàn bộ biểu cảm của nhật ký của user by id:
+export const totalEmotion = async () => {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) {
+    throw new Error("Chưa đăng nhập");
+  }
+  const { data, error } = await supabase
+    .from("emotion_logs")
+    .select("emotion_id")
+    .eq("account_id", user.id);
+  if (error) throw error;
+  const tichcuc = data.filter((i) => i.emotion_id === 1).length;
+  const binhthan = data.filter((i) => i.emotion_id === 2).length;
+  const loau = data.filter((i) => i.emotion_id === 3).length;
+  const buonba = data.filter((i) => i.emotion_id === 4).length;
+  const giandu = data.filter((i) => i.emotion_id === 5).length;
+
+  return { tichcuc, binhthan, loau, buonba, giandu };
+};
