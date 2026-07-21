@@ -91,7 +91,7 @@ export const toggleVerify = async (id: number, verify: boolean) => {
   return data;
 };
 
-//6. Xoá bác sĩ
+//5. Xoá bác sĩ
 export const deleteDoctor = async (id: number): Promise<void> => {
   const { error } = await supabase.from("doctors").delete().eq("id", id);
   if (error) {
@@ -99,7 +99,7 @@ export const deleteDoctor = async (id: number): Promise<void> => {
   }
 };
 
-//5. cập nhật bác sĩ
+//6. cập nhật bác sĩ
 export async function updateDoctor(
   account_id: number,
   experience_years: number,

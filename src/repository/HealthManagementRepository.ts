@@ -79,3 +79,13 @@ export const checkHealthManagement = async (doctorId: number) => {
   console.log("existed:", existed);
   return existed;
 };
+
+//4. chấp nhận yêu cầu:
+export const toggleStatus = async (id: number, status: boolean) => {
+  const { data, error } = await supabase
+    .from("health_managements")
+    .update({ status })
+    .eq("id", id);
+  if (error) throw error;
+  return data;
+};

@@ -1,10 +1,14 @@
-import { useGetRequestVM } from "@/src/viewmodels/HealthViewModel";
+import {
+  useAcceptRequest,
+  useGetRequestVM,
+} from "@/src/viewmodels/HealthViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 
 export default function ListUserView() {
   const { heal } = useGetRequestVM();
+  const accept = useAcceptRequest();
 
   return (
     <ScrollView>
@@ -26,98 +30,141 @@ export default function ListUserView() {
         </Text>
       </View>
       <View style={{ marginTop: 30 }}>
-        {heal.map((item) => (
-          <View
-            key={item.id}
-            style={{
-              backgroundColor: "#fff",
-              padding: 16,
-              borderRadius: 15,
-              marginBottom: 15,
-              elevation: 2,
-            }}
-          >
-            <TouchableOpacity
-            // onPress={() =>
-            //   router.push({
-            //     pathname: "/doctor/MainDoctor",
-            //     params: {
-            //       accountId: item.accountId,
-            //     },
-            //   })
-            // }
-            >
-              <Text
-                style={{
-                  fontSize: 18,
-                  fontWeight: "bold",
-                }}
-              >
-                {item.account_id.username}
-              </Text>
-
-              <Text
-                style={{
-                  color: "#666",
-                  marginTop: 5,
-                }}
-              >
-                {item.account_id.user_id.email}
-              </Text>
-            </TouchableOpacity>
-
-            {/* Nút chức năng */}
+        {heal.length > 0 ? (
+          heal.map((item) => (
             <View
+              key={item.id}
               style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                marginTop: 15,
+                backgroundColor: "#fff",
+                padding: 16,
+                borderRadius: 15,
+                marginBottom: 15,
+                elevation: 2,
               }}
             >
               <TouchableOpacity
-                // onPress={() => handleAccept(item.accountId)}
-                style={{
-                  flex: 1,
-                  backgroundColor: "#22C55E",
-                  paddingVertical: 12,
-                  borderRadius: 10,
-                  marginRight: 8,
-                  alignItems: "center",
-                }}
+              // onPress={() =>
+              //   router.push({
+              //     pathname: "/doctor/MainDoctor",
+              //     params: {
+              //       accountId: item.accountId,
+              //     },
+              //   })
+              // }
               >
                 <Text
                   style={{
-                    color: "#fff",
+                    fontSize: 18,
                     fontWeight: "bold",
                   }}
                 >
-                  Chấp nhận
+                  {item.account_id.username}
+                </Text>
+
+                <Text
+                  style={{
+                    color: "#666",
+                    marginTop: 5,
+                  }}
+                >
+                  {item.account_id.user_id.email}
                 </Text>
               </TouchableOpacity>
 
-              <TouchableOpacity
-                // onPress={() => handleReject(item.accountId)}
-                style={{
-                  flex: 1,
-                  backgroundColor: "#EF4444",
-                  paddingVertical: 12,
-                  borderRadius: 10,
-                  marginLeft: 8,
-                  alignItems: "center",
-                }}
-              >
-                <Text
+              {item.status ? (
+                <TouchableOpacity
+                  onPress={() =>
+                    router.push({
+                      pathname: "/doctor/MainDoctor",
+                      params: {
+                        accountId: item.account_id.id,
+                      },
+                    })
+                  }
                   style={{
-                    color: "#fff",
-                    fontWeight: "bold",
+                    flex: 1,
+                    backgroundColor: "#3B82F6",
+                    paddingVertical: 12,
+                    borderRadius: 10,
+                    alignItems: "center",
                   }}
                 >
-                  Từ chối
-                </Text>
-              </TouchableOpacity>
+                  <Text style={{ color: "#fff", fontWeight: "bold" }}>Xem</Text>
+                </TouchableOpacity>
+              ) : (
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    marginTop: 15,
+                  }}
+                >
+                  <TouchableOpacity
+                    onPress={() => {
+                      if (item.id !== undefined) {
+                        accept(item.id, item.status);
+                      }
+                    }}
+                    style={{
+                      flex: 1,
+                      backgroundColor: "#22C55E",
+                      paddingVertical: 12,
+                      borderRadius: 10,
+                      marginRight: 8,
+                      alignItems: "center",
+                    }}
+                  >
+                    <Text
+                      style={{
+                        color: "#fff",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Chấp nhận
+                    </Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity
+                    // onPress={() => handleReject(item.accountId)}
+                    style={{
+                      flex: 1,
+                      backgroundColor: "#EF4444",
+                      paddingVertical: 12,
+                      borderRadius: 10,
+                      marginLeft: 8,
+                      alignItems: "center",
+                    }}
+                  >
+                    <Text
+                      style={{
+                        color: "#fff",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Từ chối
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              )}
             </View>
+          ))
+        ) : (
+          <View
+            style={{
+              alignItems: "center",
+              marginTop: 50,
+            }}
+          >
+            <Text
+              style={{
+                fontSize: 16,
+                color: "#666",
+              }}
+            >
+              Hiện chưa có yêu cầu nào.
+            </Text>
           </View>
-        ))}
+        )}
       </View>
     </ScrollView>
   );

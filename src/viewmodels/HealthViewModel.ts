@@ -1,4 +1,4 @@
-import { useFocusEffect } from "expo-router";
+import { router, useFocusEffect } from "expo-router";
 import { useCallback, useState } from "react";
 import { Alert } from "react-native";
 import { HealthManagements } from "../models/HealthManagements";
@@ -6,6 +6,7 @@ import {
   allHealthManagement,
   checkHealthManagement,
   reqHealthManagement,
+  toggleStatus,
 } from "../repository/HealthManagementRepository";
 
 // 1. gửi yêu cầu theo dõi sức khoẻ
@@ -52,4 +53,19 @@ export function useGetRequestVM() {
     }, []),
   );
   return { heal, loading };
+}
+
+// 3. chấp nhận tk
+export function useAcceptRequest() {
+  const accept = async (id: number, statusCurrent: boolean) => {
+    try {
+      await toggleStatus(id, !statusCurrent);
+      Alert.alert("Thông báo", "Bạn đã chấp nhận xem");
+      router.back();
+    } catch (error) {
+      Alert.alert("Thông báo", "Lỗi không thể xử lý được!");
+      console.log(error);
+    }
+  };
+  return accept;
 }
