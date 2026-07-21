@@ -9,4 +9,5 @@ export interface Account {
   gender: string;
   role: number;
   created_at: string;
+  profile?: User;
 }

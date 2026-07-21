@@ -90,10 +90,10 @@ export default function DetailAppointmentView() {
         </Text>
         <View style={{ marginTop: 18, gap: 12 }}>
           <Text style={{ fontSize: 15, color: colors.text }}>
-            Họ tên: {doc_id?.account_id?.user_id?.full_name ?? "Không có"}
+            Họ tên: {doc_id?.account_id?.profile?.full_name ?? "Không có"}
           </Text>
           <Text style={{ fontSize: 15, color: colors.text }}>
-            Email: {doc_id?.account_id?.user_id?.email ?? "Không có"}
+            Email: {doc_id?.account_id?.profile?.email ?? "Không có"}
           </Text>
           <Text style={{ fontSize: 15, color: colors.text }}>
             Chức vụ: {doc_id?.role_doctor}

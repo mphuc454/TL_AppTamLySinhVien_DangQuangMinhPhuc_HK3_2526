@@ -1,16 +1,18 @@
-import { router, useFocusEffect } from "expo-router";
+﻿import { router, useFocusEffect } from "expo-router";
 import { useCallback, useEffect, useState } from "react";
 import { Alert } from "react-native";
 import { Doctor } from "../models/Doctor";
 import { DoctorSkill } from "../models/DoctorSkill";
 import {
   getAllDoctor,
+  getCurrentDoctor,
   getDoctorByID,
   getSkillDetailDoctor,
   getSkillDoctor,
   toggleVerify,
   updateDoctor,
 } from "../repository/DoctorRepository";
+import { getAccount } from "../repository/auth/AuthRepository";
 
 // lấy danh sách các bác sĩ
 export function useDoctorViewModel() {
@@ -82,6 +84,30 @@ export function useDoctorDetailViewModel(id: number) {
   return { doc_id, loading };
 }
 
+// lấy thông tin tk bác sĩ
+export function useDoctorCurentViewModel() {
+  const [doc, setDoc] = useState<Doctor | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const loadDoctor = async () => {
+      try {
+        setLoading(true);
+        const data = await getCurrentDoctor();
+        setDoc(data);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadDoctor();
+  }, []);
+
+  return { doc, loading };
+}
+
 // lấy chi tiết kỹ năng bác sĩ theo id
 export function useSkillDetailViewModel(doctorId: number) {
   const [skill_id, setSkill] = useState<DoctorSkill[]>([]);
@@ -140,7 +166,8 @@ export function useEditDoctor() {
 }
 
 // sửa thông tin bác sĩ
-export function useEditDoc(id: number) {
+export function useEditDoc() {
+  const [accountId, setAccountId] = useState<number | null>(null);
   const [specialization, setSpecialization] = useState("");
   const [role, setRole] = useState("");
   const [bio, setBio] = useState("");
@@ -148,46 +175,76 @@ export function useEditDoc(id: number) {
 
   const loadDocs = useCallback(async () => {
     try {
-      const data = await getDoctorByID(id);
-      setSpecialization(data.specialization);
-      setRole(data.role_doctor);
-      setBio(data.bio);
-      setExperience(String(data.experience_years));
+      const [doctor, account] = await Promise.all([
+        getCurrentDoctor(),
+        getAccount(),
+      ]);
+
+      if (!account) {
+        throw new Error("Không tìm thấy tài khoản");
+      }
+
+      setAccountId(account.id);
+
+      if (doctor) {
+        setSpecialization(doctor.specialization ?? "");
+        setRole(doctor.role_doctor ?? "");
+        setBio(doctor.bio ?? "");
+        setExperience(String(doctor.experience_years ?? ""));
+      }
     } catch (error) {
       console.log(error);
       Alert.alert("Lỗi", "Không thể tải được thông tin");
     }
-  }, [id]);
+  }, []);
+
   useEffect(() => {
     loadDocs();
   }, [loadDocs]);
+
   const handleUpdate = async () => {
+    if (!accountId) {
+      Alert.alert("Lỗi", "Không tìm thấy thông tin bác sĩ");
+      return;
+    }
+
     if (!specialization) {
       Alert.alert("Thông báo", "Vui lòng nhập chuyên ngành");
       return;
     }
+
     if (!role) {
       Alert.alert("Thông báo", "Vui lòng nhập vai trò");
       return;
     }
+
     if (!bio) {
       Alert.alert("Thông báo", "Vui lòng nhập thông tin giới thiệu");
       return;
     }
+
     if (!experience) {
       Alert.alert("Thông báo", "Vui lòng nhập số năm kinh nghiệm");
       return;
     }
+
     try {
-      await updateDoctor(id, Number(experience), specialization, bio, role);
+      await updateDoctor(
+        accountId,
+        Number(experience),
+        specialization,
+        bio,
+        role,
+      );
+
       Alert.alert("Thông báo", "Cập nhật thông tin thành công");
       router.back();
     } catch (error) {
       console.log(error);
       Alert.alert("Lỗi", "Cập nhật thông tin thất bại");
-      console.log("Update Error:", error);
     }
   };
+
   return {
     specialization,
     setSpecialization,
