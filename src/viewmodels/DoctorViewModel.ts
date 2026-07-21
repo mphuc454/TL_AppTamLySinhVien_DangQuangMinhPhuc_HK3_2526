@@ -2,13 +2,10 @@
 import { useCallback, useEffect, useState } from "react";
 import { Alert } from "react-native";
 import { Doctor } from "../models/Doctor";
-import { DoctorSkill } from "../models/DoctorSkill";
 import {
   getAllDoctor,
   getCurrentDoctor,
   getDoctorByID,
-  getSkillDetailDoctor,
-  getSkillDoctor,
   toggleVerify,
   updateDoctor,
 } from "../repository/DoctorRepository";
@@ -38,28 +35,7 @@ export function useDoctorViewModel() {
 
   return { doc, loading };
 }
-// lấy danh sách chuyên môn bác sĩ
-export function useDoctorSkillViewModel() {
-  const [docskill, setDocSkill] = useState<DoctorSkill[]>([]);
-  const [loading, setLoading] = useState(false);
 
-  const loadSkillDoctors = async () => {
-    try {
-      setLoading(true);
-      const data = await getSkillDoctor();
-      setDocSkill(data);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-  useEffect(() => {
-    loadSkillDoctors();
-  }, []);
-
-  return { docskill, loading };
-}
 // lấy chi tiết thông tin bác sĩ theo id
 export function useDoctorDetailViewModel(id: number) {
   const [doc_id, setDoc] = useState<Doctor | null>(null);
@@ -106,30 +82,6 @@ export function useDoctorCurentViewModel() {
   }, []);
 
   return { doc, loading };
-}
-
-// lấy chi tiết kỹ năng bác sĩ theo id
-export function useSkillDetailViewModel(doctorId: number) {
-  const [skill_id, setSkill] = useState<DoctorSkill[]>([]);
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    const load = async () => {
-      try {
-        setLoading(true);
-        const data = await getSkillDetailDoctor(doctorId);
-        setSkill(data);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    load();
-  }, [doctorId]);
-
-  return { skill_id, loading };
 }
 
 // Vô hiệu hoá  bác sĩ
@@ -179,7 +131,6 @@ export function useEditDoc() {
         getCurrentDoctor(),
         getAccount(),
       ]);
-
       if (!account) {
         throw new Error("Không tìm thấy tài khoản");
       }

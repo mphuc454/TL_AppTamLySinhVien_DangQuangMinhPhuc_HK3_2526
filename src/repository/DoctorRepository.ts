@@ -1,5 +1,4 @@
 import { supabase } from "../lib/supabase";
-import { DoctorSkill } from "../models/DoctorSkill";
 
 //1. lấy danh sách bác sĩ từ cơ sở dữ liệu
 export const getAllDoctor = async () => {
@@ -51,15 +50,6 @@ export const getCurrentDoctor = async () => {
   return doctor;
 };
 
-//2. Lấy kỹ năng của bác sĩ từ DB:
-export const getSkillDoctor = async (): Promise<DoctorSkill[]> => {
-  const { data, error } = await supabase
-    .from("doctor_skills")
-    .select(`doctor_id,  skill_id, skills (id, name)`);
-  if (error) throw error;
-  return data ?? [];
-};
-
 //3. lấy chi tiết thông tin bác sĩ từ cơ sở dữ liệu
 export const getDoctorByID = async (id: number) => {
   const { data: doctor, error } = await supabase
@@ -91,20 +81,7 @@ export const getDoctorByID = async (id: number) => {
   };
 };
 
-//4. Lấy chi tiết kỹ năng của bác sĩ từ DB:
-export const getSkillDetailDoctor = async (
-  DoctorID: number,
-): Promise<DoctorSkill[]> => {
-  const { data, error } = await supabase
-    .from("doctor_skills")
-    .select(`skill_id (*)`)
-    .eq("doctor_id", DoctorID);
-
-  if (error) throw error;
-  return data as unknown as DoctorSkill[];
-};
-
-//5. Vô hiệu hoá tài khoản:
+//4. Vô hiệu hoá tài khoản:
 export const toggleVerify = async (id: number, verify: boolean) => {
   const { data, error } = await supabase
     .from("doctors")
@@ -122,7 +99,7 @@ export const deleteDoctor = async (id: number): Promise<void> => {
   }
 };
 
-//7. cập nhật bác sĩ
+//5. cập nhật bác sĩ
 export async function updateDoctor(
   account_id: number,
   experience_years: number,
