@@ -16,7 +16,6 @@ export default function HealthManagementView() {
         Theo dõi sức khỏe
       </Text>
 
-      {/* Thông tin người dùng */}
       <View
         style={{
           backgroundColor: "#fff",
@@ -28,14 +27,6 @@ export default function HealthManagementView() {
         <Text style={{ fontSize: 18, fontWeight: "bold" }}>Nguyễn Văn A</Text>
 
         <Text style={{ marginTop: 8 }}>Email: nguyenvana@gmail.com</Text>
-
-        <Text style={{ marginTop: 5 }}>
-          Trạng thái:
-          <Text style={{ color: "green", fontWeight: "bold" }}>
-            {" "}
-            Đang theo dõi
-          </Text>
-        </Text>
       </View>
 
       <Text
@@ -111,27 +102,6 @@ export default function HealthManagementView() {
           </View>
         ))}
       </View>
-
-      {/* Chức năng */}
-      <TouchableOpacity
-        style={{
-          backgroundColor: "#4F46E5",
-          padding: 15,
-          borderRadius: 12,
-          marginTop: 10,
-        }}
-      >
-        <Text
-          style={{
-            color: "#fff",
-            textAlign: "center",
-            fontWeight: "bold",
-          }}
-        >
-          Xem nhật ký cảm xúc
-        </Text>
-      </TouchableOpacity>
-
       <TouchableOpacity
         style={{
           backgroundColor: "#10B981",
