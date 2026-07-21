@@ -1,17 +1,14 @@
 import { useEditDoc } from "@/src/viewmodels/DoctorViewModel";
-import { useLocalSearchParams } from "expo-router";
 import {
-    ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 export default function FormEditView() {
-  const { id } = useLocalSearchParams();
-
   const {
     bio,
     experience,
@@ -22,7 +19,7 @@ export default function FormEditView() {
     setSpecialization,
     specialization,
     handleUpdate,
-  } = useEditDoc(Number(id));
+  } = useEditDoc();
   return (
     <ScrollView contentContainerStyle={{ paddingBottom: 120 }}>
       <Text

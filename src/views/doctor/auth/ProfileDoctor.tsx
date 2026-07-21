@@ -1,17 +1,17 @@
 import {
-    useAccountDetailViewModel,
-    useProfileViewModel,
+  useAccountDetailViewModel,
+  useProfileViewModel,
 } from "@/src/viewmodels/auth/ProfileViewModel";
-import { useDoctorDetailViewModel } from "@/src/viewmodels/DoctorViewModel";
+import { useDoctorCurentViewModel } from "@/src/viewmodels/DoctorViewModel";
 import { Ionicons } from "@expo/vector-icons";
-import { router, useLocalSearchParams } from "expo-router";
+import { router } from "expo-router";
 import {
-    Image,
-    ScrollView,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  Image,
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 export default function DoctorProfileView() {
@@ -27,8 +27,7 @@ export default function DoctorProfileView() {
     gender,
     setGender,
   } = useAccountDetailViewModel();
-  const { id } = useLocalSearchParams();
-  const { doc_id } = useDoctorDetailViewModel(Number(id));
+  const { doc } = useDoctorCurentViewModel();
   return (
     <ScrollView
       style={{
@@ -67,8 +66,8 @@ export default function DoctorProfileView() {
       >
         <Image
           source={{
-            uri: doc_id?.avatar_url?.trim()
-              ? doc_id.avatar_url
+            uri: doc?.avatar_url?.trim()
+              ? doc.avatar_url
               : "https://placehold.co/600x350.png",
           }}
           style={{

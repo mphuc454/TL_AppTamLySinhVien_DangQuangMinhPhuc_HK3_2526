@@ -1,5 +1,4 @@
 import { supabase } from "../lib/supabase";
-import { DoctorSkill } from "../models/DoctorSkill";
 
 //1. lấy danh sách bác sĩ từ cơ sở dữ liệu
 export const getAllDoctor = async () => {
@@ -24,13 +23,31 @@ export const getAllDoctor = async () => {
   }));
 };
 
-//2. Lấy kỹ năng của bác sĩ từ DB:
-export const getSkillDoctor = async (): Promise<DoctorSkill[]> => {
-  const { data, error } = await supabase
-    .from("doctor_skills")
-    .select(`doctor_id,  skill_id, skills (id, name)`);
-  if (error) throw error;
-  return data ?? [];
+//2. lấy tk từ bác sĩ hiện tại
+export const getCurrentDoctor = async () => {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) throw new Error("Chưa đăng nhập");
+
+  const { data: account, error: accountError } = await supabase
+    .from("accounts")
+    .select("id")
+    .eq("user_id", user.id)
+    .single();
+
+  if (accountError) throw accountError;
+
+  const { data: doctor, error: doctorError } = await supabase
+    .from("doctors")
+    .select(`*, account_id(*)`)
+    .eq("account_id", account.id)
+    .maybeSingle();
+
+  if (doctorError) throw doctorError;
+
+  return doctor;
 };
 
 //3. lấy chi tiết thông tin bác sĩ từ cơ sở dữ liệu
@@ -59,25 +76,12 @@ export const getDoctorByID = async (id: number) => {
     ...doctor,
     account_id: {
       ...doctor.account_id,
-      user_id: profile,
+      profile,
     },
   };
 };
 
-//4. Lấy chi tiết kỹ năng của bác sĩ từ DB:
-export const getSkillDetailDoctor = async (
-  DoctorID: number,
-): Promise<DoctorSkill[]> => {
-  const { data, error } = await supabase
-    .from("doctor_skills")
-    .select(`skill_id (*)`)
-    .eq("doctor_id", DoctorID);
-
-  if (error) throw error;
-  return data as unknown as DoctorSkill[];
-};
-
-//5. Vô hiệu hoá tài khoản:
+//4. Vô hiệu hoá tài khoản:
 export const toggleVerify = async (id: number, verify: boolean) => {
   const { data, error } = await supabase
     .from("doctors")
@@ -95,23 +99,45 @@ export const deleteDoctor = async (id: number): Promise<void> => {
   }
 };
 
-//7. cập nhật bác sĩ
+//5. cập nhật bác sĩ
 export async function updateDoctor(
-  id: number,
+  account_id: number,
   experience_years: number,
   specialization: string,
   bio: string,
   role_doctor: string,
 ) {
-  const { error } = await supabase
+  const { data: existingDoctor, error: findError } = await supabase
     .from("doctors")
-    .update({
-      experience_years,
-      specialization,
-      bio,
-      role_doctor,
-    })
-    .eq("id", id);
+    .select("id")
+    .eq("account_id", account_id)
+    .maybeSingle();
 
+  if (findError) throw findError;
+
+  const payload = {
+    account_id,
+    experience_years,
+    specialization,
+    bio,
+    role_doctor,
+  };
+
+  if (existingDoctor) {
+    const { error } = await supabase
+      .from("doctors")
+      .update({
+        experience_years,
+        specialization,
+        bio,
+        role_doctor,
+      })
+      .eq("account_id", account_id);
+
+    if (error) throw error;
+    return;
+  }
+
+  const { error } = await supabase.from("doctors").insert(payload);
   if (error) throw error;
 }

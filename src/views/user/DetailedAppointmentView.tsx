@@ -1,7 +1,4 @@
-import {
-  useDoctorDetailViewModel,
-  useSkillDetailViewModel,
-} from "@/src/viewmodels/DoctorViewModel";
+import { useDoctorDetailViewModel } from "@/src/viewmodels/DoctorViewModel";
 import { useAddEmergencyViewModel } from "@/src/viewmodels/EmergencyViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
@@ -13,7 +10,6 @@ export default function DetailAppointmentView() {
   const { colors } = useContext(ThemeContext);
   const { id } = useLocalSearchParams();
   const { doc_id } = useDoctorDetailViewModel(Number(id));
-  const { skill_id } = useSkillDetailViewModel(Number(id));
   const { loading, saveEmergency } = useAddEmergencyViewModel();
   return (
     <ScrollView
@@ -90,10 +86,10 @@ export default function DetailAppointmentView() {
         </Text>
         <View style={{ marginTop: 18, gap: 12 }}>
           <Text style={{ fontSize: 15, color: colors.text }}>
-            Họ tên: {doc_id?.account_id?.user_id?.full_name ?? "Không có"}
+            Họ tên: {doc_id?.account_id?.profile?.full_name ?? "Không có"}
           </Text>
           <Text style={{ fontSize: 15, color: colors.text }}>
-            Email: {doc_id?.account_id?.user_id?.email ?? "Không có"}
+            Email: {doc_id?.account_id?.profile?.email ?? "Không có"}
           </Text>
           <Text style={{ fontSize: 15, color: colors.text }}>
             Chức vụ: {doc_id?.role_doctor}
@@ -133,6 +129,33 @@ export default function DetailAppointmentView() {
             Nhắn tin
           </Text>
         </TouchableOpacity>
+        <TouchableOpacity
+          // onPress={() =>
+          //   router.push({
+          //     pathname: "/(no tabs)/MessageUser",
+          //     params: {
+          //       id: doc_id?.id,
+          //     },
+          //   })
+          // }
+          style={{
+            marginTop: 24,
+            backgroundColor: "#445AE6",
+            borderRadius: 12,
+            paddingVertical: 14,
+            alignItems: "center",
+          }}
+        >
+          <Text
+            style={{
+              color: "#fff",
+              fontSize: 16,
+              fontWeight: "700",
+            }}
+          >
+            Yêu cầu theo dõi sức khoẻ
+          </Text>
+        </TouchableOpacity>
       </View>
       <View style={{ marginTop: 30 }}>
         <Text style={{ fontSize: 20, fontWeight: "bold", color: colors.text }}>
@@ -149,40 +172,17 @@ export default function DetailAppointmentView() {
           {doc_id?.bio}
         </Text>
       </View>
+
       <View style={{ marginTop: 30 }}>
-        <Text style={{ fontSize: 15, color: colors.text }}>Chuyên môn</Text>
-        <View
+        <Text
           style={{
-            flexDirection: "row",
-            flexWrap: "wrap",
-            marginHorizontal: 14,
+            fontSize: 20,
+            color: colors.text,
+            marginBottom: 20,
+            fontWeight: "bold",
           }}
         >
-          {skill_id
-            .filter((item) => item.skill_id)
-            .map((item) => (
-              <View
-                key={item.skill_id.id}
-                style={{
-                  backgroundColor: "#F5F6FF",
-                  borderColor: "#CED5FF",
-                  borderWidth: 1,
-                  borderRadius: 20,
-                  paddingHorizontal: 18,
-                  paddingVertical: 10,
-                  margin: 5,
-                }}
-              >
-                <Text style={{ color: "#27139B", fontWeight: "600" }}>
-                  {item.skill_id.name}
-                </Text>
-              </View>
-            ))}
-        </View>
-      </View>
-      <View style={{ marginTop: 30 }}>
-        <Text style={{ fontSize: 15, color: colors.text, marginBottom: 20 }}>
-          Liên hệ khẩn cấp
+          Liên hệ
         </Text>
         <TouchableOpacity
           style={{
