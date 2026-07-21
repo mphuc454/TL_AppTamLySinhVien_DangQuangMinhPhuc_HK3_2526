@@ -1,5 +1,4 @@
 import { supabase } from "../lib/supabase";
-import { HealthManagements } from "../models/HealthManagements";
 
 // 1. thêm vào quản lý sức khoẻ
 export const reqHealthManagement = async (doctorId: number) => {
@@ -27,25 +26,30 @@ export const reqHealthManagement = async (doctorId: number) => {
 };
 
 // 2. xem ds quản lý sức khoẻ
-export const allHealthManagement = async (): Promise<HealthManagements[]> => {
-  const { data, error } = await supabase.from("health_managements").select(`
-      *,
-      account_id (
-        id,
-        username,
-        gender,
-        year_birth,
-        user_id (
-          full_name,
-          email,
-          phone
-        )
-      )
-    `);
-  if (error) {
-    throw new Error(error.message);
-  }
-  return data ?? [];
+export const allHealthManagement = async () => {
+  const { data: healthManagements, error } = await supabase
+    .from("health_managements")
+    .select(`*, account_id(*)`);
+
+  if (error) throw error;
+
+  const { data: profiles, error: profileError } = await supabase
+    .from("user")
+    .select("*");
+
+  if (profileError) throw profileError;
+
+  return healthManagements.map((item) => ({
+    ...item,
+    account_id: item.account_id
+      ? {
+          ...item.account_id,
+          user_id: profiles.find(
+            (profile) => profile.id === item.account_id?.user_id,
+          ),
+        }
+      : null,
+  }));
 };
 
 // 3. kiểm tra đã thêm vào chưa
