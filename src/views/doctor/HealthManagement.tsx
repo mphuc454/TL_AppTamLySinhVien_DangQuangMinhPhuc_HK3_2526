@@ -1,6 +1,14 @@
+import {
+  useHealthDetail,
+  useTotalEmotion,
+} from "@/src/viewmodels/HealthViewModel";
+import { useLocalSearchParams } from "expo-router";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 
 export default function HealthManagementView() {
+  const { emoTotal } = useTotalEmotion();
+  const { id } = useLocalSearchParams();
+  const { heal_id } = useHealthDetail(Number(id));
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: "#F5F6FA" }}
@@ -24,9 +32,14 @@ export default function HealthManagementView() {
           marginBottom: 20,
         }}
       >
-        <Text style={{ fontSize: 18, fontWeight: "bold" }}>Nguyễn Văn A</Text>
+        <Text style={{ fontSize: 18, fontWeight: "bold" }}>
+          Tên:
+          {heal_id?.account_id.username ?? "Chưa có thông tin"}
+        </Text>
 
-        <Text style={{ marginTop: 8 }}>Email: nguyenvana@gmail.com</Text>
+        <Text style={{ marginTop: 8 }}>
+          Email: {heal_id?.account_id.user_id.email ?? "Chưa có thông tin"}
+        </Text>
       </View>
 
       <Text
@@ -36,7 +49,7 @@ export default function HealthManagementView() {
           marginBottom: 15,
         }}
       >
-        Thống kê cảm xúc theo nhật ký
+        Thống kê cảm xúc theo nhật ký của người dùng
       </Text>
 
       <View
@@ -50,27 +63,27 @@ export default function HealthManagementView() {
           {
             title: "Tích cực",
             color: "#22C55E",
-            total: 32,
+            total: emoTotal.tichcuc,
           },
           {
             title: "Bình thản",
             color: "#3B82F6",
-            total: 20,
+            total: emoTotal.binhthan,
           },
           {
             title: "Lo âu",
             color: "#F59E0B",
-            total: 8,
+            total: emoTotal.loau,
           },
           {
             title: "Buồn bã",
             color: "#6366F1",
-            total: 6,
+            total: emoTotal.buonba,
           },
           {
             title: "Giận dữ",
             color: "#EF4444",
-            total: 2,
+            total: emoTotal.giandu,
           },
         ].map((item) => (
           <View
