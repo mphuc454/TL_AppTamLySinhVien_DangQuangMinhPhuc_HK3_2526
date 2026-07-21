@@ -21,6 +21,12 @@ export default function AdminLayout() {
         }}
       />
       <Drawer.Screen
+        name="ListUser"
+        options={{
+          title: "Yêu cầu theo dõi",
+        }}
+      />
+      <Drawer.Screen
         name="FormEditDoctor"
         options={{
           drawerLabel: () => null,
