@@ -140,7 +140,7 @@ export default function DetailAppointmentView() {
           // }
           style={{
             marginTop: 24,
-            backgroundColor: "#445AE6",
+            backgroundColor: "#e27f07",
             borderRadius: 12,
             paddingVertical: 14,
             alignItems: "center",
