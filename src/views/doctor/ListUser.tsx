@@ -1,20 +1,11 @@
+import { useGetRequestVM } from "@/src/viewmodels/HealthViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 
 export default function ListUserView() {
-  const users = [
-    {
-      accountId: 1,
-      fullName: "Nguyễn Văn A",
-      email: "a@gmail.com",
-    },
-    {
-      accountId: 2,
-      fullName: "Trần Thị B",
-      email: "b@gmail.com",
-    },
-  ];
+  const { heal } = useGetRequestVM();
+
   return (
     <ScrollView>
       <View
@@ -35,9 +26,9 @@ export default function ListUserView() {
         </Text>
       </View>
       <View style={{ marginTop: 30 }}>
-        {users.map((item) => (
+        {heal.map((item) => (
           <View
-            key={item.accountId}
+            key={item.id}
             style={{
               backgroundColor: "#fff",
               padding: 16,
@@ -47,14 +38,14 @@ export default function ListUserView() {
             }}
           >
             <TouchableOpacity
-              onPress={() =>
-                router.push({
-                  pathname: "/doctor/MainDoctor",
-                  params: {
-                    accountId: item.accountId,
-                  },
-                })
-              }
+            // onPress={() =>
+            //   router.push({
+            //     pathname: "/doctor/MainDoctor",
+            //     params: {
+            //       accountId: item.accountId,
+            //     },
+            //   })
+            // }
             >
               <Text
                 style={{
@@ -62,7 +53,7 @@ export default function ListUserView() {
                   fontWeight: "bold",
                 }}
               >
-                {item.fullName}
+                {item.account_id.username}
               </Text>
 
               <Text
@@ -71,7 +62,7 @@ export default function ListUserView() {
                   marginTop: 5,
                 }}
               >
-                {item.email}
+                {item.account_id.user_id.email}
               </Text>
             </TouchableOpacity>
 
