@@ -1,6 +1,9 @@
 import { useDoctorDetailViewModel } from "@/src/viewmodels/DoctorViewModel";
 import { useAddEmergencyViewModel } from "@/src/viewmodels/EmergencyViewModel";
-import { useHandleRequestVM } from "@/src/viewmodels/HealthViewModel";
+import {
+  useAccepttoChat,
+  useHandleRequestVM,
+} from "@/src/viewmodels/HealthViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import { useContext } from "react";
@@ -13,6 +16,7 @@ export default function DetailAppointmentView() {
   const { doc_id } = useDoctorDetailViewModel(Number(id));
   const { loading, saveEmergency } = useAddEmergencyViewModel();
   const add = useHandleRequestVM();
+  const acceptToChat = useAccepttoChat(doc_id?.id ?? 0);
   return (
     <ScrollView
       style={{
@@ -105,14 +109,16 @@ export default function DetailAppointmentView() {
         </View>
 
         <TouchableOpacity
-          onPress={() =>
+          onPress={async () => {
+            const canChat = await acceptToChat();
+            if (!canChat) return;
             router.push({
               pathname: "/(no tabs)/MessageUser",
               params: {
                 id: doc_id?.id,
               },
-            })
-          }
+            });
+          }}
           style={{
             marginTop: 24,
             backgroundColor: "#445AE6",

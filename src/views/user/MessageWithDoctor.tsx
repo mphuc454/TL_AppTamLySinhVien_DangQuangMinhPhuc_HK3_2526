@@ -1,16 +1,16 @@
+import { useDoctorDetailViewModel } from "@/src/viewmodels/DoctorViewModel";
+import { Ionicons } from "@expo/vector-icons";
+import { router, useLocalSearchParams } from "expo-router";
 import React, { useState } from "react";
 import {
-  View,
-  Text,
-  StyleSheet,
   FlatList,
-  TouchableOpacity,
+  StyleSheet,
+  Text,
   TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Ionicons } from "@expo/vector-icons";
-import { useLocalSearchParams } from "expo-router";
-import { useDoctorDetailViewModel } from "@/src/viewmodels/DoctorViewModel";
 
 const messages = [
   {
@@ -32,13 +32,13 @@ const messages = [
 
 export default function ChatScreen() {
   const [text, setText] = useState("");
-  const {id} = useLocalSearchParams();
-  const {doc_id} = useDoctorDetailViewModel(Number(id));
+  const { id } = useLocalSearchParams();
+  const { doc_id } = useDoctorDetailViewModel(Number(id));
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => router.back()}>
           <Ionicons name="chevron-back" size={24} color="#333" />
         </TouchableOpacity>
 
@@ -67,9 +67,7 @@ export default function ChatScreen() {
             <View
               style={[
                 styles.messageContainer,
-                isMe
-                  ? styles.myMessageContainer
-                  : styles.otherMessageContainer,
+                isMe ? styles.myMessageContainer : styles.otherMessageContainer,
               ]}
             >
               {!isMe && (
@@ -84,12 +82,7 @@ export default function ChatScreen() {
                   isMe ? styles.myBubble : styles.otherBubble,
                 ]}
               >
-                <Text
-                  style={[
-                    styles.messageText,
-                    isMe && { color: "white" },
-                  ]}
-                >
+                <Text style={[styles.messageText, isMe && { color: "white" }]}>
                   {item.text}
                 </Text>
               </View>
@@ -107,11 +100,7 @@ export default function ChatScreen() {
         />
 
         <TouchableOpacity style={styles.sendButton}>
-          <Ionicons
-            name="send"
-            size={22}
-            color="white"
-          />
+          <Ionicons name="send" size={22} color="white" />
         </TouchableOpacity>
       </View>
     </SafeAreaView>

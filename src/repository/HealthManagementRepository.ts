@@ -70,13 +70,12 @@ export const checkHealthManagement = async (doctorId: number) => {
 
   const { data: existed, error } = await supabase
     .from("health_managements")
-    .select("id")
+    .select("id, status")
     .eq("account_id", account.id)
     .eq("doctor_id", doctorId)
     .maybeSingle();
 
   if (error) throw error;
-  console.log("existed:", existed);
   return existed;
 };
 

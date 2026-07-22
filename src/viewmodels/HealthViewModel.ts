@@ -161,3 +161,32 @@ export function useHealthDetail(id: number) {
 
   return { heal_id };
 }
+
+export function useAccepttoChat(id: number) {
+  const acceptToChat = async () => {
+    try {
+      const mana = await checkHealthManagement(id);
+
+      if (!mana) {
+        Alert.alert(
+          "Thông báo",
+          "Bạn cần gửi yêu cầu đến bác sĩ mới được nhắn tin.",
+        );
+        return false;
+      }
+
+      if (!mana.status) {
+        Alert.alert("Thông báo", "Bác sĩ chưa chấp nhận yêu cầu theo dõi.");
+        return false;
+      }
+
+      return true;
+    } catch (error) {
+      console.log(error);
+      Alert.alert("Thông báo", "Không thể kiểm tra trạng thái.");
+      return false;
+    }
+  };
+
+  return acceptToChat;
+}
