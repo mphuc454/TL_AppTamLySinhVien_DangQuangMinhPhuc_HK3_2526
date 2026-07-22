@@ -1,6 +1,7 @@
 import {
   useAcceptRequest,
   useGetRequestVM,
+  useRejectRequest,
 } from "@/src/viewmodels/HealthViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
@@ -9,6 +10,7 @@ import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 export default function ListUserView() {
   const { heal } = useGetRequestVM();
   const accept = useAcceptRequest();
+  const rej = useRejectRequest();
 
   return (
     <ScrollView>
@@ -42,16 +44,7 @@ export default function ListUserView() {
                 elevation: 2,
               }}
             >
-              <TouchableOpacity
-              // onPress={() =>
-              //   router.push({
-              //     pathname: "/doctor/MainDoctor",
-              //     params: {
-              //       accountId: item.accountId,
-              //     },
-              //   })
-              // }
-              >
+              <TouchableOpacity>
                 <Text
                   style={{
                     fontSize: 18,
@@ -82,6 +75,7 @@ export default function ListUserView() {
                     })
                   }
                   style={{
+                    marginTop: 15,
                     flex: 1,
                     backgroundColor: "#3B82F6",
                     paddingVertical: 12,
@@ -125,7 +119,7 @@ export default function ListUserView() {
                   </TouchableOpacity>
 
                   <TouchableOpacity
-                    // onPress={() => handleReject(item.accountId)}
+                    onPress={() => rej(item.account_id.id)}
                     style={{
                       flex: 1,
                       backgroundColor: "#EF4444",

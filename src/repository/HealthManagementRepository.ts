@@ -70,13 +70,12 @@ export const checkHealthManagement = async (doctorId: number) => {
 
   const { data: existed, error } = await supabase
     .from("health_managements")
-    .select("id")
+    .select("id, status")
     .eq("account_id", account.id)
     .eq("doctor_id", doctorId)
     .maybeSingle();
 
   if (error) throw error;
-  console.log("existed:", existed);
   return existed;
 };
 
@@ -85,34 +84,47 @@ export const toggleStatus = async (id: number, status: boolean) => {
   const { data, error } = await supabase
     .from("health_managements")
     .update({ status })
-    .eq("id", id);
+    .eq("id", id)
+    .select();
   if (error) throw error;
   return data;
 };
 
 // 5. xem chi tiết quản lý sức khoẻ
-export const getDetailHealthManagement = async (id: number) => {
-  const { data: detailedhealth, error } = await supabase
+export const getDetailHealthManagement = async (accountId: number) => {
+  const { data: health, error } = await supabase
     .from("health_managements")
-    .select(`*, account_id(*)`)
-    .eq("id", id)
+    .select("*, account_id(*)")
+    .eq("account_id", accountId)
     .single();
 
   if (error) throw error;
 
-  const { data: profiles, error: profileError } = await supabase
+  const { data: profile, error: profileError } = await supabase
     .from("user")
     .select("*")
-    .eq("id", detailedhealth.account_id.user_id)
+    .eq("id", health.account_id.user_id)
     .single();
 
   if (profileError) throw profileError;
 
   return {
-    ...detailedhealth,
+    ...health,
     account_id: {
-      ...detailedhealth.account_id,
-      profiles,
+      ...health.account_id,
+      profile,
     },
   };
+};
+// 6. xoá id quản lý sức khoẻ
+export const getDeleteHealthManagement = async (id: number) => {
+  const { data, error } = await supabase
+    .from("health_managements")
+    .delete()
+    .eq("id", id)
+    .select();
+  console.log("Deleted rows:", data);
+  if (error) {
+    throw error;
+  }
 };

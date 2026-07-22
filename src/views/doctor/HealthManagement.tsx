@@ -1,14 +1,20 @@
 import {
   useHealthDetail,
+  useRejectRequest,
   useTotalEmotion,
 } from "@/src/viewmodels/HealthViewModel";
 import { useLocalSearchParams } from "expo-router";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 
 export default function HealthManagementView() {
-  const { emoTotal } = useTotalEmotion();
-  const { id } = useLocalSearchParams();
-  const { heal_id } = useHealthDetail(Number(id));
+  const { accountId } = useLocalSearchParams();
+  const { heal_id } = useHealthDetail(Number(accountId));
+  const userId = heal_id?.account_id.user_id;
+  const { emoTotal } = useTotalEmotion(
+    typeof userId === "string" ? userId : undefined,
+  );
+  const rej = useRejectRequest();
+
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: "#F5F6FA" }}
@@ -32,14 +38,18 @@ export default function HealthManagementView() {
           marginBottom: 20,
         }}
       >
-        <Text style={{ fontSize: 18, fontWeight: "bold" }}>
-          Tên:
-          {heal_id?.account_id.username ?? "Chưa có thông tin"}
-        </Text>
-
-        <Text style={{ marginTop: 8 }}>
-          Email: {heal_id?.account_id.user_id.email ?? "Chưa có thông tin"}
-        </Text>
+        <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
+          <Text>Tên người dùng:</Text>
+          <Text style={{ fontSize: 18, fontWeight: "bold" }}>
+            {heal_id?.account_id.username ?? "Chưa có thông tin"}
+          </Text>
+        </View>
+        <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
+          <Text>Email:</Text>
+          <Text style={{ marginTop: 8 }}>
+            {heal_id?.account_id.profile?.email ?? "Chưa có thông tin"}
+          </Text>
+        </View>
       </View>
 
       <Text
@@ -135,6 +145,11 @@ export default function HealthManagementView() {
       </TouchableOpacity>
 
       <TouchableOpacity
+        onPress={() => {
+          if (heal_id?.id !== undefined) {
+            rej(heal_id.id);
+          }
+        }}
         style={{
           backgroundColor: "#EF4444",
           padding: 15,

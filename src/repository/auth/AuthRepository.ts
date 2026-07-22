@@ -1,5 +1,4 @@
 import { supabase } from "@/src/lib/supabase";
-
 type AuthResult = {
   success: boolean;
   error?: string;
@@ -152,4 +151,17 @@ export const changePassword = async (newPass: string) => {
   const { error } = await supabase.auth.updateUser({ password: newPass });
   if (error) throw error;
   return true;
+};
+
+// 8. Lấy token thông báo
+export const getExpoToken = async (accountId: number) => {
+  const { data, error } = await supabase
+    .from("accounts")
+    .select("expo_push_token")
+    .eq("id", accountId)
+    .single();
+
+  if (error) throw error;
+
+  return data?.expo_push_token;
 };
