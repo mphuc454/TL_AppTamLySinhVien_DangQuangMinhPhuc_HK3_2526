@@ -118,3 +118,34 @@ export const totalUserByYear = async () => {
     total,
   }));
 };
+
+//8. upload ảnh vào supabase storage
+export const uploadDoctorImage = async (imageUri: string, doctorId: number) => {
+  const response = await fetch(imageUri);
+  const arrayBuffer = await response.arrayBuffer();
+  const fileName = `${doctorId}-${Date.now()}.jpg`;
+  const { data: uploadData, error: uploadError } = await supabase.storage
+    .from("doctor_image")
+    .upload(fileName, arrayBuffer, {
+      contentType: "image/jpeg",
+      upsert: true,
+    });
+
+  if (uploadError) throw uploadError;
+
+  const { data: publicData } = supabase.storage
+    .from("doctor_image")
+    .getPublicUrl(uploadData.path);
+
+  const { data, error } = await supabase
+    .from("doctors")
+    .update({
+      avatar_url: publicData.publicUrl,
+    })
+    .eq("id", doctorId)
+    .select();
+
+  if (error) throw error;
+
+  return data;
+};

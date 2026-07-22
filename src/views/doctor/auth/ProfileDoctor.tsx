@@ -1,6 +1,7 @@
 import {
   useAccountDetailViewModel,
   useProfileViewModel,
+  useTakeImage,
 } from "@/src/viewmodels/auth/ProfileViewModel";
 import { useDoctorCurentViewModel } from "@/src/viewmodels/DoctorViewModel";
 import { Ionicons } from "@expo/vector-icons";
@@ -28,6 +29,7 @@ export default function DoctorProfileView() {
     setGender,
   } = useAccountDetailViewModel();
   const { doc } = useDoctorCurentViewModel();
+  const { image, pickImage } = useTakeImage(doc?.id ?? 0);
   return (
     <ScrollView
       style={{
@@ -66,9 +68,11 @@ export default function DoctorProfileView() {
       >
         <Image
           source={{
-            uri: doc?.avatar_url?.trim()
-              ? doc.avatar_url
-              : "https://placehold.co/600x350.png",
+            uri:
+              image ??
+              (doc?.avatar_url?.trim()
+                ? doc.avatar_url
+                : "https://placehold.co/600x350.png"),
           }}
           style={{
             width: 110,
@@ -79,6 +83,7 @@ export default function DoctorProfileView() {
           }}
         ></Image>
         <TouchableOpacity
+          onPress={pickImage}
           style={{
             position: "absolute",
             bottom: 5,
