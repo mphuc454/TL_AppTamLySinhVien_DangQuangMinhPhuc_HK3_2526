@@ -1,11 +1,12 @@
 import { router, useFocusEffect } from "expo-router";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { Alert } from "react-native";
 import { HealthManagements } from "../models/HealthManagements";
 import { totalEmotion } from "../repository/EmotionRepository";
 import {
   allHealthManagement,
   checkHealthManagement,
+  getDeleteHealthManagement,
   getDetailHealthManagement,
   reqHealthManagement,
   toggleStatus,
@@ -62,7 +63,6 @@ export function useAcceptRequest() {
     // accountId: number,
   ) => {
     try {
-      console.log("statusCurrent:", statusCurrent);
       await toggleStatus(id, !statusCurrent);
       // const token = await getExpoToken(accountId);
       // if (token) {
@@ -80,6 +80,34 @@ export function useAcceptRequest() {
     }
   };
   return accept;
+}
+
+export function useRejectRequest() {
+  const reject = async (id: number) => {
+    console.log("Deleting health_managements with id =", id);
+
+    Alert.alert("Xoá theo dõi", "Bạn có muốn chắc kết thúc theo dõi không ?", [
+      { text: "Huỷ", style: "cancel" },
+      {
+        text: "Xoá",
+        style: "destructive",
+        onPress: async () => {
+          try {
+            await getDeleteHealthManagement(id);
+            Alert.alert(
+              "Thông báo",
+              "Bạn đã từ chối yêu cầu theo dõi sức khoẻ người này",
+            );
+            router.replace("/doctor/ListUser");
+          } catch (error) {
+            console.log(error);
+            Alert.alert("Thông báo", "Lỗi không thể xử lý được!");
+          }
+        },
+      },
+    ]);
+  };
+  return reject;
 }
 
 export function useTotalEmotion(userId?: string) {
@@ -113,23 +141,23 @@ export function useTotalEmotion(userId?: string) {
 
 export function useHealthDetail(id: number) {
   const [heal_id, setHeal] = useState<HealthManagements | null>(null);
-  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    const loadDetail = async () => {
-      try {
-        setLoading(true);
-        const data = await getDetailHealthManagement(id);
-        setHeal(data);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadDetail();
+  const loadDetail = useCallback(async () => {
+    try {
+      if (id == null || Number.isNaN(id)) return;
+      const data = await getDetailHealthManagement(id);
+      setHeal(data);
+    } catch (error) {
+      console.log(error);
+      setHeal(null);
+    }
   }, [id]);
 
-  return { heal_id, loading };
+  useFocusEffect(
+    useCallback(() => {
+      loadDetail();
+    }, [loadDetail]),
+  );
+
+  return { heal_id };
 }
