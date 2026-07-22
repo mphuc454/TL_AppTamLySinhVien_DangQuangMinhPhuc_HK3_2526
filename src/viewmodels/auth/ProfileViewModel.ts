@@ -6,7 +6,9 @@ import {
 import {
   getAccountById,
   modifyAccountbyID,
+  uploadDoctorImage,
 } from "@/src/repository/auth/ProfileRepository";
+import * as ImagePicker from "expo-image-picker";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import { Alert } from "react-native";
@@ -138,4 +140,29 @@ export function useChangePassword() {
     }
   };
   return { newPa, setNewPa, handleChangePass, loading };
+}
+
+export function useTakeImage(accountId: number) {
+  const [image, setImage] = useState<string | null>(null);
+
+  const pickImage = async () => {
+    const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+    if (!permission.granted) {
+      alert("Bạn cần cấp quyền truy cập thư viện ảnh.");
+      return;
+    }
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ["images"],
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 0.8,
+    });
+    if (!result.canceled) {
+      const uri = result.assets[0].uri;
+      setImage(uri);
+      await uploadDoctorImage(uri, accountId);
+    }
+  };
+  return { image, pickImage };
 }
