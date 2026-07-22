@@ -6,9 +6,14 @@ import { useLocalSearchParams } from "expo-router";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 
 export default function HealthManagementView() {
-  const { emoTotal } = useTotalEmotion();
-  const { id } = useLocalSearchParams();
-  const { heal_id } = useHealthDetail(Number(id));
+  const { accountId } = useLocalSearchParams();
+
+  const { heal_id } = useHealthDetail(Number(accountId));
+  const userId = heal_id?.account_id.user_id;
+  const { emoTotal } = useTotalEmotion(
+    typeof userId === "string" ? userId : undefined,
+  );
+
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: "#F5F6FA" }}
@@ -38,7 +43,7 @@ export default function HealthManagementView() {
         </Text>
 
         <Text style={{ marginTop: 8 }}>
-          Email: {heal_id?.account_id.user_id.email ?? "Chưa có thông tin"}
+          Email: {heal_id?.account_id.profile?.email ?? "Chưa có thông tin"}
         </Text>
       </View>
 

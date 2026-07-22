@@ -56,9 +56,22 @@ export function useGetRequestVM() {
 }
 
 export function useAcceptRequest() {
-  const accept = async (id: number, statusCurrent: boolean) => {
+  const accept = async (
+    id: number,
+    statusCurrent: boolean,
+    // accountId: number,
+  ) => {
     try {
+      console.log("statusCurrent:", statusCurrent);
       await toggleStatus(id, !statusCurrent);
+      // const token = await getExpoToken(accountId);
+      // if (token) {
+      //   await sendPushNotification(
+      //     token,
+      //     "Yêu cầu được chấp nhận",
+      //     "Bác sĩ đã chấp nhận yêu cầu theo dõi của bạn.",
+      //   );
+      // }
       Alert.alert("Thông báo", "Bạn đã chấp nhận xem");
       router.back();
     } catch (error) {
@@ -69,7 +82,7 @@ export function useAcceptRequest() {
   return accept;
 }
 
-export function useTotalEmotion() {
+export function useTotalEmotion(userId?: string) {
   const [emoTotal, setEmoTotal] = useState({
     tichcuc: 0,
     binhthan: 0,
@@ -77,18 +90,22 @@ export function useTotalEmotion() {
     buonba: 0,
     giandu: 0,
   });
-  const loadTotal = async () => {
+  const loadTotal = useCallback(async () => {
+    if (!userId) return;
     try {
-      const total = await totalEmotion();
+      const total = await totalEmotion(userId);
       setEmoTotal(total);
     } catch (error) {
       console.log(error);
     }
-  };
+  }, [userId]);
+
   useFocusEffect(
     useCallback(() => {
+      if (!userId) return;
+
       loadTotal();
-    }, []),
+    }, [loadTotal, userId]),
   );
 
   return { emoTotal };

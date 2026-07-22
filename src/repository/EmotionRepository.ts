@@ -103,18 +103,14 @@ export const mostEmotion = async () => {
 };
 
 //7.Thống kê toàn bộ biểu cảm của nhật ký của user by id:
-export const totalEmotion = async () => {
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) {
-    throw new Error("Chưa đăng nhập");
-  }
+export const totalEmotion = async (userId: string) => {
   const { data, error } = await supabase
     .from("emotion_logs")
     .select("emotion_id")
-    .eq("account_id", user.id);
+    .eq("account_id", userId);
+
   if (error) throw error;
+
   const tichcuc = data.filter((i) => i.emotion_id === 1).length;
   const binhthan = data.filter((i) => i.emotion_id === 2).length;
   const loau = data.filter((i) => i.emotion_id === 3).length;

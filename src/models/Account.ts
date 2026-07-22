@@ -10,4 +10,5 @@ export interface Account {
   role: number;
   created_at: string;
   profile?: User;
+  expo_push_token: string;
 }
