@@ -1,4 +1,3 @@
-// import { useRegisterViewModel } from "@/src/viewmodels/AuthViewModels";
 import { useRegisterViewModel } from "@/src/viewmodels/auth/RegisterViewModel";
 import { Feather, Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
