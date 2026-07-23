@@ -17,19 +17,29 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function ChatScreen() {
-  const { id } = useLocalSearchParams();
-  const { doc_id } = useDoctorDetailViewModel(Number(id));
+  const { id, otherAccountId, otherName } = useLocalSearchParams();
   const usracc = useGetAccount();
-  const docacc = doc_id?.account_id?.id;
 
-  const ready = !!usracc && !!docacc;
+  const doctorTableId = !otherAccountId && id ? Number(id) : undefined;
+
+  const { doc_id } = useDoctorDetailViewModel(doctorTableId);
+
+  const docacc = otherAccountId
+    ? Number(otherAccountId)
+    : doc_id?.account_id?.id;
+
+  const displayName = otherAccountId
+    ? String(otherName ?? "Người dùng")
+    : (doc_id?.account_id?.username ?? "Bác sĩ");
+
+  const ready = !!usracc && !!docacc && Number.isFinite(docacc);
 
   const { messages, text, setText, send } = useChat(
     usracc,
     ready ? docacc! : 0,
   );
 
-  const initial = doc_id?.account_id?.username?.charAt(0)?.toUpperCase() ?? "?";
+  const initial = displayName.charAt(0).toUpperCase();
 
   if (!ready) {
     return (
@@ -52,9 +62,7 @@ export default function ChatScreen() {
 
         <View style={styles.userInfo}>
           <View>
-            <Text style={styles.name}>
-              {doc_id?.account_id?.username ?? "Bác sĩ"}
-            </Text>
+            <Text style={styles.name}>{displayName}</Text>
           </View>
         </View>
       </View>
@@ -140,7 +148,6 @@ export default function ChatScreen() {
     </SafeAreaView>
   );
 }
-
 const PRIMARY = "#5661F6";
 const ACCENT = "#F49C8F";
 
