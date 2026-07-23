@@ -4,6 +4,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import React from "react";
 import {
+  ActivityIndicator,
   FlatList,
   KeyboardAvoidingView,
   Platform,
@@ -18,10 +19,28 @@ import { SafeAreaView } from "react-native-safe-area-context";
 export default function ChatScreen() {
   const { id } = useLocalSearchParams();
   const { doc_id } = useDoctorDetailViewModel(Number(id));
-  const acc = useGetAccount();
-  const conversationId = 1;
-  const { messages, text, setText, send } = useChat(conversationId, acc);
-  const initial = doc_id?.account_id?.username;
+  const usracc = useGetAccount();
+  const docacc = doc_id?.account_id?.id;
+
+  const ready = !!usracc && !!docacc;
+
+  const { messages, text, setText, send } = useChat(
+    usracc,
+    ready ? docacc! : 0,
+  );
+
+  const initial = doc_id?.account_id?.username?.charAt(0)?.toUpperCase() ?? "?";
+
+  if (!ready) {
+    return (
+      <SafeAreaView
+        style={[styles.container, styles.centerContent]}
+        edges={["top", "left", "right"]}
+      >
+        <ActivityIndicator size="large" color="#5661F6" />
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.container} edges={["top", "left", "right"]}>
@@ -47,7 +66,7 @@ export default function ChatScreen() {
         contentContainerStyle={styles.listContent}
         showsVerticalScrollIndicator={false}
         renderItem={({ item }) => {
-          const isMe = item.sender_account_id === acc;
+          const isMe = item.sender_account_id === usracc;
 
           return (
             <View
@@ -90,6 +109,7 @@ export default function ChatScreen() {
           );
         }}
       />
+
       {/* Input */}
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : undefined}
@@ -144,7 +164,10 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 3,
   },
-
+  centerContent: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
   backBtn: {
     width: 36,
     height: 36,

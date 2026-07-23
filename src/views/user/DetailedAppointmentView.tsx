@@ -13,7 +13,7 @@ import { ThemeContext } from "../theme/ThemeContext";
 export default function DetailAppointmentView() {
   const { colors } = useContext(ThemeContext);
   const { id } = useLocalSearchParams();
-  const { doc_id } = useDoctorDetailViewModel(Number(id));
+  const { doc_id } = useDoctorDetailViewModel(id ? Number(id) : undefined);
   const { loading, saveEmergency } = useAddEmergencyViewModel();
   const add = useHandleRequestVM();
   const acceptToChat = useAccepttoChat(doc_id?.id ?? 0);

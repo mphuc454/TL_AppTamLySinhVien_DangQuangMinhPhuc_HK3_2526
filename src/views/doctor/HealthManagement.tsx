@@ -3,7 +3,7 @@ import {
   useRejectRequest,
   useTotalEmotion,
 } from "@/src/viewmodels/HealthViewModel";
-import { useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 
 export default function HealthManagementView() {
@@ -126,6 +126,16 @@ export default function HealthManagementView() {
         ))}
       </View>
       <TouchableOpacity
+        onPress={() => {
+          if (!heal_id?.account_id?.id) return;
+          router.push({
+            pathname: "/(no tabs)/MessageUser",
+            params: {
+              otherAccountId: heal_id.account_id.id,
+              otherName: heal_id.account_id.username ?? "Người dùng",
+            },
+          });
+        }}
         style={{
           backgroundColor: "#10B981",
           padding: 15,

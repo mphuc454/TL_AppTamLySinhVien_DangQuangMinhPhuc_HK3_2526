@@ -1,24 +1,46 @@
 import { useCallback, useEffect, useState } from "react";
 import { Messages } from "../models/Messages";
 import { getAccount } from "../repository/auth/AuthRepository";
-import { getMessage, sendMessage } from "../service/ChatService";
+import {
+  getMessages,
+  getOrCreateConversation,
+  sendMessage,
+} from "../repository/ChatRepository";
 
-export function useChat(conversationId: number, senderID: number) {
+export function useChat(userAccountId: number, doctorAccountId: number) {
+  const [conversationId, setConversationId] = useState<number | null>(null);
   const [messages, setMessages] = useState<Messages[]>([]);
   const [text, setText] = useState("");
+
+  useEffect(() => {
+    if (!userAccountId || !doctorAccountId) return;
+    (async () => {
+      const convo = await getOrCreateConversation(
+        userAccountId,
+        doctorAccountId,
+      );
+      setConversationId(convo.id);
+    })();
+  }, [userAccountId, doctorAccountId]);
+
   const load = useCallback(async () => {
-    const data = await getMessage(conversationId);
+    if (!conversationId) return;
+    const data = await getMessages(conversationId);
     setMessages(data);
   }, [conversationId]);
+
   const send = async () => {
-    if (!text.trim()) return;
-    await sendMessage(conversationId, senderID, text);
+    if (!text.trim() || !conversationId) return;
+
+    await sendMessage(conversationId, userAccountId, text);
     setText("");
-    load();
+    await load();
   };
+
   useEffect(() => {
     load();
   }, [load]);
+
   return { messages, text, setText, send };
 }
 
