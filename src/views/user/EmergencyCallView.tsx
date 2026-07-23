@@ -3,6 +3,7 @@ import {
   useDelEmergencyViewModel,
   useEmergencyViewModel,
 } from "@/src/viewmodels/EmergencyViewModel";
+import { useAccepttoCall } from "@/src/viewmodels/HealthViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useContext } from "react";
@@ -12,6 +13,8 @@ import { ThemeContext } from "../theme/ThemeContext";
 export default function EmergencyCallView() {
   const { colors } = useContext(ThemeContext);
   const { emergencyList } = useEmergencyViewModel();
+  const acceptToCall = useAccepttoCall();
+
   const del = useDelEmergencyViewModel();
   return (
     <ScrollView
@@ -84,6 +87,12 @@ export default function EmergencyCallView() {
         ) : (
           emergencyList.map((i) => (
             <TouchableOpacity
+              onPress={() =>
+                acceptToCall(
+                  i.doctor_id.id,
+                  i.doctor_id.account_id.user_id.phone,
+                )
+              }
               key={i.id}
               style={{
                 marginTop: 10,

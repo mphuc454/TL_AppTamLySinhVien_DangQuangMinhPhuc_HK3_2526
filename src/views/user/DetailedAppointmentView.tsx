@@ -16,10 +16,7 @@ export default function DetailAppointmentView() {
   const { doc_id } = useDoctorDetailViewModel(id ? Number(id) : undefined);
   const { loading, saveEmergency } = useAddEmergencyViewModel();
   const add = useHandleRequestVM();
-  const acceptToCall = useAccepttoCall(
-    doc_id?.id ?? 0,
-    doc_id?.account_id.profile?.phone,
-  );
+  const acceptToCall = useAccepttoCall();
   return (
     <ScrollView
       style={{
@@ -164,7 +161,9 @@ export default function DetailAppointmentView() {
           Liên hệ
         </Text>
         <TouchableOpacity
-          onPress={acceptToCall}
+          onPress={() =>
+            acceptToCall(doc_id?.id ?? 0, doc_id?.account_id.profile?.phone)
+          }
           style={{
             marginTop: 10,
             backgroundColor: "#D8D8D8",

@@ -165,8 +165,8 @@ export function useHealthDetail(id: number) {
   return { heal_id };
 }
 
-export function useAccepttoCall(id: number, phone: string | undefined) {
-  const acceptToCall = async () => {
+export function useAccepttoCall() {
+  const acceptToCall = async (id: number, phone: string | undefined) => {
     try {
       const mana = await checkHealthManagement(id);
       if (!mana) {
