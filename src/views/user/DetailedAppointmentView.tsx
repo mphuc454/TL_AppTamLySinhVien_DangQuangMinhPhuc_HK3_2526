@@ -1,3 +1,4 @@
+import { useSendMail } from "@/src/viewmodels/ContactViewModel";
 import { useDoctorDetailViewModel } from "@/src/viewmodels/DoctorViewModel";
 import { useAddEmergencyViewModel } from "@/src/viewmodels/EmergencyViewModel";
 import {
@@ -7,7 +8,14 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import { useContext } from "react";
-import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import {
+  Alert,
+  Image,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { ThemeContext } from "../theme/ThemeContext";
 
 export default function DetailAppointmentView() {
@@ -16,10 +24,8 @@ export default function DetailAppointmentView() {
   const { doc_id } = useDoctorDetailViewModel(id ? Number(id) : undefined);
   const { loading, saveEmergency } = useAddEmergencyViewModel();
   const add = useHandleRequestVM();
-  const acceptToCall = useAccepttoCall(
-    doc_id?.id ?? 0,
-    doc_id?.account_id.profile?.phone,
-  );
+  const acceptToCall = useAccepttoCall();
+  const { sendContact } = useSendMail();
   return (
     <ScrollView
       style={{
@@ -135,6 +141,35 @@ export default function DetailAppointmentView() {
             Yêu cầu theo dõi sức khoẻ
           </Text>
         </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            const email = doc_id?.account_id?.profile?.email;
+
+            if (!email) {
+              Alert.alert("Thông báo", "Bác sĩ chưa có email.");
+              return;
+            }
+
+            sendContact(email);
+          }}
+          style={{
+            marginTop: 24,
+            backgroundColor: "#202ead",
+            borderRadius: 12,
+            paddingVertical: 14,
+            alignItems: "center",
+          }}
+        >
+          <Text
+            style={{
+              color: "#fff",
+              fontSize: 16,
+              fontWeight: "700",
+            }}
+          >
+            Gửi liên hệ Email
+          </Text>
+        </TouchableOpacity>
       </View>
       <View style={{ marginTop: 30 }}>
         <Text style={{ fontSize: 20, fontWeight: "bold", color: colors.text }}>
@@ -164,7 +199,9 @@ export default function DetailAppointmentView() {
           Liên hệ
         </Text>
         <TouchableOpacity
-          onPress={acceptToCall}
+          onPress={() =>
+            acceptToCall(doc_id?.id ?? 0, doc_id?.account_id.profile?.phone)
+          }
           style={{
             marginTop: 10,
             backgroundColor: "#D8D8D8",
