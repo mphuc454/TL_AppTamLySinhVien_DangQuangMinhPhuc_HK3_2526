@@ -1,9 +1,12 @@
+import { useChat, useGetAccount } from "@/src/viewmodels/ChatViewModel";
 import { useDoctorDetailViewModel } from "@/src/viewmodels/DoctorViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
-import React, { useState } from "react";
+import React from "react";
 import {
   FlatList,
+  KeyboardAvoidingView,
+  Platform,
   StyleSheet,
   Text,
   TextInput,
@@ -12,43 +15,27 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const messages = [
-  {
-    id: "1",
-    sender: "doctor",
-    text: "Chào em! Dạo này em cảm thấy thế nào?",
-  },
-  {
-    id: "2",
-    sender: "me",
-    text: "Em khá căng thẳng vì sắp thi.",
-  },
-  {
-    id: "3",
-    sender: "doctor",
-    text: "Đừng quá lo nhé. Hãy thử hít thở sâu và nghỉ ngơi một chút.",
-  },
-];
-
 export default function ChatScreen() {
-  const [text, setText] = useState("");
   const { id } = useLocalSearchParams();
   const { doc_id } = useDoctorDetailViewModel(Number(id));
+  const acc = useGetAccount();
+  const conversationId = 1;
+  const { messages, text, setText, send } = useChat(conversationId, acc);
+  const initial = doc_id?.account_id?.username;
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container} edges={["top", "left", "right"]}>
+      {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => router.back()}>
+        <TouchableOpacity onPress={() => router.back()} style={styles.backBtn}>
           <Ionicons name="chevron-back" size={24} color="#333" />
         </TouchableOpacity>
 
         <View style={styles.userInfo}>
-          <View style={styles.avatar}>
-            <Text style={{ color: "white", fontWeight: "bold" }}>B</Text>
-          </View>
-
           <View>
-            <Text style={styles.name}>{doc_id?.account_id.username}</Text>
+            <Text style={styles.name}>
+              {doc_id?.account_id?.username ?? "Bác sĩ"}
+            </Text>
           </View>
         </View>
       </View>
@@ -56,71 +43,115 @@ export default function ChatScreen() {
       {/* Messages */}
       <FlatList
         data={messages}
-        keyExtractor={(item) => item.id}
-        contentContainerStyle={{
-          padding: 15,
-        }}
+        keyExtractor={(item) => item.id.toString()}
+        contentContainerStyle={styles.listContent}
+        showsVerticalScrollIndicator={false}
         renderItem={({ item }) => {
-          const isMe = item.sender === "me";
+          const isMe = item.sender_account_id === acc;
 
           return (
             <View
               style={[
-                styles.messageContainer,
+                styles.messageRow,
                 isMe ? styles.myMessageContainer : styles.otherMessageContainer,
               ]}
             >
               {!isMe && (
                 <View style={styles.smallAvatar}>
-                  <Text style={{ color: "white", fontSize: 10 }}>B</Text>
+                  <Text style={styles.smallAvatarText}>{initial}</Text>
                 </View>
               )}
 
-              <View
-                style={[
-                  styles.bubble,
-                  isMe ? styles.myBubble : styles.otherBubble,
-                ]}
-              >
-                <Text style={[styles.messageText, isMe && { color: "white" }]}>
-                  {item.text}
+              <View style={{ maxWidth: "78%" }}>
+                <View
+                  style={[
+                    styles.bubble,
+                    isMe ? styles.myBubble : styles.otherBubble,
+                  ]}
+                >
+                  <Text
+                    style={[styles.messageText, isMe && styles.myMessageText]}
+                  >
+                    {item.message}
+                  </Text>
+                </View>
+                <Text
+                  style={[
+                    styles.time,
+                    isMe
+                      ? { textAlign: "right" }
+                      : { textAlign: "left", marginLeft: 4 },
+                  ]}
+                >
+                  {item.created_at}
                 </Text>
               </View>
             </View>
           );
         }}
       />
+      {/* Input */}
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
+        keyboardVerticalOffset={Platform.OS === "ios" ? 20 : 0}
+      >
+        <View style={styles.inputContainer}>
+          <TextInput
+            value={text}
+            onChangeText={setText}
+            placeholder="Nhắn tin..."
+            placeholderTextColor="#9A9AA4"
+            style={styles.input}
+            multiline
+          />
 
-      <View style={styles.inputContainer}>
-        <TextInput
-          value={text}
-          onChangeText={setText}
-          placeholder="Nhắn tin..."
-          style={styles.input}
-        />
-
-        <TouchableOpacity style={styles.sendButton}>
-          <Ionicons name="send" size={22} color="white" />
-        </TouchableOpacity>
-      </View>
+          <TouchableOpacity
+            onPress={send}
+            style={[
+              styles.sendButton,
+              !text.trim() && styles.sendButtonDisabled,
+            ]}
+            disabled={!text.trim()}
+          >
+            <Ionicons name="send" size={20} color="white" />
+          </TouchableOpacity>
+        </View>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }
+
+const PRIMARY = "#5661F6";
+const ACCENT = "#F49C8F";
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#F7F6FB",
-    marginTop: 15,
   },
 
   header: {
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 16,
-    paddingVertical: 14,
+    paddingHorizontal: 12,
+    paddingVertical: 12,
     backgroundColor: "white",
-    elevation: 2,
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
+    shadowColor: "#000",
+    shadowOpacity: 0.05,
+    shadowOffset: { width: 0, height: 3 },
+    shadowRadius: 8,
+    elevation: 3,
+  },
+
+  backBtn: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#F3F3F5",
   },
 
   userInfo: {
@@ -129,14 +160,10 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
 
-  avatar: {
-    width: 42,
-    height: 42,
-    borderRadius: 21,
-    backgroundColor: "#F49C8F",
-    justifyContent: "center",
-    alignItems: "center",
-    marginRight: 12,
+  avatarText: {
+    color: "white",
+    fontWeight: "700",
+    fontSize: 16,
   },
 
   name: {
@@ -145,8 +172,19 @@ const styles = StyleSheet.create({
     color: "#222",
   },
 
-  messageContainer: {
-    marginBottom: 18,
+  statusRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 2,
+  },
+
+  listContent: {
+    padding: 16,
+    paddingBottom: 8,
+  },
+
+  messageRow: {
+    marginBottom: 16,
     flexDirection: "row",
     alignItems: "flex-end",
   },
@@ -163,67 +201,93 @@ const styles = StyleSheet.create({
     width: 28,
     height: 28,
     borderRadius: 14,
-    backgroundColor: "#F49C8F",
+    backgroundColor: ACCENT,
     justifyContent: "center",
     alignItems: "center",
     marginRight: 8,
   },
 
+  smallAvatarText: {
+    color: "white",
+    fontSize: 11,
+    fontWeight: "700",
+  },
+
   bubble: {
-    maxWidth: "78%",
-    borderRadius: 18,
-    padding: 12,
+    borderRadius: 20,
+    paddingHorizontal: 14,
+    paddingVertical: 10,
   },
 
   myBubble: {
-    backgroundColor: "#5661F6",
+    backgroundColor: PRIMARY,
     alignSelf: "flex-end",
+    borderBottomRightRadius: 4,
+    shadowColor: PRIMARY,
+    shadowOpacity: 0.25,
+    shadowOffset: { width: 0, height: 4 },
+    shadowRadius: 6,
+    elevation: 2,
   },
 
   otherBubble: {
     backgroundColor: "white",
+    borderBottomLeftRadius: 4,
+    shadowColor: "#000",
+    shadowOpacity: 0.05,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 4,
+    elevation: 1,
   },
 
   messageText: {
     fontSize: 15,
     color: "#333",
-    lineHeight: 22,
+    lineHeight: 21,
+  },
+
+  myMessageText: {
+    color: "white",
   },
 
   time: {
     fontSize: 11,
-    color: "#999",
-    alignSelf: "flex-end",
-    marginTop: 6,
+    color: "#B0B0B8",
+    marginTop: 4,
   },
 
   inputContainer: {
     flexDirection: "row",
-    alignItems: "center",
-    paddingHorizontal: 15,
+    alignItems: "flex-end",
+    paddingHorizontal: 14,
     paddingVertical: 10,
     backgroundColor: "white",
     borderTopWidth: 1,
-    borderColor: "#eee",
-    marginBottom: 60,
+    borderColor: "#EFEFF2",
+    marginBottom: 80,
   },
 
   input: {
     flex: 1,
     backgroundColor: "#F3F3F5",
-    borderRadius: 25,
+    borderRadius: 22,
     paddingHorizontal: 16,
     paddingVertical: 10,
-    marginHorizontal: 10,
+    marginRight: 10,
     fontSize: 15,
+    maxHeight: 100,
   },
 
   sendButton: {
     width: 42,
     height: 42,
     borderRadius: 21,
-    backgroundColor: "#5661F6",
+    backgroundColor: PRIMARY,
     justifyContent: "center",
     alignItems: "center",
+  },
+
+  sendButtonDisabled: {
+    backgroundColor: "#C7C9F5",
   },
 });
