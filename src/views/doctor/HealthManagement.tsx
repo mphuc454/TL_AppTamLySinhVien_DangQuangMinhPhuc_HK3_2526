@@ -125,24 +125,6 @@ export default function HealthManagementView() {
           </View>
         ))}
       </View>
-      <TouchableOpacity
-        style={{
-          backgroundColor: "#10B981",
-          padding: 15,
-          borderRadius: 12,
-          marginTop: 12,
-        }}
-      >
-        <Text
-          style={{
-            color: "#fff",
-            textAlign: "center",
-            fontWeight: "bold",
-          }}
-        >
-          Nhắn tin
-        </Text>
-      </TouchableOpacity>
 
       <TouchableOpacity
         onPress={() => {

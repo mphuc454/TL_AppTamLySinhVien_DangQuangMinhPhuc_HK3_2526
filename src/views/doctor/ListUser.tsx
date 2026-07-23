@@ -119,7 +119,10 @@ export default function ListUserView() {
                   </TouchableOpacity>
 
                   <TouchableOpacity
-                    onPress={() => rej(item.account_id.id)}
+                    onPress={() => {
+                      if (item.id === undefined) return;
+                      rej(item.id);
+                    }}
                     style={{
                       flex: 1,
                       backgroundColor: "#EF4444",

@@ -37,11 +37,16 @@ export function useDoctorViewModel() {
 }
 
 // lấy chi tiết thông tin bác sĩ theo id
-export function useDoctorDetailViewModel(id: number) {
+export function useDoctorDetailViewModel(id: number | undefined) {
   const [doc_id, setDoc] = useState<Doctor | null>(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    if (id == null || Number.isNaN(id)) {
+      setDoc(null);
+      return;
+    }
+
     const loadDoctorDetail = async () => {
       try {
         setLoading(true);

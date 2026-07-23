@@ -18,12 +18,18 @@ export default function RootLayout() {
       if (session) {
         try {
           const account = await getAccount();
+
           const inAdminGroup = segments[0] === "admin";
           const inDoctorGroup = segments[0] === "doctor";
-          const inUserGroup =
-            segments[0] === "(tabs)" ||
-            segments[0] === "(no tabs)" ||
-            segments[0] === "auth";
+          const inSharedGroup =
+            segments[0] === "(no tabs)" || segments[0] === "auth";
+          const inUserOnlyGroup = segments[0] === "(tabs)";
+
+          if (inSharedGroup) {
+            setLoading(false);
+            return;
+          }
+
           if (account?.role === 2 && !inAdminGroup) {
             router.replace("/admin/Dashboard");
           } else if (account?.role === 3 && !inDoctorGroup) {
@@ -31,7 +37,9 @@ export default function RootLayout() {
           } else if (
             account?.role !== 2 &&
             account?.role !== 3 &&
-            !inUserGroup
+            inUserOnlyGroup === false &&
+            !inAdminGroup &&
+            !inDoctorGroup
           ) {
             router.replace("/(tabs)/Index");
           }
