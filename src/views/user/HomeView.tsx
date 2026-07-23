@@ -153,9 +153,7 @@ export default function IndexView() {
             >
               Cảm xúc nhiều nhất
             </Text>
-            <View
-              style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
-            >
+            <View style={{ alignItems: "center", gap: 10 }}>
               <Text
                 style={{
                   fontSize: 37,

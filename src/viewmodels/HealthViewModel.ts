@@ -1,6 +1,6 @@
 import { router, useFocusEffect } from "expo-router";
 import { useCallback, useState } from "react";
-import { Alert } from "react-native";
+import { Alert, Linking } from "react-native";
 import { HealthManagements } from "../models/HealthManagements";
 import { totalEmotion } from "../repository/EmotionRepository";
 import {
@@ -17,7 +17,10 @@ export function useHandleRequestVM() {
     try {
       const existed = await checkHealthManagement(doctorAccountId);
       if (existed) {
-        Alert.alert("Thông báo", "Bạn đã gửi yêu cầu theo dõi đến bác sĩ này.");
+        Alert.alert(
+          "Thông báo",
+          "Bạn đã thực hiện yêu cầu theo dõi đến bác sĩ này rồi.",
+        );
         return;
       }
       await reqHealthManagement(doctorAccountId);
@@ -162,15 +165,14 @@ export function useHealthDetail(id: number) {
   return { heal_id };
 }
 
-export function useAccepttoChat(id: number) {
-  const acceptToChat = async () => {
+export function useAccepttoCall(id: number, phone: string | undefined) {
+  const acceptToCall = async () => {
     try {
       const mana = await checkHealthManagement(id);
-
       if (!mana) {
         Alert.alert(
           "Thông báo",
-          "Bạn cần gửi yêu cầu đến bác sĩ mới được nhắn tin.",
+          "Bạn cần gửi yêu cầu đến bác sĩ mới gọi được.",
         );
         return false;
       }
@@ -179,7 +181,17 @@ export function useAccepttoChat(id: number) {
         Alert.alert("Thông báo", "Bác sĩ chưa chấp nhận yêu cầu theo dõi.");
         return false;
       }
-
+      if (!phone) {
+        Alert.alert("Thông báo", "Không có số điện thoại.");
+        return false;
+      }
+      const p = `tel:${phone}`;
+      const supported = await Linking.canOpenURL(p);
+      if (!supported) {
+        Alert.alert("Thông báo", "Thiết bị không hỗ trợ gọi điện.");
+        return;
+      }
+      await Linking.openURL(p);
       return true;
     } catch (error) {
       console.log(error);
@@ -188,5 +200,5 @@ export function useAccepttoChat(id: number) {
     }
   };
 
-  return acceptToChat;
+  return acceptToCall;
 }

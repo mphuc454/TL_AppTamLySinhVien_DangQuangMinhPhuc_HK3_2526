@@ -1,7 +1,7 @@
 import { useDoctorDetailViewModel } from "@/src/viewmodels/DoctorViewModel";
 import { useAddEmergencyViewModel } from "@/src/viewmodels/EmergencyViewModel";
 import {
-  useAccepttoChat,
+  useAccepttoCall,
   useHandleRequestVM,
 } from "@/src/viewmodels/HealthViewModel";
 import { Ionicons } from "@expo/vector-icons";
@@ -16,7 +16,10 @@ export default function DetailAppointmentView() {
   const { doc_id } = useDoctorDetailViewModel(id ? Number(id) : undefined);
   const { loading, saveEmergency } = useAddEmergencyViewModel();
   const add = useHandleRequestVM();
-  const acceptToChat = useAccepttoChat(doc_id?.id ?? 0);
+  const acceptToCall = useAccepttoCall(
+    doc_id?.id ?? 0,
+    doc_id?.account_id.profile?.phone,
+  );
   return (
     <ScrollView
       style={{
@@ -109,35 +112,6 @@ export default function DetailAppointmentView() {
         </View>
 
         <TouchableOpacity
-          onPress={async () => {
-            const canChat = await acceptToChat();
-            if (!canChat) return;
-            router.push({
-              pathname: "/(no tabs)/MessageUser",
-              params: {
-                id: doc_id?.id,
-              },
-            });
-          }}
-          style={{
-            marginTop: 24,
-            backgroundColor: "#445AE6",
-            borderRadius: 12,
-            paddingVertical: 14,
-            alignItems: "center",
-          }}
-        >
-          <Text
-            style={{
-              color: "#fff",
-              fontSize: 16,
-              fontWeight: "700",
-            }}
-          >
-            Nhắn tin
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
           onPress={() => {
             if (doc_id?.id) {
               add(doc_id.id);
@@ -190,6 +164,7 @@ export default function DetailAppointmentView() {
           Liên hệ
         </Text>
         <TouchableOpacity
+          onPress={acceptToCall}
           style={{
             marginTop: 10,
             backgroundColor: "#D8D8D8",
@@ -216,7 +191,7 @@ export default function DetailAppointmentView() {
               Số điện thoại liên hệ
             </Text>
             <Text style={{ marginTop: 5, fontSize: 12, color: "#333" }}>
-              0901234567
+              {doc_id?.account_id.profile?.phone}
             </Text>
           </View>
         </TouchableOpacity>
