@@ -281,123 +281,44 @@ export default function IndexView() {
                     color: colors.text,
                   }}
                 >
-                  Phân tích tâm trạng
-                </Text>
-
-                <Text
-                  style={{
-                    fontSize: 12,
-                    color: colors.textSecondary,
-                    marginTop: 2,
-                  }}
-                >
-                  Dựa trên nhật ký cảm xúc của bạn
+                  Phân tích tâm trạng AI
                 </Text>
               </View>
             </View>
           </View>
-
-          {/* Nội dung */}
-          <Text
-            style={{
-              marginTop: 16,
-              fontSize: 13,
-              color: colors.textSecondary,
-              lineHeight: 21,
-            }}
-          >
-            AI nhận thấy tâm trạng của bạn đang khá ổn định trong tuần gần đây.
-            Hãy tiếp tục ghi nhật ký để theo dõi những thay đổi và nhận phân
-            tích chính xác hơn.
-          </Text>
-
           {/* Thống kê */}
           <View
             style={{
-              marginTop: 18,
-              backgroundColor: "#F8F6FD",
-              borderRadius: 16,
+              backgroundColor: "#EEF8F0",
               padding: 14,
-              flexDirection: "row",
-              justifyContent: "space-between",
+              borderRadius: 14,
+              alignItems: "center",
+              marginBottom: 18,
+              marginTop: 18,
             }}
           >
-            <View style={{ alignItems: "center", flex: 1 }}>
-              <Text
-                style={{
-                  fontSize: 22,
-                  fontWeight: "700",
-                  color: "#604FD9",
-                }}
-              >
-                7
-              </Text>
-              <Text
-                style={{
-                  fontSize: 11,
-                  color: colors.textSecondary,
-                  marginTop: 4,
-                }}
-              >
-                Nhật ký
-              </Text>
-            </View>
+            <Text style={{ fontSize: 14, color: "#4CAF50" }}>
+              Tình hình hiện tại
+            </Text>
 
-            <View
+            <Text
               style={{
-                width: 1,
-                backgroundColor: "#E5E5E5",
+                fontSize: 24,
+                fontWeight: "700",
+                color: "#4CAF50",
               }}
-            />
+            >
+              Ổn định
+            </Text>
 
-            <View style={{ alignItems: "center", flex: 1 }}>
-              <Text
-                style={{
-                  fontSize: 22,
-                  fontWeight: "700",
-                  color: "#4CAF50",
-                }}
-              >
-                82%
-              </Text>
-              <Text
-                style={{
-                  fontSize: 11,
-                  color: colors.textSecondary,
-                  marginTop: 4,
-                }}
-              >
-                Tích cực
-              </Text>
-            </View>
-
-            <View
+            <Text
               style={{
-                width: 1,
-                backgroundColor: "#E5E5E5",
+                marginTop: 6,
+                color: colors.textSecondary,
               }}
-            />
-
-            <View style={{ alignItems: "center", flex: 1 }}>
-              <Text
-                style={{
-                  fontSize: 22,
-                  fontWeight: "700",
-                  color: "#FF9800",
-                }}
-              >
-                5
-              </Text>
-              <Text
-                style={{
-                  fontSize: 11,
-                  color: colors.textSecondary,
-                  marginTop: 4,
-                }}
-              >
-                Ngày
-              </Text>
-            </View>
+            >
+              Dựa trên nhật ký cảm xúc của bạn
+            </Text>
           </View>
 
           {/* Button */}
@@ -426,7 +347,7 @@ export default function IndexView() {
                 fontSize: 14,
               }}
             >
-              Xem phân tích chi tiết
+              Xem phân tích
             </Text>
           </TouchableOpacity>
         </View>
