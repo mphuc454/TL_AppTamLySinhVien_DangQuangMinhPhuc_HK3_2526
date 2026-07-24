@@ -1,10 +1,11 @@
+import { useSendMail } from "@/src/viewmodels/ContactViewModel";
 import {
   useHealthDetail,
   useRejectRequest,
   useTotalEmotion,
 } from "@/src/viewmodels/HealthViewModel";
 import { useLocalSearchParams } from "expo-router";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { Alert, ScrollView, Text, TouchableOpacity, View } from "react-native";
 
 export default function HealthManagementView() {
   const { accountId } = useLocalSearchParams();
@@ -14,6 +15,7 @@ export default function HealthManagementView() {
     typeof userId === "string" ? userId : undefined,
   );
   const rej = useRejectRequest();
+  const { sendContact } = useSendMail();
 
   return (
     <ScrollView
@@ -125,7 +127,35 @@ export default function HealthManagementView() {
           </View>
         ))}
       </View>
+      <TouchableOpacity
+        onPress={() => {
+          const email = heal_id?.account_id.profile?.email;
 
+          if (!email) {
+            Alert.alert("Thông báo", "Người dùng chưa có email.");
+            return;
+          }
+
+          sendContact(email);
+        }}
+        style={{
+          backgroundColor: "#202ead",
+          padding: 15,
+          borderRadius: 12,
+          marginTop: 12,
+          marginBottom: 30,
+        }}
+      >
+        <Text
+          style={{
+            color: "#fff",
+            textAlign: "center",
+            fontWeight: "bold",
+          }}
+        >
+          Liên hệ Email
+        </Text>
+      </TouchableOpacity>
       <TouchableOpacity
         onPress={() => {
           if (heal_id?.id !== undefined) {
