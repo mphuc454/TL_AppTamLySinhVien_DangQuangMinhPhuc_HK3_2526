@@ -1,5 +1,5 @@
 import { router, useFocusEffect } from "expo-router";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Alert, Linking } from "react-native";
 import { HealthManagements } from "../models/HealthManagements";
 import { totalEmotion } from "../repository/EmotionRepository";
@@ -87,8 +87,6 @@ export function useAcceptRequest() {
 
 export function useRejectRequest() {
   const reject = async (id: number) => {
-    console.log("Deleting health_managements with id =", id);
-
     Alert.alert("Xoá theo dõi", "Bạn có muốn chắc kết thúc theo dõi không ?", [
       { text: "Huỷ", style: "cancel" },
       {
@@ -101,7 +99,7 @@ export function useRejectRequest() {
               "Thông báo",
               "Bạn đã từ chối yêu cầu theo dõi sức khoẻ người này",
             );
-            router.replace("/doctor/ListUser");
+            router.back();
           } catch (error) {
             console.log(error);
             Alert.alert("Thông báo", "Lỗi không thể xử lý được!");
@@ -121,8 +119,22 @@ export function useTotalEmotion(userId?: string) {
     buonba: 0,
     giandu: 0,
   });
+
+  useEffect(() => {
+    if (!userId) {
+      setEmoTotal({
+        tichcuc: 0,
+        binhthan: 0,
+        loau: 0,
+        buonba: 0,
+        giandu: 0,
+      });
+    }
+  }, [userId]);
+
   const loadTotal = useCallback(async () => {
     if (!userId) return;
+
     try {
       const total = await totalEmotion(userId);
       setEmoTotal(total);

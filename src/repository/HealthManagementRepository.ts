@@ -96,10 +96,13 @@ export const getDetailHealthManagement = async (accountId: number) => {
     .from("health_managements")
     .select("*, account_id(*)")
     .eq("account_id", accountId)
-    .single();
+    .eq("status", true)
+    .maybeSingle();
 
   if (error) throw error;
-
+  if (!health) {
+    return null;
+  }
   const { data: profile, error: profileError } = await supabase
     .from("user")
     .select("*")
