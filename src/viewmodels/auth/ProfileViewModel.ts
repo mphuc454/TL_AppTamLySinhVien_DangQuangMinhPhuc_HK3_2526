@@ -48,9 +48,8 @@ export function useAccountDetailViewModel() {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState<any>(null);
   const [phone, setPhone] = useState<any>(null);
-  const [gender, setGender] = useState<any>(null);
+  const [gender, setGender] = useState("");
   const [usrname, setUsername] = useState<any>(null);
-  const [addr, setAddr] = useState<any>(null);
 
   useEffect(() => {
     const load = async () => {
@@ -59,7 +58,6 @@ export function useAccountDetailViewModel() {
         const data = await getAccountById();
         setAcc(data);
         setUsername(data.username ?? "Không có thông tin");
-        setAddr(data.address ?? "Không có thông tin");
         setGender(data.gender ?? "Không có thông tin");
         setEmail(data.user_id?.email ?? "Không có thông tin");
         setPhone(data.user_id?.phone ?? "Không có thông tin");
@@ -75,7 +73,7 @@ export function useAccountDetailViewModel() {
   const handleAccount = async () => {
     try {
       setLoading(true);
-      const data = await modifyAccountbyID(usrname, phone, addr, email, gender);
+      const data = await modifyAccountbyID(usrname, phone, email, gender);
       setAcc(data);
       alert("Cập nhật thành công");
     } catch (error) {
@@ -91,8 +89,6 @@ export function useAccountDetailViewModel() {
     setUsername,
     phone,
     setPhone,
-    addr,
-    setAddr,
     email,
     setEmail,
     gender,

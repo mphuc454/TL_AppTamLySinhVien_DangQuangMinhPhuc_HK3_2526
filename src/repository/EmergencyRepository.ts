@@ -28,9 +28,7 @@ export const getEmergency = async (): Promise<Emergency_Contacts[]> => {
           id,
           user_id,
           username,
-          address,
           gender,
-          year_birth,
           role,
           created_at
         )

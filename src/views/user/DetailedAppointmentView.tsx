@@ -110,9 +110,6 @@ export default function DetailAppointmentView() {
             Chức vụ: {doc_id?.role_doctor}
           </Text>
           <Text style={{ fontSize: 15, color: colors.text }}>
-            Nơi ở: {doc_id?.account_id?.address ?? "Không có"}
-          </Text>
-          <Text style={{ fontSize: 15, color: colors.text }}>
             Kinh nghiệm: {doc_id?.experience_years} năm
           </Text>
         </View>

@@ -84,7 +84,7 @@ export default function DetailedMusicView() {
             marginLeft: 20,
           }}
         >
-          <TouchableOpacity onPress={() => router.push("/(tabs)/Index")}>
+          <TouchableOpacity onPress={() => router.back()}>
             <Ionicons
               name="arrow-back"
               size={40}

@@ -3,6 +3,7 @@ import {
   useProfileViewModel,
 } from "@/src/viewmodels/auth/ProfileViewModel";
 import { Ionicons } from "@expo/vector-icons";
+import { Picker } from "@react-native-picker/picker";
 import { router } from "expo-router";
 import {
   ScrollView,
@@ -162,18 +163,25 @@ export default function AdminProfileView() {
         >
           Giới tính quản trị viên
         </Text>
-        <TextInput
+        <Picker
           style={{
-            backgroundColor: "#FFF",
+            backgroundColor: "#fff",
+            borderRadius: 12,
             borderWidth: 1,
-            borderColor: "#E5E5E5",
-            borderRadius: 10,
-            height: 52,
-            paddingHorizontal: 12,
+            borderColor: "#E5E7EB",
+            height: 55,
+            paddingHorizontal: 16,
+            justifyContent: "space-between",
+            alignItems: "center",
+            flexDirection: "row",
           }}
-          value={gender}
-          onChangeText={setGender}
-        ></TextInput>
+          selectedValue={gender}
+          onValueChange={(value) => setGender(value)}
+        >
+          <Picker.Item label="Chọn giới tính" value="" />
+          <Picker.Item label="Nam" value="Nam" />
+          <Picker.Item label="Nữ" value="Nữ" />
+        </Picker>
       </View>
       <View
         style={{

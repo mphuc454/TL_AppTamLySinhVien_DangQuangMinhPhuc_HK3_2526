@@ -33,7 +33,6 @@ export const getAccountById = async () => {
 export const modifyAccountbyID = async (
   username: string,
   phone: string,
-  address: string,
   email: string,
   gender: string,
 ) => {
@@ -46,7 +45,7 @@ export const modifyAccountbyID = async (
   const formatGender = gender.trim().toUpperCase();
   const { data: account, error: accountError } = await supabase
     .from("accounts")
-    .update({ username, address, gender: formatGender })
+    .update({ username, gender: formatGender })
     .eq("user_id", user.id)
     .select()
     .single();
