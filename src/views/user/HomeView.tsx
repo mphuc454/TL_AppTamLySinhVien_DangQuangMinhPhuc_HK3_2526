@@ -1,3 +1,4 @@
+import { useAccountDetailViewModel } from "@/src/viewmodels/auth/ProfileViewModel";
 import {
   useMostEmotionViewModel,
   useTotalLogViewModel,
@@ -44,6 +45,7 @@ export default function IndexView() {
   const { colors } = useContext(ThemeContext);
   const { logTotal } = useTotalLogViewModel();
   const { emotion, count } = useMostEmotionViewModel();
+  const { usrname } = useAccountDetailViewModel();
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: colors.background }}
@@ -59,7 +61,7 @@ export default function IndexView() {
         }}
       >
         <Text style={{ fontSize: 18, fontWeight: "bold", color: colors.text }}>
-          Chào bạn, User! Chào ngày mới tràn đầy năng lượng nào!
+          Chào bạn {usrname}, gửi lời chào đến bạn với tràn đầy năng lượng nào!
         </Text>
 
         <View
