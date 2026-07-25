@@ -121,12 +121,11 @@ export const getDetailHealthManagement = async (accountId: number) => {
 };
 // 6. xoá id quản lý sức khoẻ
 export const getDeleteHealthManagement = async (id: number) => {
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from("health_managements")
     .delete()
     .eq("id", id)
     .select();
-  console.log("Deleted rows:", data);
   if (error) {
     throw error;
   }
