@@ -177,32 +177,7 @@ export default function RegisterView() {
           Đăng ký
         </Text>
       </TouchableOpacity>
-      <Text
-        style={{
-          textAlign: "center",
-          marginTop: 10,
-          color: colors.text,
-          fontSize: 18,
-        }}
-      >
-        or
-      </Text>
-      <TouchableOpacity
-        style={{
-          marginTop: 10,
-          height: 60,
-          width: "100%",
-          borderRadius: 16,
-          justifyContent: "center",
-          alignItems: "center",
-          borderWidth: 1,
-          flexDirection: "row",
-          gap: 10,
-        }}
-      >
-        <Ionicons name="logo-google" size={24} color="#EA4335" />
-        <Text style={{ color: colors.text }}>Tiếp tục với Google</Text>
-      </TouchableOpacity>
+
       <View
         style={{
           flexDirection: "row",

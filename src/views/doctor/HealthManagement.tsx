@@ -4,14 +4,14 @@ import {
   useRejectRequest,
   useTotalEmotion,
 } from "@/src/viewmodels/HealthViewModel";
-import { useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { Alert, ScrollView, Text, TouchableOpacity, View } from "react-native";
 
 export default function HealthManagementView() {
   const { accountId } = useLocalSearchParams();
-  const { heal_id } = useHealthDetail(Number(accountId));
+  const { heal_id, clear } = useHealthDetail(Number(accountId));
   const userId = heal_id?.account_id.user_id;
-  const { emoTotal } = useTotalEmotion(
+  const { emoTotal, reset } = useTotalEmotion(
     typeof userId === "string" ? userId : undefined,
   );
   const rej = useRejectRequest();
@@ -157,9 +157,13 @@ export default function HealthManagementView() {
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={() => {
-          if (heal_id?.id !== undefined) {
-            rej(heal_id.id);
+        onPress={async () => {
+          if (!heal_id?.id) return;
+          const ok = await rej(heal_id.id);
+          if (ok) {
+            clear();
+            reset();
+            router.replace("/doctor/ListUser");
           }
         }}
         style={{

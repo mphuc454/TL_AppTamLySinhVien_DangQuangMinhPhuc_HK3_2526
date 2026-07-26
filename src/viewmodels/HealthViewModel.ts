@@ -1,5 +1,5 @@
 import { router, useFocusEffect } from "expo-router";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { Alert, Linking } from "react-native";
 import { HealthManagements } from "../models/HealthManagements";
 import { totalEmotion } from "../repository/EmotionRepository";
@@ -86,31 +86,42 @@ export function useAcceptRequest() {
 }
 
 export function useRejectRequest() {
-  const reject = async (id: number) => {
-    Alert.alert("Xoá theo dõi", "Bạn có muốn chắc kết thúc theo dõi không ?", [
-      { text: "Huỷ", style: "cancel" },
-      {
-        text: "Xoá",
-        style: "destructive",
-        onPress: async () => {
-          try {
-            await getDeleteHealthManagement(id);
-            Alert.alert(
-              "Thông báo",
-              "Bạn đã từ chối yêu cầu theo dõi sức khoẻ người này",
-            );
-            router.back();
-          } catch (error) {
-            console.log(error);
-            Alert.alert("Thông báo", "Lỗi không thể xử lý được!");
-          }
-        },
-      },
-    ]);
+  const reject = (id: number) => {
+    return new Promise<boolean>((resolve) => {
+      Alert.alert(
+        "Xoá theo dõi",
+        "Bạn có muốn chắc kết thúc theo dõi không ?",
+        [
+          {
+            text: "Huỷ",
+            style: "cancel",
+            onPress: () => resolve(false),
+          },
+          {
+            text: "Xoá",
+            style: "destructive",
+            onPress: async () => {
+              try {
+                await getDeleteHealthManagement(id);
+                Alert.alert(
+                  "Thông báo",
+                  "Bạn đã kết thúc theo dõi người dùng.",
+                );
+                resolve(true);
+              } catch (error) {
+                console.log(error);
+                Alert.alert("Thông báo", "Lỗi không thể xử lý được!");
+                resolve(false);
+              }
+            },
+          },
+        ],
+      );
+    });
   };
+
   return reject;
 }
-
 export function useTotalEmotion(userId?: string) {
   const [emoTotal, setEmoTotal] = useState({
     tichcuc: 0,
@@ -120,17 +131,15 @@ export function useTotalEmotion(userId?: string) {
     giandu: 0,
   });
 
-  useEffect(() => {
-    if (!userId) {
-      setEmoTotal({
-        tichcuc: 0,
-        binhthan: 0,
-        loau: 0,
-        buonba: 0,
-        giandu: 0,
-      });
-    }
-  }, [userId]);
+  const reset = () => {
+    setEmoTotal({
+      tichcuc: 0,
+      binhthan: 0,
+      loau: 0,
+      buonba: 0,
+      giandu: 0,
+    });
+  };
 
   const loadTotal = useCallback(async () => {
     if (!userId) return;
@@ -151,12 +160,15 @@ export function useTotalEmotion(userId?: string) {
     }, [loadTotal, userId]),
   );
 
-  return { emoTotal };
+  return { emoTotal, reset };
 }
 
 export function useHealthDetail(id: number) {
   const [heal_id, setHeal] = useState<HealthManagements | null>(null);
-
+  const load = async () => {
+    const data = await getDetailHealthManagement(id);
+    setHeal(data);
+  };
   const loadDetail = useCallback(async () => {
     try {
       if (id == null || Number.isNaN(id)) return;
@@ -174,7 +186,11 @@ export function useHealthDetail(id: number) {
     }, [loadDetail]),
   );
 
-  return { heal_id };
+  return {
+    heal_id,
+    load,
+    clear: () => setHeal(null),
+  };
 }
 
 export function useAccepttoCall() {

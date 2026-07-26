@@ -115,6 +115,20 @@ export default function LoginView() {
           alignItems: "center",
         }}
       ></View>
+      <View style={{ flexDirection: "row", alignItems: "center" }}>
+        <View>
+          <TouchableOpacity>
+            <Text
+              style={{
+                fontSize: 12,
+                color: "#4169E1",
+              }}
+            >
+              Quên mật khẩu
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
       <View
         style={{
           flexDirection: "row",
@@ -136,9 +150,9 @@ export default function LoginView() {
               color: "#4169E1",
               fontWeight: "bold",
               fontSize: 13,
+              marginLeft: 8,
             }}
           >
-            {" "}
             Đăng ký
           </Text>
         </TouchableOpacity>
@@ -172,32 +186,6 @@ export default function LoginView() {
           >
             {loading ? "Đang đăng nhập..." : "Đăng nhập"}
           </Text>
-        </TouchableOpacity>
-        <Text
-          style={{
-            textAlign: "center",
-            marginTop: 30,
-            color: colors.text,
-            fontSize: 18,
-          }}
-        >
-          or
-        </Text>
-        <TouchableOpacity
-          style={{
-            marginTop: 30,
-            height: 60,
-            width: "100%",
-            borderRadius: 16,
-            justifyContent: "center",
-            alignItems: "center",
-            borderWidth: 1,
-            flexDirection: "row",
-            gap: 10,
-          }}
-        >
-          <Ionicons name="logo-google" size={24} color="#EA4335" />
-          <Text style={{ color: colors.text }}>Tiếp tục với Google</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
