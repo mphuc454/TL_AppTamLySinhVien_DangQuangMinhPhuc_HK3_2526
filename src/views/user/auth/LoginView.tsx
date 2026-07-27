@@ -123,7 +123,7 @@ export default function LoginView() {
         }}
       >
         <View>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => router.push("/auth/ForgetPass")}>
             <Text
               style={{
                 fontSize: 12,
