@@ -1,5 +1,4 @@
 import { supabase } from "@/src/lib/supabase";
-import * as Linking from "expo-linking";
 type AuthResult = {
   success: boolean;
   error?: string;
@@ -154,27 +153,7 @@ export const changePassword = async (newPass: string) => {
   return true;
 };
 
-// 7. Quên password
-export const forgotPassword = async (email: string) => {
-  const redirectTo = Linking.createURL("auth/ResetPass");
-  console.log(Linking.createURL("auth/ResetPass"));
-  const { error } = await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo,
-  });
-  if (error) throw error;
-};
-// 8. Đặt lại password
-export const resetPassword = async (newPassword: string) => {
-  const { error } = await supabase.auth.updateUser({
-    password: newPassword,
-  });
-
-  if (error) throw error;
-
-  return true;
-};
-
-// 9. Lấy token thông báo
+// 8. Lấy token thông báo
 export const getExpoToken = async (accountId: number) => {
   const { data, error } = await supabase
     .from("accounts")

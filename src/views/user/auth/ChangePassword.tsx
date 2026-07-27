@@ -1,15 +1,15 @@
 import { useChangePassword } from "@/src/viewmodels/auth/ProfileViewModel";
 import {
-    KeyboardAvoidingView,
-    Platform,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
-export default function InputUsrView() {
+export default function ChangePassView() {
   const { newPa, setNewPa, handleChangePass, loading } = useChangePassword();
   return (
     <KeyboardAvoidingView
