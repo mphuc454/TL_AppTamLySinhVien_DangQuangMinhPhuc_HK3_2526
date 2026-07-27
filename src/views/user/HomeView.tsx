@@ -1,3 +1,4 @@
+import { useEmotionAnalytics } from "@/src/viewmodels/ApiFlaskViewModel";
 import { useAccountDetailViewModel } from "@/src/viewmodels/auth/ProfileViewModel";
 import {
   useMostEmotionViewModel,
@@ -46,6 +47,7 @@ export default function IndexView() {
   const { logTotal } = useTotalLogViewModel();
   const { emotion, count } = useMostEmotionViewModel();
   const { usrname } = useAccountDetailViewModel();
+  const { emotionStatus, emotion_color } = useEmotionAnalytics();
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: colors.background }}
@@ -283,15 +285,14 @@ export default function IndexView() {
                     color: colors.text,
                   }}
                 >
-                  Phân tích tâm trạng AI
+                  Phân tích tâm trạng từ AI
                 </Text>
               </View>
             </View>
           </View>
-          {/* Thống kê */}
           <View
             style={{
-              backgroundColor: "#EEF8F0",
+              backgroundColor: emotion_color,
               padding: 14,
               borderRadius: 14,
               alignItems: "center",
@@ -299,59 +300,25 @@ export default function IndexView() {
               marginTop: 18,
             }}
           >
-            <Text style={{ fontSize: 14, color: "#4CAF50" }}>
-              Tình hình hiện tại
-            </Text>
+            <Text style={{ fontSize: 14 }}>Tình hình hiện tại</Text>
 
             <Text
               style={{
                 fontSize: 24,
                 fontWeight: "700",
-                color: "#4CAF50",
               }}
             >
-              Ổn định
+              {emotionStatus}
             </Text>
 
             <Text
               style={{
                 marginTop: 6,
-                color: colors.textSecondary,
               }}
             >
               Dựa trên nhật ký cảm xúc của bạn
             </Text>
           </View>
-
-          {/* Button */}
-          <TouchableOpacity
-            style={{
-              marginTop: 18,
-              height: 48,
-              borderRadius: 14,
-              backgroundColor: "#604FD9",
-              justifyContent: "center",
-              alignItems: "center",
-              flexDirection: "row",
-            }}
-          >
-            <Ionicons
-              name="sparkles-outline"
-              size={18}
-              color="#FFF"
-              style={{ marginRight: 8 }}
-            />
-
-            <Text
-              style={{
-                color: "#FFF",
-                fontWeight: "700",
-                fontSize: 14,
-              }}
-            >
-              Xem phân tích
-            </Text>
-          </TouchableOpacity>
         </View>
 
         <View style={{ marginTop: 30 }}>
