@@ -1,11 +1,9 @@
 // import { registerForPushNotificationsAsync } from "@/src/lib/Push";
 // import { supabase } from "@/src/lib/supabase";
 import {
-  forgotPassword,
   getAccount,
   hasAccount,
   login,
-  resetPassword,
 } from "@/src/repository/auth/AuthRepository";
 import { router } from "expo-router";
 import { useState } from "react";
@@ -70,51 +68,6 @@ export function useLoginViewModel() {
       setLoading(false);
     }
   };
-  const handleForgotPass = async () => {
-    if (!email.trim()) {
-      Alert.alert("Thông báo", "Vui lòng không để email trống.");
-      return;
-    }
-    try {
-      setLoading(true);
-
-      await forgotPassword(email);
-
-      Alert.alert(
-        "Thành công",
-        "Xác nhận đặt lại mật khẩu đã được gửi đến email của bạn.",
-      );
-    } catch (error: any) {
-      Alert.alert("Lỗi", error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-  const handleResetPassword = async () => {
-    if (!password.trim() || !confirmPassword.trim()) {
-      Alert.alert("Thông báo", "Vui lòng nhập đầy đủ thông tin.");
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      Alert.alert("Thông báo", "Mật khẩu xác nhận không khớp.");
-      return;
-    }
-
-    try {
-      setLoading(true);
-
-      await resetPassword(password);
-
-      Alert.alert("Thành công", "Đổi mật khẩu thành công.");
-
-      router.replace("/auth/Login");
-    } catch (error: any) {
-      Alert.alert("Lỗi", error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   return {
     email,
@@ -124,8 +77,6 @@ export function useLoginViewModel() {
     loading,
     confirmPassword,
     handleLogin,
-    handleForgotPass,
     setConfirmPassword,
-    handleResetPassword,
   };
 }

@@ -8,16 +8,7 @@ export default function RootLayout() {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const segments = useSegments();
-  useEffect(() => {
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((event) => {
-      if (event === "PASSWORD_RECOVERY") {
-        router.replace("/auth/ResetPass");
-      }
-    });
-    return () => subscription.unsubscribe();
-  }, [router]);
+
   useEffect(() => {
     const checkRole = async () => {
       const {
