@@ -115,9 +115,15 @@ export default function LoginView() {
           alignItems: "center",
         }}
       ></View>
-      <View style={{ flexDirection: "row", alignItems: "center" }}>
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "flex-end",
+          justifyContent: "flex-end",
+        }}
+      >
         <View>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => router.push("/auth/ForgetPass")}>
             <Text
               style={{
                 fontSize: 12,
