@@ -1,7 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
-import Header from "../../src/components/Header";
 import { useContext } from "react";
+import Header from "../../src/components/Header";
 import { ThemeContext } from "../../src/views/theme/ThemeContext";
 
 export default function RootLayout() {
@@ -43,19 +43,6 @@ export default function RootLayout() {
           tabBarIcon: ({ color, focused }) => (
             <Ionicons
               name={focused ? "home" : "home-outline"}
-              size={24}
-              color={colors.text}
-            />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="Chatbot"
-        options={{
-          title: "Chatbot",
-          tabBarIcon: ({ color, focused }) => (
-            <Ionicons
-              name={focused ? "chatbubble" : "chatbubble-outline"}
               size={24}
               color={colors.text}
             />

@@ -1,27 +1,38 @@
 import { useEffect, useState } from "react";
+import { Alert } from "react-native";
 import { supabase } from "../lib/supabase";
 
 export function useEmotionAnalytics() {
   const [emotionStatus, setEmotionStatus] = useState("Đang phân tích...");
+  const [loading, setLoading] = useState(false);
 
   const getAnalytics = async () => {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
+    try {
+      setLoading(true);
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
 
-    if (!user) throw new Error("Chưa đăng nhập");
-    const res = await fetch("http://192.168.1.117:5000/data-analysic", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        account_id: user.id,
-      }),
-    });
-    const data = await res.json();
-    if (data) {
-      setEmotionStatus(data.emotion_status);
+      if (!user) throw new Error("Chưa đăng nhập");
+      const res = await fetch("http://192.168.1.117:5000/data-analysic", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          account_id: user.id,
+        }),
+      });
+      const data = await res.json();
+      if (data) {
+        setEmotionStatus(data.emotion_status);
+      }
+      Alert.alert("Thành công", "Đã phân tích tâm trạng của bạn.");
+    } catch (error) {
+      console.log(error);
+      Alert.alert("Lỗi", "Không thể phân tích tâm trạng.");
+    } finally {
+      setLoading(false);
     }
   };
   const emotion_color =
@@ -34,5 +45,5 @@ export function useEmotionAnalytics() {
   useEffect(() => {
     getAnalytics();
   }, []);
-  return { emotionStatus, emotion_color };
+  return { emotionStatus, emotion_color, loading, getAnalytics };
 }

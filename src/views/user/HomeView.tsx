@@ -47,7 +47,8 @@ export default function IndexView() {
   const { logTotal } = useTotalLogViewModel();
   const { emotion, count } = useMostEmotionViewModel();
   const { usrname } = useAccountDetailViewModel();
-  const { emotionStatus, emotion_color } = useEmotionAnalytics();
+  const { emotionStatus, emotion_color, loading, getAnalytics } =
+    useEmotionAnalytics();
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: colors.background }}
@@ -224,7 +225,7 @@ export default function IndexView() {
                 marginRight: 6,
               }}
               activeOpacity={0.85}
-              onPress={() => console.log("Start AI chat")}
+              onPress={() => router.push("/(no tabs)/Chatbot")}
             >
               <Text style={{ color: "#604FD9", fontWeight: "bold" }}>
                 Bắt đầu
@@ -248,7 +249,6 @@ export default function IndexView() {
             elevation: 3,
           }}
         >
-          {/* Header */}
           <View
             style={{
               flexDirection: "row",
@@ -319,6 +319,29 @@ export default function IndexView() {
               Dựa trên nhật ký cảm xúc của bạn
             </Text>
           </View>
+          <TouchableOpacity
+            onPress={getAnalytics}
+            disabled={loading}
+            style={{
+              marginTop: 18,
+              height: 48,
+              borderRadius: 14,
+              backgroundColor: "#604FD9",
+              justifyContent: "center",
+              alignItems: "center",
+              flexDirection: "row",
+            }}
+          >
+            <Ionicons
+              name="sparkles-outline"
+              size={18}
+              color="#FFF"
+              style={{ marginRight: 8 }}
+            />
+            <Text style={{ color: "#FFF", fontWeight: "700", fontSize: 14 }}>
+              {loading ? "Đang phân tích..." : "Xem phân tích"}
+            </Text>
+          </TouchableOpacity>
         </View>
 
         <View style={{ marginTop: 30 }}>

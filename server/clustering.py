@@ -16,6 +16,8 @@ def analytics_emotion ():
     kmeans = KMeans(n_clusters=n, random_state=42)
     labels = kmeans.fit_predict(X_scaler)
     df['cluster'] = labels
+    
+    #Sau khi train
     centers = sc.inverse_transform(kmeans.cluster_centers_)
     centers_df = pd.DataFrame(
     centers,
