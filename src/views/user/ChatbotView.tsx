@@ -1,46 +1,39 @@
-import { useDoctorDetailViewModel } from "@/src/viewmodels/DoctorViewModel";
 import { Ionicons } from "@expo/vector-icons";
-import { router, useLocalSearchParams } from "expo-router";
+import { router } from "expo-router";
 import React, { useState } from "react";
 import {
-    FlatList,
-    KeyboardAvoidingView,
-    Platform,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  FlatList,
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const messages = [
   {
     id: "1",
-    sender: "doctor",
+    sender: "chatbot",
     text: "Chào em! Dạo này em cảm thấy thế nào?",
-    time: "09:12",
   },
   {
     id: "2",
     sender: "me",
     text: "Em khá căng thẳng vì sắp thi.",
-    time: "09:13",
   },
   {
     id: "3",
-    sender: "doctor",
+    sender: "chatbot",
     text: "Đừng quá lo nhé. Hãy thử hít thở sâu và nghỉ ngơi một chút.",
-    time: "09:14",
   },
 ];
 
 export default function ChatBotView() {
   const [text, setText] = useState("");
-  const { id } = useLocalSearchParams();
-  const { doc_id } = useDoctorDetailViewModel(Number(id));
-
-  const initial = doc_id?.account_id?.username?.[0]?.toUpperCase() ?? "B";
 
   return (
     <SafeAreaView style={styles.container} edges={["top", "left", "right"]}>
@@ -51,18 +44,14 @@ export default function ChatBotView() {
         </TouchableOpacity>
 
         <View style={styles.userInfo}>
-          <View style={styles.avatar}>
-            <Text style={styles.avatarText}>{initial}</Text>
-          </View>
+          <Image
+            style={styles.avatar}
+            source={{ uri: "https://picsum.photos/seed/696/3000/2000" }}
+          ></Image>
 
           <View>
-            <Text style={styles.name}>
-              {doc_id?.account_id?.username ?? "Bác sĩ"}
-            </Text>
-            <View style={styles.statusRow}>
-              <View style={styles.onlineDot} />
-              <Text style={styles.statusText}>Đang hoạt động</Text>
-            </View>
+            <Text style={styles.name}>Chatbot</Text>
+            <View style={styles.statusRow}></View>
           </View>
         </View>
       </View>
@@ -84,9 +73,10 @@ export default function ChatBotView() {
               ]}
             >
               {!isMe && (
-                <View style={styles.smallAvatar}>
-                  <Text style={styles.smallAvatarText}>{initial}</Text>
-                </View>
+                <Image
+                  style={styles.avatar}
+                  source={{ uri: "https://picsum.photos/seed/696/3000/2000" }}
+                ></Image>
               )}
 
               <View style={{ maxWidth: "78%" }}>
@@ -102,23 +92,11 @@ export default function ChatBotView() {
                     {item.text}
                   </Text>
                 </View>
-                <Text
-                  style={[
-                    styles.time,
-                    isMe
-                      ? { textAlign: "right" }
-                      : { textAlign: "left", marginLeft: 4 },
-                  ]}
-                >
-                  {item.time}
-                </Text>
               </View>
             </View>
           );
         }}
       />
-
-      {/* Input */}
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : undefined}
         keyboardVerticalOffset={Platform.OS === "ios" ? 20 : 0}
@@ -314,6 +292,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderTopWidth: 1,
     borderColor: "#EFEFF2",
+    marginBottom: 70,
   },
 
   input: {
