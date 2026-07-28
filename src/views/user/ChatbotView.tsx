@@ -1,6 +1,7 @@
+import { useChatbotAI } from "@/src/viewmodels/ApiFlaskViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
-import React, { useState } from "react";
+import React from "react";
 import {
   FlatList,
   Image,
@@ -14,27 +15,8 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const messages = [
-  {
-    id: "1",
-    sender: "chatbot",
-    text: "Chào em! Dạo này em cảm thấy thế nào?",
-  },
-  {
-    id: "2",
-    sender: "me",
-    text: "Em khá căng thẳng vì sắp thi.",
-  },
-  {
-    id: "3",
-    sender: "chatbot",
-    text: "Đừng quá lo nhé. Hãy thử hít thở sâu và nghỉ ngơi một chút.",
-  },
-];
-
 export default function ChatBotView() {
-  const [text, setText] = useState("");
-
+  const { text, handle, messages, setText } = useChatbotAI();
   return (
     <SafeAreaView style={styles.container} edges={["top", "left", "right"]}>
       {/* Header */}
@@ -112,6 +94,7 @@ export default function ChatBotView() {
           />
 
           <TouchableOpacity
+            onPress={handle}
             style={[
               styles.sendButton,
               !text.trim() && styles.sendButtonDisabled,
