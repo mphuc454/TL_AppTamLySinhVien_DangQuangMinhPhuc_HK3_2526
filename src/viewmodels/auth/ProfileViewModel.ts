@@ -101,21 +101,38 @@ export function useAccountDetailViewModel() {
 //3. thay đổi mật khẩu tài khoản
 export function useChangePassword() {
   const [newPa, setNewPa] = useState("");
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
   const [loading, setLoading] = useState(false);
 
   const handleChangePass = async () => {
-    if (!newPa) {
-      alert("Vui lòng nhập đầy đủ mật khẩu.");
+    if (!newPa || !currentPassword || !confirmPassword) {
+      Alert.alert(
+        "Thông báo",
+        "Vui lòng không để trống các trường nhập thông tin.",
+      );
       return;
     }
     if (newPa.length < 6) {
-      alert("Mật khẩu phải có ít nhất 6 ký tự");
+      Alert.alert("Thông báo", "Mật khẩu phải có ít nhất 6 ký tự");
+      return;
+    }
+    if (currentPassword === newPa) {
+      Alert.alert(
+        "Thông báo",
+        "Mật khẩu mới không được trùng mật khẩu hiện tại",
+      );
+      return;
+    }
+    if (newPa !== confirmPassword) {
+      Alert.alert("Thông báo", "Mật khẩu xác nhận không khớp");
       return;
     }
     try {
       setLoading(true);
       await changePassword(newPa);
-      alert("Đã thay đổi mật khẩu thành công");
+      Alert.alert("Thông báo", "Bạn đã thay đổi mật khẩu thành công");
       const acc = await getAccount();
       switch (acc.role) {
         case 1:
@@ -129,13 +146,25 @@ export function useChangePassword() {
           break;
       }
       setNewPa("");
+      setConfirmPassword("");
+      setCurrentPassword("");
     } catch (error) {
       console.log(error);
+      Alert.alert("Thông báo", "Đổi mật khẩu thất bại");
     } finally {
       setLoading(false);
     }
   };
-  return { newPa, setNewPa, handleChangePass, loading };
+  return {
+    newPa,
+    setNewPa,
+    currentPassword,
+    setCurrentPassword,
+    confirmPassword,
+    setConfirmPassword,
+    handleChangePass,
+    loading,
+  };
 }
 
 export function useTakeImage(accountId: number) {
