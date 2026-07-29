@@ -21,7 +21,7 @@ def process_pdf():
     docs = loader.load()
     return docs
 
-def text_split(size=1000, overlap=200 ):
+def text_split(size=1200, overlap=200 ):
     MARKDOWN_TEMPLATE = [
     "\n#{1,6} ",
     "```\n",
@@ -77,7 +77,7 @@ def data_chatbot(user_message):
     vector_db = build_vector()
     context = retrieve_context(vector_db, user_message)
     system_prompt = (
-        "Bạn là chuyên gia tư vấn tâm lý sức khoẻ học đường. "
+        "Bạn là chuyên gia tư vấn tâm lý sức khoẻ học đường có đồng cảm và thấu hiểu. "
         "Mọi câu hỏi không liên quan sẽ từ chối trả lời hoặc kêu tôi không biết. "
         "Hãy sử dụng thông tin ngữ cảnh dưới đây (nếu có liên quan) để trả lời chính xác hơn:\n\n"
         f"{context}"
