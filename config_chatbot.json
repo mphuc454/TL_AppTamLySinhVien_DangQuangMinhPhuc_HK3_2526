@@ -1,0 +1,6 @@
+{
+    "model": "llama-3.3-70b-versatile",
+    "temperature": 0.4,
+    "top_p": 0.9,
+    "max_tokens": 512
+}

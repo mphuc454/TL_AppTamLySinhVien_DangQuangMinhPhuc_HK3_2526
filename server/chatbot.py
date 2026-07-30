@@ -1,5 +1,6 @@
 from groq import Groq
 import os
+import json
 from dotenv import load_dotenv
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import PyPDFLoader, DirectoryLoader
@@ -70,6 +71,10 @@ def retrieve_context(vectorstore, query, k=4):
     context = "\n\n".join(doc.page_content for doc in results)
     return context
 
+def load_json():
+    with open("config_chatbot.json", "r", encoding="utf-8") as f:
+        return json.load(f)
+
 def data_chatbot(user_message):
     client = Groq(
     api_key=os.environ.get("GROQ_API_KEY"),  # This is the default and can be omitted
@@ -82,9 +87,13 @@ def data_chatbot(user_message):
         "Hãy sử dụng thông tin ngữ cảnh dưới đây (nếu có liên quan) để trả lời chính xác hơn:\n\n"
         f"{context}"
     )
-    
+    config_data = load_json()
+
     chat_completion = client.chat.completions.create(
-             model="llama-3.1-8b-instant",
+             model= config_data['model'],
+             temperature=config_data['temperature'],
+             top_p=config_data['top_p'],
+             max_tokens=config_data['max_tokens'],
              messages=[
                     {"role":"system", "content": system_prompt},
                     {"role": "user", "content": user_message}
