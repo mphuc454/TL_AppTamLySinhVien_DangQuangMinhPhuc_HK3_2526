@@ -1,9 +1,6 @@
 import { useEmotionAnalytics } from "@/src/viewmodels/ApiFlaskViewModel";
 import { useAccountDetailViewModel } from "@/src/viewmodels/auth/ProfileViewModel";
-import {
-  useMostEmotionViewModel,
-  useTotalLogViewModel,
-} from "@/src/viewmodels/EmotionViewModel";
+import { useTotalLogViewModel } from "@/src/viewmodels/EmotionViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useContext } from "react";
@@ -45,7 +42,6 @@ const Data2 = [
 export default function IndexView() {
   const { colors } = useContext(ThemeContext);
   const { logTotal } = useTotalLogViewModel();
-  const { emotion, count } = useMostEmotionViewModel();
   const { usrname } = useAccountDetailViewModel();
   const { emotionStatus, emotion_color, loading, getAnalytics } =
     useEmotionAnalytics();
@@ -140,7 +136,7 @@ export default function IndexView() {
               </Text>
             </View>
           </View>
-          <View
+          {/* <View
             style={{
               flex: 1,
               padding: 15,
@@ -180,7 +176,7 @@ export default function IndexView() {
             >
               {count} lần
             </Text>
-          </View>
+          </View> */}
         </View>
 
         <View
