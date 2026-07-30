@@ -1,5 +1,7 @@
+import { useConfigChatbot } from "@/src/viewmodels/ApiFlaskViewModel";
 import { Picker } from "@react-native-picker/picker";
 import {
+  Alert,
   ScrollView,
   Text,
   TextInput,
@@ -8,6 +10,17 @@ import {
 } from "react-native";
 
 export default function AdminChatbotView() {
+  const {
+    updateConfig,
+    model,
+    setModel,
+    maxTokens,
+    setMaxTokens,
+    temperature,
+    setTemperature,
+    topP,
+    setTopP,
+  } = useConfigChatbot();
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: "#F5F7FB" }}
@@ -54,8 +67,8 @@ export default function AdminChatbotView() {
             alignItems: "center",
             flexDirection: "row",
           }}
-          // selectedValue={gender}
-          // onValueChange={(value) => setGender(value)}
+          selectedValue={model}
+          onValueChange={(value) => setModel(value)}
         >
           <Picker.Item
             label="llama-3.1-8b-instant"
@@ -92,8 +105,8 @@ export default function AdminChatbotView() {
               flexDirection: "row",
               marginBottom: 30,
             }}
-            // selectedValue={gender}
-            // onValueChange={(value) => setGender(value)}
+            selectedValue={temperature}
+            onValueChange={(value) => setTemperature(Number(value))}
           >
             <Picker.Item label="0.3" value="0.3" />
             <Picker.Item label="0.4" value="0.4" />
@@ -114,8 +127,8 @@ export default function AdminChatbotView() {
               flexDirection: "row",
               marginBottom: 30,
             }}
-            // selectedValue={gender}
-            // onValueChange={(value) => setGender(value)}
+            selectedValue={topP}
+            onValueChange={(value) => setTopP(Number(value))}
           >
             <Picker.Item label="0.8" value="0.8" />
             <Picker.Item label="0.9" value="0.9" />
@@ -136,8 +149,8 @@ export default function AdminChatbotView() {
               flexDirection: "row",
               marginBottom: 30,
             }}
-            // selectedValue={gender}
-            // onValueChange={(value) => setGender(value)}
+            selectedValue={maxTokens}
+            onValueChange={(value) => setMaxTokens(Number(value))}
           >
             <Picker.Item label="256" value="256" />
             <Picker.Item label="512" value="512" />
@@ -146,6 +159,15 @@ export default function AdminChatbotView() {
         </View>
 
         <TouchableOpacity
+          onPress={async () => {
+            try {
+              await updateConfig(model, temperature, topP, maxTokens);
+              Alert.alert("Thành công", "Đã cập nhật cấu hình chatbot.");
+            } catch (error) {
+              Alert.alert("Lỗi", "Không thể cập nhật cấu hình.");
+              console.log(error);
+            }
+          }}
           style={{
             backgroundColor: "#2563EB",
             marginTop: 20,
