@@ -76,33 +76,8 @@ export const totalEmotionLog = async () => {
   }
   return count ?? 0;
 };
-//6.Thống kê cảm xúc ghi nhận nhiều nhất
-export const mostEmotion = async () => {
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) {
-    throw new Error("Chưa đăng nhập");
-  }
-  const { data, error } = await supabase
-    .from("emotion_logs")
-    .select(
-      `*, emotions(
-        id,
-        name,
-        icon,
-        color
-      )
-    `,
-    )
-    .eq("account_id", user.id);
-  if (error) {
-    throw error;
-  }
-  return data;
-};
 
-//7.Thống kê toàn bộ biểu cảm của nhật ký của user by id:
+//6.Thống kê toàn bộ biểu cảm của nhật ký của user by id:
 export const totalEmotion = async (userId: string) => {
   const { data, error } = await supabase
     .from("emotion_logs")

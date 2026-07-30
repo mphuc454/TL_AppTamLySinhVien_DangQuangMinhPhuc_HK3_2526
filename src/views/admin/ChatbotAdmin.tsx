@@ -1,13 +1,6 @@
 import { useConfigChatbot } from "@/src/viewmodels/ApiFlaskViewModel";
 import { Picker } from "@react-native-picker/picker";
-import {
-  Alert,
-  ScrollView,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Alert, ScrollView, Text, TouchableOpacity, View } from "react-native";
 
 export default function AdminChatbotView() {
   const {
@@ -21,10 +14,11 @@ export default function AdminChatbotView() {
     topP,
     setTopP,
   } = useConfigChatbot();
+
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: "#F5F7FB" }}
-      contentContainerStyle={{ paddingBottom: 100 }}
+      contentContainerStyle={{ paddingBottom: 80 }}
     >
       <Text
         style={{
@@ -180,71 +174,6 @@ export default function AdminChatbotView() {
             Lưu cấu hình
           </Text>
         </TouchableOpacity>
-      </View>
-
-      <View
-        style={{
-          backgroundColor: "#fff",
-          borderRadius: 15,
-          padding: 16,
-          marginBottom: 30,
-        }}
-      >
-        <Text
-          style={{
-            fontSize: 18,
-            fontWeight: "bold",
-            marginBottom: 15,
-          }}
-        >
-          Hỏi Chatbot
-        </Text>
-
-        <TextInput
-          placeholder="Ask chatbot..."
-          multiline
-          style={{
-            borderWidth: 1,
-            borderColor: "#ddd",
-            borderRadius: 12,
-            minHeight: 90,
-            padding: 12,
-            marginBottom: 15,
-          }}
-        />
-
-        <TouchableOpacity
-          style={{
-            backgroundColor: "#2563EB",
-            padding: 15,
-            borderRadius: 12,
-            alignItems: "center",
-          }}
-        >
-          <Text
-            style={{
-              color: "white",
-              fontWeight: "bold",
-            }}
-          >
-            Gửi
-          </Text>
-        </TouchableOpacity>
-
-        <View
-          style={{
-            borderWidth: 1,
-            borderColor: "#ddd",
-            borderRadius: 16,
-            minHeight: 90,
-            padding: 12,
-            marginTop: 15,
-          }}
-        >
-          <Text style={{ fontWeight: "bold" }}>Phản hồi Chatbot: </Text>
-
-          <Text style={{ marginTop: 10, color: "#666" }}></Text>
-        </View>
       </View>
     </ScrollView>
   );

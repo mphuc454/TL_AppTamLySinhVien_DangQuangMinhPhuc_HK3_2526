@@ -27,10 +27,9 @@ export function useEmotionAnalytics() {
       if (data) {
         setEmotionStatus(data.emotion_status);
       }
-      Alert.alert("Thành công", "Đã phân tích tâm trạng của bạn.");
+      console.log("Phân tích thành công ");
     } catch (error) {
       console.log(error);
-      Alert.alert("Lỗi", "Không thể phân tích tâm trạng.");
     } finally {
       setLoading(false);
     }
