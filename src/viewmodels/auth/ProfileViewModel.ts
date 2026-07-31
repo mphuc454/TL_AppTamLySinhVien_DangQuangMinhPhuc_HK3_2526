@@ -2,6 +2,7 @@ import {
   changePassword,
   getAccount,
   logout,
+  verifyCurrentPassword,
 } from "@/src/repository/auth/AuthRepository";
 import {
   getAccountById,
@@ -131,6 +132,11 @@ export function useChangePassword() {
     }
     try {
       setLoading(true);
+      const isValid = await verifyCurrentPassword(currentPassword);
+      if (!isValid) {
+        Alert.alert("Thông báo", "Mật khẩu hiện tại không đúng");
+        return;
+      }
       await changePassword(newPa);
       Alert.alert("Thông báo", "Bạn đã thay đổi mật khẩu thành công");
       const acc = await getAccount();
@@ -148,7 +154,8 @@ export function useChangePassword() {
       setNewPa("");
       setConfirmPassword("");
       setCurrentPassword("");
-    } catch (error) {
+    } catch (error: any) {
+      Alert.alert("Thông báo", error.message);
       console.log(error);
       Alert.alert("Thông báo", "Đổi mật khẩu thất bại");
     } finally {
@@ -167,6 +174,7 @@ export function useChangePassword() {
   };
 }
 
+//4. Lấy ảnh tài khoản bác sĩ
 export function useTakeImage(accountId: number) {
   const [image, setImage] = useState<string | null>(null);
 
