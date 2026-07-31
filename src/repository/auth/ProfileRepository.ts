@@ -118,7 +118,7 @@ export const totalUserByYear = async () => {
   }));
 };
 
-//8. upload ảnh vào supabase storage
+//8. upload ảnh vào supabase storage của doctor
 export const uploadDoctorImage = async (imageUri: string, doctorId: number) => {
   const response = await fetch(imageUri);
   const arrayBuffer = await response.arrayBuffer();

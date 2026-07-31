@@ -165,3 +165,27 @@ export const getExpoToken = async (accountId: number) => {
 
   return data?.expo_push_token;
 };
+
+// 9. Xác nhận mật khẩu
+export const verifyCurrentPassword = async (
+  currentPassword: string,
+): Promise<boolean> => {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user || !user.email) {
+    throw new Error("Không tìm thấy người dùng");
+  }
+
+  const { error } = await supabase.auth.signInWithPassword({
+    email: user.email,
+    password: currentPassword,
+  });
+
+  if (error) {
+    return false;
+  }
+
+  return true;
+};
