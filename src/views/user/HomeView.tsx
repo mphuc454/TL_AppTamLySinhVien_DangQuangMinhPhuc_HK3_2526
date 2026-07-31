@@ -136,47 +136,6 @@ export default function IndexView() {
               </Text>
             </View>
           </View>
-          {/* <View
-            style={{
-              flex: 1,
-              padding: 15,
-              backgroundColor: colors.cardBackground,
-              borderRadius: 16,
-            }}
-          >
-            <Text
-              style={{
-                fontWeight: "bold",
-                color: colors.text,
-                fontSize: 14,
-                textAlign: "center",
-              }}
-            >
-              Cảm xúc nhiều nhất
-            </Text>
-            <View style={{ alignItems: "center", gap: 10 }}>
-              <Text
-                style={{
-                  fontSize: 37,
-                  fontWeight: "bold",
-                  color: colors.text,
-                  textAlign: "center",
-                }}
-              >
-                {emotion?.name ?? "Không có"}
-              </Text>
-            </View>
-            <Text
-              style={{
-                fontSize: 10,
-                fontWeight: "semibold",
-                color: colors.text,
-                textAlign: "center",
-              }}
-            >
-              {count} lần
-            </Text>
-          </View> */}
         </View>
 
         <View
@@ -285,6 +244,25 @@ export default function IndexView() {
                 </Text>
               </View>
             </View>
+          </View>
+          <View>
+            <Text
+              style={{
+                marginTop: 16,
+                padding: 12,
+                backgroundColor: "#FFF8E1",
+                borderLeftWidth: 4,
+                borderLeftColor: "#F59E0B",
+                color: "#92400E",
+                fontSize: 14,
+                lineHeight: 22,
+                borderRadius: 8,
+                textAlign: "justify",
+              }}
+            >
+              Xin lưu ý: đây chỉ có tính chất tham khảo. Nếu bạn gặp vấn đề xin
+              vui lòng liên hệ đến bác sĩ để tư vấn tâm lý.
+            </Text>
           </View>
           <View
             style={{
