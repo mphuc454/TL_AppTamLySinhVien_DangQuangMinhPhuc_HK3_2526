@@ -63,37 +63,6 @@ export default function IndexView() {
           Chào bạn {usrname}, gửi lời chào đến bạn với tràn đầy năng lượng nào!
         </Text>
 
-        <View
-          style={{
-            marginTop: 30,
-            backgroundColor: colors.cardBackground,
-            borderRadius: 20,
-            padding: 10,
-            minHeight: 100,
-            flexDirection: "row",
-            alignItems: "center",
-          }}
-        >
-          <View style={{ flex: 5, alignItems: "center" }}>
-            <Text
-              style={{
-                fontSize: 14,
-                color: colors.textSecondary,
-                textAlign: "center",
-              }}
-            >
-              “It is better to conquer yourself than to win a thousand battles”
-            </Text>
-          </View>
-          <View style={{ flex: 1, alignItems: "center" }}>
-            <Ionicons
-              name="chatbubble-ellipses-outline"
-              size={35}
-              color={colors.borderColor}
-            />
-          </View>
-        </View>
-
         <View style={{ marginTop: 30, flexDirection: "row", gap: 9 }}>
           <View
             style={{

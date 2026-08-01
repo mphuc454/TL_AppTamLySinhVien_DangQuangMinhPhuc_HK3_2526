@@ -44,32 +44,10 @@ export default function EmergencyCallView() {
             color: colors.text,
           }}
         >
-          Các cuộc gọi khẩn cấp
+          Quản lý cuộc gọi tới Bác sĩ
         </Text>
       </View>
-      <View style={{ marginTop: 30 }}>
-        <Text style={{ color: colors.text }}>ĐƯỜNG DÂY NÓNG QUỐC GIA:</Text>
-        <TouchableOpacity
-          style={{
-            marginTop: 10,
-            backgroundColor: "#C0392B",
-            borderRadius: 22,
-            padding: 12,
-            flexDirection: "row",
-            alignItems: "center",
-          }}
-        >
-          <View style={{ flex: 1 }}>
-            <Text style={{ color: "#fff", fontWeight: "semibold" }}>
-              Tổng đài tư vấn tâm lý 1800-1567
-            </Text>
-            <Text style={{ marginTop: 10 }}>Miễn phí · Hoạt động 24/7</Text>
-          </View>
-          <View style={{ width: 70, alignItems: "center" }}>
-            <Ionicons name="call" size={30}></Ionicons>
-          </View>
-        </TouchableOpacity>
-      </View>
+
       <View style={{ marginTop: 30 }}>
         <Text style={{ color: colors.text }}>DANH SÁCH CUỘC GỌI ĐƯỢC LƯU:</Text>
         {emergencyList.length <= 0 ? (
