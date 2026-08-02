@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 import json
 
-from clustering import analytics_emotion
+from analyst import analytics_emotion
 from chatbot import data_chatbot
 app = Flask(__name__)
 CORS(app) 

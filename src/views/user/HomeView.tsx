@@ -209,7 +209,7 @@ export default function IndexView() {
                     color: colors.text,
                   }}
                 >
-                  Phân tích tâm trạng từ AI
+                  Phân tích tâm trạng
                 </Text>
               </View>
             </View>
