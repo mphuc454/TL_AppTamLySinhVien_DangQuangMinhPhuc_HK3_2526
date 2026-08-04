@@ -44,18 +44,37 @@ export default function FormEditView() {
             fontWeight: "bold",
           }}
         >
-          Bổ sung thông tin bác sĩ
+          Chuyên môn của bác sĩ
         </Text>
       </View>
 
       <View style={styles.group}>
-        <Text style={styles.label}>Nhập chuyên ngành</Text>
-        <TextInput
-          placeholder="Nhập chuyên ngành của bác sĩ"
-          value={specialization}
-          onChangeText={setSpecialization}
-          style={styles.input}
-        />
+        <Text style={styles.label}>Chọn chuyên ngành</Text>
+        <Picker
+          style={{
+            backgroundColor: "#fff",
+            borderRadius: 12,
+            borderWidth: 1,
+            borderColor: "#E5E7EB",
+            height: 55,
+            paddingHorizontal: 16,
+            justifyContent: "space-between",
+            alignItems: "center",
+            flexDirection: "row",
+          }}
+          selectedValue={specialization}
+          onValueChange={(value) => setSpecialization(value)}
+        >
+          <Picker.Item label="Tâm lý sức khỏe" value="Tâm lý sức khỏe" />
+          <Picker.Item label="Tâm lý lâm sàng" value="Tâm lý lâm sàng" />
+          <Picker.Item label="Tư vấn tâm lý" value="Tư vấn tâm lý" />
+          <Picker.Item
+            label="Tâm lý trẻ em và vị thành niên"
+            value="Tâm lý trẻ em và vị thành niên"
+          />
+          <Picker.Item label="Tâm lý học đường" value="Tâm lý học đường" />
+          <Picker.Item label="Khác" value="Khác" />
+        </Picker>
       </View>
 
       <View style={styles.group}>

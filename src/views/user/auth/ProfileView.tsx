@@ -179,9 +179,9 @@ export default function ProfileView() {
           selectedValue={gender}
           onValueChange={(value) => setGender(value)}
         >
-          <Picker.Item label="Chọn giới tính" value="" />
-          <Picker.Item label="Nam" value="Nam" />
-          <Picker.Item label="Nữ" value="Nữ" />
+          <Picker.Item label="Khác" value="KHÁC" />
+          <Picker.Item label="Nam" value="NAM" />
+          <Picker.Item label="Nữ" value="NỮ" />
         </Picker>
       </View>
       <View
