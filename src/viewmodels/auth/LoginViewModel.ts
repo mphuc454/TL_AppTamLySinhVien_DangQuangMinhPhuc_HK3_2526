@@ -1,5 +1,3 @@
-// import { registerForPushNotificationsAsync } from "@/src/lib/Push";
-// import { supabase } from "@/src/lib/supabase";
 import {
   getAccount,
   hasAccount,
