@@ -4,7 +4,6 @@ export interface Account {
   id: number;
   user_id: User;
   username: string;
-  birth_date: number;
   gender: string;
   role: number;
   created_at: string;
