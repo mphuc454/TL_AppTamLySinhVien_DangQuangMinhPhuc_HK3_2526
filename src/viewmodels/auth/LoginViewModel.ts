@@ -11,7 +11,6 @@ export function useLoginViewModel() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  // const [confirmPassword, setConfirmPassword] = useState("");
   const validate = () => {
     if (!email.trim()) {
       alert("Vui lòng nhập email.");
