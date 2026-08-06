@@ -81,7 +81,9 @@ export default function ArticleView() {
         {categoryArticles.map((item) => (
           <TouchableOpacity
             key={item.id}
-            onPress={() => setSelectedCategory(item.id)}
+            onPress={() =>
+              setSelectedCategory(selectedCategory === item.id ? null : item.id)
+            }
             style={{
               backgroundColor: "#D9D9D9",
               paddingHorizontal: 12,
