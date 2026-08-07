@@ -4,10 +4,9 @@ import { useTotalLogViewModel } from "@/src/viewmodels/EmotionViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useContext } from "react";
-import { Animated, Text, TouchableOpacity, View } from "react-native";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { ThemeContext } from "../theme/ThemeContext";
 
-const ScrollView = Animated.ScrollView;
 const Data2 = [
   {
     id: 1,
@@ -63,47 +62,174 @@ export default function IndexView() {
           Chào bạn {usrname}, gửi lời chào đến bạn với tràn đầy năng lượng nào!
         </Text>
 
-        <View style={{ marginTop: 30, flexDirection: "row", gap: 9 }}>
+        <View
+          style={{
+            marginTop: 30,
+            flexDirection: "row",
+            flexWrap: "wrap",
+            justifyContent: "space-between",
+            rowGap: 10,
+          }}
+        >
           <View
             style={{
-              flex: 1,
-              padding: 15,
+              width: "48%",
               backgroundColor: colors.cardBackground,
               borderRadius: 16,
+              padding: 15,
+              alignItems: "center",
             }}
           >
             <Text
               style={{
+                fontSize: 14,
+                fontWeight: "bold",
+                textAlign: "center",
+                color: colors.text,
+              }}
+            >
+              Tổng số nhật ký
+            </Text>
+            <Text
+              style={{
+                marginTop: 8,
+                fontSize: 36,
                 fontWeight: "bold",
                 color: colors.text,
-                fontSize: 14,
                 textAlign: "center",
               }}
             >
-              Số lần ghi nhật ký
+              {logTotal}
             </Text>
-            <View style={{ alignItems: "center", gap: 10 }}>
-              <Text
-                style={{
-                  fontSize: 37,
-                  fontWeight: "bold",
-                  color: colors.text,
-                  textAlign: "center",
-                }}
-              >
-                {logTotal}
-              </Text>
-              <Text
-                style={{
-                  fontSize: 10,
-                  fontWeight: "semibold",
-                  color: colors.text,
-                  textAlign: "center",
-                }}
-              >
-                lượt ghi nhận
-              </Text>
-            </View>
+            <Text
+              style={{
+                fontSize: 11,
+                color: colors.text,
+                opacity: 0.7,
+                textAlign: "center",
+              }}
+            >
+              lượt ghi nhận
+            </Text>
+          </View>
+
+          <View
+            style={{
+              width: "48%",
+              backgroundColor: colors.cardBackground,
+              borderRadius: 16,
+              padding: 15,
+              alignItems: "center",
+            }}
+          >
+            <Text
+              style={{
+                fontSize: 14,
+                fontWeight: "bold",
+                textAlign: "center",
+                color: colors.text,
+              }}
+            >
+              Ngày ghi gần nhất
+            </Text>
+            {/* <Text style={{marginTop: 8,
+                fontSize: 36,
+                fontWeight: "bold",
+                color: colors.text,
+                textAlign: "center",}}>{lastLogDate}</Text> */}
+            <Text
+              style={{
+                marginTop: 8,
+                fontSize: 11,
+                color: colors.text,
+                opacity: 0.7,
+                textAlign: "center",
+              }}
+            >
+              lần cập nhật cuối
+            </Text>
+          </View>
+
+          {/* Tâm trạng nhiều nhất */}
+          <View
+            style={{
+              width: "48%",
+              backgroundColor: colors.cardBackground,
+              borderRadius: 16,
+              padding: 15,
+              alignItems: "center",
+            }}
+          >
+            <Text
+              style={{
+                fontSize: 14,
+                fontWeight: "bold",
+                textAlign: "center",
+                color: colors.text,
+              }}
+            >
+              Tâm trạng nhiều nhất
+            </Text>
+            {/* <Text style={{
+            marginTop: 8,
+                fontSize: 36,
+                fontWeight: "bold",
+                color: colors.text,
+                textAlign: "center",}}>{topEmotion}</Text> */}
+            <Text
+              style={{
+                marginTop: 8,
+                fontSize: 11,
+                color: colors.text,
+                opacity: 0.7,
+                textAlign: "center",
+              }}
+            >
+              được ghi nhận nhiều nhất
+            </Text>
+          </View>
+
+          <View
+            style={{
+              width: "48%",
+              backgroundColor: colors.cardBackground,
+              borderRadius: 16,
+              padding: 15,
+              alignItems: "center",
+            }}
+          >
+            <Text
+              style={{
+                fontSize: 14,
+                fontWeight: "bold",
+                textAlign: "center",
+                color: colors.text,
+              }}
+            >
+              Hôm nay
+            </Text>
+            <Text
+              style={{
+                marginTop: 8,
+                fontSize: 18,
+                fontWeight: "bold",
+                color: colors.text,
+                textAlign: "center",
+              }}
+            >
+              {new Date().toLocaleDateString("vi-VN")}
+            </Text>
+            <Text
+              style={{
+                marginTop: 8,
+                fontSize: 11,
+                color: colors.text,
+                opacity: 0.7,
+                textAlign: "center",
+              }}
+            >
+              ngày hiện tại
+            </Text>
           </View>
         </View>
 
