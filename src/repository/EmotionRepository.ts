@@ -94,3 +94,42 @@ export const totalEmotion = async (userId: string) => {
 
   return { tichcuc, binhthan, loau, buonba, giandu };
 };
+
+//7.Thống kê ngày ghi nhật ký gần nhất:
+export const getLastEmotionLogDate = async () => {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) {
+    throw new Error("Chưa đăng nhập");
+  }
+  const { data, error } = await supabase
+    .from("emotion_logs")
+    .select("created_at")
+    .eq("account_id", user.id)
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  if (error) throw error;
+  return data?.created_at || null;
+};
+
+//8.Thống kê nhật ký nhiều nhất:
+export const getMostEmotionLog = async () => {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) {
+    throw new Error("Chưa đăng nhập");
+  }
+  const { data, error } = await supabase
+    .from("emotion_stat")
+    .select("name")
+    .eq("account_id", user.id)
+    .order("total", { ascending: false })
+    .order("last_log", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  if (error) throw error;
+  return data?.name || null;
+};

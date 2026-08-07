@@ -1,5 +1,5 @@
 import { router, useFocusEffect } from "expo-router";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Alert } from "react-native";
 import { Emotion } from "../models/Emotion";
 import { EmotionLog } from "../models/EmotionLog";
@@ -7,6 +7,8 @@ import {
   deleteEmotionLog,
   getAllEmotion,
   getEmotionLog,
+  getLastEmotionLogDate,
+  getMostEmotionLog,
   insertEmotionLog,
   totalEmotionLog,
 } from "../repository/EmotionRepository";
@@ -154,4 +156,50 @@ export function useTotalLogViewModel() {
     }, []),
   );
   return { logTotal, loading };
+}
+
+export function useLastEmotionLogDate() {
+  const [lastDate, setLastDate] = useState<string | null>(null);
+  const loadLastDate = useCallback(async () => {
+    try {
+      const date = await getLastEmotionLogDate();
+      if (date) {
+        setLastDate(new Date(date).toLocaleDateString("vi-VN"));
+      } else {
+        setLastDate("Chưa có");
+      }
+    } catch (error) {
+      console.log(error);
+      setLastDate("Chưa có");
+    }
+  }, []);
+
+  useEffect(() => {
+    loadLastDate();
+  }, [loadLastDate]);
+
+  return { lastDate };
+}
+
+export function useMostEmotionLog() {
+  const [mostEmotion, setMostEmotion] = useState<string | null>(null);
+  const loadEmotion = useCallback(async () => {
+    try {
+      const data = await getMostEmotionLog();
+      if (data) {
+        setMostEmotion(data);
+      } else {
+        setMostEmotion("Chưa có");
+      }
+    } catch (error) {
+      console.log(error);
+      setMostEmotion("Chưa có");
+    }
+  }, []);
+
+  useEffect(() => {
+    loadEmotion();
+  }, [loadEmotion]);
+
+  return { mostEmotion };
 }
