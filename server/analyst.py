@@ -3,9 +3,9 @@ import pandas as pd
 from database.supabase_python import data_supabase
 
 def rule_based(avg_sentiment):
-    if avg_sentiment >= 0.2:
+    if avg_sentiment >= 0.6:
         return "Ổn định"
-    elif avg_sentiment >= -2:
+    elif avg_sentiment >= -1:
         return "Cần theo dõi"
     else:
         return "Nghiêm trọng"
