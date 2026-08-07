@@ -1,6 +1,10 @@
 import { useEmotionAnalytics } from "@/src/viewmodels/ApiFlaskViewModel";
 import { useAccountDetailViewModel } from "@/src/viewmodels/auth/ProfileViewModel";
-import { useTotalLogViewModel } from "@/src/viewmodels/EmotionViewModel";
+import {
+  useLastEmotionLogDate,
+  useMostEmotionLog,
+  useTotalLogViewModel,
+} from "@/src/viewmodels/EmotionViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useContext } from "react";
@@ -44,6 +48,8 @@ export default function IndexView() {
   const { usrname } = useAccountDetailViewModel();
   const { emotionStatus, emotion_color, loading, getAnalytics } =
     useEmotionAnalytics();
+  const { lastDate } = useLastEmotionLogDate();
+  const { mostEmotion } = useMostEmotionLog();
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: colors.background }}
@@ -130,13 +136,19 @@ export default function IndexView() {
                 color: colors.text,
               }}
             >
-              Ngày ghi gần nhất
+              Ngày ghi nhật ký gần nhất
             </Text>
-            {/* <Text style={{marginTop: 8,
+            <Text
+              style={{
+                marginTop: 8,
                 fontSize: 36,
                 fontWeight: "bold",
                 color: colors.text,
-                textAlign: "center",}}>{lastLogDate}</Text> */}
+                textAlign: "center",
+              }}
+            >
+              {lastDate}
+            </Text>
             <Text
               style={{
                 marginTop: 8,
@@ -168,14 +180,19 @@ export default function IndexView() {
                 color: colors.text,
               }}
             >
-              Tâm trạng nhiều nhất
+              Tâm trạng nhật ký nhiều nhất
             </Text>
-            {/* <Text style={{
-            marginTop: 8,
+            <Text
+              style={{
+                marginTop: 8,
                 fontSize: 36,
                 fontWeight: "bold",
                 color: colors.text,
-                textAlign: "center",}}>{topEmotion}</Text> */}
+                textAlign: "center",
+              }}
+            >
+              {mostEmotion}
+            </Text>
             <Text
               style={{
                 marginTop: 8,
@@ -211,7 +228,7 @@ export default function IndexView() {
             <Text
               style={{
                 marginTop: 8,
-                fontSize: 18,
+                fontSize: 36,
                 fontWeight: "bold",
                 color: colors.text,
                 textAlign: "center",
