@@ -67,7 +67,17 @@ export default function IndexView() {
         <Text style={{ fontSize: 18, fontWeight: "bold", color: colors.text }}>
           Chào bạn {usrname}, gửi lời chào đến bạn với tràn đầy năng lượng nào!
         </Text>
-
+        <Text
+          style={{
+            marginTop: 25,
+            marginBottom: 5,
+            fontSize: 20,
+            fontWeight: "bold",
+            color: "#0bd80e",
+          }}
+        >
+          Tổng quan ghi nhật ký:
+        </Text>
         <View
           style={{
             marginTop: 30,
@@ -162,7 +172,6 @@ export default function IndexView() {
             </Text>
           </View>
 
-          {/* Tâm trạng nhiều nhất */}
           <View
             style={{
               width: "48%",
@@ -249,7 +258,17 @@ export default function IndexView() {
             </Text>
           </View>
         </View>
-
+        <Text
+          style={{
+            marginTop: 25,
+            marginBottom: 5,
+            fontSize: 20,
+            fontWeight: "bold",
+            color: "#0bd80e",
+          }}
+        >
+          Trò chuyện với chatbot AI:
+        </Text>
         <View
           style={{
             marginTop: 30,
@@ -301,6 +320,17 @@ export default function IndexView() {
           </View>
         </View>
 
+        <Text
+          style={{
+            marginTop: 25,
+            marginBottom: 5,
+            fontSize: 20,
+            fontWeight: "bold",
+            color: "#0bd80e",
+          }}
+        >
+          Phân tích tâm trạng của bạn:
+        </Text>
         <View
           style={{
             marginTop: 18,
@@ -429,8 +459,18 @@ export default function IndexView() {
             </Text>
           </TouchableOpacity>
         </View>
-
-        <View style={{ marginTop: 30 }}>
+        <Text
+          style={{
+            marginTop: 25,
+            marginBottom: 5,
+            fontSize: 20,
+            fontWeight: "bold",
+            color: "#0bd80e",
+          }}
+        >
+          Khám phá & thư giãn:
+        </Text>
+        <View style={{ marginTop: 8 }}>
           <View
             style={{
               marginTop: 30,
