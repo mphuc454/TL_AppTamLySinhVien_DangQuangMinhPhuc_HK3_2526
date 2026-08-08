@@ -1,7 +1,7 @@
 import { useLoginViewModel } from "@/src/viewmodels/auth/LoginViewModel";
 import { Feather, Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ThemeContext } from "../../theme/ThemeContext";
@@ -9,6 +9,8 @@ export default function LoginView() {
   const { colors } = useContext(ThemeContext);
   const { email, setEmail, password, setPassword, loading, handleLogin } =
     useLoginViewModel();
+  const [showPassword, setShowPassword] = useState(false);
+
   return (
     <SafeAreaView
       style={{
@@ -98,13 +100,16 @@ export default function LoginView() {
           <TextInput
             value={password}
             onChangeText={setPassword}
-            secureTextEntry
+            secureTextEntry={!showPassword}
             autoCapitalize="none"
             style={{ flex: 1 }}
             placeholder="Nhập mật khẩu"
           ></TextInput>
-          <TouchableOpacity>
-            <Feather name={"eye"} size={20}></Feather>
+          <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+            <Feather
+              name={showPassword ? "eye" : "eye-off"}
+              size={20}
+            ></Feather>
           </TouchableOpacity>
         </View>
       </View>

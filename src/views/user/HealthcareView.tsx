@@ -52,12 +52,14 @@ export default function HealthcareView() {
         >
           <Text
             style={{
-              fontSize: 16,
+              marginTop: 25,
+              marginBottom: 5,
+              fontSize: 20,
               fontWeight: "bold",
-              color: colors.text,
+              color: "#0bd80e",
             }}
           >
-            Ghi nhật ký tâm trạng hôm nay
+            Ghi nhật ký tâm trạng của bạn
           </Text>
           <View
             style={{
@@ -150,7 +152,13 @@ export default function HealthcareView() {
             }}
           >
             <Text
-              style={{ fontSize: 16, fontWeight: "bold", color: colors.text }}
+              style={{
+                marginTop: 25,
+                marginBottom: 5,
+                fontSize: 20,
+                fontWeight: "bold",
+                color: "#0bd80e",
+              }}
             >
               Nhật ký gần đây:
             </Text>
@@ -162,6 +170,7 @@ export default function HealthcareView() {
                   fontSize: 11,
                   color: "#3514C6",
                   fontWeight: "regular",
+                  marginTop: 25,
                 }}
               >
                 Xem tất cả
@@ -240,7 +249,13 @@ export default function HealthcareView() {
             }}
           >
             <Text
-              style={{ fontSize: 16, fontWeight: "bold", color: colors.text }}
+              style={{
+                marginTop: 25,
+                marginBottom: 5,
+                fontSize: 20,
+                fontWeight: "bold",
+                color: "#0bd80e",
+              }}
             >
               Nghe nhạc thư giãn:
             </Text>
@@ -250,6 +265,7 @@ export default function HealthcareView() {
                   fontSize: 11,
                   color: "#3514C6",
                   fontWeight: "regular",
+                  marginTop: 25,
                 }}
               >
                 Xem tất cả
@@ -335,9 +351,15 @@ export default function HealthcareView() {
             }}
           >
             <Text
-              style={{ fontSize: 16, fontWeight: "bold", color: colors.text }}
+              style={{
+                marginTop: 25,
+                marginBottom: 5,
+                fontSize: 20,
+                fontWeight: "bold",
+                color: "#0bd80e",
+              }}
             >
-              Bài tập gợi ý cho bạn:
+              Bài tập cải thiện sức khoẻ tinh thần:
             </Text>
             <TouchableOpacity
               onPress={() => router.push("/(no tabs)/Exercises")}
@@ -347,6 +369,7 @@ export default function HealthcareView() {
                   fontSize: 11,
                   color: "#3514C6",
                   fontWeight: "regular",
+                  marginTop: 25,
                 }}
               >
                 Xem tất cả
