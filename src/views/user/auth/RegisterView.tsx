@@ -1,7 +1,7 @@
 import { useRegisterViewModel } from "@/src/viewmodels/auth/RegisterViewModel";
 import { Feather, Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ThemeContext } from "../../theme/ThemeContext";
@@ -20,6 +20,8 @@ export default function RegisterView() {
     setConfirmPassword,
     handleRegister,
   } = useRegisterViewModel();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   return (
     <SafeAreaView
       style={{
@@ -47,7 +49,7 @@ export default function RegisterView() {
             color: colors.text,
           }}
         >
-          Tạo tài khoản
+          Đăng ký tài khoản
         </Text>
       </View>
       <View
@@ -65,7 +67,7 @@ export default function RegisterView() {
           value={username}
           onChangeText={setUsername}
           style={{ flex: 1 }}
-          placeholder="Nhập tên của bạn"
+          placeholder="Nhập họ và tên của bạn"
         ></TextInput>
       </View>
       <View
@@ -122,13 +124,13 @@ export default function RegisterView() {
         <TextInput
           value={password}
           onChangeText={setPassword}
-          secureTextEntry
+          secureTextEntry={!showPassword}
           autoCapitalize="none"
           style={{ flex: 1 }}
           placeholder="Nhập mật khẩu của bạn"
         ></TextInput>
-        <TouchableOpacity>
-          <Feather name={"eye"} size={20}></Feather>
+        <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+          <Feather name={showPassword ? "eye" : "eye-off"} size={20}></Feather>
         </TouchableOpacity>
       </View>
       <View
@@ -139,12 +141,10 @@ export default function RegisterView() {
         <Text style={{ fontSize: 12, marginBottom: 10, color: colors.text }}>
           Xác nhận mật khẩu
         </Text>
-        <TextInput
-          value={confirmPassword}
-          onChangeText={setConfirmPassword}
-          secureTextEntry
-          autoCapitalize="none"
+        <View
           style={{
+            flexDirection: "row",
+            alignItems: "center",
             backgroundColor: "#FFF",
             borderWidth: 1,
             borderColor: "#E5E5E5",
@@ -152,7 +152,25 @@ export default function RegisterView() {
             height: 52,
             paddingHorizontal: 12,
           }}
-        ></TextInput>
+        >
+          <TextInput
+            value={confirmPassword}
+            onChangeText={setConfirmPassword}
+            secureTextEntry={!showConfirmPassword}
+            autoCapitalize="none"
+            style={{
+              flex: 1,
+            }}
+          ></TextInput>
+          <TouchableOpacity
+            onPress={() => setShowConfirmPassword(!showConfirmPassword)}
+          >
+            <Feather
+              name={showConfirmPassword ? "eye" : "eye-off"}
+              size={20}
+            ></Feather>
+          </TouchableOpacity>
+        </View>
       </View>
       <TouchableOpacity
         onPress={handleRegister}
