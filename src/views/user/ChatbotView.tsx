@@ -28,7 +28,9 @@ export default function ChatBotView() {
         <View style={styles.userInfo}>
           <Image
             style={styles.avatar}
-            source={{ uri: "https://picsum.photos/seed/696/3000/2000" }}
+            source={{
+              uri: "https://rmzjhiftwntkrcygnrww.supabase.co/storage/v1/object/public/Chatbot%20AI/alexandra_koch-robot-7720755_1920.png",
+            }}
           ></Image>
 
           <View>
@@ -57,7 +59,9 @@ export default function ChatBotView() {
               {!isMe && (
                 <Image
                   style={styles.avatar}
-                  source={{ uri: "https://picsum.photos/seed/696/3000/2000" }}
+                  source={{
+                    uri: "https://rmzjhiftwntkrcygnrww.supabase.co/storage/v1/object/public/Chatbot%20AI/alexandra_koch-robot-7720755_1920.png",
+                  }}
                 ></Image>
               )}
 

@@ -29,7 +29,7 @@ export default function InputUsrView() {
         <Text style={styles.label}>Tên</Text>
         <TextInput
           style={styles.input}
-          placeholder="Nhập tên của bạn"
+          placeholder="Nhập tên tài khoản của bạn"
           placeholderTextColor="#999"
           value={name}
           onChangeText={setName}
