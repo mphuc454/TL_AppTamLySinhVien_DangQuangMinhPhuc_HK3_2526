@@ -1,6 +1,7 @@
 ﻿import { router, useFocusEffect } from "expo-router";
 import { useCallback, useEffect, useState } from "react";
 import { Alert } from "react-native";
+import { supabase } from "../lib/supabase";
 import { Doctor } from "../models/Doctor";
 import {
   getAllDoctor,
@@ -87,6 +88,40 @@ export function useDoctorCurentViewModel() {
   }, []);
 
   return { doc, loading };
+}
+
+export function useWatchDoctorStatus() {
+  useFocusEffect(
+    useCallback(() => {
+      let cancelled = false;
+
+      const checkVerify = async () => {
+        try {
+          const doctor = await getCurrentDoctor();
+          if (cancelled) return;
+
+          if (doctor && doctor.verify === false) {
+            await supabase.auth.signOut();
+
+            Alert.alert(
+              "Thông báo",
+              "Tài khoản bác sĩ của bạn hiện chưa kích hoạt, vui lòng liên hệ quản trị viên để biết thêm chi tiết.",
+              [{ text: "OK", onPress: () => router.replace("/auth/Login") }],
+              { cancelable: false },
+            );
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      };
+
+      checkVerify();
+
+      return () => {
+        cancelled = true;
+      };
+    }, []),
+  );
 }
 
 // Vô hiệu hoá  bác sĩ

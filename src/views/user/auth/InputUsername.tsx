@@ -10,9 +10,8 @@ import {
 } from "react-native";
 
 const ROLES = [
-  { value: "1", label: "User" },
-  { value: "2", label: "Admin" },
-  { value: "3", label: "Doctor" },
+  { value: "1", label: "Người dùng" },
+  { value: "3", label: "Bác sĩ tư vấn tâm lý" },
 ];
 
 export default function InputUsrView() {
