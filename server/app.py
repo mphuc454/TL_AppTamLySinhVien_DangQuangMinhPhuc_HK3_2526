@@ -7,10 +7,6 @@ from chatbot import data_chatbot
 app = Flask(__name__)
 CORS(app) 
 
-@app.route('/', methods = ['GET'])
-def get_data():
-    return jsonify({"mess": "Hello RN from flask", "status": "success"})
-
 @app.route('/data-analysic', methods=["POST"])
 def get_dataEmotion():
     account_id = request.json.get("account_id")

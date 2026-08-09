@@ -1,9 +1,12 @@
 import { Ionicons } from "@expo/vector-icons";
 import { DrawerActions, useNavigation } from "@react-navigation/native";
 import { Text, TouchableOpacity, View } from "react-native";
+import { useWatchDoctorStatus } from "../viewmodels/DoctorViewModel";
 
 export default function HeaderDoctor() {
   const navigation = useNavigation();
+
+  useWatchDoctorStatus();
 
   return (
     <View

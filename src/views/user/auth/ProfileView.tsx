@@ -244,7 +244,7 @@ export default function ProfileView() {
             textAlign: "center",
           }}
         >
-          Danh sách cuộc gọi khẩn cấp
+          Quản lý lưu số điện thoại bác sĩ
         </Text>
       </TouchableOpacity>
       <TouchableOpacity

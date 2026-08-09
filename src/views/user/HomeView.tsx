@@ -109,7 +109,7 @@ export default function IndexView() {
             <Text
               style={{
                 marginTop: 8,
-                fontSize: 36,
+                fontSize: 26,
                 fontWeight: "bold",
                 color: colors.text,
                 textAlign: "center",
@@ -151,7 +151,7 @@ export default function IndexView() {
             <Text
               style={{
                 marginTop: 8,
-                fontSize: 36,
+                fontSize: 26,
                 fontWeight: "bold",
                 color: colors.text,
                 textAlign: "center",
@@ -194,7 +194,7 @@ export default function IndexView() {
             <Text
               style={{
                 marginTop: 8,
-                fontSize: 36,
+                fontSize: 26,
                 fontWeight: "bold",
                 color: colors.text,
                 textAlign: "center",
@@ -237,7 +237,7 @@ export default function IndexView() {
             <Text
               style={{
                 marginTop: 8,
-                fontSize: 36,
+                fontSize: 26,
                 fontWeight: "bold",
                 color: colors.text,
                 textAlign: "center",
