@@ -90,6 +90,7 @@ export function useDoctorCurentViewModel() {
   return { doc, loading };
 }
 
+// theo dõi trạng thái xác thực của bác sĩ
 export function useWatchDoctorStatus() {
   useFocusEffect(
     useCallback(() => {
@@ -193,6 +194,49 @@ export function useEditDoc() {
     loadDocs();
   }, [loadDocs]);
 
+  const handleInsert = async () => {
+    if (!accountId) {
+      Alert.alert("Lỗi", "Không tìm thấy thông tin bác sĩ");
+      return;
+    }
+
+    if (!specialization) {
+      Alert.alert("Thông báo", "Vui lòng nhập chuyên ngành");
+      return;
+    }
+
+    if (!role) {
+      Alert.alert("Thông báo", "Vui lòng nhập vai trò");
+      return;
+    }
+
+    if (!bio) {
+      Alert.alert("Thông báo", "Vui lòng nhập thông tin giới thiệu");
+      return;
+    }
+
+    if (!experience) {
+      Alert.alert("Thông báo", "Vui lòng nhập số năm kinh nghiệm");
+      return;
+    }
+
+    try {
+      await updateDoctor(
+        accountId,
+        Number(experience),
+        specialization,
+        bio,
+        role,
+      );
+
+      Alert.alert("Thông báo", "Thêm thông tin thành công");
+      router.push("/doctor/MainDoctor");
+    } catch (error) {
+      console.log(error);
+      Alert.alert("Lỗi", "Cập nhật thông tin thất bại");
+    }
+  };
+
   const handleUpdate = async () => {
     if (!accountId) {
       Alert.alert("Lỗi", "Không tìm thấy thông tin bác sĩ");
@@ -246,5 +290,6 @@ export function useEditDoc() {
     experience,
     setExperience,
     handleUpdate,
+    handleInsert,
   };
 }

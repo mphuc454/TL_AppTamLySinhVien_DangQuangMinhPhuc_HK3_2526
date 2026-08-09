@@ -1,17 +1,15 @@
 import { useEditDoc } from "@/src/viewmodels/DoctorViewModel";
-import { Ionicons } from "@expo/vector-icons";
 import { Picker } from "@react-native-picker/picker";
-import { router } from "expo-router";
 import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View,
 } from "react-native";
 
-export default function FormEditView() {
+export default function InsertDoctorView() {
   const {
     bio,
     experience,
@@ -21,20 +19,13 @@ export default function FormEditView() {
     setRole,
     setSpecialization,
     specialization,
-    handleUpdate,
+    handleInsert,
   } = useEditDoc();
   return (
     <ScrollView contentContainerStyle={{ paddingBottom: 120 }}>
       <View
         style={{ flexDirection: "row", alignItems: "center", marginTop: 30 }}
       >
-        <TouchableOpacity onPress={() => router.back()}>
-          <Ionicons
-            style={{ marginTop: 30 }}
-            name="arrow-back"
-            size={25}
-          ></Ionicons>
-        </TouchableOpacity>
         <Text
           style={{
             marginTop: 30,
@@ -44,7 +35,7 @@ export default function FormEditView() {
             fontWeight: "bold",
           }}
         >
-          Chỉnh sửa chuyên môn của bác sĩ
+          Nhập chuyên môn của bác sĩ
         </Text>
       </View>
 
@@ -112,8 +103,8 @@ export default function FormEditView() {
           style={styles.input}
         />
       </View>
-      <TouchableOpacity style={styles.button} onPress={handleUpdate}>
-        <Text style={styles.buttonText}>Cập nhật thông tin</Text>
+      <TouchableOpacity style={styles.button} onPress={handleInsert}>
+        <Text style={styles.buttonText}>Thêm thông tin</Text>
       </TouchableOpacity>
     </ScrollView>
   );
