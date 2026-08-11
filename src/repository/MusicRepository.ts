@@ -22,12 +22,3 @@ export const geDetailedMusicsbyID = async (id: number) => {
   }
   return data ?? [];
 };
-
-//3.Thống kê tổng số bài nhạc
-export const totalMusic = async () => {
-  const { count, error } = await supabase
-    .from("musics")
-    .select("*", { count: "exact", head: true });
-  if (error) throw error;
-  return count ?? 0;
-};

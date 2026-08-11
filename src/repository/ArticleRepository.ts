@@ -23,44 +23,7 @@ export const getArticleByID = async (id: number) => {
   return data ?? [];
 };
 
-//3.Thống kê tổng số bài viết
-export const totalArticle = async () => {
-  const { count, error } = await supabase
-    .from("articles")
-    .select("*", { count: "exact", head: true });
-  if (error) throw error;
-  return count ?? 0;
-};
-
-//4.Thống kê tổng số bài viết theo danh mục
-export const totalArticleByCategory = async () => {
-  const { data, error } = await supabase
-    .from("articles")
-    .select(`id, id_category_articles(name)`);
-  if (error) throw error;
-  const statistical: Record<string, number> = {};
-  data.forEach((item: any) => {
-    const category = item.id_category_articles?.name ?? "Chưa phân loại";
-    statistical[category] = (statistical[category] || 0) + 1;
-  });
-  const total = Object.values(statistical).reduce((a, b) => a + b, 0);
-  const colors = [
-    "#002868",
-    "#22C55E",
-    "#F59E0B",
-    "#EF4444",
-    "#753df7",
-    "#d2dae6",
-  ];
-  return Object.entries(statistical).map(([category, count], index) => ({
-    value: count,
-    label: category,
-    text: `${Math.round((count / total) * 100)}%`,
-    color: colors[index % colors.length],
-  }));
-};
-
-//6. Bài viết tăng lượt xem
+//3. Bài viết tăng lượt xem
 export const inscreaseView = async (id: number) => {
   const { data, error } = await supabase
     .from("articles")
@@ -79,7 +42,7 @@ export const inscreaseView = async (id: number) => {
   }
 };
 
-//7. Thêm bài viết
+//4. Thêm bài viết
 export const insertArticle = async (
   id_category_articles: number,
   title: string,
@@ -107,7 +70,7 @@ export const insertArticle = async (
   return data;
 };
 
-//8. Xoá bài viết
+//5. Xoá bài viết
 export const deleteArticle = async (id: number): Promise<void> => {
   const { error } = await supabase.from("articles").delete().eq("id", id);
   if (error) {
@@ -115,7 +78,7 @@ export const deleteArticle = async (id: number): Promise<void> => {
   }
 };
 
-//9. cập nhật bài viết
+//6. cập nhật bài viết
 
 export async function updateArticle(
   id: number,

@@ -1,19 +1,17 @@
-import {
-  totalArticle,
-  totalArticleByCategory,
-} from "@/src/repository/ArticleRepository";
+import { useFocusEffect } from "expo-router";
+import { useCallback, useState } from "react";
 import {
   totalAccount,
   totalAdmin,
+  totalArticle,
+  totalArticleByCategory,
   totalDoctor,
+  totalExercise,
   totalGender,
-  totalUserByYear,
-} from "@/src/repository/auth/ProfileRepository";
-import { totalExercise } from "@/src/repository/ExerciseRepository";
-import { totalMusic } from "@/src/repository/MusicRepository";
-import { useFocusEffect } from "expo-router";
-import { useCallback, useState } from "react";
+  totalMusic,
+} from "../repository/admin/DashboardRepository";
 
+// thống kê tổng quan user
 export function useDashboardUserViewModel() {
   const [usrTotal, setUsrTotal] = useState<number>(0);
   const [loading, setLoading] = useState(false);
@@ -37,6 +35,7 @@ export function useDashboardUserViewModel() {
   return { usrTotal, loading };
 }
 
+// thống kê tổng quan bác sĩ
 export function useDashboardDoctorViewModel() {
   const [docTotal, setDocTotal] = useState<number>(0);
   const [loadingDoc, setLoading] = useState(false);
@@ -60,6 +59,7 @@ export function useDashboardDoctorViewModel() {
   return { docTotal, loadingDoc };
 }
 
+// thống kê tổng quan bài viết
 export function useDashboardArticleViewModel() {
   const [arcTotal, setArcTotal] = useState<number>(0);
   const [loadingArc, setLoading] = useState(false);
@@ -83,6 +83,7 @@ export function useDashboardArticleViewModel() {
   return { arcTotal, loadingArc };
 }
 
+// thống kê tổng quan bài tập
 export function useDashboardExerciseViewModel() {
   const [exTotal, setExTotal] = useState<number>(0);
   const [loadingEx, setLoading] = useState(false);
@@ -106,6 +107,7 @@ export function useDashboardExerciseViewModel() {
   return { exTotal, loadingEx };
 }
 
+// thống kê tổng quan âm nhạc
 export function useDashboardMusicViewModel() {
   const [musTotal, setMusTotal] = useState<number>(0);
   const [loadingMus, setLoading] = useState(false);
@@ -129,6 +131,7 @@ export function useDashboardMusicViewModel() {
   return { musTotal, loadingMus };
 }
 
+// thống kê tổng quan admin
 export function useDashboardAdminViewModel() {
   const [adTotal, setAdTotal] = useState<number>(0);
   const [loadingAd, setLoading] = useState(false);
@@ -152,6 +155,7 @@ export function useDashboardAdminViewModel() {
   return { adTotal, loadingAd };
 }
 
+// thống kê giới tính
 export function useGenderAdminViewModel() {
   const [genTotal, setGenTotal] = useState({ male: 0, female: 0 });
   const loadTotal = async () => {
@@ -184,6 +188,7 @@ export function useGenderAdminViewModel() {
   return { pieData };
 }
 
+// thống kê thể loại bài viết
 export function useCategoryArticleAdminViewModel() {
   const [chartData, setPieData] = useState<any[]>([]);
   const loadTotal = async () => {
@@ -200,28 +205,4 @@ export function useCategoryArticleAdminViewModel() {
     }, []),
   );
   return { chartData };
-}
-
-export function useUserByYearAdminViewModel() {
-  const [dataUser, setChartData] = useState<any[]>([]);
-  const loadTotal = async () => {
-    try {
-      const total = await totalUserByYear();
-      setChartData(
-        total.map((i) => ({
-          value: i.total,
-          label: i.getYear,
-          frontColor: "#09f210",
-        })),
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  useFocusEffect(
-    useCallback(() => {
-      loadTotal();
-    }, []),
-  );
-  return { dataUser };
 }
