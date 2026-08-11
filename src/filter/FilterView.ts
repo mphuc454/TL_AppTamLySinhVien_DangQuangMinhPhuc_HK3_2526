@@ -57,6 +57,7 @@ export function FilterArticle() {
   };
 }
 
+// lọc tìm kiếm bài tập
 export function FilterExercises() {
   const { ex } = useExercisesViewModel();
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);

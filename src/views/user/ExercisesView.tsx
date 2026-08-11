@@ -20,7 +20,7 @@ export default function ExercisesView() {
     setSearchText,
     filterExercises,
   } = FilterExercises();
-  const { categoryArticles } = useCategoryExercisesViewModel();
+  const { categoryEx } = useCategoryExercisesViewModel();
   const { colors } = useContext(ThemeContext);
 
   return (
@@ -75,7 +75,7 @@ export default function ExercisesView() {
         showsHorizontalScrollIndicator={false}
         style={{ marginTop: 15, paddingHorizontal: 20 }}
       >
-        {categoryArticles.map((item) => (
+        {categoryEx.map((item) => (
           <TouchableOpacity
             key={item.id}
             onPress={() =>

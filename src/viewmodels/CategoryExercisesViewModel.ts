@@ -3,15 +3,13 @@ import { CategoryExercise } from "../models/CategoryExercise";
 import { getCategoryExercises } from "../repository/CategoryExercises";
 
 export function useCategoryExercisesViewModel() {
-  const [categoryArticles, setCategoryArticles] = useState<CategoryExercise[]>(
-    [],
-  );
+  const [categoryEx, setCategoryEx] = useState<CategoryExercise[]>([]);
   const [loading, setLoading] = useState(false);
-  const loadCategoryArticles = async () => {
+  const loadCategoryEx = async () => {
     try {
       setLoading(true);
       const data = await getCategoryExercises();
-      setCategoryArticles(data);
+      setCategoryEx(data);
     } catch (error) {
       console.log(error);
     } finally {
@@ -19,7 +17,7 @@ export function useCategoryExercisesViewModel() {
     }
   };
   useEffect(() => {
-    loadCategoryArticles();
+    loadCategoryEx();
   }, []);
-  return { categoryArticles, loading, loadCategoryArticles };
+  return { categoryEx, loading, loadCategoryEx };
 }

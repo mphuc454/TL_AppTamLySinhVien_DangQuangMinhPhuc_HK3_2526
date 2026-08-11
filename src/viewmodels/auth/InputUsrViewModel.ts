@@ -45,7 +45,7 @@ export function useInputUsrViewModel() {
             router.replace("/(tabs)/Index");
             break;
           case "3":
-            router.replace("/doctor/MainDoctor");
+            router.replace("/auth/LoginDoctorForm");
             break;
           default:
             router.replace("/(tabs)/Index");

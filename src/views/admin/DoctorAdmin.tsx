@@ -145,7 +145,7 @@ export default function AdminDoctorView() {
                   fontWeight: "light",
                 }}
               >
-                Ngày tạo:{" "}
+                Ngày tạo:
                 {item.account_id?.created_at
                   ? new Date(item.account_id.created_at).toLocaleDateString(
                       "vi-VN",
