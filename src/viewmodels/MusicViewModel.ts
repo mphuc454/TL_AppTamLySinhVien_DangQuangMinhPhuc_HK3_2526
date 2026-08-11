@@ -1,3 +1,4 @@
+import { AudioPlayer, useAudioPlayerStatus } from "expo-audio";
 import { useFocusEffect } from "expo-router";
 import { useCallback, useEffect, useState } from "react";
 import { Music } from "../models/Music";
@@ -36,7 +37,7 @@ export function useMusicsDetailViewModel(id: number) {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const load = async () => {
+    const loadDetailMusic = async () => {
       setLoading(true);
 
       try {
@@ -47,11 +48,54 @@ export function useMusicsDetailViewModel(id: number) {
       }
     };
 
-    load();
+    loadDetailMusic();
   }, [id]);
 
   return {
     mus_id,
     loading,
   };
+}
+export function useMusicPlayer(player: AudioPlayer) {
+  const status = useAudioPlayerStatus(player);
+  const handlePlayPause = async () => {
+    if (!player) return;
+    if (status.playing) {
+      await player.pause();
+    } else {
+      await player.play();
+    }
+  };
+  useEffect(() => {
+    if (status.didJustFinish) {
+      try {
+        player.pause();
+        player.seekTo(0);
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  }, [status.didJustFinish, player]);
+  useFocusEffect(
+    useCallback(() => {
+      return () => {
+        try {
+          player.pause();
+          player.seekTo(0);
+        } catch (e) {
+          console.log(e);
+        }
+      };
+    }, [player]),
+  );
+  return { handlePlayPause, status };
+}
+
+export function useFormatTime() {
+  const formatTime = (seconds: number = 0) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${mins}:${secs.toString().padStart(2, "0")}`;
+  };
+  return { formatTime };
 }

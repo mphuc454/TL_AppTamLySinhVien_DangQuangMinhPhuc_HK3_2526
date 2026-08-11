@@ -1,9 +1,12 @@
-import { useMusicsDetailViewModel } from "@/src/viewmodels/MusicViewModel";
+import {
+  useFormatTime,
+  useMusicPlayer,
+  useMusicsDetailViewModel,
+} from "@/src/viewmodels/MusicViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import Slider from "@react-native-community/slider";
-import { useAudioPlayer, useAudioPlayerStatus } from "expo-audio";
-import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
-import { useCallback, useEffect } from "react";
+import { useAudioPlayer } from "expo-audio";
+import { router, useLocalSearchParams } from "expo-router";
 import {
   ImageBackground,
   ScrollView,
@@ -22,44 +25,8 @@ export default function DetailedMusicView() {
         }
       : null,
   );
-  const status = useAudioPlayerStatus(player);
-
-  const handlePlayPause = async () => {
-    if (!player) return;
-    if (status.playing) {
-      await player.pause();
-    } else {
-      await player.play();
-    }
-  };
-  useEffect(() => {
-    if (status.didJustFinish) {
-      try {
-        player.pause();
-        player.seekTo(0);
-      } catch (e) {
-        console.log(e);
-      }
-    }
-  }, [status.didJustFinish, player]);
-
-  useFocusEffect(
-    useCallback(() => {
-      return () => {
-        try {
-          player.pause();
-          player.seekTo(0);
-        } catch (e) {
-          console.log(e);
-        }
-      };
-    }, [player]),
-  );
-  const formatTime = (seconds: number = 0) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = Math.floor(seconds % 60);
-    return `${mins}:${secs.toString().padStart(2, "0")}`;
-  };
+  const { handlePlayPause, status } = useMusicPlayer(player);
+  const { formatTime } = useFormatTime();
   return (
     <ScrollView
       style={{

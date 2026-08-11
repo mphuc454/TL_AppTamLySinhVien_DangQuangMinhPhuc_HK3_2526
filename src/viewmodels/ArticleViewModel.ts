@@ -41,7 +41,7 @@ export function useArticleDetailViewModel(id: number) {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const loadDetail = async () => {
+    const loadArticleDetail = async () => {
       try {
         setLoading(true);
         const data = await getArticleByID(id);
@@ -53,7 +53,7 @@ export function useArticleDetailViewModel(id: number) {
       }
     };
 
-    loadDetail();
+    loadArticleDetail();
   }, [id]);
 
   return { arc, loading };
