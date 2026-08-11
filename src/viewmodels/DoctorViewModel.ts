@@ -66,13 +66,13 @@ export function useDoctorDetailViewModel(id: number | undefined) {
   return { doc_id, loading };
 }
 
-// lấy thông tin tk bác sĩ
+// lấy thông tin tài khoản hiện của bác sĩ
 export function useDoctorCurentViewModel() {
   const [doc, setDoc] = useState<Doctor | null>(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const loadDoctor = async () => {
+    const loadCurentDoctor = async () => {
       try {
         setLoading(true);
         const data = await getCurrentDoctor();
@@ -84,7 +84,7 @@ export function useDoctorCurentViewModel() {
       }
     };
 
-    loadDoctor();
+    loadCurentDoctor();
   }, []);
 
   return { doc, loading };

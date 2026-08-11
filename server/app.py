@@ -2,17 +2,16 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 import json
 
-from analyst import analytics_emotion
 from chatbot import data_chatbot
+from analystemotion.AnalystEmotionAPI import AnalystEmotionAPI
 app = Flask(__name__)
 CORS(app) 
 
 @app.route('/data-analysic', methods=["POST"])
 def get_dataEmotion():
+    analystAPI = AnalystEmotionAPI()
     account_id = request.json.get("account_id")
-    data = analytics_emotion()
-    result = next((item for item in data if item['account_id'] == account_id), None)
-    return jsonify(result)
+    return analystAPI.get_dataEmotion(account_id) 
 
 @app.route('/config_chat', methods=["POST"])
 def update_config():
@@ -22,6 +21,7 @@ def update_config():
     return jsonify({
         "message":"Cập nhật thành công"
     })
+    
 @app.route('/chatbot', methods=["POST"])
 def get_dataChatbot():
     data = request.get_json()

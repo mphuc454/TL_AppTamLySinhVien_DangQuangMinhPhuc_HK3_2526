@@ -1,4 +1,4 @@
-import { useConfigChatbot } from "@/src/viewmodels/ApiFlaskViewModel";
+import { useConfigChatbot } from "@/src/viewmodels/admin/ConfigChatbotViewModel";
 import { Picker } from "@react-native-picker/picker";
 import { Alert, ScrollView, Text, TouchableOpacity, View } from "react-native";
 

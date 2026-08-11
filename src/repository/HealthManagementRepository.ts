@@ -52,7 +52,7 @@ export const allHealthManagement = async () => {
   }));
 };
 
-// 3. kiểm tra đã thêm vào chưa
+// 3. kiểm tra đã thêm vào yêu cầu chưa
 export const checkHealthManagement = async (doctorId: number) => {
   const {
     data: { user },

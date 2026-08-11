@@ -3,11 +3,13 @@ import { useArticleViewModel } from "../viewmodels/ArticleViewModel";
 import { useDoctorViewModel } from "../viewmodels/DoctorViewModel";
 import { useExercisesViewModel } from "../viewmodels/ExercisesViewModel";
 
+
+// lọc tìm kiếm bác sĩ
 export function FilterDoc() {
   const { doc } = useDoctorViewModel();
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
   const [searchText, setSearchText] = useState("");
-  const filterDocs = useMemo(() => {
+  const filterDoctor = useMemo(() => {
     return doc.filter((item) => {
       const matchCategory =
         selectedCategory === null || item.id === selectedCategory;
@@ -24,10 +26,11 @@ export function FilterDoc() {
     setSelectedCategory,
     searchText,
     setSearchText,
-    filterDocs,
+    filterDoctor,
   };
 }
 
+// lọc tìm kiếm bài viết
 export function FilterArticle() {
   const { articles } = useArticleViewModel();
 
