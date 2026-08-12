@@ -4,7 +4,7 @@ import { Alert, ScrollView, Text, TouchableOpacity, View } from "react-native";
 
 export default function AdminChatbotView() {
   const {
-    updateConfig,
+    updateConfigChatbot,
     model,
     setModel,
     maxTokens,
@@ -99,7 +99,7 @@ export default function AdminChatbotView() {
               flexDirection: "row",
               marginBottom: 30,
             }}
-            selectedValue={temperature}
+            selectedValue={String(temperature)}
             onValueChange={(value) => setTemperature(Number(value))}
           >
             <Picker.Item label="0.3" value="0.3" />
@@ -121,7 +121,7 @@ export default function AdminChatbotView() {
               flexDirection: "row",
               marginBottom: 30,
             }}
-            selectedValue={topP}
+            selectedValue={String(topP)}
             onValueChange={(value) => setTopP(Number(value))}
           >
             <Picker.Item label="0.8" value="0.8" />
@@ -143,7 +143,7 @@ export default function AdminChatbotView() {
               flexDirection: "row",
               marginBottom: 30,
             }}
-            selectedValue={maxTokens}
+            selectedValue={String(maxTokens)}
             onValueChange={(value) => setMaxTokens(Number(value))}
           >
             <Picker.Item label="256" value="256" />
@@ -155,7 +155,7 @@ export default function AdminChatbotView() {
         <TouchableOpacity
           onPress={async () => {
             try {
-              await updateConfig(model, temperature, topP, maxTokens);
+              await updateConfigChatbot(model, temperature, topP, maxTokens);
               Alert.alert("Thành công", "Đã cập nhật cấu hình chatbot.");
             } catch (error) {
               Alert.alert("Lỗi", "Không thể cập nhật cấu hình.");
