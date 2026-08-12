@@ -1,6 +1,6 @@
 {
-    "max_tokens": 1024,
-    "model": "llama-3.1-8b-instant",
-    "temperature": 0.5,
+    "max_tokens": 512,
+    "model": "llama-3.3-70b-versatile",
+    "temperature": 0.6,
     "top_p": 0.9
 }

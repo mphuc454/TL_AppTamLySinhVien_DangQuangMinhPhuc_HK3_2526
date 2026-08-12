@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 
 export function useConfigChatbot() {
   const [loading, setLoading] = useState(false);
-  const [model, setModel] = useState("llama-3.1-8b-instant");
-  const [temperature, setTemperature] = useState(0.5);
-  const [topP, setTopP] = useState(0.9);
-  const [maxTokens, setMaxTokens] = useState(1024);
+  const [model, setModel] = useState("");
+  const [temperature, setTemperature] = useState(Number);
+  const [topP, setTopP] = useState(Number);
+  const [maxTokens, setMaxTokens] = useState(Number);
 
   const getConfigChatbot = async () => {
     try {
