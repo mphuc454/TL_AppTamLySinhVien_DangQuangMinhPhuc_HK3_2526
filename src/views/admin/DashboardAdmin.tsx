@@ -7,7 +7,7 @@ import {
   useDashboardMusicViewModel,
   useDashboardUserViewModel,
   useGenderAdminViewModel,
-} from "@/src/viewmodels/DashboardViewModel";
+} from "@/src/viewmodels/admin/DashboardViewModel";
 import { ScrollView, Text, View } from "react-native";
 import { PieChart } from "react-native-gifted-charts";
 

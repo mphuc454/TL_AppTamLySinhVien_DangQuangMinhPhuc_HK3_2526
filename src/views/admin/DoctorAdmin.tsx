@@ -1,5 +1,5 @@
 import { useSearchDoc } from "@/src/filter/FilterView";
-import { useEditDoctor } from "@/src/viewmodels/DoctorViewModel";
+import { useEditDoctor } from "@/src/viewmodels/admin/DoctorAdminViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useState } from "react";

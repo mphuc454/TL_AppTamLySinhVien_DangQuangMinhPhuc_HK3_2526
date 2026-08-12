@@ -3,7 +3,6 @@ import { useArticleViewModel } from "../viewmodels/ArticleViewModel";
 import { useDoctorViewModel } from "../viewmodels/DoctorViewModel";
 import { useExercisesViewModel } from "../viewmodels/ExercisesViewModel";
 
-
 // lọc tìm kiếm bác sĩ
 export function FilterDoc() {
   const { doc } = useDoctorViewModel();
@@ -102,11 +101,10 @@ export function useSearchArticle(seacrhItems: string) {
 // lọc tìm kiếm bác sĩ
 export function useSearchDoc(seacrhItems: string) {
   const { doc } = useDoctorViewModel();
-
-  const filterSearchDoc = useMemo(() => {
+  const filterDoctor = useMemo(() => {
     return doc.filter((i) =>
       i.account_id?.username.toUpperCase().includes(seacrhItems.toUpperCase()),
     );
   }, [doc, seacrhItems]);
-  return filterSearchDoc;
+  return filterDoctor;
 }
