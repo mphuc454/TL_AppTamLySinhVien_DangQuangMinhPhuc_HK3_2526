@@ -1,7 +1,8 @@
-import { useAddArticle } from "@/src/viewmodels/ArticleViewModel";
+import { useAddArticle } from "@/src/viewmodels/admin/ArticleAdminViewModel";
 import { useCategoryArticlesViewModel } from "@/src/viewmodels/CategoryArticleViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { Picker } from "@react-native-picker/picker";
+import { router } from "expo-router";
 import {
   Image,
   ScrollView,
@@ -126,7 +127,19 @@ export default function FormAddView() {
       <TouchableOpacity onPress={handleSave} style={styles.button}>
         <Text style={styles.buttonText}>Thêm bài viết</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity
+        onPress={() => router.back()}
+        style={{
+          marginTop: 30,
+          height: 56,
+          backgroundColor: "#f72f0c",
+          borderRadius: 14,
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "row",
+          gap: 8,
+        }}
+      >
         <Text style={styles.buttonText}>Huỷ</Text>
       </TouchableOpacity>
     </ScrollView>

@@ -1,4 +1,4 @@
-import { useChatbotAI } from "@/src/viewmodels/ApiFlaskViewModel";
+import { useChatbotAI } from "@/src/viewmodels/ChatbotViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React from "react";

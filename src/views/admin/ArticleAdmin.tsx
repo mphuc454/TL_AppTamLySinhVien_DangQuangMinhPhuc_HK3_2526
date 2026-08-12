@@ -1,5 +1,5 @@
 import { useSearchArticle } from "@/src/filter/FilterView";
-import { useDeleteArticle } from "@/src/viewmodels/ArticleViewModel";
+import { useDeleteArticle } from "@/src/viewmodels/admin/ArticleAdminViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useState } from "react";

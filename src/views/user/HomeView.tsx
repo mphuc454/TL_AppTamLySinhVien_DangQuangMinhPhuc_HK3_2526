@@ -1,4 +1,4 @@
-import { useEmotionAnalytics } from "@/src/viewmodels/ApiFlaskViewModel";
+import { useEmotionAnalytics } from "@/src/viewmodels/AnalystEmotionViewModel";
 import { useAccountDetailViewModel } from "@/src/viewmodels/auth/ProfileViewModel";
 import {
   useLastEmotionLogDate,
@@ -46,6 +46,7 @@ export default function IndexView() {
   const { colors } = useContext(ThemeContext);
   const { logTotal } = useTotalLogViewModel();
   const { usrname } = useAccountDetailViewModel();
+
   const { emotionStatus, emotion_color, loading, getAnalytics } =
     useEmotionAnalytics();
   const { lastDate } = useLastEmotionLogDate();

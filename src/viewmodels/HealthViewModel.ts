@@ -12,8 +12,9 @@ import {
   toggleStatus,
 } from "../repository/HealthManagementRepository";
 
+// xử lý yêu cầu theo dõi sức khoẻ
 export function useHandleRequestVM() {
-  const handleAdd = async (doctorAccountId: number) => {
+  const handleAddRequest = async (doctorAccountId: number) => {
     try {
       const existed = await checkHealthManagement(doctorAccountId);
       if (existed) {
@@ -33,8 +34,10 @@ export function useHandleRequestVM() {
       console.log(error);
     }
   };
-  return handleAdd;
+  return { handleAddRequest };
 }
+
+// xem theo dõi sức khoẻ của người dùng
 export function useGetRequestVM() {
   const [heal, setHeal] = useState<HealthManagements[]>([]);
   const [loading, setLoading] = useState(false);
@@ -59,6 +62,7 @@ export function useGetRequestVM() {
   return { heal, loading };
 }
 
+// chấp nhận yêu cầu theo dõi sức khoẻ
 export function useAcceptRequest() {
   const accept = async (
     id: number,
@@ -85,6 +89,7 @@ export function useAcceptRequest() {
   return accept;
 }
 
+// từ chối yêu cầu theo dõi sức khoẻ
 export function useRejectRequest() {
   const reject = (id: number) => {
     return new Promise<boolean>((resolve) => {
@@ -163,6 +168,7 @@ export function useTotalEmotion(userId?: string) {
   return { emoTotal, reset };
 }
 
+// xem thông tin chi tiết theo dõi sức khoẻ
 export function useHealthDetail(id: number) {
   const [heal_id, setHeal] = useState<HealthManagements | null>(null);
   const load = async () => {
@@ -193,6 +199,7 @@ export function useHealthDetail(id: number) {
   };
 }
 
+// chấp nhận yêu cầu gọi điện thoại
 export function useAccepttoCall() {
   const acceptToCall = async (id: number, phone: string | undefined) => {
     try {

@@ -19,7 +19,7 @@ export default function AppointmentView() {
     setSelectedCategory,
     searchText,
     setSearchText,
-    filterDocs,
+      filterDoctor,
   } = FilterDoc();
   const { doc } = useDoctorViewModel();
   return (
@@ -100,8 +100,8 @@ export default function AppointmentView() {
         ))}
       </ScrollView>
       <View style={{ marginTop: 20 }}>
-        {filterDocs.filter((d) => d.verify).length > 0 ? (
-          filterDocs.map((d) => (
+        {filterDoctor.filter((d) => d.verify).length > 0 ? (
+            filterDoctor.map((d) => (
             <View
               key={d.id}
               style={{

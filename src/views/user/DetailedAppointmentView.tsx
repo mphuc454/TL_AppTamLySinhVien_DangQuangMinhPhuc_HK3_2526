@@ -23,7 +23,7 @@ export default function DetailAppointmentView() {
   const { id } = useLocalSearchParams();
   const { doc_id } = useDoctorDetailViewModel(id ? Number(id) : undefined);
   const { loading, saveEmergency } = useAddEmergencyViewModel();
-  const add = useHandleRequestVM();
+  const { handleAddRequest } = useHandleRequestVM();
   const acceptToCall = useAccepttoCall();
   const { sendContact } = useSendMail();
   return (
@@ -117,7 +117,7 @@ export default function DetailAppointmentView() {
         <TouchableOpacity
           onPress={() => {
             if (doc_id?.id) {
-              add(doc_id.id);
+              handleAddRequest(doc_id.id);
             }
           }}
           style={{

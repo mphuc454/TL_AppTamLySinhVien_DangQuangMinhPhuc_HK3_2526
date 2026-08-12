@@ -7,10 +7,10 @@ import {
   useDashboardMusicViewModel,
   useDashboardUserViewModel,
   useGenderAdminViewModel,
-  useUserByYearAdminViewModel,
-} from "@/src/viewmodels/DashboardViewModel";
+} from "@/src/viewmodels/admin/DashboardViewModel";
 import { ScrollView, Text, View } from "react-native";
-import { BarChart, PieChart } from "react-native-gifted-charts";
+import { PieChart } from "react-native-gifted-charts";
+
 export default function AdminDashboardView() {
   const { usrTotal, loading } = useDashboardUserViewModel();
   const { docTotal, loadingDoc } = useDashboardDoctorViewModel();
@@ -20,7 +20,6 @@ export default function AdminDashboardView() {
   const { loadingMus, musTotal } = useDashboardMusicViewModel();
   const { pieData } = useGenderAdminViewModel();
   const { chartData } = useCategoryArticleAdminViewModel();
-  const { dataUser } = useUserByYearAdminViewModel();
   return (
     <ScrollView contentContainerStyle={{ paddingBottom: 120 }}>
       <View
@@ -413,110 +412,6 @@ export default function AdminDashboardView() {
             </Text>
           </View>
         ))}
-      </View>
-
-      {/* Thống kê phần 6 */}
-
-      <View
-        style={{
-          marginTop: 30,
-          marginHorizontal: 8,
-          paddingBottom: 20,
-        }}
-      >
-        <Text
-          style={{
-            fontSize: 18,
-            fontWeight: "bold",
-            marginBottom: 15,
-          }}
-        >
-          Thống kê lượt người dùng đăng ký trong năm
-        </Text>
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            marginBottom: 15,
-          }}
-        >
-          <View
-            style={{
-              width: 14,
-              height: 14,
-              borderRadius: 3,
-              backgroundColor: "#09f210",
-              marginRight: 8,
-            }}
-          />
-
-          <Text
-            style={{
-              fontSize: 14,
-              fontWeight: "500",
-            }}
-          >
-            Lượng người dùng
-          </Text>
-        </View>
-        <View style={{ flexDirection: "row", marginTop: 10 }}>
-          {/* Trục Y */}
-          <View style={{ justifyContent: "center", alignItems: "center" }}>
-            <Text
-              style={{
-                transform: [{ rotate: "-90deg" }],
-                fontSize: 14,
-                fontWeight: "600",
-                color: "#555",
-                textAlign: "center",
-              }}
-            >
-              Số lượng
-            </Text>
-          </View>
-          <View style={{ flex: 1 }}>
-            <BarChart
-              data={dataUser}
-              barWidth={25}
-              spacing={20}
-              roundedTop
-              noOfSections={5}
-              maxValue={40}
-              yAxisThickness={1}
-              xAxisThickness={1}
-            />
-            {/* Trục X */}
-            <Text
-              style={{
-                textAlign: "center",
-                marginTop: 12,
-                fontSize: 14,
-                fontWeight: "600",
-                color: "#555",
-              }}
-            >
-              Năm
-            </Text>
-          </View>
-        </View>
-        {/* lấy thông tin chi tiết */}
-        <View
-          style={{
-            marginTop: 15,
-          }}
-        >
-          {dataUser.map((item, index) => (
-            <View
-              key={index}
-              style={{ flexDirection: "row", alignItems: "center" }}
-            >
-              <Text>Số lượng người đăng ký năm </Text>
-              <Text style={{ fontWeight: "bold" }}>{item.label}: </Text>
-              <Text style={{ fontWeight: "bold" }}>{item.value} </Text>
-              <Text>người</Text>
-            </View>
-          ))}
-        </View>
       </View>
     </ScrollView>
   );

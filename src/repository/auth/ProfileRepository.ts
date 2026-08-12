@@ -63,62 +63,7 @@ export const modifyAccountbyID = async (
   };
 };
 
-//3.Thống kê tổng số người dùng
-export const totalAccount = async () => {
-  const { count, error } = await supabase
-    .from("accounts")
-    .select("*", { count: "exact", head: true })
-    .eq("role", 1);
-  if (error) throw error;
-  return count ?? 0;
-};
-
-//4.Thống kê tổng số bác sĩ
-export const totalDoctor = async () => {
-  const { count, error } = await supabase
-    .from("accounts")
-    .select("*", { count: "exact", head: true })
-    .eq("role", 3);
-  if (error) throw error;
-  return count ?? 0;
-};
-
-//5.Thống kê tổng số admin
-export const totalAdmin = async () => {
-  const { count, error } = await supabase
-    .from("accounts")
-    .select("*", { count: "exact", head: true })
-    .eq("role", 2);
-  if (error) throw error;
-  return count ?? 0;
-};
-
-//6.Thống kê tổng số giới tính
-export const totalGender = async () => {
-  const { data, error } = await supabase.from("accounts").select("gender");
-  if (error) throw error;
-  const male = data.filter((i) => i.gender === "NAM").length;
-  const female = data.filter((i) => i.gender === "NỮ").length;
-
-  return { male, female };
-};
-
-//7.Thống kê accounts trong năm
-export const totalUserByYear = async () => {
-  const { data, error } = await supabase.from("accounts").select("created_at");
-  if (error) throw error;
-  const statistical: Record<string, number> = {};
-  data.forEach((i: any) => {
-    const getYear = new Date(i.created_at).getFullYear().toString();
-    statistical[getYear] = (statistical[getYear] || 0) + 1;
-  });
-  return Object.entries(statistical).map(([getYear, total]) => ({
-    getYear,
-    total,
-  }));
-};
-
-//8. upload ảnh vào supabase storage của doctor
+//3. upload ảnh vào supabase storage của doctor
 export const uploadDoctorImage = async (imageUri: string, doctorId: number) => {
   const response = await fetch(imageUri);
   const arrayBuffer = await response.arrayBuffer();

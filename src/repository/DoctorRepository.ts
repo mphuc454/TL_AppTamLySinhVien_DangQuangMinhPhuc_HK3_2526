@@ -81,25 +81,7 @@ export const getDoctorByID = async (id: number) => {
   };
 };
 
-//4. Vô hiệu hoá tài khoản:
-export const toggleVerify = async (id: number, verify: boolean) => {
-  const { data, error } = await supabase
-    .from("doctors")
-    .update({ verify })
-    .eq("id", id);
-  if (error) throw error;
-  return data;
-};
-
-//5. Xoá bác sĩ
-export const deleteDoctor = async (id: number): Promise<void> => {
-  const { error } = await supabase.from("doctors").delete().eq("id", id);
-  if (error) {
-    throw error;
-  }
-};
-
-//6. cập nhật bác sĩ
+//4. cập nhật bác sĩ
 export async function updateDoctor(
   account_id: number,
   experience_years: number,

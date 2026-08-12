@@ -36,11 +36,3 @@ export const getExercisesbyID = async (id: number) => {
   }
   return data ?? [];
 };
-//3.Thống kê tổng số bài tập
-export const totalExercise = async () => {
-  const { count, error } = await supabase
-    .from("exercises")
-    .select("*", { count: "exact", head: true });
-  if (error) throw error;
-  return count ?? 0;
-};
