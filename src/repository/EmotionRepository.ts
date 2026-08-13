@@ -77,25 +77,7 @@ export const totalEmotionLog = async () => {
   return count ?? 0;
 };
 
-//6.Thống kê toàn bộ biểu cảm của nhật ký của user by id:
-export const totalEmotion = async (userId: string) => {
-  const { data, error } = await supabase
-    .from("emotion_logs")
-    .select("emotion_id")
-    .eq("account_id", userId);
-
-  if (error) throw error;
-
-  const tichcuc = data.filter((i) => i.emotion_id === 1).length;
-  const binhthan = data.filter((i) => i.emotion_id === 2).length;
-  const loau = data.filter((i) => i.emotion_id === 3).length;
-  const buonba = data.filter((i) => i.emotion_id === 4).length;
-  const giandu = data.filter((i) => i.emotion_id === 5).length;
-
-  return { tichcuc, binhthan, loau, buonba, giandu };
-};
-
-//7.Thống kê ngày ghi nhật ký gần nhất:
+//6.Thống kê ngày ghi nhật ký gần nhất:
 export const getLastEmotionLogDate = async () => {
   const {
     data: { user },
@@ -114,7 +96,7 @@ export const getLastEmotionLogDate = async () => {
   return data?.created_at || null;
 };
 
-//8.Thống kê nhật ký nhiều nhất:
+//7.Thống kê nhật ký nhiều nhất:
 export const getMostEmotionLog = async () => {
   const {
     data: { user },

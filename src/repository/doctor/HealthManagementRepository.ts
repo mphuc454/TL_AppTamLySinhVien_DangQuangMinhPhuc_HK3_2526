@@ -1,4 +1,4 @@
-import { supabase } from "../lib/supabase";
+import { supabase } from "../../lib/supabase";
 
 // 1. thêm vào quản lý sức khoẻ
 export const reqHealthManagement = async (doctorId: number) => {
@@ -120,7 +120,7 @@ export const getDetailHealthManagement = async (accountId: number) => {
   };
 };
 // 6. xoá id quản lý sức khoẻ
-export const getDeleteHealthManagement = async (id: number) => {
+export const deleteHealthManagement = async (id: number) => {
   const { error } = await supabase
     .from("health_managements")
     .delete()
@@ -129,4 +129,22 @@ export const getDeleteHealthManagement = async (id: number) => {
   if (error) {
     throw error;
   }
+};
+
+//7.Thống kê toàn bộ biểu cảm của nhật ký của user by id:
+export const totalEmotion = async (userId: string) => {
+  const { data, error } = await supabase
+    .from("emotion_logs")
+    .select("emotion_id")
+    .eq("account_id", userId);
+
+  if (error) throw error;
+
+  const tichcuc = data.filter((i) => i.emotion_id === 1).length;
+  const binhthan = data.filter((i) => i.emotion_id === 2).length;
+  const loau = data.filter((i) => i.emotion_id === 3).length;
+  const buonba = data.filter((i) => i.emotion_id === 4).length;
+  const giandu = data.filter((i) => i.emotion_id === 5).length;
+
+  return { tichcuc, binhthan, loau, buonba, giandu };
 };
