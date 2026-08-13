@@ -60,7 +60,7 @@ export function useLoginViewModel() {
           break;
       }
     } catch {
-      alert("Đăng nhập thất bại.");
+      Alert.alert("Lỗi", "Đăng nhập thất bại.");
     } finally {
       setLoading(false);
     }
