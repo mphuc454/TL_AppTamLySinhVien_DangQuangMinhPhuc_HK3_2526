@@ -1,6 +1,7 @@
-import { register } from "@/src/repository/auth/AuthRepository";
+import { isExistEmail, register } from "@/src/repository/auth/AuthRepository";
 import { router } from "expo-router";
 import { useState } from "react";
+import { Alert } from "react-native";
 
 //1. xử lý dữ liệu đăng ký tài khoản
 export function useRegisterViewModel() {
@@ -9,7 +10,7 @@ export function useRegisterViewModel() {
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const validate = () => {
+  const validate = async () => {
     if (!username.trim()) {
       alert("Vui lòng nhập tên");
       return false;
@@ -22,6 +23,12 @@ export function useRegisterViewModel() {
     if (!emailRegex.test(email)) {
       alert("Email không hợp lệ.");
       return false;
+    }
+
+    const CheckExistsEmail = await isExistEmail(email);
+    if (CheckExistsEmail) {
+      Alert.alert("Lỗi", "Email đã tồn tại trên hệ thống");
+      return;
     }
     if (!phone.trim()) {
       alert("Vui lòng nhập số điện thoại.");
@@ -54,12 +61,13 @@ export function useRegisterViewModel() {
     try {
       const result = await register(username, email, phone, password);
       if (result.success) {
-        alert(
+        Alert.alert(
+          "Thành công",
           "Đăng ký thành công, Vui lòng xác nhận đã gửi về email của bạn !",
         );
         router.replace("/auth/Login");
       } else {
-        alert("Đăng ký thất bại.");
+        console.log("Lỗi đăng ký thất bại");
       }
     } catch (error) {
       console.log(error);

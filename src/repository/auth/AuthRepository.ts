@@ -153,20 +153,7 @@ export const changePassword = async (newPass: string) => {
   return true;
 };
 
-// 8. Lấy token thông báo
-export const getExpoToken = async (accountId: number) => {
-  const { data, error } = await supabase
-    .from("accounts")
-    .select("expo_push_token")
-    .eq("id", accountId)
-    .single();
-
-  if (error) throw error;
-
-  return data?.expo_push_token;
-};
-
-// 9. Xác nhận mật khẩu
+// 8. Xác nhận mật khẩu
 export const verifyCurrentPassword = async (
   currentPassword: string,
 ): Promise<boolean> => {
@@ -188,4 +175,15 @@ export const verifyCurrentPassword = async (
   }
 
   return true;
+};
+
+// 9. kiểm tra email có tồn tại
+export const isExistEmail = async (email: string) => {
+  const { data, error } = await supabase
+    .from("user")
+    .select("id")
+    .eq("email", email)
+    .maybeSingle();
+  if (error) throw error;
+  return data;
 };

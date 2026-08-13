@@ -1,8 +1,3 @@
-// export function useEmergencyViewModel(doctorId: number) {
-//   const [saveEmergency, setSaveEmergency] = useState(false);
-//   const [loading, setLoading] = useState(false);
-//   const [emergencyList, setEmergencyList] = useState<any[]>([]);
-
 import { router, useFocusEffect } from "expo-router";
 import { useCallback, useState } from "react";
 import { Alert } from "react-native";
@@ -13,11 +8,12 @@ import {
   removeEmergency,
 } from "../repository/EmergencyRepository";
 
+// hiển thị danh sách cuộc gọi bác sĩ
 export function useEmergencyViewModel() {
   const [emergencyList, setEmergencyList] = useState<Emergency_Contacts[]>([]);
   const [loading, setLoading] = useState(false);
 
-  const loadEmotionLog = async () => {
+  const loadEmergencyCall = async () => {
     try {
       setLoading(true);
       const data = await getEmergency();
@@ -31,14 +27,14 @@ export function useEmergencyViewModel() {
 
   useFocusEffect(
     useCallback(() => {
-      loadEmotionLog();
+      loadEmergencyCall();
     }, []),
   );
 
   return { emergencyList, loading };
 }
 
-//thêm gọi khẩn cấp
+//thêm gọi khẩn cấp tới bác sĩ
 export function useAddEmergencyViewModel() {
   const [loading, setLoading] = useState(false);
 
