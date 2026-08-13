@@ -3,7 +3,7 @@ import {
   useHealthDetail,
   useRejectRequest,
   useTotalEmotion,
-} from "@/src/viewmodels/HealthViewModel";
+} from "@/src/viewmodels/doctor/HealthViewModel";
 import { router, useLocalSearchParams } from "expo-router";
 import { Alert, ScrollView, Text, TouchableOpacity, View } from "react-native";
 

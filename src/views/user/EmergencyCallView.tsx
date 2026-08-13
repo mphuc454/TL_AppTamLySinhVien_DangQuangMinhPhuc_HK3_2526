@@ -1,9 +1,9 @@
 // import { useEmergencyViewModel } from "@/src/viewmodels/EmergencyViewModel";
 import {
-  useDelEmergencyViewModel,
-  useEmergencyViewModel,
+    useDelEmergencyViewModel,
+    useEmergencyViewModel,
 } from "@/src/viewmodels/EmergencyViewModel";
-import { useAccepttoCall } from "@/src/viewmodels/HealthViewModel";
+import { useAccepttoCall } from "@/src/viewmodels/doctor/HealthViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useContext } from "react";

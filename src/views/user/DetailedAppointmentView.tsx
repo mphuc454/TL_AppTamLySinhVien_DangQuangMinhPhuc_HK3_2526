@@ -2,19 +2,19 @@ import { useSendMail } from "@/src/viewmodels/ContactViewModel";
 import { useDoctorDetailViewModel } from "@/src/viewmodels/DoctorViewModel";
 import { useAddEmergencyViewModel } from "@/src/viewmodels/EmergencyViewModel";
 import {
-  useAccepttoCall,
-  useHandleRequestVM,
-} from "@/src/viewmodels/HealthViewModel";
+    useAccepttoCall,
+    useHandleRequestVM,
+} from "@/src/viewmodels/doctor/HealthViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import { useContext } from "react";
 import {
-  Alert,
-  Image,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
+    Alert,
+    Image,
+    ScrollView,
+    Text,
+    TouchableOpacity,
+    View,
 } from "react-native";
 import { ThemeContext } from "../theme/ThemeContext";
 

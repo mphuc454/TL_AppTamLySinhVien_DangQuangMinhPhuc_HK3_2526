@@ -1,16 +1,16 @@
 import { router, useFocusEffect } from "expo-router";
 import { useCallback, useState } from "react";
 import { Alert, Linking } from "react-native";
-import { HealthManagements } from "../models/HealthManagements";
-import { totalEmotion } from "../repository/EmotionRepository";
+import { HealthManagements } from "../../models/HealthManagements";
 import {
   allHealthManagement,
   checkHealthManagement,
-  getDeleteHealthManagement,
+  deleteHealthManagement,
   getDetailHealthManagement,
   reqHealthManagement,
   toggleStatus,
-} from "../repository/HealthManagementRepository";
+  totalEmotion,
+} from "../../repository/doctor/HealthManagementRepository";
 
 // xử lý yêu cầu theo dõi sức khoẻ
 export function useHandleRequestVM() {
@@ -42,7 +42,7 @@ export function useGetRequestVM() {
   const [heal, setHeal] = useState<HealthManagements[]>([]);
   const [loading, setLoading] = useState(false);
 
-  const loadAll = async () => {
+  const loadDetailedHealth = async () => {
     try {
       setLoading(true);
       const data = await allHealthManagement();
@@ -56,7 +56,7 @@ export function useGetRequestVM() {
 
   useFocusEffect(
     useCallback(() => {
-      loadAll();
+      loadDetailedHealth();
     }, []),
   );
   return { heal, loading };
@@ -64,21 +64,10 @@ export function useGetRequestVM() {
 
 // chấp nhận yêu cầu theo dõi sức khoẻ
 export function useAcceptRequest() {
-  const accept = async (
-    id: number,
-    statusCurrent: boolean,
-    // accountId: number,
-  ) => {
+  const acceptRequest = async (id: number, statusCurrent: boolean) => {
     try {
       await toggleStatus(id, !statusCurrent);
-      // const token = await getExpoToken(accountId);
-      // if (token) {
-      //   await sendPushNotification(
-      //     token,
-      //     "Yêu cầu được chấp nhận",
-      //     "Bác sĩ đã chấp nhận yêu cầu theo dõi của bạn.",
-      //   );
-      // }
+
       Alert.alert("Thông báo", "Bạn đã chấp nhận xem");
       router.back();
     } catch (error) {
@@ -86,12 +75,12 @@ export function useAcceptRequest() {
       console.log(error);
     }
   };
-  return accept;
+  return acceptRequest;
 }
 
 // từ chối yêu cầu theo dõi sức khoẻ
 export function useRejectRequest() {
-  const reject = (id: number) => {
+  const rejectRequest = (id: number) => {
     return new Promise<boolean>((resolve) => {
       Alert.alert(
         "Xoá theo dõi",
@@ -107,7 +96,7 @@ export function useRejectRequest() {
             style: "destructive",
             onPress: async () => {
               try {
-                await getDeleteHealthManagement(id);
+                await deleteHealthManagement(id);
                 Alert.alert(
                   "Thông báo",
                   "Bạn đã kết thúc theo dõi người dùng.",
@@ -125,7 +114,7 @@ export function useRejectRequest() {
     });
   };
 
-  return reject;
+  return rejectRequest;
 }
 export function useTotalEmotion(userId?: string) {
   const [emoTotal, setEmoTotal] = useState({
@@ -146,7 +135,7 @@ export function useTotalEmotion(userId?: string) {
     });
   };
 
-  const loadTotal = useCallback(async () => {
+  const loadTotalEmotion = useCallback(async () => {
     if (!userId) return;
 
     try {
@@ -161,8 +150,8 @@ export function useTotalEmotion(userId?: string) {
     useCallback(() => {
       if (!userId) return;
 
-      loadTotal();
-    }, [loadTotal, userId]),
+      loadTotalEmotion();
+    }, [loadTotalEmotion, userId]),
   );
 
   return { emoTotal, reset };
@@ -171,11 +160,8 @@ export function useTotalEmotion(userId?: string) {
 // xem thông tin chi tiết theo dõi sức khoẻ
 export function useHealthDetail(id: number) {
   const [heal_id, setHeal] = useState<HealthManagements | null>(null);
-  const load = async () => {
-    const data = await getDetailHealthManagement(id);
-    setHeal(data);
-  };
-  const loadDetail = useCallback(async () => {
+
+  const loadDetailedUser = useCallback(async () => {
     try {
       if (id == null || Number.isNaN(id)) return;
       const data = await getDetailHealthManagement(id);
@@ -188,13 +174,13 @@ export function useHealthDetail(id: number) {
 
   useFocusEffect(
     useCallback(() => {
-      loadDetail();
-    }, [loadDetail]),
+      loadDetailedUser();
+    }, [loadDetailedUser]),
   );
 
   return {
     heal_id,
-    load,
+    loadDetailedUser,
     clear: () => setHeal(null),
   };
 }

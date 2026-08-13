@@ -2,7 +2,7 @@ import {
   useAcceptRequest,
   useGetRequestVM,
   useRejectRequest,
-} from "@/src/viewmodels/HealthViewModel";
+} from "@/src/viewmodels/doctor/HealthViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
