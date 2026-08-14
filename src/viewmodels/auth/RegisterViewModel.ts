@@ -12,16 +12,16 @@ export function useRegisterViewModel() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const validate = async () => {
     if (!username.trim()) {
-      alert("Vui lòng nhập tên");
+      Alert.alert("Lỗi", "Vui lòng nhập tên");
       return false;
     }
     if (!email.trim()) {
-      alert("Vui lòng nhập email.");
+      Alert.alert("Lỗi", "Vui lòng nhập email.");
       return false;
     }
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailRegex = /^[^\s@]+@(gmail|outlook|hotmail|yahoo)\.(com|vn)$/i;
     if (!emailRegex.test(email)) {
-      alert("Email không hợp lệ.");
+      Alert.alert("Lỗi", "Email không hợp lệ.");
       return false;
     }
 
@@ -31,27 +31,26 @@ export function useRegisterViewModel() {
       return;
     }
     if (!phone.trim()) {
-      alert("Vui lòng nhập số điện thoại.");
+      Alert.alert("Lỗi", "Vui lòng nhập số điện thoại.");
       return false;
     }
     const phoneRegex = /^[0-9]{10}$/;
     if (!phoneRegex.test(phone)) {
-      alert("Số điện thoại không hợp lệ.");
+      Alert.alert("Lỗi", "Số điện thoại không hợp lệ.");
       return false;
     }
 
     if (!password) {
-      alert("Vui lòng nhập mật khẩu.");
+      Alert.alert("Lỗi", "Vui lòng nhập mật khẩu.");
       return false;
     }
 
     if (password.length < 6) {
-      alert("Mật khẩu phải có ít nhất 6 ký tự.");
+      Alert.alert("Lỗi", "Mật khẩu phải có ít nhất 6 ký tự.");
       return false;
     }
-
     if (password !== confirmPassword) {
-      alert("Mật khẩu xác nhận không khớp.");
+      Alert.alert("Lỗi", "Mật khẩu xác nhận không khớp.");
       return false;
     }
     return true;
