@@ -53,7 +53,7 @@ export function useAccountDetailViewModel() {
   const [usrname, setUsername] = useState<any>(null);
 
   useEffect(() => {
-    const load = async () => {
+    const loadProfileAccount = async () => {
       setLoading(true);
       try {
         const data = await getAccountById();
@@ -68,22 +68,47 @@ export function useAccountDetailViewModel() {
         setLoading(false);
       }
     };
-    load();
+    loadProfileAccount();
   }, []);
 
   const handleAccount = async () => {
-    try {
-      setLoading(true);
-      const data = await modifyAccountbyID(usrname, phone, email, gender);
-      setAcc(data);
-      alert("Cập nhật thành công");
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
+    if (!email || !phone || !usrname) {
+      Alert.alert(
+        "Thông báo",
+        "Vui lòng không để trống các trường nhập thông tin.",
+      );
+      return;
     }
+    const phoneRegex = /^[0-9]{10}$/;
+    if (!phoneRegex.test(phone)) {
+      Alert.alert("Lỗi", "Số điện thoại không hợp lệ.");
+      return;
+    }
+    const emailRegex = /^[^\s@]+@(gmail|outlook|hotmail|yahoo)\.(com|vn)$/i;
+    if (!emailRegex.test(email)) {
+      Alert.alert("Lỗi", "Email không hợp lệ.");
+      return false;
+    }
+    Alert.alert("Thông báo", "Bạn có xác nhận thay đổi thông tin", [
+      { text: "Huỷ", style: "cancel" },
+      {
+        text: "Đồng ý",
+        style: "destructive",
+        onPress: async () => {
+          try {
+            setLoading(true);
+            const data = await modifyAccountbyID(usrname, phone, email, gender);
+            setAcc(data);
+            Alert.alert("Thông báo", "Cập nhật hồ sơ thành công");
+          } catch (error) {
+            console.log(error);
+          } finally {
+            setLoading(false);
+          }
+        },
+      },
+    ]);
   };
-
   return {
     acc,
     usrname,
@@ -132,8 +157,8 @@ export function useChangePassword() {
     }
     try {
       setLoading(true);
-      const isValid = await verifyCurrentPassword(currentPassword);
-      if (!isValid) {
+      const isCurrentPassword = await verifyCurrentPassword(currentPassword);
+      if (!isCurrentPassword) {
         Alert.alert("Thông báo", "Mật khẩu hiện tại không đúng");
         return;
       }
