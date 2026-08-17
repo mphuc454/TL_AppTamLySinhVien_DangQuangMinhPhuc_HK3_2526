@@ -60,11 +60,11 @@ export function useAddEmotionLog() {
   };
   const handleSave = async () => {
     if (!selectedEmotionId) {
-      alert("Vui lòng chọn biểu tượng cảm xúc");
+      Alert.alert("Lỗi", "Vui lòng chọn biểu tượng cảm xúc");
       return;
     }
     if (!content.trim()) {
-      alert("Vui lòng nhập nội dung");
+      Alert.alert("Lỗi", "Vui lòng nhập nội dung");
       return;
     }
     const success = await saveEmotionLog(selectedEmotionId, content);
@@ -123,7 +123,7 @@ export function useDeleteEmotionLog() {
         onPress: async () => {
           try {
             await deleteEmotionLog(id);
-            Alert.alert("Thông báo", "Xóa thành công");
+            Alert.alert("Thông báo", "Xóa nhật ký thành công");
             router.back();
           } catch (error) {
             console.log(error);

@@ -16,7 +16,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function ChatBotView() {
-  const { text, handle, messages, setText } = useChatbotAI();
+  const { text, handleMessage, messages, setText } = useChatbotAI();
   return (
     <SafeAreaView style={styles.container} edges={["top", "left", "right"]}>
       {/* Header */}
@@ -98,7 +98,7 @@ export default function ChatBotView() {
           />
 
           <TouchableOpacity
-            onPress={handle}
+            onPress={handleMessage}
             style={[
               styles.sendButton,
               !text.trim() && styles.sendButtonDisabled,
