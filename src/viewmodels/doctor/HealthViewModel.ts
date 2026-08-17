@@ -24,11 +24,19 @@ export function useHandleRequestVM() {
         );
         return;
       }
-      await reqHealthManagement(doctorAccountId);
-      Alert.alert(
-        "Thông báo",
-        "Bạn đã gửi thành công, vui lòng chờ xác nhận của bác sĩ",
-      );
+      Alert.alert("Thông báo", "Bạn có xác nhận yêu cầu theo dõi", [
+        { text: "Huỷ", style: "cancel" },
+        {
+          text: "Đồng ý",
+          onPress: async () => {
+            await reqHealthManagement(doctorAccountId);
+            Alert.alert(
+              "Thông báo",
+              "Bạn đã gửi thành công, vui lòng chờ xác nhận của bác sĩ",
+            );
+          },
+        },
+      ]);
     } catch (error) {
       Alert.alert("Lỗi", "Đã xảy ra lỗi không thể gửi yêu cầu");
       console.log(error);
