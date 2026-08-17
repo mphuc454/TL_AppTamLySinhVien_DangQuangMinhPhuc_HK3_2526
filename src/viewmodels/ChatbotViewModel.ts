@@ -10,7 +10,7 @@ export function useChatbotAI() {
       text: "Chào bạn! Dạo này bạn cảm thấy thế nào?",
     },
   ]);
-  const sendMess = async (mess: string) => {
+  const sendMessage = async (mess: string) => {
     try {
       const res = await fetch("http://192.168.1.117:5000/chatbot", {
         method: "POST",
@@ -24,12 +24,12 @@ export function useChatbotAI() {
       const data = await res.json();
       return data.reply;
     } catch (error) {
-      console.log(error);
       Alert.alert("Xin lỗi", "Hiện tại chatbot đang gặp sự cố.");
+      throw error;
     }
   };
 
-  const handle = async () => {
+  const handleMessage = async () => {
     if (!text.trim()) return;
     const usrText = text;
     setMessages((prev) => [
@@ -41,7 +41,7 @@ export function useChatbotAI() {
       },
     ]);
     setText("");
-    const reply = await sendMess(usrText);
+    const reply = await sendMessage(usrText);
     if (reply) {
       setMessages((prev) => [
         ...prev,
@@ -54,5 +54,5 @@ export function useChatbotAI() {
     }
   };
 
-  return { sendMess, text, messages, handle, setText };
+  return { sendMessage, text, messages, handleMessage, setText };
 }

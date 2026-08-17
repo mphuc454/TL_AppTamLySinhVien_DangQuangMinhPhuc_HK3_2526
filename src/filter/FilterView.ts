@@ -38,7 +38,7 @@ export function FilterArticle() {
 
   const filterArticles = useMemo(() => {
     return articles.filter((item) => {
-      const matchCategory =
+      const matchCategoryArticles =
         selectedCategory === null ||
         item.id_category_articles?.id === selectedCategory;
 
@@ -46,7 +46,7 @@ export function FilterArticle() {
         .toUpperCase()
         .includes(searchText.toUpperCase().trim());
 
-      return matchCategory && filterSearchArticle;
+      return matchCategoryArticles && filterSearchArticle;
     });
   }, [articles, selectedCategory, searchText]);
 
@@ -67,14 +67,14 @@ export function FilterExercises() {
 
   const filterExercises = useMemo(() => {
     return ex.filter((item) => {
-      const matchCategory =
+      const matchCategoryExercises =
         selectedCategory === null || item.category?.id === selectedCategory;
 
       const filterSearchEx = item.title
         .toUpperCase()
         .includes(searchText.trim().toUpperCase());
 
-      return matchCategory && filterSearchEx;
+      return matchCategoryExercises && filterSearchEx;
     });
   }, [ex, selectedCategory, searchText]);
   return {

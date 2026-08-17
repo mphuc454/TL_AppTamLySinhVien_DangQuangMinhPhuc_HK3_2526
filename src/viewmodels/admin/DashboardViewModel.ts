@@ -1,12 +1,12 @@
 import {
-  totalAccount,
-  totalAdmin,
-  totalArticle,
-  totalArticleByCategory,
-  totalDoctor,
-  totalExercise,
-  totalGender,
-  totalMusic,
+  getTotalAccount,
+  getTotalAdmin,
+  getTotalArticle,
+  getTotalArticleByCategory,
+  getTotalDoctor,
+  getTotalExercise,
+  getTotalGender,
+  getTotalMusic,
 } from "@/src/repository/admin/DashboardRepository";
 import { useFocusEffect } from "expo-router";
 import { useCallback, useState } from "react";
@@ -18,7 +18,7 @@ export function useDashboardUserViewModel() {
   const loadTotalUser = async () => {
     try {
       setLoading(true);
-      const total = await totalAccount();
+      const total = await getTotalAccount();
       setUsrTotal(total);
     } catch (error) {
       console.log(error);
@@ -42,7 +42,7 @@ export function useDashboardDoctorViewModel() {
   const loadTotalDoctor = async () => {
     try {
       setLoading(true);
-      const total = await totalDoctor();
+      const total = await getTotalDoctor();
       setDocTotal(total);
     } catch (error) {
       console.log(error);
@@ -66,7 +66,7 @@ export function useDashboardArticleViewModel() {
   const loadTotalArticle = async () => {
     try {
       setLoading(true);
-      const total = await totalArticle();
+      const total = await getTotalArticle();
       setArcTotal(total);
     } catch (error) {
       console.log(error);
@@ -90,7 +90,7 @@ export function useDashboardExerciseViewModel() {
   const loadTotalExercise = async () => {
     try {
       setLoading(true);
-      const total = await totalExercise();
+      const total = await getTotalExercise();
       setExTotal(total);
     } catch (error) {
       console.log(error);
@@ -114,7 +114,7 @@ export function useDashboardMusicViewModel() {
   const loadTotalMusic = async () => {
     try {
       setLoading(true);
-      const total = await totalMusic();
+      const total = await getTotalMusic();
       setMusTotal(total);
     } catch (error) {
       console.log(error);
@@ -138,7 +138,7 @@ export function useDashboardAdminViewModel() {
   const loadTotalAdmin = async () => {
     try {
       setLoading(true);
-      const total = await totalAdmin();
+      const total = await getTotalAdmin();
       setAdTotal(total);
     } catch (error) {
       console.log(error);
@@ -160,7 +160,7 @@ export function useGenderAdminViewModel() {
   const [genTotal, setGenTotal] = useState({ male: 0, female: 0 });
   const loadTotalGender = async () => {
     try {
-      const total = await totalGender();
+      const total = await getTotalGender();
       setGenTotal(total);
     } catch (error) {
       console.log(error);
@@ -193,7 +193,7 @@ export function useCategoryArticleAdminViewModel() {
   const [chartData, setPieData] = useState<any[]>([]);
   const loadTotalCategoryArticle = async () => {
     try {
-      const total = await totalArticleByCategory();
+      const total = await getTotalArticleByCategory();
       setPieData(total);
     } catch (error) {
       console.log(error);

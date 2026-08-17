@@ -1,7 +1,7 @@
 import { supabase } from "@/src/lib/supabase";
 
 //1.Thống kê tổng số người dùng
-export const totalAccount = async () => {
+export const getTotalAccount = async () => {
   const { count, error } = await supabase
     .from("accounts")
     .select("*", { count: "exact", head: true })
@@ -11,7 +11,7 @@ export const totalAccount = async () => {
 };
 
 //2.Thống kê tổng số bác sĩ
-export const totalDoctor = async () => {
+export const getTotalDoctor = async () => {
   const { count, error } = await supabase
     .from("accounts")
     .select("*", { count: "exact", head: true })
@@ -21,7 +21,7 @@ export const totalDoctor = async () => {
 };
 
 //3.Thống kê tổng số admin
-export const totalAdmin = async () => {
+export const getTotalAdmin = async () => {
   const { count, error } = await supabase
     .from("accounts")
     .select("*", { count: "exact", head: true })
@@ -31,7 +31,7 @@ export const totalAdmin = async () => {
 };
 
 //4.Thống kê tổng số giới tính
-export const totalGender = async () => {
+export const getTotalGender = async () => {
   const { data, error } = await supabase.from("accounts").select("gender");
   if (error) throw error;
   const male = data.filter((i) => i.gender === "NAM").length;
@@ -41,7 +41,7 @@ export const totalGender = async () => {
 };
 
 //5.Thống kê tổng số bài tập
-export const totalExercise = async () => {
+export const getTotalExercise = async () => {
   const { count, error } = await supabase
     .from("exercises")
     .select("*", { count: "exact", head: true });
@@ -50,7 +50,7 @@ export const totalExercise = async () => {
 };
 
 //6.Thống kê tổng số bài viết
-export const totalArticle = async () => {
+export const getTotalArticle = async () => {
   const { count, error } = await supabase
     .from("articles")
     .select("*", { count: "exact", head: true });
@@ -59,7 +59,7 @@ export const totalArticle = async () => {
 };
 
 //7.Thống kê tổng số bài viết theo danh mục
-export const totalArticleByCategory = async () => {
+export const getTotalArticleByCategory = async () => {
   const { data, error } = await supabase
     .from("articles")
     .select(`id, id_category_articles(name)`);
@@ -87,7 +87,7 @@ export const totalArticleByCategory = async () => {
 };
 
 //8.Thống kê tổng số bài nhạc
-export const totalMusic = async () => {
+export const getTotalMusic = async () => {
   const { count, error } = await supabase
     .from("musics")
     .select("*", { count: "exact", head: true });
