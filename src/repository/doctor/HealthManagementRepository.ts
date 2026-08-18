@@ -26,7 +26,7 @@ export const reqHealthManagement = async (doctorId: number) => {
 };
 
 // 2. xem ds quản lý sức khoẻ
-export const allHealthManagement = async () => {
+export const getAllRequestHealthManagement = async () => {
   const { data: healthManagements, error } = await supabase
     .from("health_managements")
     .select(`*, account_id(*)`);

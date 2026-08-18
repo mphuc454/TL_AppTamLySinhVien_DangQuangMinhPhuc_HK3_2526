@@ -11,7 +11,7 @@ import { Alert } from "react-native";
 
 // xoá bài viết
 export function useDeleteArticle() {
-  const handleRemove = (id: number) => {
+  const handleRemoveArticle = (id: number) => {
     Alert.alert("Xoá bài viết", "Bạn có muốn chắc xoá bài viết không ?", [
       { text: "Huỷ", style: "cancel" },
       {
@@ -30,7 +30,7 @@ export function useDeleteArticle() {
       },
     ]);
   };
-  return handleRemove;
+  return handleRemoveArticle;
 }
 
 // thêm bài viết
@@ -70,7 +70,7 @@ export function useAddArticle() {
       setLoading(false);
     }
   };
-  const handleSave = async () => {
+  const handleAddArticle = async () => {
     if (!title.trim()) {
       Alert.alert("Nhập tiêu đề");
       return;
@@ -148,7 +148,7 @@ export function useAddArticle() {
     setContent,
     thumbnail,
     setThumbnail,
-    handleSave,
+    handleAddArticle,
     pickImage,
     loading,
   };
@@ -181,7 +181,7 @@ export function useEditArticle(id: number) {
     updateArticles();
   }, [updateArticles]);
 
-  const handleUpdate = async () => {
+  const handleUpdateArticles = async () => {
     if (!category) {
       Alert.alert("Thông báo", "Vui lòng chọn danh mục bài viết");
       return;
@@ -237,7 +237,7 @@ export function useEditArticle(id: number) {
     setCategory,
     time,
     setTime,
-    handleUpdate,
+    handleUpdateArticles,
     pickImage,
   };
 }

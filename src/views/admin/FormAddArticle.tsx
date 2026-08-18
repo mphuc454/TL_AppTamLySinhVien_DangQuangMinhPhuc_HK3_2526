@@ -26,7 +26,7 @@ export default function FormAddView() {
     content,
     setContent,
     thumbnail,
-    handleSave,
+    handleAddArticle,
     pickImage,
   } = useAddArticle();
   const { categoryArticles } = useCategoryArticlesViewModel();
@@ -124,7 +124,7 @@ export default function FormAddView() {
           style={styles.input}
         />
       </View>
-      <TouchableOpacity onPress={handleSave} style={styles.button}>
+      <TouchableOpacity onPress={handleAddArticle} style={styles.button}>
         <Text style={styles.buttonText}>Thêm bài viết</Text>
       </TouchableOpacity>
       <TouchableOpacity

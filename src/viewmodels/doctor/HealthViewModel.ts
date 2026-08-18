@@ -3,9 +3,9 @@ import { useCallback, useState } from "react";
 import { Alert, Linking } from "react-native";
 import { HealthManagements } from "../../models/HealthManagements";
 import {
-  allHealthManagement,
   checkHealthManagement,
   deleteHealthManagement,
+  getAllRequestHealthManagement,
   getDetailHealthManagement,
   reqHealthManagement,
   toggleStatus,
@@ -53,7 +53,7 @@ export function useGetRequestVM() {
   const loadDetailedHealth = async () => {
     try {
       setLoading(true);
-      const data = await allHealthManagement();
+      const data = await getAllRequestHealthManagement();
       setHeal(data);
     } catch (error) {
       console.log(error);
@@ -215,8 +215,8 @@ export function useAccepttoCall() {
         return false;
       }
       const p = `tel:${phone}`;
-      const supported = await Linking.canOpenURL(p);
-      if (!supported) {
+      const phoneCall = await Linking.canOpenURL(p);
+      if (!phoneCall) {
         Alert.alert("Thông báo", "Thiết bị không hỗ trợ gọi điện.");
         return;
       }

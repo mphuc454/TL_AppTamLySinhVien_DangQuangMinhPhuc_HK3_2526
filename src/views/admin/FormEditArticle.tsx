@@ -28,7 +28,7 @@ export default function FormEditView() {
     setCategory,
     time,
     setTime,
-    handleUpdate,
+    handleUpdateArticles,
     pickImage,
   } = useEditArticle(Number(id));
   const { categoryArticles } = useCategoryArticlesViewModel();
@@ -144,7 +144,7 @@ export default function FormEditView() {
           style={styles.input}
         />
       </View>
-      <TouchableOpacity onPress={handleUpdate} style={styles.button}>
+      <TouchableOpacity onPress={handleUpdateArticles} style={styles.button}>
         <Text style={styles.buttonText}>Cập nhật bài viết</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.button}>
