@@ -1,14 +1,14 @@
 import {
   deleteArticle,
   insertArticle,
-  updateArticle, uploadArticleImage,
+  updateArticle,
+  uploadArticleImage,
 } from "@/src/repository/admin/ArticleAdminRepository";
 import { getArticleByID } from "@/src/repository/ArticleRepository";
 import * as ImagePicker from "expo-image-picker";
 import { router } from "expo-router";
 import { useCallback, useEffect, useState } from "react";
 import { Alert } from "react-native";
-import {uploadDoctorImage} from "@/src/repository/auth/ProfileRepository";
 
 // xoá bài viết
 export function useDeleteArticle() {
@@ -118,14 +118,10 @@ export function useAddArticle() {
     }
   };
   const pickImage = async () => {
-    const permission =
-        await ImagePicker.requestMediaLibraryPermissionsAsync();
+    const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
     if (!permission.granted) {
-      Alert.alert(
-          "Thông báo",
-          "Bạn cần cấp quyền truy cập thư viện ảnh."
-      );
+      Alert.alert("Thông báo", "Bạn cần cấp quyền truy cập thư viện ảnh.");
       return;
     }
 
@@ -146,10 +142,7 @@ export function useAddArticle() {
       } catch (error) {
         console.log("Upload image error:", error);
 
-        Alert.alert(
-            "Thông báo",
-            "Không thể tải ảnh lên."
-        );
+        Alert.alert("Thông báo", "Không thể tải ảnh lên.");
       }
     }
   };
@@ -223,14 +216,10 @@ export function useEditArticle(id: number) {
     }
   };
   const pickImage = async () => {
-    const permission =
-        await ImagePicker.requestMediaLibraryPermissionsAsync();
+    const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
     if (!permission.granted) {
-      Alert.alert(
-          "Thông báo",
-          "Bạn cần cấp quyền truy cập thư viện ảnh."
-      );
+      Alert.alert("Thông báo", "Bạn cần cấp quyền truy cập thư viện ảnh.");
       return;
     }
 
@@ -250,14 +239,11 @@ export function useEditArticle(id: number) {
       } catch (error) {
         console.log("Upload image error:", error);
 
-        Alert.alert(
-            "Thông báo",
-            "Không thể tải ảnh lên."
-        );
+        Alert.alert("Thông báo", "Không thể tải ảnh lên.");
       }
     }
   };
-    return{
+  return {
     title,
     setTitle,
     author,
