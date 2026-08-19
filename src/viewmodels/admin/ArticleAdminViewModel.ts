@@ -2,6 +2,7 @@ import {
   deleteArticle,
   insertArticle,
   updateArticle,
+  uploadArticleImage,
 } from "@/src/repository/admin/ArticleAdminRepository";
 import { getArticleByID } from "@/src/repository/ArticleRepository";
 import * as ImagePicker from "expo-image-picker";
@@ -42,6 +43,7 @@ export function useAddArticle() {
   const [category, setCategory] = useState<number | null>(null);
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
+  const [image, setImage] = useState<string | null>(null);
 
   const addArticle = async (
     id_category_articles: number,
@@ -116,23 +118,32 @@ export function useAddArticle() {
     }
   };
   const pickImage = async () => {
-    try {
-      const res = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ["images"],
-        allowsEditing: true,
-        aspect: [16, 9],
-        quality: 1,
-      });
-      if (!res.canceled) {
-        const uri = res.assets?.[0]?.uri?.trim();
-        setThumbnail(uri || "");
+    const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+    if (!permission.granted) {
+      Alert.alert("Thông báo", "Bạn cần cấp quyền truy cập thư viện ảnh.");
+      return;
+    }
+
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ["images"],
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 0.8,
+    });
+
+    if (!result.canceled) {
+      try {
+        const uri = result.assets[0].uri;
+        setImage(uri);
+        const url = await uploadArticleImage(uri);
+
+        setThumbnail(url);
+      } catch (error) {
+        console.log("Upload image error:", error);
+
+        Alert.alert("Thông báo", "Không thể tải ảnh lên.");
       }
-    } catch (error) {
-      console.log(error);
-      Alert.alert(
-        "Lỗi",
-        "Không thể chọn ảnh. Vui lòng kiểm tra quyền truy cập thư viện ảnh.",
-      );
     }
   };
   return {
@@ -162,6 +173,7 @@ export function useEditArticle(id: number) {
   const [thumbnail, setThumbnail] = useState("");
   const [category, setCategory] = useState<number | null>(null);
   const [content, setContent] = useState("");
+  const [image, setImage] = useState<string | null>(null);
 
   const updateArticles = useCallback(async () => {
     try {
@@ -204,24 +216,31 @@ export function useEditArticle(id: number) {
     }
   };
   const pickImage = async () => {
-    try {
-      const res = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ["images"],
-        allowsEditing: true,
-        aspect: [16, 9],
-        quality: 1,
-      });
+    const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
-      if (!res.canceled) {
-        const uri = res.assets?.[0]?.uri?.trim();
-        setThumbnail(uri || "");
+    if (!permission.granted) {
+      Alert.alert("Thông báo", "Bạn cần cấp quyền truy cập thư viện ảnh.");
+      return;
+    }
+
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ["images"],
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 0.8,
+    });
+
+    if (!result.canceled) {
+      try {
+        const uri = result.assets[0].uri;
+        setImage(uri);
+        const url = await uploadArticleImage(uri);
+        setThumbnail(url);
+      } catch (error) {
+        console.log("Upload image error:", error);
+
+        Alert.alert("Thông báo", "Không thể tải ảnh lên.");
       }
-    } catch (error) {
-      console.log(error);
-      Alert.alert(
-        "Lỗi",
-        "Không thể chọn ảnh. Vui lòng kiểm tra quyền truy cập thư viện ảnh.",
-      );
     }
   };
   return {

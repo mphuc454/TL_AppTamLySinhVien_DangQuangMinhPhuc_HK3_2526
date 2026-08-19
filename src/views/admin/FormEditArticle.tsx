@@ -147,7 +147,19 @@ export default function FormEditView() {
       <TouchableOpacity onPress={handleUpdateArticles} style={styles.button}>
         <Text style={styles.buttonText}>Cập nhật bài viết</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity
+        onPress={() => router.back()}
+        style={{
+          marginTop: 30,
+          height: 56,
+          backgroundColor: "#f72f0c",
+          borderRadius: 14,
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "row",
+          gap: 8,
+        }}
+      >
         <Text style={styles.buttonText}>Huỷ</Text>
       </TouchableOpacity>
     </ScrollView>
