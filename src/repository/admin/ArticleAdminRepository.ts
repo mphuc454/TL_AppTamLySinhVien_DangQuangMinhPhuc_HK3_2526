@@ -61,3 +61,23 @@ export async function updateArticle(
 
   if (error) throw error;
 }
+
+//4. upload ảnh bài viết
+export const uploadArticleImage = async (imageUri: string) => {
+    const response = await fetch(imageUri);
+    const arrayBuffer = await response.arrayBuffer();
+    const fileName = `${Date.now()}.jpg`;
+    const { data, error } = await supabase.storage
+        .from("article_images")
+        .upload(fileName, arrayBuffer, {
+            contentType: "image/jpeg",
+            upsert: true,
+        });
+    if (error) {
+        throw error;
+    }
+    const { data: publicData } = supabase.storage
+        .from("article_images")
+        .getPublicUrl(data.path);
+    return publicData.publicUrl;
+};
