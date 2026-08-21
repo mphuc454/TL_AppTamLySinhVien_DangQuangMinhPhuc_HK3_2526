@@ -1,7 +1,7 @@
 import { useChangePassword } from "@/src/viewmodels/auth/ProfileViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import {
   KeyboardAvoidingView,
   Platform,
@@ -25,6 +25,8 @@ export default function ChangePassView() {
     setCurrentPassword,
   } = useChangePassword();
   const { colors } = useContext(ThemeContext);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   return (
     <KeyboardAvoidingView
