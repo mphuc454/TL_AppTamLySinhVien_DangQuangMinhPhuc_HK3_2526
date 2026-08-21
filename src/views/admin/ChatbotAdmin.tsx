@@ -65,24 +65,21 @@ export default function AdminChatbotView() {
           onValueChange={(value) => setModel(value)}
         >
           <Picker.Item
-            label="llama-3.1-8b-instant"
-            value="llama-3.1-8b-instant"
-          />
-          <Picker.Item
-            label="llama-3.3-70b-versatile"
-            value="llama-3.3-70b-versatile"
+            label="meta-llama/llama-prompt-guard-2-86m"
+            value="meta-llama/llama-prompt-guard-2-86m"
           />
           <Picker.Item
             label="meta-llama/llama-prompt-guard-2-22m"
             value="meta-llama/llama-prompt-guard-2-22m"
           />
           <Picker.Item
-            label="meta-llama/llama-prompt-guard-2-86m"
-            value="meta-llama/llama-prompt-guard-2-86m"
-          />
-          <Picker.Item
             label="openai/gpt-oss-120b"
             value="openai/gpt-oss-120b"
+          />
+          <Picker.Item label="openai/gpt-oss-20b" value="openai/gpt-oss-20b" />
+          <Picker.Item
+            label="openai/gpt-oss-safeguard-20b"
+            value="openai/gpt-oss-safeguard-20b"
           />
         </Picker>
         <View style={{ marginTop: 30 }}>

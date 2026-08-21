@@ -84,7 +84,8 @@ export function useAccountDetailViewModel() {
       Alert.alert("Lỗi", "Số điện thoại không hợp lệ.");
       return;
     }
-    const emailRegex = /^[^\s@]+@(gmail|outlook|hotmail|yahoo)\.(com|vn)$/i;
+    const emailRegex =
+      /^[^\s@]+@((gmail|outlook|hotmail|yahoo)\.(com|vn)|imail\.edu\.vn|st\.hcmuaf\.edu\.vn)$/i;
     if (!emailRegex.test(email)) {
       Alert.alert("Lỗi", "Email không hợp lệ.");
       return false;

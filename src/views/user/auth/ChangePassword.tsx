@@ -1,6 +1,7 @@
 import { useChangePassword } from "@/src/viewmodels/auth/ProfileViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
+import { useContext } from "react";
 import {
   KeyboardAvoidingView,
   Platform,
@@ -10,6 +11,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { ThemeContext } from "../../theme/ThemeContext";
 
 export default function ChangePassView() {
   const {
@@ -22,9 +24,11 @@ export default function ChangePassView() {
     currentPassword,
     setCurrentPassword,
   } = useChangePassword();
+  const { colors } = useContext(ThemeContext);
+
   return (
     <KeyboardAvoidingView
-      style={{ flex: 1, backgroundColor: "#fff" }}
+      style={{ flex: 1, backgroundColor: colors.background }}
       behavior={Platform.OS === "ios" ? "padding" : undefined}
     >
       <View style={styles.container}>
@@ -32,7 +36,11 @@ export default function ChangePassView() {
           style={{ flexDirection: "row", alignItems: "center", marginTop: 30 }}
         >
           <TouchableOpacity onPress={() => router.back()}>
-            <Ionicons name="arrow-back" size={25}></Ionicons>
+            <Ionicons
+              style={{ color: colors.text }}
+              name="arrow-back"
+              size={25}
+            ></Ionicons>
           </TouchableOpacity>
           <Text
             style={{
@@ -40,13 +48,13 @@ export default function ChangePassView() {
               textAlign: "center",
               fontSize: 20,
               fontWeight: "bold",
+              color: colors.text,
             }}
           >
             Thay đổi mật khẩu
           </Text>
         </View>
         <View style={{ marginTop: 30 }}>
-          <Text style={styles.label}>Nhập mật khẩu hiện tại</Text>
           <TextInput
             value={currentPassword}
             onChangeText={setCurrentPassword}
@@ -54,7 +62,6 @@ export default function ChangePassView() {
             placeholder="Nhập mật khẩu hiện tại"
             placeholderTextColor="#999"
           />
-          <Text style={styles.label}>Nhập mật khẩu mới</Text>
           <TextInput
             value={confirmPassword}
             onChangeText={setConfirmPassword}
@@ -62,7 +69,6 @@ export default function ChangePassView() {
             placeholder="Nhập mật khẩu mới"
             placeholderTextColor="#999"
           />
-          <Text style={styles.label}>Xác nhận mật khẩu mới</Text>
           <TextInput
             value={newPa}
             onChangeText={setNewPa}
@@ -93,12 +99,6 @@ const styles = StyleSheet.create({
     paddingTop: 60,
   },
 
-  label: {
-    fontSize: 14,
-    fontWeight: "600",
-    color: "#333",
-    marginBottom: 8,
-  },
   input: {
     borderWidth: 1,
     borderColor: "#ddd",
