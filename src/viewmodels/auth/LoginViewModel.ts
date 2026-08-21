@@ -41,13 +41,6 @@ export function useLoginViewModel() {
         return;
       }
       const acc = await getAccount();
-      // const token = await registerForPushNotificationsAsync();
-      // if (token) {
-      //   await supabase
-      //     .from("accounts")
-      //     .update({ expo_push_token: token })
-      //     .eq("id", acc.id);
-      // }
       switch (acc.role) {
         case 1:
           router.replace("/(tabs)/Index");
