@@ -1,5 +1,5 @@
 import { useChangePassword } from "@/src/viewmodels/auth/ProfileViewModel";
-import { Ionicons } from "@expo/vector-icons";
+import { Feather, Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useContext, useState } from "react";
 import {
@@ -25,8 +25,9 @@ export default function ChangePassView() {
     setCurrentPassword,
   } = useChangePassword();
   const { colors } = useContext(ThemeContext);
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [showOldPassword, setShowOldPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmNewPassword, setShowConfirmNewPassword] = useState(false);
 
   return (
     <KeyboardAvoidingView
@@ -57,27 +58,98 @@ export default function ChangePassView() {
           </Text>
         </View>
         <View style={{ marginTop: 30 }}>
-          <TextInput
-            value={currentPassword}
-            onChangeText={setCurrentPassword}
-            style={styles.input}
-            placeholder="Nhập mật khẩu hiện tại"
-            placeholderTextColor="#999"
-          />
-          <TextInput
-            value={confirmPassword}
-            onChangeText={setConfirmPassword}
-            style={styles.input}
-            placeholder="Nhập mật khẩu mới"
-            placeholderTextColor="#999"
-          />
-          <TextInput
-            value={newPa}
-            onChangeText={setNewPa}
-            style={styles.input}
-            placeholder="Xác nhận mật khẩu mới"
-            placeholderTextColor="#999"
-          />
+          <View
+            style={{
+              marginBottom: 10,
+              flexDirection: "row",
+              alignItems: "center",
+              backgroundColor: "#FFF",
+              borderWidth: 1,
+              borderColor: "#E5E5E5",
+              borderRadius: 10,
+              height: 52,
+              paddingHorizontal: 12,
+            }}
+          >
+            <TextInput
+              value={currentPassword}
+              onChangeText={setCurrentPassword}
+              secureTextEntry={!showOldPassword}
+              style={{ flex: 1 }}
+              placeholder="Nhập mật khẩu hiện tại"
+              placeholderTextColor="#999"
+            />
+            <TouchableOpacity
+              onPress={() => setShowOldPassword(!showOldPassword)}
+            >
+              <Feather
+                name={showOldPassword ? "eye" : "eye-off"}
+                size={20}
+              ></Feather>
+            </TouchableOpacity>
+          </View>
+
+          <View
+            style={{
+              marginBottom: 10,
+              flexDirection: "row",
+              alignItems: "center",
+              backgroundColor: "#FFF",
+              borderWidth: 1,
+              borderColor: "#E5E5E5",
+              borderRadius: 10,
+              height: 52,
+              paddingHorizontal: 12,
+            }}
+          >
+            <TextInput
+              value={confirmPassword}
+              onChangeText={setConfirmPassword}
+              secureTextEntry={!showNewPassword}
+              style={{ flex: 1 }}
+              placeholder="Nhập mật khẩu mới"
+              placeholderTextColor="#999"
+            />
+            <TouchableOpacity
+              onPress={() => setShowNewPassword(!showNewPassword)}
+            >
+              <Feather
+                name={showNewPassword ? "eye" : "eye-off"}
+                size={20}
+              ></Feather>
+            </TouchableOpacity>
+          </View>
+
+          <View
+            style={{
+              marginBottom: 10,
+              flexDirection: "row",
+              alignItems: "center",
+              backgroundColor: "#FFF",
+              borderWidth: 1,
+              borderColor: "#E5E5E5",
+              borderRadius: 10,
+              height: 52,
+              paddingHorizontal: 12,
+            }}
+          >
+            <TextInput
+              value={newPa}
+              onChangeText={setNewPa}
+              style={{ flex: 1 }}
+              secureTextEntry={!showConfirmNewPassword}
+              placeholder="Xác nhận mật khẩu mới"
+              placeholderTextColor="#999"
+            />
+            <TouchableOpacity
+              onPress={() => setShowConfirmNewPassword(!showConfirmNewPassword)}
+            >
+              <Feather
+                name={showConfirmNewPassword ? "eye" : "eye-off"}
+                size={20}
+              ></Feather>
+            </TouchableOpacity>
+          </View>
         </View>
 
         <TouchableOpacity
@@ -99,17 +171,6 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 24,
     paddingTop: 60,
-  },
-
-  input: {
-    borderWidth: 1,
-    borderColor: "#ddd",
-    borderRadius: 10,
-    paddingHorizontal: 14,
-    paddingVertical: 12,
-    fontSize: 16,
-    color: "#1a1a1a",
-    marginBottom: 24,
   },
 
   submitButton: {
