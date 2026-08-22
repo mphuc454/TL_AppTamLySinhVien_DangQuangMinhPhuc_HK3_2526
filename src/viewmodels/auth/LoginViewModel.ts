@@ -16,12 +16,16 @@ export function useLoginViewModel() {
       alert("Vui lòng nhập email.");
       return false;
     }
-
+    const emailRegex =
+      /^[^\s@]+@((gmail|outlook|hotmail|yahoo)\.(com|vn)|imail\.edu\.vn|st\.hcmuaf\.edu\.vn)$/i;
+    if (!emailRegex.test(email)) {
+      Alert.alert("Lỗi", "Email không hợp lệ.");
+      return false;
+    }
     if (!password.trim()) {
       alert("Vui lòng nhập mật khẩu.");
       return false;
     }
-
     return true;
   };
 

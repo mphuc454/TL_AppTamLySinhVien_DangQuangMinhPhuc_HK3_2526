@@ -359,7 +359,7 @@ export default function HealthcareView() {
                 color: "#0bd80e",
               }}
             >
-              Bài tập cải thiện sức khoẻ tinh thần:
+              Bài tập sức khoẻ tinh thần:
             </Text>
             <TouchableOpacity
               onPress={() => router.push("/(no tabs)/Exercises")}
@@ -370,6 +370,7 @@ export default function HealthcareView() {
                   color: "#3514C6",
                   fontWeight: "regular",
                   marginTop: 25,
+                  marginLeft: 8,
                 }}
               >
                 Xem tất cả

@@ -163,8 +163,14 @@ export function useChangePassword() {
         Alert.alert("Thông báo", "Mật khẩu hiện tại không đúng");
         return;
       }
-      await changePassword(newPa);
-      Alert.alert("Thông báo", "Bạn đã thay đổi mật khẩu thành công");
+      try {
+        await changePassword(newPa);
+        Alert.alert("Thông báo", "Bạn đã thay đổi mật khẩu thành công");
+      } catch (error) {
+        Alert.alert("Lỗi", "Cập nhật mật khẩu thất bại");
+        console.log(error);
+      }
+
       const acc = await getAccount();
       switch (acc.role) {
         case 1:
