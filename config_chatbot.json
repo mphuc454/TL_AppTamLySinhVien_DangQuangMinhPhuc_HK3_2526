@@ -1,6 +1,6 @@
 {
   "max_tokens": 512,
-  "model": "meta-llama/llama-prompt-guard-2-86m",
+  "model": "openai/gpt-oss-120b",
   "temperature": 0.6,
   "top_p": 0.9
 }

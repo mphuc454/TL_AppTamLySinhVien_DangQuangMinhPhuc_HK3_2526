@@ -65,18 +65,11 @@ export default function AdminChatbotView() {
           onValueChange={(value) => setModel(value)}
         >
           <Picker.Item
-            label="meta-llama/llama-prompt-guard-2-86m"
-            value="meta-llama/llama-prompt-guard-2-86m"
-          />
-          <Picker.Item
-            label="meta-llama/llama-prompt-guard-2-22m"
-            value="meta-llama/llama-prompt-guard-2-22m"
-          />
-          <Picker.Item
             label="openai/gpt-oss-120b"
             value="openai/gpt-oss-120b"
           />
           <Picker.Item label="openai/gpt-oss-20b" value="openai/gpt-oss-20b" />
+          <Picker.Item label="qwen/qwen3.6-27b" value="qwen/qwen3.6-27b" />
           <Picker.Item
             label="openai/gpt-oss-safeguard-20b"
             value="openai/gpt-oss-safeguard-20b"
