@@ -4,6 +4,7 @@ import { router, useLocalSearchParams } from "expo-router";
 import { useContext } from "react";
 import {
   FlatList,
+  Image,
   ScrollView,
   Text,
   TouchableOpacity,
@@ -12,10 +13,10 @@ import {
 import { ThemeContext } from "../theme/ThemeContext";
 
 export default function DetailedExercisesView() {
-    const { colors } = useContext(ThemeContext);
-  
-  const {id} = useLocalSearchParams();
-  const {ex} = useExercisesDetailViewModel(Number(id));
+  const { colors } = useContext(ThemeContext);
+
+  const { id } = useLocalSearchParams();
+  const { ex } = useExercisesDetailViewModel(Number(id));
   return (
     <ScrollView
       style={{
@@ -30,17 +31,20 @@ export default function DetailedExercisesView() {
         style={{ flexDirection: "row", alignItems: "center", marginTop: 30 }}
       >
         <TouchableOpacity onPress={() => router.push("/(tabs)/Index")}>
-          <Ionicons style={{ color: colors.text }} name="arrow-back" size={25}></Ionicons>
+          <Ionicons
+            style={{ color: colors.text }}
+            name="arrow-back"
+            size={25}
+          ></Ionicons>
         </TouchableOpacity>
       </View>
-      <View
+      <Image
+        source={{ uri: ex?.image_url }}
         style={{
-          height: 220,
-          backgroundColor: "#D88D8D",
-          marginTop: 20,
-          marginHorizontal: 8,
+          width: "100%",
+          height: 180,
         }}
-      ></View>
+      ></Image>
       <View
         style={{
           alignSelf: "flex-start",
@@ -80,17 +84,25 @@ export default function DetailedExercisesView() {
           marginHorizontal: 12,
         }}
       >
-        <Text style={{color: colors.text}}>Số vòng: </Text>
+        <Text style={{ color: colors.text }}>Số vòng: </Text>
         <Text style={{ color: colors.text }}>{ex?.number_of_rounds}</Text>
-        <Text style={{ marginLeft: 5, fontWeight: "light", color: colors.text }}>lượt</Text>
+        <Text
+          style={{ marginLeft: 5, fontWeight: "light", color: colors.text }}
+        >
+          lượt
+        </Text>
         <Ionicons
           name="time-outline"
           size={15}
           style={{ marginLeft: 15, color: colors.text }}
         ></Ionicons>
-        <Text style={{ marginLeft: 4, color: colors.text }}>{ex?.duration_minutes} phút</Text>
+        <Text style={{ marginLeft: 4, color: colors.text }}>
+          {ex?.duration_minutes} phút
+        </Text>
         <Text style={{ marginLeft: 20, color: colors.text }}>Mức độ: </Text>
-        <Text style={{ marginLeft: 3, color: colors.text }}>{ex?.difficulty}</Text>
+        <Text style={{ marginLeft: 3, color: colors.text }}>
+          {ex?.difficulty}
+        </Text>
       </View>
       <Text
         style={{
@@ -103,14 +115,14 @@ export default function DetailedExercisesView() {
           fontWeight: "semibold",
         }}
       >
-       {ex?.description}
+        {ex?.description}
       </Text>
       <Text
         style={{
           fontSize: 16,
           fontWeight: "bold",
           marginTop: 30,
-          color: colors.text
+          color: colors.text,
         }}
       >
         Các bước thực hiện:
@@ -121,7 +133,7 @@ export default function DetailedExercisesView() {
         keyExtractor={(item) => item.id.toString()}
         scrollEnabled={false}
         showsVerticalScrollIndicator={false}
-        renderItem={({ item }) => (
+        renderItem={({ item, index }) => (
           <View
             style={{
               flexDirection: "row",
@@ -143,7 +155,7 @@ export default function DetailedExercisesView() {
               <Text
                 style={{ fontSize: 15, fontWeight: "700", color: "#efece7" }}
               >
-                {item.id}
+                {index + 1}
               </Text>
             </View>
             <View style={{ flex: 1 }}>
@@ -151,7 +163,7 @@ export default function DetailedExercisesView() {
                 style={{
                   fontSize: 18,
                   fontWeight: "bold",
-                  color: colors.text
+                  color: colors.text,
                 }}
               >
                 {item.title_step}

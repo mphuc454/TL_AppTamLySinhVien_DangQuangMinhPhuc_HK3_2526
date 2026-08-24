@@ -80,6 +80,12 @@ export function useConfigChatbot() {
       setLoading(false);
     }
   };
+  const defaultConfig = async () => {
+    setModel("openai/gpt-oss-120b");
+    setTemperature(0.5);
+    setTopP(0.9);
+    setMaxTokens(512);
+  };
 
   useEffect(() => {
     getConfigChatbot();
@@ -95,6 +101,7 @@ export function useConfigChatbot() {
     setTemperature,
     temperature,
     topP,
+    defaultConfig,
     setTopP,
     getConfigChatbot,
   };

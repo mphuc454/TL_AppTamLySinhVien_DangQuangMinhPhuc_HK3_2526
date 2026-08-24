@@ -13,6 +13,7 @@ export default function AdminChatbotView() {
     setTemperature,
     topP,
     setTopP,
+    defaultConfig,
   } = useConfigChatbot();
 
   return (
@@ -65,18 +66,11 @@ export default function AdminChatbotView() {
           onValueChange={(value) => setModel(value)}
         >
           <Picker.Item
-            label="meta-llama/llama-prompt-guard-2-86m"
-            value="meta-llama/llama-prompt-guard-2-86m"
-          />
-          <Picker.Item
-            label="meta-llama/llama-prompt-guard-2-22m"
-            value="meta-llama/llama-prompt-guard-2-22m"
-          />
-          <Picker.Item
             label="openai/gpt-oss-120b"
             value="openai/gpt-oss-120b"
           />
           <Picker.Item label="openai/gpt-oss-20b" value="openai/gpt-oss-20b" />
+          <Picker.Item label="qwen/qwen3.6-27b" value="qwen/qwen3.6-27b" />
           <Picker.Item
             label="openai/gpt-oss-safeguard-20b"
             value="openai/gpt-oss-safeguard-20b"
@@ -148,7 +142,20 @@ export default function AdminChatbotView() {
             <Picker.Item label="1024" value="1024" />
           </Picker>
         </View>
-
+        <TouchableOpacity
+          onPress={() => defaultConfig()}
+          style={{
+            backgroundColor: "#6B7280",
+            marginTop: 20,
+            padding: 15,
+            borderRadius: 12,
+            alignItems: "center",
+          }}
+        >
+          <Text style={{ color: "#fff", fontWeight: "bold" }}>
+            Thiết lập mặc định
+          </Text>
+        </TouchableOpacity>
         <TouchableOpacity
           onPress={async () => {
             try {

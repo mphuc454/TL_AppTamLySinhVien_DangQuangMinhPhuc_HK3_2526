@@ -1,7 +1,7 @@
 import { useChatbotAI } from "@/src/viewmodels/ChatbotViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
-import React from "react";
+import React, { useRef } from "react";
 import {
   FlatList,
   Image,
@@ -17,6 +17,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function ChatBotView() {
   const { text, handleMessage, messages, setText } = useChatbotAI();
+  const flatListRef = useRef<FlatList>(null);
   return (
     <SafeAreaView style={styles.container} edges={["top", "left", "right"]}>
       {/* Header */}
@@ -31,62 +32,71 @@ export default function ChatBotView() {
             source={{
               uri: "https://rmzjhiftwntkrcygnrww.supabase.co/storage/v1/object/public/Chatbot%20AI/alexandra_koch-robot-7720755_1920.png",
             }}
-          ></Image>
+          />
 
           <View>
             <Text style={styles.name}>Chatbot</Text>
-            <View style={styles.statusRow}></View>
+            <View style={styles.statusRow} />
           </View>
         </View>
       </View>
 
-      {/* Messages */}
-      <FlatList
-        data={messages}
-        keyExtractor={(item) => item.id}
-        contentContainerStyle={styles.listContent}
-        showsVerticalScrollIndicator={false}
-        renderItem={({ item }) => {
-          const isMe = item.sender === "me";
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 0}
+      >
+        {/* Messages */}
+        <FlatList
+          ref={flatListRef}
+          data={messages}
+          keyExtractor={(item) => item.id}
+          contentContainerStyle={styles.listContent}
+          showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps="handled"
+          onContentSizeChange={() => {
+            flatListRef.current?.scrollToEnd({ animated: true });
+          }}
+          renderItem={({ item }) => {
+            const isMe = item.sender === "me";
 
-          return (
-            <View
-              style={[
-                styles.messageRow,
-                isMe ? styles.myMessageContainer : styles.otherMessageContainer,
-              ]}
-            >
-              {!isMe && (
-                <Image
-                  style={styles.avatar}
-                  source={{
-                    uri: "https://rmzjhiftwntkrcygnrww.supabase.co/storage/v1/object/public/Chatbot%20AI/alexandra_koch-robot-7720755_1920.png",
-                  }}
-                ></Image>
-              )}
+            return (
+              <View
+                style={[
+                  styles.messageRow,
+                  isMe
+                    ? styles.myMessageContainer
+                    : styles.otherMessageContainer,
+                ]}
+              >
+                {!isMe && (
+                  <Image
+                    style={styles.avatar}
+                    source={{
+                      uri: "https://rmzjhiftwntkrcygnrww.supabase.co/storage/v1/object/public/Chatbot%20AI/alexandra_koch-robot-7720755_1920.png",
+                    }}
+                  />
+                )}
 
-              <View style={{ maxWidth: "78%" }}>
-                <View
-                  style={[
-                    styles.bubble,
-                    isMe ? styles.myBubble : styles.otherBubble,
-                  ]}
-                >
-                  <Text
-                    style={[styles.messageText, isMe && styles.myMessageText]}
+                <View style={{ maxWidth: "78%" }}>
+                  <View
+                    style={[
+                      styles.bubble,
+                      isMe ? styles.myBubble : styles.otherBubble,
+                    ]}
                   >
-                    {item.text}
-                  </Text>
+                    <Text
+                      style={[styles.messageText, isMe && styles.myMessageText]}
+                    >
+                      {item.text}
+                    </Text>
+                  </View>
                 </View>
               </View>
-            </View>
-          );
-        }}
-      />
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : undefined}
-        keyboardVerticalOffset={Platform.OS === "ios" ? 20 : 0}
-      >
+            );
+          }}
+        />
+
         <View style={styles.inputContainer}>
           <TextInput
             value={text}
@@ -113,7 +123,7 @@ export default function ChatBotView() {
   );
 }
 
-const PRIMARY = "#5661F6";
+const PRIMARY = "#212ffa";
 const ACCENT = "#F49C8F";
 
 const styles = StyleSheet.create({
@@ -195,7 +205,7 @@ const styles = StyleSheet.create({
 
   listContent: {
     padding: 16,
-    paddingBottom: 8,
+    paddingBottom: 10,
   },
 
   messageRow: {
@@ -274,23 +284,19 @@ const styles = StyleSheet.create({
   inputContainer: {
     flexDirection: "row",
     alignItems: "flex-end",
-    paddingHorizontal: 14,
+    paddingHorizontal: 12,
     paddingVertical: 10,
-    backgroundColor: "white",
-    borderTopWidth: 1,
-    borderColor: "#EFEFF2",
-    marginBottom: 70,
+    backgroundColor: "#fff",
+    marginBottom: 35,
   },
 
   input: {
     flex: 1,
-    backgroundColor: "#F3F3F5",
-    borderRadius: 22,
+    maxHeight: 100,
+    borderRadius: 20,
     paddingHorizontal: 16,
     paddingVertical: 10,
-    marginRight: 10,
-    fontSize: 15,
-    maxHeight: 100,
+    backgroundColor: "#F2F2F5",
   },
 
   sendButton: {
@@ -300,9 +306,10 @@ const styles = StyleSheet.create({
     backgroundColor: PRIMARY,
     justifyContent: "center",
     alignItems: "center",
+    marginLeft: 10,
   },
 
   sendButtonDisabled: {
-    backgroundColor: "#C7C9F5",
+    backgroundColor: PRIMARY,
   },
 });

@@ -39,7 +39,7 @@ export default function AdminDoctorView() {
             fontWeight: "bold",
           }}
         >
-          Quản lý bác sĩ
+          Quản lý bác sĩ tư vấn tâm lý
         </Text>
       </View>
       <View
@@ -58,7 +58,7 @@ export default function AdminDoctorView() {
         <TextInput
           value={search}
           onChangeText={setSearch}
-          placeholder="Tìm bài viết..."
+          placeholder="Tìm tên bác sĩ tư vấn tâm lý..."
           style={{
             flex: 1,
             height: 45,
