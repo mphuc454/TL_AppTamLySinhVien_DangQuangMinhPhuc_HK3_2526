@@ -13,6 +13,7 @@ export default function AdminChatbotView() {
     setTemperature,
     topP,
     setTopP,
+    defaultConfig,
   } = useConfigChatbot();
 
   return (
@@ -141,7 +142,20 @@ export default function AdminChatbotView() {
             <Picker.Item label="1024" value="1024" />
           </Picker>
         </View>
-
+        <TouchableOpacity
+          onPress={() => defaultConfig()}
+          style={{
+            backgroundColor: "#6B7280",
+            marginTop: 20,
+            padding: 15,
+            borderRadius: 12,
+            alignItems: "center",
+          }}
+        >
+          <Text style={{ color: "#fff", fontWeight: "bold" }}>
+            Thiết lập mặc định
+          </Text>
+        </TouchableOpacity>
         <TouchableOpacity
           onPress={async () => {
             try {
