@@ -81,10 +81,42 @@ export function useConfigChatbot() {
     }
   };
   const defaultConfig = async () => {
-    setModel("openai/gpt-oss-120b");
-    setTemperature(0.5);
-    setTopP(0.9);
-    setMaxTokens(512);
+    const defaultModel = "openai/gpt-oss-120b";
+    const defaultTemperature = 0.5;
+    const defaultTopP = 0.9;
+    const defaultMaxTokens = 512;
+
+    try {
+      setLoading(true);
+
+      const response = await fetch("http://192.168.1.117:5000/config_chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model: defaultModel,
+          temperature: defaultTemperature,
+          top_p: defaultTopP,
+          max_tokens: defaultMaxTokens,
+        }),
+      });
+
+      const res = await response.json();
+
+      if (!response.ok) {
+        throw new Error("Không thể lưu cấu hình mặc định");
+      }
+      const config = res.config ?? res;
+      setModel(config.model);
+      setTemperature(Number(config.temperature));
+      setTopP(Number(config.top_p));
+      setMaxTokens(Number(config.max_tokens));
+    } catch (error) {
+      console.log("Error setting default config:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
