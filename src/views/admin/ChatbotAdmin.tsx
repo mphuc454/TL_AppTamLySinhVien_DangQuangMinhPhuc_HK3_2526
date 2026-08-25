@@ -13,7 +13,7 @@ export default function AdminChatbotView() {
     setTemperature,
     topP,
     setTopP,
-    defaultConfig,
+    defaultConfigChatbot,
   } = useConfigChatbot();
 
   return (
@@ -143,7 +143,7 @@ export default function AdminChatbotView() {
           </Picker>
         </View>
         <TouchableOpacity
-          onPress={() => defaultConfig()}
+          onPress={() => defaultConfigChatbot()}
           style={{
             backgroundColor: "#6B7280",
             marginTop: 20,
@@ -158,13 +158,26 @@ export default function AdminChatbotView() {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={async () => {
-            try {
-              await updateConfigChatbot(model, temperature, topP, maxTokens);
-              Alert.alert("Thành công", "Đã cập nhật cấu hình chatbot.");
-            } catch (error) {
-              Alert.alert("Lỗi", "Không thể cập nhật cấu hình.");
-              console.log(error);
-            }
+            Alert.alert("Xác nhận", "Xác nhận thay đổi cấu hình chatbot", [
+              { text: "Huỷ", style: "cancel" },
+              {
+                text: "Xác nhận",
+                onPress: async () => {
+                  try {
+                    await updateConfigChatbot(
+                      model,
+                      temperature,
+                      topP,
+                      maxTokens,
+                    );
+                    Alert.alert("Thành công", "Đã cập nhật cấu hình chatbot.");
+                  } catch (error) {
+                    Alert.alert("Lỗi", "Không thể cập nhật cấu hình.");
+                    console.log(error);
+                  }
+                },
+              },
+            ]);
           }}
           style={{
             backgroundColor: "#2563EB",
