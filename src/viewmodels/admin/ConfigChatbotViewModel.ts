@@ -80,7 +80,7 @@ export function useConfigChatbot() {
       setLoading(false);
     }
   };
-  const defaultConfig = async () => {
+  const defaultConfigChatbot = async () => {
     const defaultModel = "openai/gpt-oss-120b";
     const defaultTemperature = 0.5;
     const defaultTopP = 0.9;
@@ -133,7 +133,7 @@ export function useConfigChatbot() {
     setTemperature,
     temperature,
     topP,
-    defaultConfig,
+    defaultConfigChatbot,
     setTopP,
     getConfigChatbot,
   };
