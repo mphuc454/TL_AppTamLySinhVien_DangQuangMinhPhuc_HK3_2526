@@ -1,6 +1,6 @@
 import {
-    useDeleteEmotionLog,
-    useEmotionLog,
+  useDeleteEmotionLog,
+  useEmotionLog,
 } from "@/src/viewmodels/EmotionViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
@@ -45,78 +45,92 @@ export default function ListEmotionView() {
         </Text>
       </View>
       <View>
-        {emLog.map((item, index) => {
-          const currentDate = new Date(item.created_at).toLocaleDateString(
-            "vi-VN",
-          );
-          const previousDate =
-            index > 0
-              ? new Date(emLog[index - 1].created_at).toLocaleDateString(
-                  "vi-VN",
-                )
-              : null;
+        {emLog.length > 0 ? (
+          emLog.map((item, index) => {
+            const currentDate = new Date(item.created_at).toLocaleDateString(
+              "vi-VN",
+            );
+            const previousDate =
+              index > 0
+                ? new Date(emLog[index - 1].created_at).toLocaleDateString(
+                    "vi-VN",
+                  )
+                : null;
 
-          const showDate = currentDate !== previousDate;
+            const showDate = currentDate !== previousDate;
 
-          return (
-            <View key={item.id}>
-              {showDate && (
-                <Text
+            return (
+              <View key={item.id}>
+                {showDate && (
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      fontWeight: "bold",
+                      marginTop: 20,
+                      marginBottom: 10,
+                    }}
+                  >
+                    {currentDate}
+                  </Text>
+                )}
+
+                <TouchableOpacity
                   style={{
-                    fontSize: 16,
-                    fontWeight: "bold",
-                    marginTop: 20,
+                    backgroundColor: "#2D2121",
+                    borderRadius: 16,
+                    padding: 16,
+                    flexDirection: "row",
+                    alignItems: "center",
                     marginBottom: 10,
                   }}
                 >
-                  {currentDate}
-                </Text>
-              )}
-
-              <TouchableOpacity
-                style={{
-                  backgroundColor: "#2D2121",
-                  borderRadius: 16,
-                  padding: 16,
-                  flexDirection: "row",
-                  alignItems: "center",
-                  marginBottom: 10,
-                }}
-              >
-                <View
-                  style={{
-                    width: 70,
-                    height: 70,
-                    borderRadius: 35,
-                    backgroundColor: item.emotions?.color,
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <Ionicons name={item.emotions?.icon as any} size={36} />
-                </View>
-
-                <View style={{ flex: 1, marginLeft: 12 }}>
-                  <Text
+                  <View
                     style={{
-                      fontSize: 15,
-                      color: "#FFF",
+                      width: 70,
+                      height: 70,
+                      borderRadius: 35,
+                      backgroundColor: item.emotions?.color,
+                      justifyContent: "center",
+                      alignItems: "center",
                     }}
                   >
-                    {item.content}
-                  </Text>
-                </View>
+                    <Ionicons name={item.emotions?.icon as any} size={36} />
+                  </View>
 
-                <TouchableOpacity
-                  onPress={() => handleRM(item.id)}
-                  style={{ padding: 8 }}
-                >
-                  <Ionicons name="trash-outline" size={24} color="#FF4D4F" />
+                  <View style={{ flex: 1, marginLeft: 12 }}>
+                    <Text
+                      style={{
+                        fontSize: 15,
+                        color: "#FFF",
+                      }}
+                    >
+                      {item.content}
+                    </Text>
+                  </View>
+
+                  <TouchableOpacity
+                    onPress={() => handleRM(item.id)}
+                    style={{ padding: 8 }}
+                  >
+                    <Ionicons name="trash-outline" size={24} color="#FF4D4F" />
+                  </TouchableOpacity>
                 </TouchableOpacity>
-              </TouchableOpacity>
-            </View>
-          );
-        })}
+              </View>
+            );
+          })
+        ) : (
+          <Text
+            style={{
+              width: "100%",
+              textAlign: "center",
+              marginTop: 20,
+              fontSize: 16,
+              color: "#666",
+            }}
+          >
+            Hiện chưa có nhật ký nào.
+          </Text>
+        )}
       </View>
     </ScrollView>
   );
