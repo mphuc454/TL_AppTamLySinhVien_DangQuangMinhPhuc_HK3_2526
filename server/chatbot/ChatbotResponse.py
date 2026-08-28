@@ -11,7 +11,6 @@ class ChatbotResponse:
     load_dotenv()
     CHROMA_DIR = "./chroma_db"
     COLLECTION_NAME = "school_mental_health"
-    
     def process_pdf(self):
         base_dir = os.path.dirname(os.path.abspath(__file__))
         doc_path = os.path.join(base_dir, "documents")
@@ -44,10 +43,14 @@ class ChatbotResponse:
         )) 
         split = text.split_documents(docs)
         return split
-
+    
     def hugg_embed(self):
+        hf_token = os.getenv("HF_TOKEN")
         embeddings  = HuggingFaceEmbeddings(
             model_name = "sentence-transformers/all-MiniLM-L6-v2",
+            model_kwargs = {"device": "cpu",
+                            "token": hf_token},
+            encode_kwargs={"normalize_embeddings": False}
         )
         return embeddings
 
