@@ -1,13 +1,13 @@
 import {
-    useLastEmotionLogDate,
-    useMostEmotionLog,
-    useTotalLogViewModel,
+  useLastEmotionLogDate,
+  useMostEmotionLog,
+  useTotalLogViewModel,
 } from "@/src/viewmodels/EmotionViewModel";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useContext } from "react";
-import { Text, TouchableOpacity, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { BarChart } from "react-native-gifted-charts";
 import { ThemeContext } from "../theme/ThemeContext";
 
 export default function LogStatisticsView() {
@@ -15,9 +15,61 @@ export default function LogStatisticsView() {
   const { lastDate } = useLastEmotionLogDate();
   const { mostEmotion } = useMostEmotionLog();
   const { logTotal } = useTotalLogViewModel();
-
+  const legend = [
+    { label: "Tích cực", color: "#556817" },
+    { label: "Buồn bã", color: "#22A3CA" },
+    { label: "Bình thản", color: "#A0E3E2" },
+    { label: "Lo âu", color: "#F36A0E" },
+    { label: "Giận dữ", color: "#BE0003" },
+  ];
+  const Data3 = [
+    {
+      value: 10,
+      label: "T2",
+      frontColor: "#556817",
+      labelTextStyle: { color: "#FFFFFF" },
+    },
+    {
+      value: 20,
+      label: "T3",
+      frontColor: "#22A3CA",
+      labelTextStyle: { color: "#FFFFFF" },
+    },
+    {
+      value: 40,
+      label: "T4",
+      frontColor: "#F36A0E",
+      labelTextStyle: { color: "#FFFFFF" },
+    },
+    {
+      value: 50,
+      label: "T5",
+      frontColor: "#BE0003",
+      labelTextStyle: { color: "#FFFFFF" },
+    },
+    {
+      value: 30,
+      label: "T6",
+      frontColor: "#A0E3E2",
+      labelTextStyle: { color: "#FFFFFF" },
+    },
+    {
+      value: 30,
+      label: "T7",
+      frontColor: "#A0E3E2",
+      labelTextStyle: { color: "#FFFFFF" },
+    },
+    {
+      value: 10,
+      label: "CN",
+      frontColor: "#556817",
+      labelTextStyle: { color: "#FFFFFF" },
+    },
+  ];
   return (
-    <SafeAreaView
+    <ScrollView
+      contentContainerStyle={{ paddingBottom: 180 }}
+      showsVerticalScrollIndicator={false}
       style={[
         {
           flex: 1,
@@ -27,7 +79,7 @@ export default function LogStatisticsView() {
       ]}
     >
       <View
-        style={{ flexDirection: "row", alignItems: "center", marginTop: 30 }}
+        style={{ flexDirection: "row", alignItems: "center", marginTop: 60 }}
       >
         <TouchableOpacity onPress={() => router.push("/auth/SettingsUser")}>
           <Ionicons name="arrow-back" size={25} color={colors.text}></Ionicons>
@@ -226,6 +278,62 @@ export default function LogStatisticsView() {
           </Text>
         </View>
       </View>
-    </SafeAreaView>
+      <View
+        style={{
+          marginTop: 30,
+          padding: 16,
+          backgroundColor: colors.cardBackground,
+          borderRadius: 16,
+        }}
+      >
+        <Text style={{ fontSize: 16, fontWeight: "bold", color: colors.text }}>
+          Biểu đồ thống kê tâm trạng
+        </Text>
+        <View
+          style={{
+            flexDirection: "row",
+            flexWrap: "wrap",
+            marginTop: 8,
+            marginBottom: 12,
+          }}
+        >
+          {legend.map((item, index) => (
+            <View
+              key={index}
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                marginRight: 16,
+                marginBottom: 8,
+              }}
+            >
+              <View
+                style={{
+                  width: 12,
+                  height: 12,
+                  borderRadius: 6,
+                  backgroundColor: item.color,
+                  marginRight: 8,
+                }}
+              ></View>
+              <Text style={{ color: colors.text, fontSize: 14 }}>
+                {item.label}
+              </Text>
+            </View>
+          ))}
+        </View>
+        <BarChart
+          data={Data3}
+          barWidth={25}
+          spacing={20}
+          hideYAxisText
+          hideRules
+          yAxisThickness={0}
+          xAxisThickness={0}
+          noOfSections={4}
+          barMarginBottom={0}
+        ></BarChart>
+      </View>
+    </ScrollView>
   );
 }
