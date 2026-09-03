@@ -41,7 +41,7 @@ export default function SettingView() {
       <TouchableOpacity
         onPress={() => router.push("/auth/Theme")}
         style={{
-          backgroundColor: "#FCDDDD",
+          backgroundColor: colors.background,
           borderRadius: 25,
           flexDirection: "row",
           alignItems: "center",
@@ -68,9 +68,46 @@ export default function SettingView() {
             fontWeight: "bold",
             flex: 1,
             textAlign: "center",
+            color: colors.text,
           }}
         >
           Thay đổi màu nền
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => router.push("/(no tabs)/LogStatistics")}
+        style={{
+          backgroundColor: colors.background,
+          borderRadius: 25,
+          flexDirection: "row",
+          alignItems: "center",
+          padding: 20,
+          marginTop: 30,
+        }}
+      >
+        <View
+          style={{
+            width: 45,
+            height: 45,
+            borderRadius: 10,
+            backgroundColor: "#D5D5D5",
+            justifyContent: "center",
+            alignItems: "center",
+            marginRight: 20,
+          }}
+        >
+          <Ionicons name="stats-chart" size={30}></Ionicons>
+        </View>
+        <Text
+          style={{
+            fontSize: 16,
+            fontWeight: "bold",
+            flex: 1,
+            textAlign: "center",
+            color: colors.text,
+          }}
+        >
+          Thống kê nhật ký của bạn
         </Text>
       </TouchableOpacity>
     </SafeAreaView>

@@ -1,10 +1,6 @@
 import { useEmotionAnalytics } from "@/src/viewmodels/AnalystEmotionViewModel";
 import { useAccountDetailViewModel } from "@/src/viewmodels/auth/ProfileViewModel";
-import {
-  useLastEmotionLogDate,
-  useMostEmotionLog,
-  useTotalLogViewModel,
-} from "@/src/viewmodels/EmotionViewModel";
+
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useContext } from "react";
@@ -44,13 +40,11 @@ const Data2 = [
 
 export default function IndexView() {
   const { colors } = useContext(ThemeContext);
-  const { logTotal } = useTotalLogViewModel();
   const { usrname } = useAccountDetailViewModel();
 
   const { emotionStatus, emotion_color, loading, getAnalytics } =
     useEmotionAnalytics();
-  const { lastDate } = useLastEmotionLogDate();
-  const { mostEmotion } = useMostEmotionLog();
+
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: colors.background }}
@@ -66,199 +60,121 @@ export default function IndexView() {
         }}
       >
         <Text style={{ fontSize: 18, fontWeight: "bold", color: colors.text }}>
-          Chào bạn {usrname}, gửi lời chào đến bạn với tràn đầy năng lượng nào!
+          Chào bạn {usrname}
         </Text>
-        <Text
-          style={{
-            marginTop: 25,
-            marginBottom: 5,
-            fontSize: 20,
-            fontWeight: "bold",
-            color: "#0bd80e",
-          }}
-        >
-          Tổng quan ghi nhật ký:
+        <Text style={{ color: "#0bd80e" }}>
+          Gửi lời chào đến bạn với tràn đầy năng lượng nào!
         </Text>
         <View
           style={{
             marginTop: 30,
+            backgroundColor: colors.cardBackground,
+            borderRadius: 20,
+            padding: 10,
+            height: 100,
             flexDirection: "row",
-            flexWrap: "wrap",
-            justifyContent: "space-between",
-            rowGap: 10,
+            alignItems: "center",
           }}
         >
           <View
             style={{
-              width: "48%",
-              backgroundColor: colors.cardBackground,
-              borderRadius: 16,
-              padding: 15,
+              flex: 5,
               alignItems: "center",
             }}
           >
             <Text
               style={{
                 fontSize: 14,
-                fontWeight: "bold",
-                textAlign: "center",
+                fontWeight: "regular",
                 color: colors.text,
+                textAlign: "center",
               }}
             >
-              Tổng số nhật ký
+              “Chiến thắng chính bản thân mình còn tốt hơn chiến thắng một nghìn
+              trận chiến.”
             </Text>
+          </View>
+          <View style={{ flex: 1, alignItems: "center" }}>
+            <Ionicons
+              name="chatbubble-ellipses-outline"
+              size={35}
+              color={colors.text}
+            />
+          </View>
+        </View>
+        <View
+          style={{
+            marginTop: 30,
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+            paddingHorizontal: 16,
+            paddingVertical: 14,
+            borderRadius: 16,
+            backgroundColor: "#FFF7ED",
+            borderWidth: 1,
+            borderColor: "#FED7AA",
+          }}
+        >
+          <View
+            style={{
+              width: 44,
+              height: 44,
+              borderRadius: 22,
+              backgroundColor: "#FFEDD5",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Ionicons name="flame" size={26} color="#EA580C" />
+          </View>
+
+          {/* Nội dung */}
+          <View style={{ flex: 1, marginLeft: 12 }}>
             <Text
               style={{
-                marginTop: 8,
-                fontSize: 26,
-                fontWeight: "bold",
-                color: colors.text,
-                textAlign: "center",
+                fontSize: 14,
+                fontWeight: "600",
+                color: "#9A3412",
               }}
             >
-              {logTotal}
+              Streak ghi nhật ký của bạn
             </Text>
+
             <Text
               style={{
-                fontSize: 11,
-                color: colors.text,
-                opacity: 0.7,
-                textAlign: "center",
+                marginTop: 3,
+                fontSize: 12,
+                color: "#C2410C",
               }}
             >
-              lượt ghi nhận
+              Duy trì thói quen chăm sóc bản thân
             </Text>
           </View>
 
-          <View
-            style={{
-              width: "48%",
-              backgroundColor: colors.cardBackground,
-              borderRadius: 16,
-              padding: 15,
-              alignItems: "center",
-            }}
-          >
+          {/* Streak */}
+          <View style={{ alignItems: "center" }}>
             <Text
               style={{
-                fontSize: 14,
-                fontWeight: "bold",
-                textAlign: "center",
-                color: colors.text,
+                fontSize: 24,
+                fontWeight: "800",
+                color: "#EA580C",
               }}
             >
-              Ngày ghi nhật ký gần nhất
+              7
             </Text>
-            <Text
-              style={{
-                marginTop: 8,
-                fontSize: 26,
-                fontWeight: "bold",
-                color: colors.text,
-                textAlign: "center",
-              }}
-            >
-              {lastDate}
-            </Text>
-            <Text
-              style={{
-                marginTop: 8,
-                fontSize: 11,
-                color: colors.text,
-                opacity: 0.7,
-                textAlign: "center",
-              }}
-            >
-              lần cập nhật cuối
-            </Text>
-          </View>
 
-          <View
-            style={{
-              width: "48%",
-              backgroundColor: colors.cardBackground,
-              borderRadius: 16,
-              padding: 15,
-              alignItems: "center",
-            }}
-          >
             <Text
               style={{
-                fontSize: 14,
-                fontWeight: "bold",
-                textAlign: "center",
-                color: colors.text,
-              }}
-            >
-              Tâm trạng nhật ký nhiều nhất
-            </Text>
-            <Text
-              style={{
-                marginTop: 8,
-                fontSize: 26,
-                fontWeight: "bold",
-                color: colors.text,
-                textAlign: "center",
-              }}
-            >
-              {mostEmotion}
-            </Text>
-            <Text
-              style={{
-                marginTop: 8,
                 fontSize: 11,
-                color: colors.text,
-                opacity: 0.7,
-                textAlign: "center",
+                color: "#9A3412",
               }}
             >
-              được ghi nhận nhiều nhất
-            </Text>
-          </View>
-
-          <View
-            style={{
-              width: "48%",
-              backgroundColor: colors.cardBackground,
-              borderRadius: 16,
-              padding: 15,
-              alignItems: "center",
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 14,
-                fontWeight: "bold",
-                textAlign: "center",
-                color: colors.text,
-              }}
-            >
-              Hôm nay
-            </Text>
-            <Text
-              style={{
-                marginTop: 8,
-                fontSize: 26,
-                fontWeight: "bold",
-                color: colors.text,
-                textAlign: "center",
-              }}
-            >
-              {new Date().toLocaleDateString("vi-VN")}
-            </Text>
-            <Text
-              style={{
-                marginTop: 8,
-                fontSize: 11,
-                color: colors.text,
-                opacity: 0.7,
-                textAlign: "center",
-              }}
-            >
-              ngày hiện tại
+              ngày
             </Text>
           </View>
         </View>
+
         <Text
           style={{
             marginTop: 25,
