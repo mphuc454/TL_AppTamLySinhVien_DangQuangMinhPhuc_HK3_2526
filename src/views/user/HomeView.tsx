@@ -5,6 +5,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useContext } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { Calendar } from "react-native-calendars";
 import { ThemeContext } from "../theme/ThemeContext";
 
 const Data2 = [
@@ -41,7 +42,7 @@ const Data2 = [
 export default function IndexView() {
   const { colors } = useContext(ThemeContext);
   const { usrname } = useAccountDetailViewModel();
-
+  const today = new Date().toISOString().split("T")[0];
   const { emotionStatus, emotion_color, loading, getAnalytics } =
     useEmotionAnalytics();
 
@@ -174,7 +175,34 @@ export default function IndexView() {
             </Text>
           </View>
         </View>
-
+        <Text
+          style={{
+            marginTop: 25,
+            marginBottom: 5,
+            fontSize: 20,
+            fontWeight: "bold",
+            color: "#0bd80e",
+          }}
+        >
+          Lịch hôm nay:
+        </Text>
+        <View
+          style={{
+            marginTop: 30,
+            backgroundColor: colors.cardBackground,
+            width: "100%",
+          }}
+        >
+          <Calendar
+            markedDates={{
+              [today]: {
+                selected: true,
+                selectedColor: "#f32323",
+                selectedTextColor: colors.text,
+              },
+            }}
+          />
+        </View>
         <Text
           style={{
             marginTop: 25,

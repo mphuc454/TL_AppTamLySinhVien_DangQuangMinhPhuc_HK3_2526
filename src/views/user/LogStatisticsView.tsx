@@ -25,43 +25,36 @@ export default function LogStatisticsView() {
   const Data3 = [
     {
       value: 10,
-      label: "T2",
       frontColor: "#556817",
       labelTextStyle: { color: "#FFFFFF" },
     },
     {
       value: 20,
-      label: "T3",
       frontColor: "#22A3CA",
       labelTextStyle: { color: "#FFFFFF" },
     },
     {
       value: 40,
-      label: "T4",
       frontColor: "#F36A0E",
       labelTextStyle: { color: "#FFFFFF" },
     },
     {
       value: 50,
-      label: "T5",
       frontColor: "#BE0003",
       labelTextStyle: { color: "#FFFFFF" },
     },
     {
       value: 30,
-      label: "T6",
       frontColor: "#A0E3E2",
       labelTextStyle: { color: "#FFFFFF" },
     },
     {
       value: 30,
-      label: "T7",
       frontColor: "#A0E3E2",
       labelTextStyle: { color: "#FFFFFF" },
     },
     {
       value: 10,
-      label: "CN",
       frontColor: "#556817",
       labelTextStyle: { color: "#FFFFFF" },
     },
@@ -131,7 +124,7 @@ export default function LogStatisticsView() {
               marginTop: 8,
               fontSize: 26,
               fontWeight: "bold",
-              color: colors.text,
+              color: "#0bd80e",
               textAlign: "center",
             }}
           >
@@ -171,9 +164,9 @@ export default function LogStatisticsView() {
           <Text
             style={{
               marginTop: 8,
-              fontSize: 26,
+              fontSize: 16,
               fontWeight: "bold",
-              color: colors.text,
+              color: "#0bd80e",
               textAlign: "center",
             }}
           >
@@ -214,9 +207,9 @@ export default function LogStatisticsView() {
           <Text
             style={{
               marginTop: 8,
-              fontSize: 26,
+              fontSize: 16,
               fontWeight: "bold",
-              color: colors.text,
+              color: "#0bd80e",
               textAlign: "center",
             }}
           >
@@ -257,9 +250,9 @@ export default function LogStatisticsView() {
           <Text
             style={{
               marginTop: 8,
-              fontSize: 26,
+              fontSize: 16,
               fontWeight: "bold",
-              color: colors.text,
+              color: "#0bd80e",
               textAlign: "center",
             }}
           >
@@ -280,21 +273,71 @@ export default function LogStatisticsView() {
       </View>
       <View
         style={{
-          marginTop: 30,
-          padding: 16,
+          marginTop: 24,
+          padding: 18,
           backgroundColor: colors.cardBackground,
-          borderRadius: 16,
+          borderRadius: 20,
+          shadowColor: "#000",
+          shadowOffset: { width: 0, height: 4 },
+          shadowOpacity: 0.08,
+          shadowRadius: 10,
+          elevation: 3,
         }}
       >
-        <Text style={{ fontSize: 16, fontWeight: "bold", color: colors.text }}>
-          Biểu đồ thống kê tâm trạng
-        </Text>
+        {/* Header */}
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+            marginBottom: 16,
+          }}
+        >
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <View
+              style={{
+                width: 42,
+                height: 42,
+                borderRadius: 13,
+                backgroundColor: "#EEF2FF",
+                alignItems: "center",
+                justifyContent: "center",
+                marginRight: 12,
+              }}
+            >
+              <Ionicons name="stats-chart" size={21} color="#6366F1" />
+            </View>
+
+            <View>
+              <Text
+                style={{
+                  fontSize: 17,
+                  fontWeight: "700",
+                  color: colors.text,
+                }}
+              >
+                Thống kê tâm trạng
+              </Text>
+
+              <Text
+                style={{
+                  fontSize: 12,
+                  color: colors.textSecondary,
+                  marginTop: 3,
+                }}
+              >
+                Theo dõi cảm xúc của bạn
+              </Text>
+            </View>
+          </View>
+        </View>
+
         <View
           style={{
             flexDirection: "row",
             flexWrap: "wrap",
-            marginTop: 8,
-            marginBottom: 12,
+            gap: 8,
+            marginBottom: 18,
           }}
         >
           {legend.map((item, index) => (
@@ -303,36 +346,58 @@ export default function LogStatisticsView() {
               style={{
                 flexDirection: "row",
                 alignItems: "center",
-                marginRight: 16,
-                marginBottom: 8,
+                paddingHorizontal: 10,
+                paddingVertical: 7,
+                borderRadius: 20,
+                backgroundColor: item.color,
               }}
             >
               <View
                 style={{
-                  width: 12,
-                  height: 12,
-                  borderRadius: 6,
+                  width: 8,
+                  height: 8,
+                  borderRadius: 4,
                   backgroundColor: item.color,
-                  marginRight: 8,
+                  marginRight: 6,
                 }}
-              ></View>
-              <Text style={{ color: colors.text, fontSize: 14 }}>
+              />
+
+              <Text
+                style={{
+                  fontSize: 12,
+                  fontWeight: "600",
+                  color: colors.text,
+                }}
+              >
                 {item.label}
               </Text>
             </View>
           ))}
         </View>
-        <BarChart
-          data={Data3}
-          barWidth={25}
-          spacing={20}
-          hideYAxisText
-          hideRules
-          yAxisThickness={0}
-          xAxisThickness={0}
-          noOfSections={4}
-          barMarginBottom={0}
-        ></BarChart>
+
+        <View
+          style={{
+            paddingTop: 8,
+            paddingBottom: 4,
+            borderRadius: 16,
+            overflow: "hidden",
+          }}
+        >
+          <BarChart
+            data={Data3}
+            barWidth={22}
+            spacing={24}
+            hideYAxisText
+            hideRules
+            yAxisThickness={0}
+            xAxisThickness={0}
+            noOfSections={4}
+            barMarginBottom={0}
+            roundedTop
+            isAnimated
+            animationDuration={700}
+          />
+        </View>
       </View>
     </ScrollView>
   );
