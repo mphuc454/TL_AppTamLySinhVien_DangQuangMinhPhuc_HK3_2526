@@ -26,6 +26,32 @@ export default function DetailAppointmentView() {
   const { handleAddRequest } = useHandleRequestVM();
   const acceptToCall = useAccepttoCall();
   const { sendContact } = useSendMail();
+  const monday = new Date(new Date());
+  monday.setDate(
+    new Date().getDate() -
+      (new Date().getDay() === 0 ? 6 : new Date().getDay() - 1),
+  );
+  const dates = Array.from({ length: 7 }, (_, idx) => {
+    const date = new Date(monday);
+    date.setDate(monday.getDate() + idx);
+    return {
+      date: date.getDate(),
+      month: date.getMonth() + 1,
+      year: date.getFullYear(),
+    };
+  });
+  const times = [
+    "8:00",
+    "09:00",
+    "10:00",
+    "11:00",
+    "12:00",
+    "14:30",
+    "15:30",
+    "16:30",
+    "17:30",
+    "18:30",
+  ];
   return (
     <ScrollView
       style={{
@@ -183,7 +209,160 @@ export default function DetailAppointmentView() {
           {doc_id?.bio}
         </Text>
       </View>
+      <View style={{ marginTop: 30 }}>
+        <Text style={{ fontSize: 15 }}>Chuyên môn</Text>
+        <View
+          style={{
+            flexDirection: "row",
+            flexWrap: "wrap",
+            marginHorizontal: 14,
+          }}
+        >
+          {["Lo âu", "Trầm cảm", "Stress", "Rối loạn giấc ngủ"].map((item) => (
+            <View
+              key={item}
+              style={{
+                backgroundColor: "#F5F6FF",
+                borderColor: "#CED5FF",
+                borderWidth: 1,
+                borderRadius: 20,
+                paddingHorizontal: 18,
+                paddingVertical: 10,
+                margin: 5,
+              }}
+            >
+              <Text style={{ color: "#27139B", fontWeight: "600" }}>
+                {item}
+              </Text>
+            </View>
+          ))}
+        </View>
+        <View style={{ marginTop: 30 }}>
+          <Text
+            style={{
+              fontSize: 18,
+              fontWeight: "700",
+              color: colors.text,
+              marginBottom: 14,
+            }}
+          >
+            Chọn ngày
+          </Text>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{
+              paddingHorizontal: 2,
+              gap: 10,
+            }}
+          >
+            {dates.map((item, index) => {
+              const isToday =
+                item.date === new Date().getDate() &&
+                item.month === new Date().getMonth() + 1 &&
+                item.year === new Date().getFullYear();
 
+              return (
+                <TouchableOpacity
+                  key={index}
+                  activeOpacity={0.8}
+                  style={{
+                    width: 65,
+                    height: 82,
+                    borderRadius: 16,
+
+                    backgroundColor: isToday
+                      ? "#445AE6"
+                      : colors.cardBackground,
+
+                    alignItems: "center",
+                    justifyContent: "center",
+
+                    borderWidth: 1,
+                    borderColor: isToday ? "#445AE6" : "#E5E7EB",
+
+                    shadowColor: "#000",
+                    shadowOpacity: 0.06,
+                    shadowRadius: 6,
+                    elevation: 2,
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontSize: 11,
+                      marginTop: 2,
+                      color: isToday ? "#DDE3FF" : "#999",
+                    }}
+                  >
+                    {item.month}/{item.year}
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 23,
+                      fontWeight: "800",
+                      marginTop: 5,
+                      color: isToday ? "#fff" : colors.text,
+                    }}
+                  >
+                    {item.date}
+                  </Text>
+                </TouchableOpacity>
+              );
+            })}
+          </ScrollView>
+        </View>
+      </View>
+      <View style={{ marginTop: 30 }}>
+        <Text>Chọn thời gian</Text>
+        <View
+          style={{
+            flexDirection: "row",
+            flexWrap: "wrap",
+            marginHorizontal: 12,
+          }}
+        >
+          {times.map((time) => {
+            const disabled = time === "10:00" || time === "18:00";
+
+            return (
+              <TouchableOpacity
+                key={time}
+                disabled={disabled}
+                style={{
+                  width: "22%",
+                  height: 46,
+                  margin: "1.5%",
+                  borderRadius: 12,
+                  backgroundColor: "#fff",
+                  borderWidth: 1,
+                  borderColor: "#eee",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Text style={{ fontWeight: "600", color: "#666" }}>{time}</Text>
+              </TouchableOpacity>
+            );
+          })}
+        </View>
+        <View style={{ marginTop: 30 }}>
+          <TouchableOpacity
+            style={{
+              height: 55,
+              marginHorizontal: 70,
+              marginTop: 35,
+              borderRadius: 28,
+              backgroundColor: "#E6E6E6",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Text style={{ color: "#445AE6", fontWeight: "700", fontSize: 16 }}>
+              Đặt lịch hẹn
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
       <View style={{ marginTop: 30 }}>
         <Text
           style={{
